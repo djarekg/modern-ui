@@ -1,15 +1,28 @@
 {
   "configurations": [
     {
+      "name": "Launch demo:serve",
+      "cwd": "${workspaceFolder}/apps/demo",
+      "request": "launch",
+      "type": "node",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["dev"],
+      "skipFiles": ["**/node_internals/**", "!**/node_modules/**/@mu/**"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Launch demo:app",
       "type": "pwa-msedge",
       "request": "launch",
-      "name": "Launch demo",
-      "url": "http://localhost:3000",
+      "url": "http://localhost:8000/apps/demo",
       "webRoot": "${workspaceFolder}/apps/demo",
-      "userDataDir": "${workspaceFolder}/.out/edge",
-      "skipFiles": ["**/node_internals/**", "!**/node_modules/@mui/**"],
-      "preLaunchTask": "dev",
-      "postDebugTask": "terminate-dev"
+      "userDataDir": "${workspaceFolder}/.out/edge/apps"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Launch demo",
+      "configurations": ["Launch demo:serve", "Launch demo:app"]
     }
   ]
 }
