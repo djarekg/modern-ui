@@ -14,7 +14,7 @@
       "name": "Launch demo:app",
       "type": "pwa-msedge",
       "request": "launch",
-      "url": "http://localhost:8000/apps/demo",
+      "url": "http://localhost:3000/apps/demo",
       "webRoot": "${workspaceFolder}/apps/demo",
       "userDataDir": "${workspaceFolder}/.out/edge/apps"
     }
