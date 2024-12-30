@@ -1,0 +1,15 @@
+{
+  "configurations": [
+    {
+      "type": "pwa-msedge",
+      "request": "launch",
+      "name": "Launch demo",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/apps/demo",
+      "userDataDir": "${workspaceFolder}/.out/edge",
+      "skipFiles": ["**/node_internals/**", "!**/node_modules/@mui/**"],
+      "preLaunchTask": "dev",
+      "postDebugTask": "terminate-dev"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "composite": false
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/web"
+    },
+    {
+      "path": "./packages/components"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "@mui/web",
+  "version": "1.0.0",
+  "private": false,
+  "author": "Dustin Griffith",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/djarekg/mw"
+  },
+  "license": "MIT",
+  "packageManager": "bun@1.1.41",
+  "engines": {
+    "bun": ">=1.1.41"
+  },
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "task build",
+    "build": "task build"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
