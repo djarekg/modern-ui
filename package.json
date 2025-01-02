@@ -22,6 +22,9 @@
   "dependencies": {},
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@jspm/core": "^2.1.0",
+    "@jspm/generator": "^2.4.1",
+    "@jspm/import-map": "^1.1.0",
     "@types/bun": "^1.1.14",
     "typedoc": "^0.27.6"
   },

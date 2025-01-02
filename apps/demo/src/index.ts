@@ -1,20 +1,19 @@
-import { Router } from '@lit-labs/router';
-import { LitElement, type TemplateResult, html } from 'lit';
-import { routes } from './router/index.js';
-import './index.css';
+import { type CSSResult, LitElement, type TemplateResult, html } from 'lit';
+import { customElement } from 'lit/decorators.js';
+import css from './index.css' with { type: 'css' };
+import './layout/layout.js';
 
+@customElement('app-index')
 export class Index extends LitElement {
-  readonly #router = new Router(this, routes);
+  static override styles: CSSResult = css;
 
-  protected override render(): TemplateResult {
-    return html`
-      <main role="main">
-        <article>${this.#router.outlet()}</article>
-        </main>
-    `;
+  override render(): TemplateResult {
+    return html`<app-layout></app-layout>`;
   }
 }
 
-if (!customElements.get('app-index')) {
-  customElements.define('app-index', Index);
+declare global {
+  interface HTMLElementTagNameMap {
+    'app-index': Index;
+  }
 }

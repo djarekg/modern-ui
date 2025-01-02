@@ -15,9 +15,13 @@
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
-    ".": {
+    "./": {
       "types": "./dist/**/*.d.ts",
       "import": "./dist/**/*.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
   "scripts": {
@@ -25,7 +29,8 @@
     "build": "task build"
   },
   "dependencies": {
-    "@mui/web": "workspace:*"
+    "@mui/web": "workspace:*",
+    "lit": "^3.2.1"
   },
   "peerDependencies": {
     "typescript": "^5"

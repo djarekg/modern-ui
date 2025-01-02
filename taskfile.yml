@@ -1,25 +1,5 @@
 version: '3'
 
-# includes:
-#   core:
-#     taskfile: '/packages/core/taskfile.yml'
-#     dir: '/packages/core'
-#   web:
-#     taskfile: '/packages/web/taskfile.yml'
-#     dir: '/packages/web'
-#   components:
-#     taskfile: '/packages/components/taskfile.yml'
-#     dir: '/packages/components'
-#   demo:
-#     taskfile: '/apps/demo/taskfile.yml'
-#     dir: '/apps/demo'
-
-# vars:
-#   PACKAGE_PROJECTS:
-#     - '/apps/core'
-#     - '/packages/web'
-#     - '/packages/components'
-
 tasks:
   install:
     aliases: [workspace]
@@ -55,20 +35,11 @@ tasks:
   build:ts:
     desc: Build typescript
     cmds:
-      # - 'echo {{.SOURCE_DIR}}'
-      - bun build src/**/*.ts --root src --outdir dist --target browser --experimental-css --splitting --packages external --packages external --sourcemap=linked
-      # - bun build {{.SOURCE_DIR}}/src/**/*.ts --root {{.SOURCE_DIR}}/src --outdir {{.SOURCE_DIR}}/dist --target browser --experimental-css --splitting --packages external --packages external --sourcemap=linked
+      - bun build src/**/*.ts --root src --outdir dist --target browser --experimental-css --splitting --packages external --packages external --sourcemap=inline
+      # - bun build {{.SOURCE_DIR}}/src/**/*.ts --root {{.SOURCE_DIR}}/src --outdir {{.SOURCE_DIR}}/dist --target browser --experimental-css --splitting --packages external --packages external --sourcemap=inline
 
   build:typings:
     desc: Build typings
     cmds:
       - bun tsc -p tsconfig.types.json
       # - bun tsc -p {{.SOURCE_DIR}}/tsconfig.types.json
-
-  # build:packages:
-  #   desc: Build all packages
-  #   cmds:
-  #     - for: { var: PACKAGE_PROJECTS}
-  #       task: build
-  #       vars:
-  #         SOURCE_DIR: '{{.ITEM}}'

@@ -6,24 +6,29 @@
     "type": "git",
     "url": "https://github.com/djarekg/modern-web-components"
   },
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
   "engines": {
     "bun": ">=1.1.41"
   },
   "license": "MIT",
   "packageManager": "bun@1.1.41",
-  "private": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    "./": {
+      "types": "./dist/**/*.d.ts",
+      "import": "./dist/**/*.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "scripts": {
     "dev": "task build",
     "build": "task build"
   },
-  "type": "module",
   "peerDependencies": {
     "lit": "^3.2.1",
     "typescript": "^5"

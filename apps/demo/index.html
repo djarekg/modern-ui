@@ -7,11 +7,11 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0" />
 
-    <title>Web Component Rask - Demo</title>
+    <title>Modern UI Demo</title>
 
     <link rel="icon"
           type="image/svg+xml"
-          href="./public/favicon.svg">
+          href="/src/public/mwc.svg">
     <link rel="preconnect"
           href="https://fonts.googleapis.com" />
     <link rel="preconnect"
@@ -22,22 +22,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Material Symbols Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap"
           rel="stylesheet" />
 
-    <script type="importmap"
-            src="../mportmap.json"></script>
+    <!-- <script type="importmap"
+            src="../importmap.json"></script> -->
 
     <style>
-      app-root:not(:defined) {
+      app-index:not(:defined) {
         display: none;
       }
     </style>
   </head>
 
   <body>
-    <script type="module">
-      import index from './index.ts';
-      console.log(index);
-    </script>
-    <app-root></app-root>
+    <script type="module"
+            src="/src/index.ts"></script>
+    <app-index></app-index>
   </body>
 
 </html>

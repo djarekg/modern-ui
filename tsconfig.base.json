@@ -9,7 +9,7 @@
     "module": "esnext",
     "target": "esnext",
     "moduleDetection": "force",
-    "noEmit": true,
+    // "noEmit": true,
     "allowJs": false,
     "jsx": "react-jsx",
     "downlevelIteration": true,
@@ -49,5 +49,6 @@
     "strictNullChecks": false,
     "strictFunctionTypes": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["node_modules", "build"]
 }

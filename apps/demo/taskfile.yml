@@ -17,4 +17,10 @@ tasks:
     desc: Build typescript
     deps: [build:clean]
     cmds:
-      - bun build src/**/*.ts --root src --outdir dist --target browser --experimental-css --splitting --packages external --packages external --sourcemap=linked
+      - bun build src/index.ts --root-=src --outdir=dist --target=browser --experimental-css --packages=external --sourcemap=linked
+
+  dev:
+    desc: Start the development server
+    cmds:
+    - bun --inspect-wait=127.0.0.1:6006/web/ --port=3003 src/index.ts --root=src --experimental-css --target=bun
+      # - bun --watch --inspect=localhost:4000 src/index.ts --root=src --experimental-css --packages=external --sourcemap=linked --target=bun

@@ -47,7 +47,7 @@
     "editor.rulers": [100],
     "editor.experimentalEditContextEnabled": true,
     "editor.experimentalWhitespaceRendering": "font",
-
+    "editor.renderWhitespace": "none",
     "javascript.format.semicolons": "insert",
     "javascript.preferences.importModuleSpecifier": "shortest",
     "javascript.preferences.importModuleSpecifierEnding": "auto",
@@ -64,7 +64,7 @@
     "typescript.experimental.expandableHover": true,
     "typescript.format.semicolons": "insert",
     "typescript.inlayHints.parameterTypes.enabled": false,
-    "typescript.preferences.importModuleSpecifier": "shortest",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
     "typescript.preferences.importModuleSpecifierEnding": "js",
     "typescript.preferences.includePackageJsonAutoImports": "on",
     "typescript.preferences.preferTypeOnlyAutoImports": true,
@@ -151,7 +151,10 @@
     },
     "task.quickOpen.showAll": false,
 
-    "github.copilot.chat.edits.suggestRelatedFilesForTests": false
+    "github.copilot.chat.edits.suggestRelatedFilesForTests": false,
+
+    "lit-html.format.enabled": true,
+    "lit-html.tags": ["html", "raw", "css"]
   },
   "extensions": {
     "recommendations": [
@@ -160,7 +163,7 @@
       "jspm.jspm-vscode",
       "prisma.prisma-insider",
       "task.vscode-task",
-      "bierner.lit-html"
+      "runem.lit-plugin"
     ]
   }
 }

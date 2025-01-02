@@ -14,8 +14,22 @@
   },
   "type": "module",
   "module": "src/index.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    "./": {
+      "types": "./dist/**/*.d.ts",
+      "import": "./dist/**/*.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "scripts": {
-    "dev": "task build",
+    "dev": "bunx wds --config web-dev-server.config.js --watch",
+    "//////dev": "bunx wds --root-dir . --node-resolve --watch --hostname localhost --port 3003 --app-index src/index.html --esbuild-target auto",
+    "////dev": "task dev",
+    "//dev": "bun --watch --inspect=localhost:4000 src/index.ts --root=src --outdir=dist --conditions=\"development\" --experimental-css --packages=external --sourcemap=inline --target=bun",
     "build": "task build"
   },
   "dependencies": {
@@ -23,10 +37,13 @@
     "@lit-labs/signals": "^0.1.1",
     "@mui/components": "workspace:*",
     "@mui/core": "workspace:*",
-    "@mui/web": "workspace:*"
+    "@mui/web": "workspace:*",
+    "lit": "^3.2.1"
   },
   "devDependencies": {
     "@types/bun": "^1.1.14",
+    "@web/dev-server": "^0.4.6",
+    "@web/dev-server-esbuild": "^1.0.3",
     "typescript": "^5"
   }
 }

@@ -1,1 +1,1 @@
-export * from './dom/dom-ships.js';
+export * from './directive/define.js';

@@ -1,6 +1,17 @@
 {
   "compilerOptions": {
-    "composite": false
+    "composite": false,
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "strict": true
+      }
+    ]
+    // "paths": {
+    //   "@mui/components/*": ["./packages/components/*"],
+    //   "@mui/core/*": ["./packages/core/*"],
+    //   "@mui/web/*": ["./packages/web/*"]
+    // }
   },
   "files": [],
   "references": [

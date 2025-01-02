@@ -2,8 +2,27 @@
   "extends": ["../../tsconfig.base.json", "../../tsconfig.lit.json"],
   "compilerOptions": {
     "baseUrl": "src",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "rootDir": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["./app/*"],
+      "@mui/components/*": ["../../packages/components/*"],
+      "@mui/core/*": ["../../packages/core/*"],
+      "@mui/web/*": ["../../packages/web/*"]
     }
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+  // "references": [
+  //   {
+  //     "path": "../../packages/components"
+  //   },
+  //   {
+  //     "path": "../../packages/core"
+  //   },
+  //   {
+  //     "path": "../../packages/web"
+  //   }
+  // ]
 }

@@ -4,25 +4,42 @@
       "name": "Launch demo:serve",
       "cwd": "${workspaceFolder}/apps/demo",
       "request": "launch",
-      "type": "node",
-      "runtimeExecutable": "bun",
-      "runtimeArgs": ["dev"],
-      "skipFiles": ["**/node_internals/**", "!**/node_modules/**/@mu/**"],
-      "console": "integratedTerminal"
+      "type": "node-terminal",
+      "noDebug": false,
+      "command": "bun run dev",
+      "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/nodea_modules/@mui/**"],
+      "sourceMaps": true,
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "presentation": {
+        "hidden": true,
+        "group": "",
+        "order": 1
+      }
     },
     {
-      "name": "Launch demo:app",
+      "name": "Launch demo:client",
       "type": "pwa-msedge",
       "request": "launch",
-      "url": "http://localhost:3000/apps/demo",
-      "webRoot": "${workspaceFolder}/apps/demo",
-      "userDataDir": "${workspaceFolder}/.out/edge/apps"
+      "url": "http://localhost:3003/",
+      "webRoot": "${workspaceFolder}/apps/demo/src",
+      "userDataDir": "${workspaceFolder}/.out/edge/apps",
+      "internalConsoleOptions": "openOnSessionStart",
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}/apps/demo",
+      "smartStep": true,
+      "presentation": {
+        "hidden": true,
+        "group": "",
+        "order": 1
+      }
     }
   ],
   "compounds": [
     {
-      "name": "Launch demo",
-      "configurations": ["Launch demo:serve", "Launch demo:app"]
+      "name": "Debug demo",
+      "configurations": ["Launch demo:serve", "Launch demo:client"],
+      "stopAll": true
     }
   ]
 }
