@@ -1,0 +1,32 @@
+@import "normalize.css";
+@import "theme.css";
+
+:root {
+  --mui-site-breadcrumb-height: 58px;
+  /* --mui-site-header-height: calc(var(--mui-site-breadcrumb-height) + 48px); */
+  --mui-site-header-height: 58px;
+  --mui-site-footer-height: 58px;
+}
+
+body {
+  inline-size: 100vw;
+  min-inline-size: 320px;
+  min-block-size: 100vh;
+
+  /* font-family: var(--md-sys-typescale-body-large-font);
+  font-size: var(--md-sys-typescale-body-large-size);
+  font-weight: var(--md-sys-typescale-body-large-weight);
+  letter-spacing: var(--md-sys-typescale-body-large-tacking);
+  line-height: var(--md-sys-typescale-body-large-line-height); */
+
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+  direction: ltr;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  transition: color 0.5s, background-color 0.5s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
+  overflow: hidden;
+}

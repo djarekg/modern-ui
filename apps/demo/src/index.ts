@@ -2,6 +2,7 @@ import { type CSSResult, LitElement, type TemplateResult, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import css from './index.css' with { type: 'css' };
 import './layout/layout.js';
+import './styles/styles.css' with { type: 'css' };
 
 @customElement('app-index')
 export class Index extends LitElement {
