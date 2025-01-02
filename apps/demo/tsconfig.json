@@ -14,15 +14,4 @@
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
-  // "references": [
-  //   {
-  //     "path": "../../packages/components"
-  //   },
-  //   {
-  //     "path": "../../packages/core"
-  //   },
-  //   {
-  //     "path": "../../packages/web"
-  //   }
-  // ]
 }

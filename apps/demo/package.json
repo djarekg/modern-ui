@@ -27,9 +27,6 @@
   },
   "scripts": {
     "dev": "bunx wds --config web-dev-server.config.js --watch",
-    "//////dev": "bunx wds --root-dir . --node-resolve --watch --hostname localhost --port 3003 --app-index src/index.html --esbuild-target auto",
-    "////dev": "task dev",
-    "//dev": "bun --watch --inspect=localhost:4000 src/index.ts --root=src --outdir=dist --conditions=\"development\" --experimental-css --packages=external --sourcemap=inline --target=bun",
     "build": "task build"
   },
   "dependencies": {
