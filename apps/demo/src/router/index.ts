@@ -7,6 +7,14 @@ export const navigate = (path: string): void => {
 
 export const routes: RouteConfig[] = [
   {
+    path: '/*',
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    enter: (params: any) => {
+      console.log('enter', params);
+      return false;
+    },
+  },
+  {
     name: 'home',
     path: '/home',
     render: () => {
