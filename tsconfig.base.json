@@ -48,7 +48,11 @@
     "noPropertyAccessFromIndexSignature": true,
     "strictNullChecks": false,
     "strictFunctionTypes": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "paths": {
+      "@/*": ["${configDir}/src/*"]
+    }
   },
-  "exclude": ["node_modules", "build"]
+  "exclude": ["node_modules", "dist"]
 }

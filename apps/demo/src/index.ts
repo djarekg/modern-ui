@@ -1,12 +1,12 @@
 import { type CSSResult, LitElement, type TemplateResult, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import css from './index.css' with { type: 'css' };
 import './layout/layout.js';
-import './styles/styles.css' with { type: 'css' };
+import css from './index.css' with { type: 'css' };
+import styles from './styles/styles.css' with { type: 'css' };
 
 @customElement('app-index')
 export class Index extends LitElement {
-  static override styles: CSSResult = css;
+  static override styles: CSSResult[] = [styles, css];
 
   override render(): TemplateResult {
     return html`<app-layout></app-layout>`;

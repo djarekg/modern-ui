@@ -14,10 +14,6 @@
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
-    "./theme/theme.js": {
-      "types": "./dist/theme/theme.d.ts",
-      "import": "./dist/theme/theme.js"
-    },
     "./": {
       "types": "./dist/**/*.d.ts",
       "import": "./dist/**/*.js"

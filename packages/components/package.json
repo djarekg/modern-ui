@@ -29,10 +29,10 @@
     "build": "task build"
   },
   "dependencies": {
-    "@mui/web": "workspace:*",
-    "lit": "^3.2.1"
+    "@mui/web": "workspace:*"
   },
   "peerDependencies": {
+    "lit": "^3.2.1",
     "typescript": "^5"
   }
 }

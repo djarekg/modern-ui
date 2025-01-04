@@ -8,6 +8,9 @@
     "moduleResolution": "bundler",
     "module": "ESNext",
     "moduleDetection": "force",
-    "target": "ESNext"
+    "target": "ESNext",
+    "paths": {
+      "@/*": ["${configDir}/src/*"]
+    }
   }
 }

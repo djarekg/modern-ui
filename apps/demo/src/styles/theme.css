@@ -51,7 +51,7 @@
 }
 
 :root {
-  --color-primary: var(--color-primary-a50);
+  --color-primary: var(--color-primary-a10);
   --color-secondary: var(--color-surface-a0);
 }
 

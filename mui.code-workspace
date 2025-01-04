@@ -154,7 +154,10 @@
     "github.copilot.chat.edits.suggestRelatedFilesForTests": false,
 
     "lit-html.format.enabled": true,
-    "lit-html.tags": ["html", "raw", "css"]
+    "lit-html.tags": ["html", "raw", "css"],
+    "[yaml]": {
+      "editor.defaultFormatter": "redhat.vscode-yaml"
+    }
   },
   "extensions": {
     "recommendations": [

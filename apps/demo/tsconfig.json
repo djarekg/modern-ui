@@ -2,9 +2,9 @@
   "extends": ["../../tsconfig.base.json", "../../tsconfig.lit.json"],
   "compilerOptions": {
     "baseUrl": "src",
+    "rootDir": ".",
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
-    "rootDir": ".",
     "paths": {
       "@/*": ["./app/*"],
       "@mui/components/*": ["../../packages/components/*"],

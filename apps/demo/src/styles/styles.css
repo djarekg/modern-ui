@@ -1,5 +1,5 @@
-@import "normalize.css";
-@import "theme.css";
+@import url("normalize.css");
+@import url("theme.css");
 
 :root {
   --mui-site-breadcrumb-height: 58px;
@@ -7,6 +7,13 @@
   --mui-site-header-height: 58px;
   --mui-site-footer-height: 58px;
 }
+
+/* html {
+  color-scheme: light;
+
+  &[color-theme="dark"] {
+  }
+} */
 
 body {
   inline-size: 100vw;

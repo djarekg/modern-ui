@@ -8,10 +8,18 @@ export const navigate = (path: string): void => {
 export const routes: RouteConfig[] = [
   {
     name: 'home',
-    path: '/',
+    path: '/home',
     render: () => {
       import('../pages/index.js');
       return html`<app-home></app-home>`;
+    },
+  },
+  {
+    name: 'login',
+    path: '/',
+    render: () => {
+      import('../pages/login/login.js');
+      return html`<app-login></app-login>`;
     },
   },
 ];

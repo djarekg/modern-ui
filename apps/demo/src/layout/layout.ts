@@ -3,6 +3,8 @@ import { type CSSResult, LitElement, type TemplateResult, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { routes } from '../router/index.js';
 import css from './layout.css' with { type: 'css' };
+import './header/header.js';
+import './footer/footer.js';
 
 @customElement('app-layout')
 export class Layout extends LitElement {
@@ -13,14 +15,11 @@ export class Layout extends LitElement {
   protected override render(): TemplateResult {
     return html`
       <main>
-        <header>
-          <h1>App Layout</h1>
-        </header>
+        <qpp-header></qpp-header>
         <article>
             ${this.#router.outlet()}
         </article>
-        <footer>
-        </footer>
+        <qpp-footer></qpp-footer>
       </main>
     `;
   }
