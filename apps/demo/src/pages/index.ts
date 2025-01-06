@@ -12,7 +12,11 @@ export class Home extends LitElement {
   static styles: CSSResult = styles;
 
   override render(): TemplateResult {
-    return html`<div>Home</div>`;
+    return html`<div>
+
+      Home
+
+      </div>`;
   }
 }
 

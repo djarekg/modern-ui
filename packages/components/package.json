@@ -29,7 +29,8 @@
     "build": "task build"
   },
   "dependencies": {
-    "@mui/web": "workspace:*"
+    "@mui/web": "workspace:*",
+    "@open-wc/dedupe-mixin": "^1.4.0"
   },
   "peerDependencies": {
     "lit": "^3.2.1",

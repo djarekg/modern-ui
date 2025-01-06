@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url';
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 
 export default /** @type {import("@web/dev-server").DevServerConfig} */ ({
-  esbuildTarget: 'esnext',
+  esbuildTarget: 'auto',
   rootDir: './',
   port: 3003,
   appIndex: 'src/index.html',
@@ -19,6 +19,7 @@ export default /** @type {import("@web/dev-server").DevServerConfig} */ ({
       target: 'esnext',
       tsconfig: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),
       ts: true,
+      json: true,
     }),
   ],
 });

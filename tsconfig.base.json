@@ -36,7 +36,7 @@
     "strict": true,
 
     // Some stricter flags (disabled by default)
-    "isolatedDeclarations": true,
+    // "isolatedDeclarations": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
