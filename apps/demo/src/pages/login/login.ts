@@ -1,10 +1,10 @@
-import { type CSSResult, LitElement, type TemplateResult, html } from 'lit';
+import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import styles from './login.css' with { type: 'css' };
+import styles from './login.css?inline';
 
 @customElement('app-login')
 export class Login extends LitElement {
-  static override styles: CSSResult = styles;
+  static override styles = [unsafeCSS(styles)];
 
   override render(): TemplateResult {
     return html`
