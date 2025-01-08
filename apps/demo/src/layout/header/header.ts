@@ -1,7 +1,7 @@
-import { type CSSResult, LitElement, type TemplateResult, css, html } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
-const styles: CSSResult = css`
+const styles = css`
   :host {
     display: block;
   }
@@ -9,13 +9,17 @@ const styles: CSSResult = css`
 
 @customElement('app-header')
 export class Header extends LitElement {
-  static override styles: CSSResult = styles;
+  static override styles = styles;
 
-  override render(): TemplateResult {
+  override render() {
     return html`
-    <header>
-
-    </header>`;
+      <header>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/login">Login</a>
+        </nav>
+      </header>
+    `;
   }
 }
 

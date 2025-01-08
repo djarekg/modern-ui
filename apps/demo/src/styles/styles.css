@@ -17,6 +17,7 @@
 
 body {
   inline-size: 100vw;
+  block-size: 100vh;
   min-inline-size: 320px;
   min-block-size: 100vh;
 
