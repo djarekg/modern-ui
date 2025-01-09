@@ -73,10 +73,10 @@
     "typescript.suggest.includeCompletionsForImportStatements": true,
     "typescript.suggest.jsdoc.generateReturns": true,
     "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "typescript.workspaceSymbols.excludeLibrarySymbols": true,
-    "typescript.workspaceSymbols.scope": "currentProject",
+    // "typescript.workspaceSymbols.excludeLibrarySymbols": true,
+    "typescript.workspaceSymbols.scope": "allOpenProjects",
 
     "[typescript]": {
       "editor.defaultFormatter": "biomejs.biome"

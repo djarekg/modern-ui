@@ -11,7 +11,7 @@ export class Index extends LitElement {
   static override styles = [unsafeCSS(styles), unsafeCSS(css)];
 
   override render(): TemplateResult {
-    return html`twes<app-layout></app-layout>`;
+    return html`<app-layout></app-layout>`;
   }
 }
 

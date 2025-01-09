@@ -1,7 +1,8 @@
+import { routes } from '@/router/index.js';
 import { Router } from '@lit-labs/router';
+import { useAuth } from '@mui/core';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { initNavigation, routes } from '../router/index.js';
 import css from './layout.css?inline';
 import './header/header.js';
 import './footer/footer.js';
@@ -14,7 +15,12 @@ export class Layout extends LitElement {
 
   connectedCallback(): void {
     super.connectedCallback();
-    initNavigation(this.#router);
+
+    const { isAuthenticated } = useAuth();
+
+    if (!isAuthenticated()) {
+      this.#router.goto('/login');
+    }
   }
 
   protected override render(): TemplateResult {

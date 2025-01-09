@@ -5,14 +5,6 @@ export const navigate = (path: string): void => globalThis.history.pushState({},
 
 export const routes: RouteConfig[] = [
   {
-    name: 'default',
-    path: '/apps/demo',
-    render: () => {
-      import('../index.js');
-      return html`<app-home></app-home>`;
-    },
-  },
-  {
     name: 'home',
     path: '/',
     render: () => {

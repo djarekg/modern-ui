@@ -5,7 +5,7 @@
     "rootDir": ".",
     "experimentalDecorators": true,
     "paths": {
-      "@/*": ["./app/*"],
+      "@/*": ["./*"],
       "@mui/components/*": ["../../packages/components/*"],
       "@mui/core/*": ["../../packages/core/*"],
       "@mui/web/*": ["../../packages/web/*"]
@@ -13,8 +13,7 @@
 
     // required by vite
     "isolatedModules": true,
-    "useDefineForClassFields": false,
-    "skipLibCheck": true
+    "useDefineForClassFields": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
