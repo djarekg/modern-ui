@@ -1,6 +1,6 @@
 import { routes } from '@/router/index.js';
 import { Router } from '@lit-labs/router';
-import { useAuth } from '@mui/core';
+import {default} from '@mui/api';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import css from './layout.css?inline';

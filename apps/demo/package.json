@@ -5,7 +5,7 @@
   "author": "Dustin Griffith",
   "repository": {
     "type": "git",
-    "url": "https://github.com/djarekg/modern-web-components"
+    "url": "https://github.com/djarekg/modern-ui"
   },
   "license": "MIT",
   "packageManager": "bun@1.1.41",
@@ -13,7 +13,6 @@
     "bun": ">=1.1.41"
   },
   "type": "module",
-  "module": "src/index.ts",
   "exports": {
     "./package.json": "./package.json",
     "./": {
@@ -34,6 +33,7 @@
   "dependencies": {
     "@lit-labs/router": "^0.1.3",
     "@lit-labs/signals": "^0.1.1",
+    "@mui/api": "workspace:*",
     "@mui/components": "workspace:*",
     "@mui/core": "workspace:*",
     "@mui/web": "workspace:*",

@@ -4,7 +4,7 @@
   "author": "Dustin Griffith",
   "repository": {
     "type": "git",
-    "url": "https://github.com/djarekg/modern-web-components"
+    "url": "https://github.com/djarekg/modern-ui"
   },
   "engines": {
     "bun": ">=1.1.41"
@@ -35,11 +35,9 @@
   },
   "dependencies": {
     "@lit-labs/signals": "^0.1.1",
-    "haunted": "^5.0.0",
-    "jsonwebtoken": "^9.0.2"
+    "haunted": "^5.0.0"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.10.5"
   }
 }

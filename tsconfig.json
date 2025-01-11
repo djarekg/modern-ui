@@ -7,14 +7,15 @@
         "strict": true
       }
     ]
-    // "paths": {
-    //   "@mui/components/*": ["./packages/components/*"],
-    //   "@mui/core/*": ["./packages/core/*"],
-    //   "@mui/web/*": ["./packages/web/*"]
-    // }
   },
   "files": [],
   "references": [
+    {
+      "path": "./apps/api"
+    },
+    {
+      "path": "./apps/demo"
+    },
     {
       "path": "./packages/core"
     },

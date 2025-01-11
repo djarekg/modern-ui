@@ -74,7 +74,7 @@
     "typescript.suggest.jsdoc.generateReturns": true,
     "typescript.tsdk": "node_modules/typescript/lib",
     "typescript.tsserver.experimental.enableProjectDiagnostics": true,
-    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "prompt",
     // "typescript.workspaceSymbols.excludeLibrarySymbols": true,
     "typescript.workspaceSymbols.scope": "allOpenProjects",
 

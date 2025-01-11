@@ -5,7 +5,7 @@
   "author": "Dustin Griffith",
   "repository": {
     "type": "git",
-    "url": "https://github.com/djarekg/modern-web-components"
+    "url": "https://github.com/djarekg/modern-ui"
   },
   "license": "MIT",
   "type": "module",
