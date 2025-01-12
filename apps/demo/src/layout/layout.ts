@@ -5,20 +5,23 @@ import { customElement } from 'lit/decorators.js';
 import css from './layout.css?inline';
 import './header/header.js';
 import './footer/footer.js';
+import { useApi } from '@/hooks/use-api.js';
+import { StatusMap } from 'elysia';
 
 @customElement('app-layout')
 export class Layout extends LitElement {
   static override styles = [unsafeCSS(css)];
   readonly #router = new Router(this, routes);
 
-  connectedCallback(): void {
+  async connectedCallback(): Promise<void> {
     super.connectedCallback();
 
-    // const { isAuthenticated } = api.useAuth();
+    const api = useApi();
+    const { status, error } = await api.client.auth.profile.get();
 
-    // if (!isAuthenticated()) {
-    //   this.#router.goto('/login');
-    // }
+    if (status === StatusMap.Unauthorized || error) {
+      this.#router.goto('/login');
+    }
   }
 
   protected override render(): TemplateResult {
