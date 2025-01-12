@@ -14,10 +14,7 @@ export class Header extends LitElement {
   override render() {
     return html`
       <header>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/login">Login</a>
-        </nav>
+
       </header>
     `;
   }

@@ -11,10 +11,21 @@ export class Login extends LitElement {
       <section class="login">
         <h2>Login</h2>
         <form>
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username" required />
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
+          <fieldset>
+            <label for="username">Username</label>
+            <span>
+              <input type="text" id="username" name="username" required />
+            </span>
+          </fieldset>
+          <fieldset>
+            <label for="password">Password</label>
+            <span>
+              <input type="password" id="password" name="password" required />
+            </span>
+          </fieldset>
+          <fieldset>
+            <button type="submit">Login</button>
+          </fieldset>
         </form>
       </section>
     `;

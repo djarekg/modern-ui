@@ -8,20 +8,24 @@
   --color-primary-a50: #caa0fa;
 
   /** Dark theme surface colors */
-  --color-surface-a0: #121212;
-  --color-surface-a10: #282828;
-  --color-surface-a20: #3f3f3f;
-  --color-surface-a30: #575757;
-  --color-surface-a40: #717171;
-  --color-surface-a50: #8b8b8b;
+  --color-surface-a0: #1d222e;
+  --color-surface-a10: #323742;
+  --color-surface-a20: #494c57;
+  --color-surface-a30: #60636d;
+  --color-surface-a40: #797b84;
+  --color-surface-a50: #92949b;
 
   /** Dark theme tonal surface colors */
-  --color-surface-tonal-a0: #1d1625;
-  --color-surface-tonal-a10: #322b3a;
-  --color-surface-tonal-a20: #48424f;
-  --color-surface-tonal-a30: #605a66;
-  --color-surface-tonal-a40: #78737e;
-  --color-surface-tonal-a50: #928d96;
+  --color-surface-tonal-a0: #22313b;
+  --color-surface-tonal-a10: #37454e;
+  --color-surface-tonal-a20: #4e5a62;
+  --color-surface-tonal-a30: #656f77;
+  --color-surface-tonal-a40: #7d868c;
+  --color-surface-tonal-a50: #959da2;
+
+  --color-text: #333;
+
+  --box-shadow: 0 25px 40px #00000053;
 }
 
 .purple {
@@ -72,4 +76,8 @@
 .bg-primary {
   color: var(--color-primary);
   background-color: var(--color-secondary);
+
+  input {
+    color: var(--color-text);
+  }
 }
