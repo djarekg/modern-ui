@@ -15,9 +15,10 @@
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
-    "./": {
-      "types": "./dist/**/*.d.ts",
-      "import": "./dist/**/*.js"
+    "./theme/theme.css": "./dist/theme/theme.css",
+    "./button/button.js": {
+      "types": "./dist/button/button.d.ts",
+      "import": "./dist/button/button.js"
     },
     ".": {
       "types": "./dist/index.d.ts",

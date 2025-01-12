@@ -19,12 +19,27 @@ form {
 .login {
   inline-size: 400px;
   block-size: 400px;
-  background: var(--color-surface-a50) / 0.1;
+  background: var(--palette-surface-a50) / 0.1;
   backdrop-filter: blur(16px);
-  border: 1px solid var(--color-surface-a30);
+  border: 1px solid var(--palette-surface-a30);
   border-radius: 0.75rem;
   padding: 0.95rem;
   box-shadow: var(--box-shadow);
+}
+
+.app-section-title {
+  font-size: 2.6rem;
+  font-weight: 900;
+  letter-spacing: .18rem;
+  background: -webkit-linear-gradient(
+    10deg,
+    var(--palette-colors-green),
+    var(--palette-colors-purple) 50%
+  );
+  /* background: -webkit-linear-gradient(45deg, rgb(9, 0, 159), rgb(0, 255, 149) 20%); */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 form {
@@ -45,7 +60,7 @@ fieldset {
   flex-direction: column;
   gap: 0.5rem;
 
-  &:has(button) {
+  &:has(mui-button) {
     flex-direction: row;
     justify-content: flex-end;
   }
@@ -55,17 +70,5 @@ span:has(> input) {
   background: #fff;
   border-radius: .75rem;
   padding: .5rem;
-}
-
-button {
-  all: unset;
-  cursor: pointer;
-  padding: .5rem 1.5rem;
-  border-radius: 0.75rem;
-  background: var(--color-primary-a10);
-  color: var(--color-surface-a0);
-  text-align: center;
-  transition: background 0.3s;
-  /* min-inline-size: 20px; */
-  inline-size: auto;
+  /* box-shadow: var(--box-shadow); */
 }

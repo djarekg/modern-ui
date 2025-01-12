@@ -1,6 +1,7 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import styles from './login.css?inline';
+import '@mui/components/button/button.js';
 
 @customElement('app-login')
 export class Login extends LitElement {
@@ -9,7 +10,7 @@ export class Login extends LitElement {
   override render(): TemplateResult {
     return html`
       <section class="login">
-        <h2>Login</h2>
+        <span class="app-section-title">Login</span>
         <form>
           <fieldset>
             <label for="username">Username</label>
@@ -24,7 +25,7 @@ export class Login extends LitElement {
             </span>
           </fieldset>
           <fieldset>
-            <button type="submit">Login</button>
+            <mui-button type="Submit">Login</mui-button>
           </fieldset>
         </form>
       </section>

@@ -1,0 +1,18 @@
+@import "_color.css";
+@import "_shape.css";
+@import "_elevation.css";
+
+:root {
+  --color-primary: var(--palette-primary-a10);
+  --color-secondary: var(--palette-surface-a0);
+  --palette-text: #333;
+}
+
+.bg-primary {
+  color: var(--color-primary);
+  background-color: var(--color-secondary);
+
+  input {
+    color: var(--color-text);
+  }
+}

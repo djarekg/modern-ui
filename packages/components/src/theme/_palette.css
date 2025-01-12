@@ -23,16 +23,9 @@
   --palette-surface-tonal-a40: #7d868c;
   --palette-surface-tonal-a50: #959da2;
 
-  --color-text: #333;
-
-  --box-shadow: 0 25px 40px #00000053;
-
   /** colors */
   --palette-colors-purple: #711fee;
   --palette-colors-green: #2dd4bf;
-
-  /** shapes */
-  --shape-button-rounded: 0.95rem;
 }
 
 .purple {
@@ -73,18 +66,4 @@
   --palette-primary-a30: #8ae3d4;
   --palette-primary-a40: #9fe8db;
   --palette-primary-a50: #b4ede2;
-}
-
-:root {
-  --color-primary: var(--palette-primary-a10);
-  --color-secondary: var(--palette-surface-a0);
-}
-
-.bg-primary {
-  color: var(--color-primary);
-  background-color: var(--color-secondary);
-
-  input {
-    color: var(--color-text);
-  }
 }
