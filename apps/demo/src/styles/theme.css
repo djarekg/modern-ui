@@ -24,6 +24,16 @@
   --color-surface-tonal-a50: #928d96;
 }
 
+.purple {
+  /** Dark theme primary colors */
+  --color-primary-a0: #711fee;
+  --color-primary-a10: #863ff1;
+  --color-primary-a20: #9958f4;
+  --color-primary-a30: #ab71f6;
+  --color-primary-a40: #bb88f8;
+  --color-primary-a50: #caa0fa;
+}
+
 .pink {
   /** Dark theme primary colors */
   --color-primary-a0: #fc45bd;
@@ -32,22 +42,26 @@
   --color-primary-a30: #ff8fd3;
   --color-primary-a40: #ffa3da;
   --color-primary-a50: #ffb6e2;
+}
 
-  /** Dark theme surface colors */
-  --color-surface-a0: #121212;
-  --color-surface-a10: #282828;
-  --color-surface-a20: #3f3f3f;
-  --color-surface-a30: #575757;
-  --color-surface-a40: #717171;
-  --color-surface-a50: #8b8b8b;
+.green {
+  /** Dark theme primary colors */
+  --color-primary-a0: #2dd4bf;
+  --color-primary-a10: #56d9c6;
+  --color-primary-a20: #72decd;
+  --color-primary-a30: #8ae3d4;
+  --color-primary-a40: #9fe8db;
+  --color-primary-a50: #b4ede2;
+}
 
-  /** Dark theme tonal surface colors */
-  --color-surface-tonal-a0: #261a21;
-  --color-surface-tonal-a10: #3b2f36;
-  --color-surface-tonal-a20: #50464c;
-  --color-surface-tonal-a30: #675d63;
-  --color-surface-tonal-a40: #7f767b;
-  --color-surface-tonal-a50: #979094;
+.green {
+  /** Dark theme primary colors */
+  --color-primary-a0: #2dd4bf;
+  --color-primary-a10: #56d9c6;
+  --color-primary-a20: #72decd;
+  --color-primary-a30: #8ae3d4;
+  --color-primary-a40: #9fe8db;
+  --color-primary-a50: #b4ede2;
 }
 
 :root {

@@ -1,4 +1,4 @@
-import { routes } from '@/router/index.js';
+import { initNavigation, routes } from '@/router/index.js';
 import { Router } from '@lit-labs/router';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
@@ -16,6 +16,8 @@ export class Layout extends LitElement {
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
 
+    initNavigation(this.#router);
+
     const api = useApi();
     const { status, error } = await api.client.auth.profile.get();
 
@@ -27,16 +29,16 @@ export class Layout extends LitElement {
   protected override render(): TemplateResult {
     return html`
       <main>
-        <qpp-header>
+        <app-header>
           <nav>
             <a href="/">Home</a>
             <a href="/login">Login</a>
           </nav>
-        </qpp-header>
+        </app-header>
         <article>
             ${this.#router.outlet()}
         </article>
-        <qpp-footer></qpp-footer>
+        <app-footer></app-footer>
       </main>
     `;
   }

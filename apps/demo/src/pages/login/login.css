@@ -6,7 +6,25 @@
   inline-size: 100%;
 }
 
-:host(.login) {
+.login,
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login {
   inline-size: 300px;
   block-size: 300px;
+  background: #1f2937cc !important;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgb(55 65 81 / 1);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  box-shadow: 0 25px 40px #00000053;
+}
+
+form {
+  background: rgba(0, 0, 0, 0);
+  /* border: 1px solid #e5e7eb; */
 }
