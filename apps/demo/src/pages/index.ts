@@ -1,4 +1,4 @@
-import { type CSSResult, LitElement, type TemplateResult, css, html } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 const styles = css`
@@ -9,14 +9,10 @@ const styles = css`
 
 @customElement('app-home')
 export class Home extends LitElement {
-  static styles: CSSResult = styles;
+  static styles = styles;
 
-  override render(): TemplateResult {
-    return html`<div>
-
-      Home
-
-      </div>`;
+  override render() {
+    return html`<div>HOME</div>`;
   }
 }
 

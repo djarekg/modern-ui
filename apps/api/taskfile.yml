@@ -1,20 +1,10 @@
-version: '3'
+version: "3"
+
+includes:
+  root-task: ../../taskfile.yml
 
 tasks:
   build:
     desc: Build the project
     cmds:
-      - task: build:clean
-      - task: build:ts
-
-  build:clean:
-    internal: true
-    desc: Clean the project
-    cmds:
-      - rm -rf dist
-
-  build:ts:
-    desc: Build typescript
-    deps: [build:clean]
-    cmds:
-      - bun build src/index.ts --root-=src --outdir=dist --target=browser --experimental-css --packages=external --sourcemap=linked
+      - task: root-task:build

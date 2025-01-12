@@ -1,6 +1,13 @@
 {
   "configurations": [
     {
+      "name": "Attach to Edge",
+      "port": 4004,
+      "request": "attach",
+      "type": "msedge",
+      "webRoot": "${workspaceFolder}/apps/api"
+    },
+    {
       "name": "Launch api",
       "cwd": "${workspaceFolder}/apps/api",
       "request": "launch",
@@ -12,9 +19,26 @@
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
       "presentation": {
-        "hidden": true,
-        "group": "",
+        "hidden": false,
+        "group": "2",
         "order": 1
+      }
+    },
+    {
+      "name": "Launch api:swagger",
+      "type": "pwa-msedge",
+      "request": "launch",
+      "url": "http://localhost:4003/swagger",
+      "webRoot": "${workspaceFolder}/apps/api/src",
+      "userDataDir": "${workspaceFolder}/.out/edge/apps/api",
+      "internalConsoleOptions": "openOnSessionStart",
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}/apps/api",
+      "smartStep": true,
+      "presentation": {
+        "hidden": false,
+        "group": "2",
+        "order": 2
       }
     },
     {
@@ -29,8 +53,8 @@
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
       "presentation": {
-        "hidden": true,
-        "group": "",
+        "hidden": false,
+        "group": "3",
         "order": 1
       }
     },
@@ -46,17 +70,37 @@
       "cwd": "${workspaceFolder}/apps/demo",
       "smartStep": true,
       "presentation": {
-        "hidden": true,
-        "group": "",
-        "order": 1
+        "hidden": false,
+        "group": "3",
+        "order": 2
       }
     }
   ],
   "compounds": [
     {
+      "name": "Debug api",
+      "configurations": ["Launch api", "Launch api:swagger"],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "1",
+        "order": 2
+      }
+    },
+    {
       "name": "Debug demo",
-      "configurations": ["Launch demo:serve", "Launch demo:client"],
-      "stopAll": true
+      "configurations": [
+        "Launch api",
+        "Launch api:swagger",
+        "Launch demo:serve",
+        "Launch demo:client"
+      ],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "1",
+        "order": 1
+      }
     }
   ]
 }

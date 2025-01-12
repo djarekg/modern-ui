@@ -6,6 +6,7 @@
     "experimentalDecorators": true,
     "paths": {
       "@/*": ["./*"],
+      "@mui/api/*": ["../api/*"],
       "@mui/components/*": ["../../packages/components/*"],
       "@mui/core/*": ["../../packages/core/*"],
       "@mui/web/*": ["../../packages/web/*"]

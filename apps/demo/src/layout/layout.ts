@@ -1,6 +1,5 @@
 import { routes } from '@/router/index.js';
 import { Router } from '@lit-labs/router';
-import {default} from '@mui/api';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import css from './layout.css?inline';
@@ -10,17 +9,16 @@ import './footer/footer.js';
 @customElement('app-layout')
 export class Layout extends LitElement {
   static override styles = [unsafeCSS(css)];
-
   readonly #router = new Router(this, routes);
 
   connectedCallback(): void {
     super.connectedCallback();
 
-    const { isAuthenticated } = useAuth();
+    // const { isAuthenticated } = api.useAuth();
 
-    if (!isAuthenticated()) {
-      this.#router.goto('/login');
-    }
+    // if (!isAuthenticated()) {
+    //   this.#router.goto('/login');
+    // }
   }
 
   protected override render(): TemplateResult {

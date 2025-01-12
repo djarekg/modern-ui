@@ -8,7 +8,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@/': resolve(__dirname, './src'),
+      '@': resolve(__dirname, './src'),
       '@mui/components': resolve(__dirname, '../../packages/components'),
       '@mui/core': resolve(__dirname, '../../packages/core/src'),
       '@mui/web': resolve(__dirname, '../../packages/web'),
