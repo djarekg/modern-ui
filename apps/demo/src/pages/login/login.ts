@@ -25,7 +25,7 @@ export class Login extends LitElement {
             </span>
           </fieldset>
           <fieldset>
-            <mui-button type="Submit">Login</mui-button>
+            <mui-button type="submit">Login</mui-button>
           </fieldset>
         </form>
       </section>

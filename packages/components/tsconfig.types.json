@@ -1,7 +1,12 @@
 {
   "extends": "../../tsconfig.types.json",
   "compilerOptions": {
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "allowArbitraryExtensions": true,
+    "paths": {
+      "@/*": ["./*"]
+      // "@mui/web/*": ["../../packages/web/*"]
+    }
   },
   "include": ["src/**/*.ts"]
 }

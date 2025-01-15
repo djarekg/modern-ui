@@ -52,6 +52,7 @@
       "sourceMaps": true,
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
+      // "preLaunchTask": "Run projects script: dev",
       "presentation": {
         "hidden": false,
         "group": "3",

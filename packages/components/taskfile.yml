@@ -1,7 +1,7 @@
-version: '3'
+version: "3"
 
 includes:
-  root-task:  ../../taskfile.yml
+  root-task: ../../taskfile.yml
 
 tasks:
   build:
@@ -9,3 +9,7 @@ tasks:
     cmds:
       - task: root-task:build
 
+  build:watch:
+    desc: Build the project
+    cmds:
+      - task: root-task:build -- --watch

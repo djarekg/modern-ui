@@ -19,12 +19,12 @@ form {
 .login {
   inline-size: 400px;
   block-size: 400px;
-  background: var(--palette-surface-a50) / 0.1;
+  background: var(--mui-palette-surface-a50) / 0.1;
   backdrop-filter: blur(16px);
-  border: 1px solid var(--palette-surface-a30);
+  border: 1px solid var(--mui-palette-surface-a30);
   border-radius: 0.75rem;
   padding: 0.95rem;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--mui-elevation-1);
 }
 
 .app-section-title {
@@ -33,8 +33,8 @@ form {
   letter-spacing: .18rem;
   background: -webkit-linear-gradient(
     10deg,
-    var(--palette-colors-green),
-    var(--palette-colors-purple) 50%
+    var(--mui-palette-colors-green),
+    var(--mui-palette-colors-purple) 50%
   );
   /* background: -webkit-linear-gradient(45deg, rgb(9, 0, 159), rgb(0, 255, 149) 20%); */
   background-clip: text;
@@ -70,5 +70,5 @@ span:has(> input) {
   background: #fff;
   border-radius: .75rem;
   padding: .5rem;
-  /* box-shadow: var(--box-shadow); */
+  /* box-shadow: var(--mui-elevation-1); */
 }

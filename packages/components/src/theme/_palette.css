@@ -1,69 +1,89 @@
 :root {
   /** Dark theme primary colors */
-  --palette-primary-a0: #711fee;
-  --palette-primary-a10: #863ff1;
-  --palette-primary-a20: #9958f4;
-  --palette-primary-a30: #ab71f6;
-  --palette-primary-a40: #bb88f8;
-  --palette-primary-a50: #caa0fa;
+  --mui-palette-primary-a0: #711fee;
+  --mui-palette-primary-a10: #863ff1;
+  --mui-palette-primary-a20: #9958f4;
+  --mui-palette-primary-a30: #ab71f6;
+  --mui-palette-primary-a40: #bb88f8;
+  --mui-palette-primary-a50: #caa0fa;
 
   /** Dark theme surface colors */
-  --palette-surface-a0: #1d222e;
-  --palette-surface-a10: #323742;
-  --palette-surface-a20: #494c57;
-  --palette-surface-a30: #60636d;
-  --palette-surface-a40: #797b84;
-  --palette-surface-a50: #92949b;
+  --mui-palette-surface-a0: #1d222e;
+  --mui-palette-surface-a10: #323742;
+  --mui-palette-surface-a20: #494c57;
+  --mui-palette-surface-a30: #60636d;
+  --mui-palette-surface-a40: #797b84;
+  --mui-palette-surface-a50: #92949b;
 
   /** Dark theme tonal surface colors */
-  --palette-surface-tonal-a0: #22313b;
-  --palette-surface-tonal-a10: #37454e;
-  --palette-surface-tonal-a20: #4e5a62;
-  --palette-surface-tonal-a30: #656f77;
-  --palette-surface-tonal-a40: #7d868c;
-  --palette-surface-tonal-a50: #959da2;
+  --mui-palette-surface-tonal-a0: #22313b;
+  --mui-palette-surface-tonal-a10: #37454e;
+  --mui-palette-surface-tonal-a20: #4e5a62;
+  --mui-palette-surface-tonal-a30: #656f77;
+  --mui-palette-surface-tonal-a40: #7d868c;
+  --mui-palette-surface-tonal-a50: #959da2;
 
   /** colors */
-  --palette-colors-purple: #711fee;
-  --palette-colors-green: #2dd4bf;
+  --mui-palette-colors-purple: #711fee;
+  --mui-palette-colors-green: #2dd4bf;
 }
 
 .purple {
   /** Dark theme primary colors */
-  --palette-primary-a0: #711fee;
-  --palette-primary-a10: #863ff1;
-  --palette-primary-a20: #9958f4;
-  --palette-primary-a30: #ab71f6;
-  --palette-primary-a40: #bb88f8;
-  --palette-primary-a50: #caa0fa;
+  --mui-palette-primary-a0: #711fee;
+  --mui-palette-primary-a10: #863ff1;
+  --mui-palette-primary-a20: #9958f4;
+  --mui-palette-primary-a30: #ab71f6;
+  --mui-palette-primary-a40: #bb88f8;
+  --mui-palette-primary-a50: #caa0fa;
 }
 
 .pink {
   /** Dark theme primary colors */
-  --palette-primary-a0: #fc45bd;
-  --palette-primary-a10: #ff62c4;
-  --palette-primary-a20: #ff79cc;
-  --palette-primary-a30: #ff8fd3;
-  --palette-primary-a40: #ffa3da;
-  --palette-primary-a50: #ffb6e2;
+  --mui-palette-primary-a0: #fc45bd;
+  --mui-palette-primary-a10: #ff62c4;
+  --mui-palette-primary-a20: #ff79cc;
+  --mui-palette-primary-a30: #ff8fd3;
+  --mui-palette-primary-a40: #ffa3da;
+  --mui-palette-primary-a50: #ffb6e2;
+}
+
+.hot-pink {
+  /** Dark theme primary colors */
+  --mui-palette-primary-a0: #ff0ea9;
+  --mui-palette-primary-a10: #ff48b2;
+  --mui-palette-primary-a20: #ff67bc;
+  --mui-palette-primary-a30: #ff81c5;
+  --mui-palette-primary-a40: #ff98cf;
+  --mui-palette-primary-a50: #ffaed8;
+}
+
+.teal {
+  /** Dark theme primary colors */
+  --mui-palatte-primary-a0: #00daff;
+  --mui-palatte-primary-a10: #4fdeff;
+  --mui-palatte-primary-a20: #71e3ff;
+  --mui-palatte-primary-a30: #8be7ff;
+  --mui-palatte-primary-a40: #a2ebff;
+  --mui-palatte-primary-a50: #b6efff;
 }
 
 .green {
   /** Dark theme primary colors */
-  --palette-primary-a0: #2dd4bf;
-  --palette-primary-a10: #56d9c6;
-  --palette-primary-a20: #72decd;
-  --palette-primary-a30: #8ae3d4;
-  --palette-primary-a40: #9fe8db;
-  --palette-primary-a50: #b4ede2;
+  --mui-palette-primary-a0: #2dd4bf;
+  --mui-palette-primary-a10: #56d9c6;
+  --mui-palette-primary-a20: #72decd;
+  --mui-palette-primary-a30: #8ae3d4;
+  --mui-palette-primary-a40: #9fe8db;
+  --mui-palette-primary-a50: #b4ede2;
 }
 
 .green {
   /** Dark theme primary colors */
-  --palette-primary-a0: #2dd4bf;
-  --palette-primary-a10: #56d9c6;
-  --palette-primary-a20: #72decd;
-  --palette-primary-a30: #8ae3d4;
-  --palette-primary-a40: #9fe8db;
-  --palette-primary-a50: #b4ede2;
+  --mui-palette-primary-a0: #2dd4bf;
+  --mui-palette-primary-a10: #56d9c6;
+  --mui-palette-primary-a20: #72decd;
+  --mui-palette-primary-a30: #8ae3d4;
+  --mui-palette-primary-a40: #9fe8db;
+  --mui-palette-primary-a50: #b4ede2;
 }

@@ -1,90 +1,90 @@
 :root {
   /** Dark theme primary colors */
-  --palette-primary-a0: #711fee;
-  --palette-primary-a10: #863ff1;
-  --palette-primary-a20: #9958f4;
-  --palette-primary-a30: #ab71f6;
-  --palette-primary-a40: #bb88f8;
-  --palette-primary-a50: #caa0fa;
+  --mui-palette-primary-a0: #711fee;
+  --mui-palette-primary-a10: #863ff1;
+  --mui-palette-primary-a20: #9958f4;
+  --mui-palette-primary-a30: #ab71f6;
+  --mui-palette-primary-a40: #bb88f8;
+  --mui-palette-primary-a50: #caa0fa;
 
   /** Dark theme surface colors */
-  --palette-surface-a0: #1d222e;
-  --palette-surface-a10: #323742;
-  --palette-surface-a20: #494c57;
-  --palette-surface-a30: #60636d;
-  --palette-surface-a40: #797b84;
-  --palette-surface-a50: #92949b;
+  --mui-palette-surface-a0: #1d222e;
+  --mui-palette-surface-a10: #323742;
+  --mui-palette-surface-a20: #494c57;
+  --mui-palette-surface-a30: #60636d;
+  --mui-palette-surface-a40: #797b84;
+  --mui-palette-surface-a50: #92949b;
 
   /** Dark theme tonal surface colors */
-  --palette-surface-tonal-a0: #22313b;
-  --palette-surface-tonal-a10: #37454e;
-  --palette-surface-tonal-a20: #4e5a62;
-  --palette-surface-tonal-a30: #656f77;
-  --palette-surface-tonal-a40: #7d868c;
-  --palette-surface-tonal-a50: #959da2;
+  --mui-palette-surface-tonal-a0: #22313b;
+  --mui-palette-surface-tonal-a10: #37454e;
+  --mui-palette-surface-tonal-a20: #4e5a62;
+  --mui-palette-surface-tonal-a30: #656f77;
+  --mui-palette-surface-tonal-a40: #7d868c;
+  --mui-palette-surface-tonal-a50: #959da2;
 
-  --color-text: #333;
+  --mui-color-text: #333;
 
-  --box-shadow: 0 25px 40px #00000053;
+  --mui-box-shadow: 0 25px 40px #00000053;
 
   /** colors */
-  --palette-colors-purple: #711fee;
-  --palette-colors-green: #2dd4bf;
+  --mui-palette-colors-purple: #711fee;
+  --mui-palette-colors-green: #2dd4bf;
 
   /** shapes */
-  --shape-button-rounded: 0.95rem;
+  --mui-shape-button-rounded: 0.95rem;
 }
 
 .purple {
   /** Dark theme primary colors */
-  --palette-primary-a0: #711fee;
-  --palette-primary-a10: #863ff1;
-  --palette-primary-a20: #9958f4;
-  --palette-primary-a30: #ab71f6;
-  --palette-primary-a40: #bb88f8;
-  --palette-primary-a50: #caa0fa;
+  --mui-palette-primary-a0: #711fee;
+  --mui-palette-primary-a10: #863ff1;
+  --mui-palette-primary-a20: #9958f4;
+  --mui-palette-primary-a30: #ab71f6;
+  --mui-palette-primary-a40: #bb88f8;
+  --mui-palette-primary-a50: #caa0fa;
 }
 
 .pink {
   /** Dark theme primary colors */
-  --palette-primary-a0: #fc45bd;
-  --palette-primary-a10: #ff62c4;
-  --palette-primary-a20: #ff79cc;
-  --palette-primary-a30: #ff8fd3;
-  --palette-primary-a40: #ffa3da;
-  --palette-primary-a50: #ffb6e2;
+  --mui-palette-primary-a0: #fc45bd;
+  --mui-palette-primary-a10: #ff62c4;
+  --mui-palette-primary-a20: #ff79cc;
+  --mui-palette-primary-a30: #ff8fd3;
+  --mui-palette-primary-a40: #ffa3da;
+  --mui-palette-primary-a50: #ffb6e2;
 }
 
 .green {
   /** Dark theme primary colors */
-  --palette-primary-a0: #2dd4bf;
-  --palette-primary-a10: #56d9c6;
-  --palette-primary-a20: #72decd;
-  --palette-primary-a30: #8ae3d4;
-  --palette-primary-a40: #9fe8db;
-  --palette-primary-a50: #b4ede2;
+  --mui-palette-primary-a0: #2dd4bf;
+  --mui-palette-primary-a10: #56d9c6;
+  --mui-palette-primary-a20: #72decd;
+  --mui-palette-primary-a30: #8ae3d4;
+  --mui-palette-primary-a40: #9fe8db;
+  --mui-palette-primary-a50: #b4ede2;
 }
 
 .green {
   /** Dark theme primary colors */
-  --palette-primary-a0: #2dd4bf;
-  --palette-primary-a10: #56d9c6;
-  --palette-primary-a20: #72decd;
-  --palette-primary-a30: #8ae3d4;
-  --palette-primary-a40: #9fe8db;
-  --palette-primary-a50: #b4ede2;
+  --mui-palette-primary-a0: #2dd4bf;
+  --mui-palette-primary-a10: #56d9c6;
+  --mui-palette-primary-a20: #72decd;
+  --mui-palette-primary-a30: #8ae3d4;
+  --mui-palette-primary-a40: #9fe8db;
+  --mui-palette-primary-a50: #b4ede2;
 }
 
 :root {
-  --color-primary: var(--palette-primary-a10);
-  --color-secondary: var(--palette-surface-a0);
+  --mui-color-primary: var(--mui-palette-primary-a10);
+  --mui-color-secondary: var(--mui-palette-surface-a0);
 }
 
 .bg-primary {
-  color: var(--color-primary);
-  background-color: var(--color-secondary);
+  color: var(--mui-color-primary);
+  background-color: var(--mui-color-secondary);
 
   input {
-    color: var(--color-text);
+    color: var(--mui-color-text);
   }
 }

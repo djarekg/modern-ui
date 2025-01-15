@@ -26,7 +26,7 @@
     }
   },
   "scripts": {
-    "dev": "task build",
+    "dev": "task build -- --watch",
     "build": "task build"
   },
   "dependencies": {
