@@ -1,8 +1,3 @@
-html {
-  background-color: hsl(0, 0%, 12%);
-  color: #ffffff;
-}
-
 :root {
   /** Dark theme primary colors */
   --mui-palette-primary-a0: #711fee;
@@ -36,6 +31,12 @@ html {
   --mui-palette-black: #000000ff;
   /* White */
   --mui-palette-white: #ffffffff;
+
+  --mui-color-background: hsl(0, 0%, 12%);
+  --mui-color-text: var(--mui-palette-white);
+
+  --mui-color-primary: var(--mui-palette-primary-a10);
+  --mui-color-secondary: var(--mui-palette-secondary-a10);
 }
 
 .purple {
@@ -70,20 +71,20 @@ html {
 
 .teal {
   /** Dark theme primary colors */
-  --mui-palatte-primary-a0: #00daff;
-  --mui-palatte-primary-a10: #4fdeff;
-  --mui-palatte-primary-a20: #71e3ff;
-  --mui-palatte-primary-a30: #8be7ff;
-  --mui-palatte-primary-a40: #a2ebff;
-  --mui-palatte-primary-a50: #b6efff;
+  --mui-palette-primary-a0: #00daff;
+  --mui-palette-primary-a10: #4fdeff;
+  --mui-palette-primary-a20: #71e3ff;
+  --mui-palette-primary-a30: #8be7ff;
+  --mui-palette-primary-a40: #a2ebff;
+  --mui-palette-primary-a50: #b6efff;
 
   /** Dark theme primary colors */
-  --mui-palatte-secondary-a0: #ff0ea9;
-  --mui-palatte-secondary-a10: #ff48b2;
-  --mui-palatte-secondary-a20: #ff67bc;
-  --mui-palatte-secondary-a30: #ff81c5;
-  --mui-palatte-secondary-a40: #ff98cf;
-  --mui-palatte-secondary-a50: #ffaed8;
+  --mui-palette-secondary-a0: #ff0ea9;
+  --mui-palette-secondary-a10: #ff48b2;
+  --mui-palette-secondary-a20: #ff67bc;
+  --mui-palette-secondary-a30: #ff81c5;
+  --mui-palette-secondary-a40: #ff98cf;
+  --mui-palette-secondary-a50: #ffaed8;
 }
 
 .green {
@@ -104,4 +105,22 @@ html {
   --mui-palette-primary-a30: #8ae3d4;
   --mui-palette-primary-a40: #9fe8db;
   --mui-palette-primary-a50: #b4ede2;
+}
+
+:root {
+  --mui-color-text-light-2: rgba(60, 60, 60, 0.7);
+  --mui-color-text-light-3: rgba(60, 60, 60, 0.33);
+  --mui-color-text-light-4: rgba(60, 60, 60, 0.18);
+  --mui-color-text-dark-1: rgba(255, 255, 255, 0.87);
+  --mui-color-text-dark-2: rgba(235, 235, 235, 0.6);
+  --mui-color-text-dark-3: rgba(235, 235, 235, 0.38);
+  --mui-color-text-dark-4: rgba(235, 235, 235, 0.18);
+}
+
+:root {
+  --mui-color-scrim: var(--mui-color-scrim-dark);
+  --mui-color-text-1: var(--mui-color-text-dark-1);
+  --mui-color-text-2: var(--mui-color-text-dark-2);
+  --mui-color-text-3: var(--mui-color-text-dark-3);
+  --mui-color-text-4: var(--mui-color-text-dark-4);
 }

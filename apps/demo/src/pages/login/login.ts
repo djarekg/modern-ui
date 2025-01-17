@@ -15,13 +15,21 @@ export class Login extends LitElement {
           <fieldset>
             <label for="username">Username</label>
             <span>
-              <input type="text" id="username" name="username" required />
+              <input
+                type="text"
+                id="username"
+                name="username"
+                required />
             </span>
           </fieldset>
           <fieldset>
             <label for="password">Password</label>
             <span>
-              <input type="password" id="password" name="password" required />
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required />
             </span>
           </fieldset>
           <fieldset>

@@ -159,11 +159,16 @@
 
     "github.copilot.chat.edits.suggestRelatedFilesForTests": false,
 
-    "lit-html.format.enabled": true,
-    "lit-html.tags": ["html", "raw", "css"],
+    // "lit-html.format.enabled": true,
+    // "lit-html.tags": ["html", "raw", "css"],
+
     "[yaml]": {
       "editor.defaultFormatter": "redhat.vscode-yaml"
-    }
+    },
+
+    // christian-kohler.path-intellisense - required for extension to work
+    "typescript.suggest.paths": false,
+    "javascript.suggest.paths": false
   },
   "extensions": {
     "recommendations": [

@@ -13,6 +13,11 @@ html:has(dialog[open]) {
   overflow: hidden;
 }
 
+html {
+  background-color: var(--mui-color-background);
+  color: var(--mui-color-text);
+}
+
 body {
   /* inline-size: 100%; */
   inline-size: 100vw;
@@ -26,7 +31,7 @@ body {
   line-height: var(--mui-typescale-body-large-line-height);
 
   background-color: var(--mui-color-background);
-  color: var(--mui-color-on-background);
+  color: var(--mui-color-text);
   direction: ltr;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
