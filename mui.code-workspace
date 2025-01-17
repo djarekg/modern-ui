@@ -6,19 +6,22 @@
     },
     {
       "path": ".",
-      "name": "🎄 root"
+      // "name": "root"
+      "name": "🦄 root"
+      // "name": "root   🎄"
     },
     {
       "path": "docs"
       // "name": "🤓 docs"
     },
     {
-      "path": "packages",
-      "name": "📦 packages"
+      "path": "packages"
+      // "name": "packages   📦"
     },
     {
-      "path": "apps",
-      "name": " 🖥️ apps"
+      "path": "apps"
+      // "name": "🖥️  apps"
+      // "name": "apps   🖥️"
     }
   ],
   "settings": {
