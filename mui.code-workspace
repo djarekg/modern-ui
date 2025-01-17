@@ -1,16 +1,16 @@
 {
   "folders": [
     {
-      "path": ".vscode",
-      "name": "👨🏼‍💻 .vscode"
+      "path": ".vscode"
+      // "name": "👨🏼‍💻 .vscode"
     },
     {
       "path": ".",
       "name": "🎄 root"
     },
     {
-      "path": "docs",
-      "name": "🤓 docs"
+      "path": "docs"
+      // "name": "🤓 docs"
     },
     {
       "path": "packages",
