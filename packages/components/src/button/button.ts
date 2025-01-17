@@ -10,7 +10,7 @@ const styles = css`
       all: unset;
       cursor: pointer;
       padding: .5rem 1.5rem;
-      border-radius: var(--mui-shape-medium);
+      border-radius: var(--mui-shape-small);
       background: var(--mui-color-primary);
       color: var(--mui-color-text);
       text-align: center;

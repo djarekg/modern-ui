@@ -9,34 +9,47 @@ export class Login extends LitElement {
 
   override render(): TemplateResult {
     return html`
-      <section class="login">
-        <span class="app-section-title">Login</span>
-        <form>
-          <fieldset>
-            <label for="username">Username</label>
-            <span>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                required />
-            </span>
-          </fieldset>
-          <fieldset>
-            <label for="password">Password</label>
-            <span>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                required />
-            </span>
-          </fieldset>
-          <fieldset>
-            <mui-button type="submit">Login</mui-button>
-          </fieldset>
-        </form>
-      </section>
+      <article>
+
+        <section>
+          <span class="app-section-title">Welcome to the demo app</span>
+          <p>
+            This is a simple demo app that demonstrates how to use the MUI components in a LitElement project.
+          </p>
+        </section>
+
+        <section>
+          <div class="login">
+            <span class="app-section-title">Login</span>
+            <form>
+              <fieldset>
+                <label for="username">Username</label>
+                <span>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    required />
+                </span>
+              </fieldset>
+              <fieldset>
+                <label for="password">Password</label>
+                <span>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required />
+                </span>
+              </fieldset>
+              <fieldset>
+                <mui-button type="submit">Login</mui-button>
+              </fieldset>
+            </form>
+          </div>
+        </section>
+
+      </article>
     `;
   }
 }

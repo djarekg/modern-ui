@@ -13,6 +13,31 @@
   background-size: cover;
 }
 
+article {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  block-size: 100%;
+  inline-size: 100%;
+
+  > section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    block-size: 100%;
+    padding-block: 5rem;
+
+    &:first-child {
+      justify-content: flex-start;
+      padding-inline: 2rem;
+    }
+
+    &:nth-child(2) {
+      justify-content: flex-end;
+    }
+  }
+}
+
 .login,
 form {
   display: flex;
@@ -20,20 +45,15 @@ form {
 }
 
 .login {
-  inline-size: 400px;
+  inline-size: 420px;
   block-size: 400px;
-  background: rgba(0, 0, 0, 0.5);
   border: 1px solid var(--mui-palette-surface-a30);
-  border-radius: 0.75rem;
-  padding: 0.95rem;
+  border-radius: var(--mui-shape-large);
+  padding: 1.5rem;
   box-shadow: var(--mui-elevation-1);
-}
-
-@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-  .login {
-    -webkit-backdrop-filter: blur(10px) saturate(180%);
-    backdrop-filter: blur(10px) saturate(180%);
-  }
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  backdrop-filter: blur(10px) saturate(180%);
 }
 
 .app-section-title {
@@ -41,20 +61,12 @@ form {
   font-weight: 900;
   letter-spacing: .1rem;
   line-height: 3rem;
-  background: -webkit-linear-gradient(
-    10deg,
-    var(--mui-palette-colors-green),
-    var(--mui-color-background),
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 form {
   flex: 1 1 100%;
   justify-content: center;
-  gap: 1.5rem;
+  gap: .7em;
 }
 
 fieldset,
