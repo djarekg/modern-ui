@@ -2,16 +2,17 @@
 @import "_shape.css";
 @import "_elevation.css";
 @import "_typography.css";
+@import "_defaults.css";
 
 :root {
   --mui-color-primary: var(--mui-palette-primary-a10);
-  --mui-color-secondary: var(--mui-palette-surface-a0);
+  --mui-color-secondary: var(--mui-palette-secondary-a10);
   --mui-color-text: #333;
 }
 
 .bg-primary {
   color: var(--mui-color-primary);
-  background-color: var(--mui-color-secondary);
+  background-color: var(--mui-palette-surface-a0);
 
   input {
     color: var(--mui-color-text);

@@ -1,8 +1,6 @@
-import { LitElement, css, html, unsafeCSS } from 'lit';
+import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import theme from '../theme/theme.css' with { type: 'css' };
-// import styles from './button.css?inline';
 
 type ButtonType = 'button' | 'submit' | 'reset' | 'menu';
 
@@ -29,7 +27,7 @@ const styles = css`
 
 @customElement('mui-button')
 export class Button extends LitElement {
-  static override styles = [unsafeCSS(theme), styles];
+  static override styles = [styles];
 
   @property({ type: String, reflect: true }) type: ButtonType = 'button';
   @property({ type: Boolean, reflect: true }) disabled = false;

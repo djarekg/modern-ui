@@ -2,20 +2,23 @@
   "folders": [
     {
       "path": ".vscode",
-      "name": ".vscode"
+      "name": "👨🏼‍💻 .vscode"
     },
     {
       "path": ".",
-      "name": "root"
+      "name": "🎄 root"
     },
     {
-      "path": "docs"
+      "path": "docs",
+      "name": "🤓 docs"
     },
     {
-      "path": "packages"
+      "path": "packages",
+      "name": "📦 packages"
     },
     {
-      "path": "apps"
+      "path": "apps",
+      "name": " 🖥️ apps"
     }
   ],
   "settings": {

@@ -5,6 +5,7 @@ import styles from './styles/styles.css?inline';
 import './layout/header/header.js';
 import './layout/footer/footer.js';
 import './layout/layout.js';
+import '@mui/components/theme/theme.css';
 
 @customElement('app-index')
 export class Index extends LitElement {

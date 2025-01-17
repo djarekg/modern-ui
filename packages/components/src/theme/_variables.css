@@ -1,3 +1,8 @@
+html {
+  background-color: hsl(0, 0%, 12%);
+  color: #ffffff;
+}
+
 :root {
   /** Dark theme primary colors */
   --mui-palette-primary-a0: #711fee;
@@ -23,16 +28,14 @@
   --mui-palette-surface-tonal-a40: #7d868c;
   --mui-palette-surface-tonal-a50: #959da2;
 
-  --mui-color-text: #333;
-
-  --mui-box-shadow: 0 25px 40px #00000053;
-
   /** colors */
   --mui-palette-colors-purple: #711fee;
   --mui-palette-colors-green: #2dd4bf;
 
-  /** shapes */
-  --mui-shape-button-rounded: 0.95rem;
+  /* Black */
+  --mui-palette-black: #000000ff;
+  /* White */
+  --mui-palette-white: #ffffffff;
 }
 
 .purple {
@@ -55,6 +58,34 @@
   --mui-palette-primary-a50: #ffb6e2;
 }
 
+.hot-pink {
+  /** Dark theme primary colors */
+  --mui-palette-primary-a0: #ff0ea9;
+  --mui-palette-primary-a10: #ff48b2;
+  --mui-palette-primary-a20: #ff67bc;
+  --mui-palette-primary-a30: #ff81c5;
+  --mui-palette-primary-a40: #ff98cf;
+  --mui-palette-primary-a50: #ffaed8;
+}
+
+.teal {
+  /** Dark theme primary colors */
+  --mui-palatte-primary-a0: #00daff;
+  --mui-palatte-primary-a10: #4fdeff;
+  --mui-palatte-primary-a20: #71e3ff;
+  --mui-palatte-primary-a30: #8be7ff;
+  --mui-palatte-primary-a40: #a2ebff;
+  --mui-palatte-primary-a50: #b6efff;
+
+  /** Dark theme primary colors */
+  --mui-palatte-secondary-a0: #ff0ea9;
+  --mui-palatte-secondary-a10: #ff48b2;
+  --mui-palatte-secondary-a20: #ff67bc;
+  --mui-palatte-secondary-a30: #ff81c5;
+  --mui-palatte-secondary-a40: #ff98cf;
+  --mui-palatte-secondary-a50: #ffaed8;
+}
+
 .green {
   /** Dark theme primary colors */
   --mui-palette-primary-a0: #2dd4bf;
@@ -73,19 +104,4 @@
   --mui-palette-primary-a30: #8ae3d4;
   --mui-palette-primary-a40: #9fe8db;
   --mui-palette-primary-a50: #b4ede2;
-}
-
-:root {
-  --mui-color-primary: var(--mui-palette-primary-a10);
-  --mui-color-secondary: var(--mui-palette-secondary-a10);
-  --mui-color-text: #333;
-}
-
-.bg-primary {
-  color: var(--mui-color-primary);
-  background-color: var(--mui-palette-surface-a0);
-
-  input {
-    color: var(--mui-color-text);
-  }
 }
