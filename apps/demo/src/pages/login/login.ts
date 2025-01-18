@@ -12,8 +12,8 @@ export class Login extends LitElement {
       <article>
 
         <section>
-          <span class="app-section-title">Welcome to the demo app</span>
-          <p>
+          <span class="app-section-title">Welcome to the demo {app}</span>
+          <p>😀
             This is a simple demo app that demonstrates how to use the MUI components in a LitElement project.
           </p>
         </section>
@@ -23,27 +23,13 @@ export class Login extends LitElement {
             <span class="app-section-title">Login</span>
             <form>
               <fieldset>
-                <label for="username">Username</label>
-                <span>
-                  <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    required />
-                </span>
+                ${this.#renderUsernameControl()}
               </fieldset>
               <fieldset>
-                <label for="password">Password</label>
-                <span>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required />
-                </span>
+                ${this.#renderPasaswordControl()}
               </fieldset>
               <fieldset>
-                <mui-outline-button type="submit">Login</mui-outline-button>
+                ${this.#renderLoginButton()}
               </fieldset>
             </form>
           </div>
@@ -51,6 +37,45 @@ export class Login extends LitElement {
 
       </article>
     `;
+  }
+
+  #renderUsernameControl(): TemplateResult {
+    return html`
+      <label for="username">Username</label>
+      <span>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required />
+      </span>
+    `;
+  }
+
+  #renderPasaswordControl(): TemplateResult {
+    return html`
+      <label for="password">Password</label>
+      <span>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required />
+      </span>
+    `;
+  }
+
+  #renderLoginButton(): TemplateResult {
+    return html`
+      <mui-outline-button
+        type="submit"
+        @click=${this.#onSubmit}>Login</mui-outline-button>
+    `;
+  }
+
+  #onSubmit(e: Event) {
+    e.stopImmediatePropagation();
+    console.log('Form submitted');
   }
 }
 
