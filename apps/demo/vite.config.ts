@@ -10,6 +10,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
+      '@mui/api': resolve(__dirname, '../../apps/api/src'),
       '@mui/components': resolve(__dirname, '../../packages/components/src'),
       '@mui/core': resolve(__dirname, '../../packages/core/src'),
       '@mui/web': resolve(__dirname, '../../packages/web/src'),

@@ -16,9 +16,13 @@
   "exports": {
     "./package.json": "./package.json",
     "./theme/theme.css": "./dist/theme/theme.css",
-    "./button/button.js": {
-      "types": "./dist/button/button.d.ts",
-      "import": "./dist/button/button.js"
+    "./button/flat-button.js": {
+      "types": "./dist/button/flat-button.d.ts",
+      "import": "./dist/button/flat-button.js"
+    },
+    "./button/outline-button.js": {
+      "types": "./dist/button/outline-button.d.ts",
+      "import": "./dist/button/outline-button.js"
     },
     ".": {
       "types": "./dist/index.d.ts",

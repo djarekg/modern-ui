@@ -1,11 +1,16 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import styles from './login.css?inline';
 import '@mui/components/button/outline-button.js';
+import { useApi } from '@/hooks/use-api.js';
+import type { TypedEvent } from '@mui/core';
 
 @customElement('app-login')
 export class Login extends LitElement {
   static override styles = [unsafeCSS(styles)];
+
+  @state() protected userName = '';
+  @state() protected password = '';
 
   override render(): TemplateResult {
     return html`
@@ -13,7 +18,7 @@ export class Login extends LitElement {
 
         <section>
           <span class="app-section-title">Welcome to the demo {app}</span>
-          <p>😀
+          <p>
             This is a simple demo app that demonstrates how to use the MUI components in a LitElement project.
           </p>
         </section>
@@ -44,10 +49,11 @@ export class Login extends LitElement {
       <label for="username">Username</label>
       <span>
         <input
+          required
           type="text"
           id="username"
           name="username"
-          required />
+          @change=${this.#onUsernameInputChange} />
       </span>
     `;
   }
@@ -57,25 +63,40 @@ export class Login extends LitElement {
       <label for="password">Password</label>
       <span>
         <input
+          required
           type="password"
           id="password"
           name="password"
-          required />
+          @change=${this.#onPasswordInputChange} />
       </span>
     `;
   }
 
   #renderLoginButton(): TemplateResult {
+    const disabled = this.userName.length === 0 || this.password.length === 0;
+
     return html`
       <mui-outline-button
         type="submit"
+        .disabled=${disabled}
         @click=${this.#onSubmit}>Login</mui-outline-button>
     `;
   }
 
+  #onUsernameInputChange({ target: { value } }: TypedEvent<HTMLInputElement>) {
+    this.userName = value;
+  }
+
+  #onPasswordInputChange({ target: { value } }: TypedEvent<HTMLInputElement>) {
+    this.password = value;
+  }
+
   #onSubmit(e: Event) {
     e.stopImmediatePropagation();
-    console.log('Form submitted');
+
+    const { auth } = useApi();
+
+    auth.sign({ name: this.userName });
   }
 }
 

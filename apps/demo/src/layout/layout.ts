@@ -18,8 +18,8 @@ export class Layout extends LitElement {
 
     initNavigation(this.#router);
 
-    const api = useApi();
-    const { status, error } = await api.client.auth.profile.get();
+    const { auth } = useApi();
+    const { status, error } = await auth.profile.get();
 
     if (status === StatusMap.Unauthorized || error) {
       this.#router.goto('/login');
