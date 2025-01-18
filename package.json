@@ -1,0 +1,42 @@
+{
+  "name": "@mui/workspace",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Dustin Griffith",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/djarekg/modern-ui"
+  },
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "bun@1.1.41",
+  "engines": {
+    "bun": ">=1.1.41"
+  },
+  "scripts": {
+    "setup": "task install",
+    "build:packages": "bun run --filter './packages/*' build",
+    "build:apps": "bun run --filter './apps/*' build",
+    "build:all": "bun run --filter '*' build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@jspm/core": "^2.1.0",
+    "@jspm/generator": "^2.4.1",
+    "@jspm/import-map": "^1.1.0",
+    "@types/bun": "^1.1.14",
+    "typedoc": "^0.27.6"
+  },
+  "peerDependencies": {
+    "typescript": "^5.7.2"
+  },
+  "overrides": {
+    "@lit-labs/signals": "latest",
+    "typescript": "^5",
+    "lit": "^3",
+    "signal-polyfill": "^0.2.0",
+    "signal-utils": "^0.21.0"
+  },
+  "workspaces": ["apps/*", "packages/*"]
+}

@@ -1,0 +1,21 @@
+{
+  "extends": ["../../tsconfig.base.json", "../../tsconfig.lit.json"],
+  "compilerOptions": {
+    "baseUrl": "src",
+    "rootDir": ".",
+    "experimentalDecorators": true,
+    "paths": {
+      "@/*": ["./*"],
+      "@mui/api/*": ["../api/*"],
+      "@mui/components/*": ["../../packages/components/*"],
+      "@mui/core/*": ["../../packages/core/*"],
+      "@mui/web/*": ["../../packages/web/*"]
+    },
+
+    // required by vite
+    "isolatedModules": true,
+    "useDefineForClassFields": false
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

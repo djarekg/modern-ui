@@ -1,0 +1,39 @@
+{
+  "name": "@mui/core",
+  "version": "1.0.0",
+  "author": "Dustin Griffith",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/djarekg/modern-ui"
+  },
+  "engines": {
+    "bun": ">=1.1.41"
+  },
+  "license": "MIT",
+  "packageManager": "bun@1.1.41",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "task build",
+    "build": "task build"
+  },
+  "peerDependencies": {
+    "@lit/context": "^1.1.3",
+    "lit": "^3.2.1",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@lit-labs/signals": "^0.1.1",
+    "haunted": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5"
+  }
+}

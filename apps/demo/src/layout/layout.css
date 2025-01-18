@@ -1,0 +1,15 @@
+:host,
+main,
+article {
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+:host {
+  display: block;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
