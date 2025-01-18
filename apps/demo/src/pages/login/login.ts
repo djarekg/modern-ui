@@ -1,7 +1,7 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import styles from './login.css?inline';
-import '@mui/components/button/button.js';
+import '@mui/components/button/outline-button.js';
 
 @customElement('app-login')
 export class Login extends LitElement {
@@ -43,7 +43,7 @@ export class Login extends LitElement {
                 </span>
               </fieldset>
               <fieldset>
-                <mui-button type="submit">Login</mui-button>
+                <mui-outline-button type="submit">Login</mui-outline-button>
               </fieldset>
             </form>
           </div>

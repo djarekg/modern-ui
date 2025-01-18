@@ -4,7 +4,6 @@
     "rootDir": ".",
     "baseUrl": "src",
     "resolveJsonModule": true,
-    // "allowArbitraryExtensions": true,
     "paths": {
       "@/*": ["./*"],
       "@mui/web/*": ["../../packages/web/*"]

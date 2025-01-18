@@ -6,23 +6,19 @@ import { ButtonBase } from './button-base.js';
 const styles = css`
   :host {
     button {
-      background: var(--mui-color-primary);
-    }
-
-    [inert] :host button,
-    :host button[disabled] {
-        pointer-events: none;
+      background: none;
+      border: 1px solid var(--mui-color-text);
     }
   }
 `;
 
-@customElement('mui-button')
-export class Button extends ButtonBase {
+@customElement('mui-outline-button')
+export class OutlineButton extends ButtonBase {
   static override styles = [baseStyles, styles];
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mui-button': Button;
+    'mui-outline-button': OutlineButton;
   }
 }

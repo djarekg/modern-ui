@@ -17,9 +17,9 @@
   --mui-typescale-label-small-size-unit: 2px;
   --mui-typescale-label-small-size: 11px;
   /* Label Small font weight */
-  --mui-typescale-label-small-weight: var(--mui-ref-typeface-weight-medium);
+  --mui-typescale-label-small-weight: var(--mui-typeface-weight-medium);
   /* Label Small font name */
-  --mui-typescale-label-small-font: var(--mui-ref-typeface-font);
+  --mui-typescale-label-small-font: var(--mui-typeface-font);
   /* Label Medium */
   --mui-typescale-label-medium-axis-value: unset;
   --mui-typescale-label-medium-font-style: unset;
@@ -39,9 +39,9 @@
   --mui-typescale-label-medium-size-unit: 2px;
   --mui-typescale-label-medium-size: 12px;
   /* Label Medium font weight */
-  --mui-typescale-label-medium-weight: var(--mui-ref-typeface-weight-medium);
+  --mui-typescale-label-medium-weight: var(--mui-typeface-weight-medium);
   /* Label Medium font name */
-  --mui-typescale-label-medium-font: var(--mui-ref-typeface-font);
+  --mui-typescale-label-medium-font: var(--mui-typeface-font);
   /* Label Large */
   --mui-typescale-label-large-text-transform: unset;
   --mui-typescale-label-large-axis-value: unset;
@@ -60,9 +60,9 @@
   --mui-typescale-label-large-size-unit: 2px;
   --mui-typescale-label-large-size: 14px;
   /* Label Large font weight */
-  --mui-typescale-label-large-weight: var(--mui-ref-typeface-weight-medium);
+  --mui-typescale-label-large-weight: var(--mui-typeface-weight-medium);
   /* Label Large font name */
-  --mui-typescale-label-large-font: var(--mui-ref-typeface-font);
+  --mui-typescale-label-large-font: var(--mui-typeface-font);
   /* Body Small */
   --mui-typescale-body-small-text-transform: unset;
   --mui-typescale-body-small-axis-value: unset;
@@ -81,9 +81,9 @@
   --mui-typescale-body-small-size-unit: 2px;
   --mui-typescale-body-small-size: 12px;
   /* Body Small font weight */
-  --mui-typescale-body-small-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-body-small-weight: var(--mui-typeface-weight-regular);
   /* Body Small font name */
-  --mui-typescale-body-small-font: var(--mui-ref-typeface-font);
+  --mui-typescale-body-small-font: var(--mui-typeface-font);
   /* Body Medium */
   --mui-typescale-body-medium-text-transform: unset;
   --mui-typescale-body-medium-axis-value: unset;
@@ -102,9 +102,9 @@
   --mui-typescale-body-medium-size-unit: 2px;
   --mui-typescale-body-medium-size: 14px;
   /* Body Medium font weight */
-  --mui-typescale-body-medium-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-body-medium-weight: var(--mui-typeface-weight-regular);
   /* Body Medium font name */
-  --mui-typescale-body-medium-font: var(--mui-ref-typeface-font);
+  --mui-typescale-body-medium-font: var(--mui-typeface-font);
   /* Body Large */
   --mui-typescale-body-large-text-transform: unset;
   --mui-typescale-body-large-axis-value: unset;
@@ -123,9 +123,9 @@
   --mui-typescale-body-large-size-unit: 2px;
   --mui-typescale-body-large-size: 16px;
   /* Body Large font weight */
-  --mui-typescale-body-large-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-body-large-weight: var(--mui-typeface-weight-regular);
   /* Body Large font name */
-  --mui-typescale-body-large-font: var(--mui-ref-typeface-font);
+  --mui-typescale-body-large-font: var(--mui-typeface-font);
   /* Title Small */
   --mui-typescale-title-small-text-transform: unset;
   --mui-typescale-title-small-axis-value: unset;
@@ -144,11 +144,11 @@
   --mui-typescale-title-small-size-unit: 2px;
   --mui-typescale-title-small-size: 14px;
   /* Title Small font weight */
-  --mui-typescale-title-small-weight: var(--mui-ref-typeface-weight-medium);
+  --mui-typescale-title-small-weight: var(--mui-typeface-weight-medium);
   /* Title Small font name */
-  --mui-typescale-title-small-font: var(--mui-ref-typeface-font);
-  --mui-typescale-title-small-type: var(--mui-typescale-title-small-weight)
-    var(--mui-ref-typeface-font) var(--mui-typescale-title-small-size);
+  --mui-typescale-title-small-font: var(--mui-typeface-font);
+  --mui-typescale-title-small-type: var(--mui-typescale-title-small-weight) var(--mui-typeface-font)
+    var(--mui-typescale-title-small-size);
   /* Title Medium */
   --mui-typescale-title-medium-text-transform: unset;
   --mui-typescale-title-medium-axis-value: unset;
@@ -167,9 +167,9 @@
   --mui-typescale-title-medium-size-unit: 2px;
   --mui-typescale-title-medium-size: 16px;
   /* Title Medium font weight */
-  --mui-typescale-title-medium-weight: var(--mui-ref-typeface-weight-medium);
+  --mui-typescale-title-medium-weight: var(--mui-typeface-weight-medium);
   /* Title Medium font name */
-  --mui-typescale-title-medium-font: var(--mui-ref-typeface-font);
+  --mui-typescale-title-medium-font: var(--mui-typeface-font);
   /* Title Large */
   --mui-typescale-title-large-text-transform: unset;
   --mui-typescale-title-large-axis-value: unset;
@@ -188,9 +188,9 @@
   --mui-typescale-title-large-size-unit: 2px;
   --mui-typescale-title-large-size: 22px;
   /* Title Large font weight */
-  --mui-typescale-title-large-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-title-large-weight: var(--mui-typeface-weight-regular);
   /* Title Large font name */
-  --mui-typescale-title-large-font: var(--mui-ref-typeface-font);
+  --mui-typescale-title-large-font: var(--mui-typeface-font);
   /* Headline Small */
   --mui-typescale-headline-small-text-transform: unset;
   --mui-typescale-headline-small-axis-value: unset;
@@ -209,9 +209,9 @@
   --mui-typescale-headline-small-size-unit: 2px;
   --mui-typescale-headline-small-size: 24px;
   /* Headline Small font weight */
-  --mui-typescale-headline-small-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-headline-small-weight: var(--mui-typeface-weight-regular);
   /* Headline Small font name */
-  --mui-typescale-headline-small-font: var(--mui-ref-typeface-font);
+  --mui-typescale-headline-small-font: var(--mui-typeface-font);
   /* Headline Medium */
   --mui-typescale-headline-medium-text-transform: unset;
   --mui-typescale-headline-medium-axis-value: unset;
@@ -230,9 +230,9 @@
   --mui-typescale-headline-medium-size-unit: 2px;
   --mui-typescale-headline-medium-size: 28px;
   /* Headline Medium font weight */
-  --mui-typescale-headline-medium-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-headline-medium-weight: var(--mui-typeface-weight-regular);
   /* Headline Medium font name */
-  --mui-typescale-headline-medium-font: var(--mui-ref-typeface-font);
+  --mui-typescale-headline-medium-font: var(--mui-typeface-font);
   /* Headline Large */
   --mui-typescale-headline-large-text-transform: unset;
   --mui-typescale-headline-large-axis-value: unset;
@@ -251,9 +251,9 @@
   --mui-typescale-headline-large-size-unit: 2px;
   --mui-typescale-headline-large-size: 32px;
   /* Headline Large font name */
-  --mui-typescale-headline-large-font: var(--mui-ref-typeface-font);
+  --mui-typescale-headline-large-font: var(--mui-typeface-font);
   /* Headline Large font weight */
-  --mui-typescale-headline-large-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-headline-large-weight: var(--mui-typeface-weight-regular);
   /* Display Small */
   --mui-typescale-display-small-text-transform: unset;
   --mui-typescale-display-small-axis-value: unset;
@@ -272,9 +272,9 @@
   --mui-typescale-display-small-size-unit: 2px;
   --mui-typescale-display-small-size: 36px;
   /* Display Small font weight */
-  --mui-typescale-display-small-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-display-small-weight: var(--mui-typeface-weight-regular);
   /* Display Small font name */
-  --mui-typescale-display-small-font: var(--mui-ref-typeface-font);
+  --mui-typescale-display-small-font: var(--mui-typeface-font);
   /* Display Medium */
   --mui-typescale-display-medium-text-transform: unset;
   --mui-typescale-display-medium-axis-value: unset;
@@ -293,9 +293,9 @@
   --mui-typescale-display-medium-size-unit: 2px;
   --mui-typescale-display-medium-size: 45px;
   /* Display Medium font weight */
-  --mui-typescale-display-medium-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-display-medium-weight: var(--mui-typeface-weight-regular);
   /* Display Medium font name */
-  --mui-typescale-display-medium-font: var(--mui-ref-typeface-font);
+  --mui-typescale-display-medium-font: var(--mui-typeface-font);
   /* Display Large */
   --mui-typescale-display-large-text-transform: unset;
   --mui-typescale-display-large-axis-value: unset;
@@ -314,17 +314,21 @@
   --mui-typescale-display-large-size-unit: 2px;
   --mui-typescale-display-large-size: 57px;
   /* Display Large font weight */
-  --mui-typescale-display-large-weight: var(--mui-ref-typeface-weight-regular);
+  --mui-typescale-display-large-weight: var(--mui-typeface-weight-regular);
   /* Display Large font name */
-  --mui-typescale-display-large-font: var(--mui-ref-typeface-font);
+  --mui-typescale-display-large-font: var(--mui-typeface-font);
   /* Font typeface */
-  --mui-ref-typeface-font: "Inter var experimental", "Inter var", Inter;
+  --mui-typeface-font: Inter, sans-serif;
+  @supports (font-variation-settings: normal) {
+    --mui-typeface-font: InterVariable, sans-serif;
+  }
+  --mui-typeface-font-feature-settings: "liga" 1, "calt" 1; /* fix for Chrome */
   /* Bold weight */
-  --mui-ref-typeface-weight-bold: 700;
+  --mui-typeface-weight-bold: 700;
   /* Medium weight */
-  --mui-ref-typeface-weight-medium: 500;
+  --mui-typeface-weight-medium: 500;
   /* Regular weight */
-  --mui-ref-typeface-weight-regular: 400;
+  --mui-typeface-weight-regular: 400;
   /* input */
   --mui-typescale-input-font: var(--mui-typescale-label-large-size) /
     var(--mui-typescale-label-large-line-height) var(--mui-typescale-label-large-weight);

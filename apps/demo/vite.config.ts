@@ -11,6 +11,8 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, './src'),
       '@mui/components': resolve(__dirname, '../../packages/components/src'),
+      '@mui/core': resolve(__dirname, '../../packages/core/src'),
+      '@mui/web': resolve(__dirname, '../../packages/web/src'),
     },
     preserveSymlinks: true,
     conditions: ['browser', 'development'],
@@ -31,5 +33,4 @@ export default defineConfig({
       },
     }),
   ],
-  publicDir: resolve(__dirname, '../../packages/components/src/theme'),
 });
