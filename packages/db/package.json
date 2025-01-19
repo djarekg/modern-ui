@@ -1,5 +1,5 @@
 {
-  "name": "@mui/components",
+  "name": "@mui/db",
   "version": "1.0.0",
   "private": false,
   "license": "MIT",
@@ -15,15 +15,6 @@
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
-    "./theme/theme.css": "./dist/theme/theme.css",
-    "./button/flat-button.js": {
-      "types": "./dist/button/flat-button.d.ts",
-      "import": "./dist/button/flat-button.js"
-    },
-    "./button/outline-button.js": {
-      "types": "./dist/button/outline-button.d.ts",
-      "import": "./dist/button/outline-button.js"
-    },
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
@@ -33,12 +24,8 @@
     "dev": "task build",
     "build": "task build"
   },
-  "dependencies": {
-    "@mui/web": "workspace:*",
-    "@open-wc/dedupe-mixin": "^1.4.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
-    "lit": "^3.2.1",
     "typescript": "^5"
   }
 }
