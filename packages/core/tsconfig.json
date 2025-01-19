@@ -2,7 +2,8 @@
   "extends": ["../../config/tsconfig.base.json", "../../config/tsconfig.lit.json"],
   "compilerOptions": {
     "rootDir": "src",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["bun"]
   },
   "include": ["src/**/*"]
 }

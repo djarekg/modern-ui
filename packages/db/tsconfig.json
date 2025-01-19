@@ -3,10 +3,10 @@
   "compilerOptions": {
     "rootDir": ".",
     "baseUrl": "src",
-    "resolveJsonModule": true,
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["bun"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "prisma/**/*"]
 }
