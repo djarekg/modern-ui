@@ -40,4 +40,4 @@ tasks:
   build:typings:
     desc: Build typings
     cmds:
-      - bun tsc -p tsconfig.types.json {{.CLI_ARGS}}
+      - bun tsc -p config/tsconfig.types.json {{.CLI_ARGS}}
