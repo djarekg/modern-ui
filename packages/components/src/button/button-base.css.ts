@@ -14,8 +14,8 @@ export default css`
     }
   }
 
-  [inert] :host button,
-  :host button[disabled] {
+  [inert] :host,
+  :host[disabled] {
     pointer-events: none;
   }
 `;

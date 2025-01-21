@@ -7,7 +7,7 @@ interface CustomJWTPayload extends JWTPayloadSpec {
   name: string;
 }
 
-export const auth = new Elysia().group('/auth', app => {
+export default new Elysia().group('/auth', app => {
   return app
     .use(
       jwt({

@@ -35,7 +35,7 @@ tasks:
   build:ts:
     desc: Build typescript
     cmds:
-      - bun build {{.CLI_ARGS}} src/**/*.ts --root src --outdir dist --target browser --splitting --packages external --packages external --sourcemap=inline
+      - bun build src/**/*.ts --root src --outdir dist --splitting --packages external --packages external --sourcemap=inline {{.CLI_ARGS}}
 
   build:typings:
     desc: Build typings

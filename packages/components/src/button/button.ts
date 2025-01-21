@@ -8,11 +8,6 @@ const styles = css`
     button {
       background: var(--mui-color-primary);
     }
-
-    [inert] :host button,
-    :host button[disabled] {
-        pointer-events: none;
-    }
   }
 `;
 

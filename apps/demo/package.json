@@ -46,5 +46,6 @@
     "typescript": "^5",
     "unplugin-fonts": "^1.3.1",
     "vite": "^6.0.7"
-  }
+  },
+  "trustedDependencies": ["esbuild"]
 }

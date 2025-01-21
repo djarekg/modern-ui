@@ -1,7 +1,7 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import styles from './login.css?inline';
-import '@mui/components/button/outline-button.js';
+import '@mui/components/button/flat-button.js';
 import { useApi } from '@/hooks/use-api.js';
 import type { TypedEvent } from '@mui/core';
 
@@ -76,10 +76,9 @@ export class Login extends LitElement {
     const disabled = this.userName.length === 0 || this.password.length === 0;
 
     return html`
-      <mui-outline-button
-        type="submit"
+      <mui-flat-button
         .disabled=${disabled}
-        @click=${this.#onSubmit}>Login</mui-outline-button>
+        @click=${this.#onSubmit}>Login</mui-flat-button>
     `;
   }
 
@@ -91,12 +90,17 @@ export class Login extends LitElement {
     this.password = value;
   }
 
-  #onSubmit(e: Event) {
+  async #onSubmit(e: Event) {
     e.stopImmediatePropagation();
 
-    const { auth } = useApi();
+    const { sign } = useApi();
 
-    auth.sign({ name: this.userName });
+    const didItWork = await sign.in.post({
+      username: this.userName,
+      password: this.password,
+    });
+
+    console.log('didItWork', didItWork);
   }
 }
 

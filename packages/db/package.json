@@ -12,18 +12,18 @@
   "engines": {
     "bun": ">=1.1.41"
   },
-  "sideEffects": false,
   "type": "module",
   "exports": {
     "./package.json": "./package.json",
+    "./auth/auth.js": "./dist/auth/index.js",
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }
   },
   "scripts": {
-    "db:generate": "bunx prisma generate && bunx prisma db push && bun prisma/seed.ts",
-    "build": "bun build src/index.ts --target bun outdir dist"
+    "db:generate": "rm -rf prisma/dev.db && bunx prisma generate && bunx prisma db push && bun prisma/seed.ts",
+    "build": "task build"
   },
   "dependencies": {
     "@prisma/client": "^6.2.1"
@@ -35,5 +35,6 @@
     "@faker-js/faker": "^9.4.0",
     "@types/bun": "^1.1.17",
     "prisma": "^6.2.1"
-  }
+  },
+  "trustedDependencies": ["@prisma/client", "@prisma/engines", "prisma"]
 }

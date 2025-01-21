@@ -15,9 +15,10 @@
   },
   "scripts": {
     "setup": "task install",
+    "postinstall": "bun run --filter './packages/db' db:generate",
     "build:packages": "bun run --filter './packages/*' build",
     "build:apps": "bun run --filter './apps/*' build",
-    "build:all": "bun run --filter '*' build"
+    "build:all": "bun run build:packages && bun run --filter './apps/api' build"
   },
   "dependencies": {},
   "devDependencies": {
@@ -38,5 +39,6 @@
     "signal-polyfill": "^0.2.0",
     "signal-utils": "^0.21.0"
   },
-  "workspaces": ["apps/*", "packages/*"]
+  "workspaces": ["apps/*", "packages/*"],
+  "trustedDependencies": ["@biomejs/biome"]
 }

@@ -4,9 +4,10 @@
     "baseUrl": "src",
     "rootDir": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@mui/db/*": ["../../packages/db/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "prisma/**/*"],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,3 +1,7 @@
 form[inert] {
   filter: grayscale(1) opacity(0.6);
 }
+
+input:-webkit-autofill {
+  background: red;
+}
