@@ -1,4 +1,4 @@
-import { verifyUser } from '@mui/db';
+import { verifyUser } from '@/auth/auth.js';
 import { Elysia, t } from 'elysia';
 
 export default new Elysia().group('/sign', app => {

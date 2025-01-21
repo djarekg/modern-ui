@@ -1,5 +1,5 @@
-import auth from '@/auth.js';
-import login from '@/login.js';
+import auth from '@/routes/auth.js';
+import login from '@/routes/login.js';
 import { cors } from '@elysiajs/cors';
 import { swagger } from '@elysiajs/swagger';
 import { Elysia } from 'elysia';

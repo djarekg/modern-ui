@@ -1,9 +1,10 @@
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import styles from './login.css?inline';
-import '@mui/components/button/flat-button.js';
+import '@mui/components/button/outline-button.js';
 import { useApi } from '@/hooks/use-api.js';
-import type { TypedEvent } from '@mui/core';
+import teRouter@lit-labs/lit-labstrouter
+import type tyTypedEventypedEvent mui@corere';
 
 @customElement('app-login')
 export class Login extends LitElement {
@@ -76,9 +77,9 @@ export class Login extends LitElement {
     const disabled = this.userName.length === 0 || this.password.length === 0;
 
     return html`
-      <mui-flat-button
+      <mui-outline-button
         .disabled=${disabled}
-        @click=${this.#onSubmit}>Login</mui-flat-button>
+        @click=${this.#onSubmit}>Login</mui-outline-button>
     `;
   }
 
@@ -95,12 +96,14 @@ export class Login extends LitElement {
 
     const { sign } = useApi();
 
-    const didItWork = await sign.in.post({
+    const { data: signedIn } = await sign.in.post({
       username: this.userName,
       password: this.password,
     });
 
-    console.log('didItWork', didItWork);
+    if (signedIn) {
+      // new Router(this).goto('/');
+    }
   }
 }
 
