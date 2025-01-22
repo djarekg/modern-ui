@@ -3,8 +3,8 @@ import { customElement, state } from 'lit/decorators.js';
 import styles from './login.css?inline';
 import '@mui/components/button/outline-button.js';
 import { useApi } from '@/hooks/use-api.js';
-import teRouter@lit-labs/lit-labstrouter
-import type tyTypedEventypedEvent mui@corere';
+import { navigate } from '@/router/index.js';
+import type { TypedEvent } from '@mui/core';
 
 @customElement('app-login')
 export class Login extends LitElement {
@@ -48,28 +48,24 @@ export class Login extends LitElement {
   #renderUsernameControl(): TemplateResult {
     return html`
       <label for="username">Username</label>
-      <span>
-        <input
-          required
-          type="text"
-          id="username"
-          name="username"
-          @change=${this.#onUsernameInputChange} />
-      </span>
+      <input
+        required
+        type="text"
+        id="username"
+        name="username"
+        @change=${this.#onUsernameInputChange} />
     `;
   }
 
   #renderPasaswordControl(): TemplateResult {
     return html`
       <label for="password">Password</label>
-      <span>
-        <input
-          required
-          type="password"
-          id="password"
-          name="password"
-          @change=${this.#onPasswordInputChange} />
-      </span>
+      <input
+        required
+        type="password"
+        id="password"
+        name="password"
+        @change=${this.#onPasswordInputChange} />
     `;
   }
 
@@ -78,6 +74,7 @@ export class Login extends LitElement {
 
     return html`
       <mui-outline-button
+        corner="round"
         .disabled=${disabled}
         @click=${this.#onSubmit}>Login</mui-outline-button>
     `;
@@ -102,7 +99,7 @@ export class Login extends LitElement {
     });
 
     if (signedIn) {
-      // new Router(this).goto('/');
+      navigate('/');
     }
   }
 }

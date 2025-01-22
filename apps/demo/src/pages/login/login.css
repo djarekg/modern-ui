@@ -96,9 +96,9 @@ fieldset {
   }
 }
 
-span:has(> input) {
+input {
   background: #fff;
   border-radius: var(--mui-shape-round);
-  padding: 0.5rem;
+  padding: 0.8rem 0.5rem;
   box-shadow: var(--mui-elevation-1);
 }
