@@ -1,12 +1,11 @@
-import { initNavigation, routes } from '@/router/index.js';
+import { validate } from '@/auth/auth.js';
+import { initNavigation, navigate, routes } from '@/router/index.js';
 import { Router } from '@lit-labs/router';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import css from './layout.css?inline';
 import './header/header.js';
 import './footer/footer.js';
-import { useApi } from '@/hooks/use-api.js';
-import { StatusMap } from 'elysia';
 
 @customElement('app-layout')
 export class Layout extends LitElement {
@@ -18,22 +17,25 @@ export class Layout extends LitElement {
 
     initNavigation(this.#router);
 
-    const { auth } = useApi();
-    const { status, error } = await auth.profile.get();
-
-    if (status === StatusMap.Unauthorized || error) {
-      this.#router.goto('/login');
+    // check if user is signed in and if not redirect to login page
+    const valid = await validate();
+    if (!valid) {
+      console.log('User is not signed in');
+      // TODO: use constants for routes
+      navigate('/login');
     }
+
+    console.log('User is signed in');
   }
 
   protected override render(): TemplateResult {
     return html`
       <main>
         <app-header>
-          <nav>
+          <!-- <nav>
             <a href="/">Home</a>
             <a href="/login">Login</a>
-          </nav>
+          </nav> -->
         </app-header>
         <article>
             ${this.#router.outlet()}

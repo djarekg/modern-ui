@@ -1,10 +1,10 @@
+import { signIn } from '@/auth/auth.js';
+import { navigate } from '@/router/index.js';
+import type { TypedEvent } from '@mui/core';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import styles from './login.css?inline';
 import '@mui/components/button/outline-button.js';
-import { useApi } from '@/hooks/use-api.js';
-import { navigate } from '@/router/index.js';
-import type { TypedEvent } from '@mui/core';
 
 @customElement('app-login')
 export class Login extends LitElement {
@@ -91,14 +91,9 @@ export class Login extends LitElement {
   async #onSubmit(e: Event) {
     e.stopImmediatePropagation();
 
-    const { sign } = useApi();
-
-    const { data: signedIn } = await sign.in.post({
-      username: this.userName,
-      password: this.password,
-    });
-
+    const signedIn = signIn(this.userName, this.password);
     if (signedIn) {
+      // TODO: use constants for routes
       navigate('/');
     }
   }

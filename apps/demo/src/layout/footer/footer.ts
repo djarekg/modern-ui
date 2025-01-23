@@ -4,7 +4,14 @@ import { customElement } from 'lit/decorators.js';
 const styles = css`
   :host {
     display: block;
-    color: white;
+
+    footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      color: white;
+      block-size: 100px;
+      background-color: var(--color-primary);
+    }
   }
 `;
 
