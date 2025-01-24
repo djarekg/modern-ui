@@ -1,87 +1,10 @@
-import { LitElement, css, html } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-
-const styles = css`
-  :host {
-    display: block;
-
-    footer {
-      display: flex;
-      flex-direction: column;
-      color: white;
-      block-size: 300px;
-      border-top: 2px solid var(--mui-palette-surface-a40);
-    }
-
-    .links {
-      display: flex;
-      justify-content: space-evenly;
-      padding-block: 24px;
-
-      > div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        h5 {
-          text-transform: uppercase;
-          margin-block-end: 0;
-        }
-      }
-    }
-
-    .copyright {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      block-size: 100%;
-      padding-inline: 24px;
-      padding-block: 16px;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      margin-block-end: 12px;
-      cursor: pointer;
-    }
-
-    .logo {
-      &::before {
-        display: inline-block;
-        width: 24px;
-        height: 24px;
-        vertical-align: top;
-        margin-inline-end: 12px;
-        background-size: contain;
-        background-repeat: no
-      }
-
-      &.github::before {
-        content: url(../../../public/img/logo-github-outline.svg);
-      }
-
-      &.docs::before {
-        content: url(../../../public/img/read-outline.svg);
-      }
-
-      &.roadmap::before {
-        content: url(../../../public/img/map-trifold.svg);
-      }
-
-      &.license::before {
-        content: url(../../../public/img/license-line.svg);
-      }
-    }
-  }
-`;
+import styles from './footer.css?inline';
 
 @customElement('app-footer')
 export class Footer extends LitElement {
-  static override styles = styles;
+  static override styles = [unsafeCSS(styles)];
 
   override render() {
     return html`
@@ -90,26 +13,63 @@ export class Footer extends LitElement {
         <div>
           <h5>Resources</h5>
           <ul>
-            <li class="logo github">
-              <a class="link"
-                target="_blank"
-                href="https://github.com/djarekg/modern-ui">
-                GitHub
-              </a>
-            </li>
-            <li class="logo docs">Docs</li>
+            ${this.#renderLink('GitHub', 'github', 'https://github.com/djarekg/modern-ui')}
+            ${this.#renderLink(
+              'Docs',
+              'docs',
+              'https://github.com/djarekg/modern-ui/blob/main/docs/getting-started/quick-start.md',
+            )}
           </ul>
         </div>
         <div>
-          <h5>TBD</h5>
+          <h5>Projects</h5>
           <ul>
+            ${this.#renderLink(
+              'core',
+              'project',
+              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/core',
+            )}
+            ${this.#renderLink(
+              'web',
+              'project',
+              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/web',
+            )}
+            ${this.#renderLink(
+              'components',
+              'project',
+              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/components',
+            )}
+            ${this.#renderLink(
+              'api',
+              'project',
+              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/apps/api',
+            )}
+            ${this.#renderLink(
+              'demo',
+              'project',
+              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/apps/demo',
+            )}
           </ul>
         </div>
         <div>
           <h5>Project</h5>
           <ul>
-            <li class="logo roadmap">Roadmap</li>
-            <li class="logo license">License</li>
+          ${this.#renderLink(
+            'Feature Considerations',
+            'rnd',
+            'https://github.com/djarekg/modern-ui/blob/main/docs/features/feature_considerations.md',
+          )}
+            ${this.#renderLink(
+              'Roadmap',
+              'roadmap',
+              'https://github.com/djarekg/modern-ui/blob/main/docs/roadmap.md',
+            )}
+            ${this.#renderLink('Organization', 'org', 'https://github.com/griffidi')}
+            ${this.#renderLink(
+              'License',
+              'license',
+              'https://github.com/djarekg/modern-ui/blob/main/LICENSE',
+            )}
           </ul>
         </div>
       </section>
@@ -117,6 +77,18 @@ export class Footer extends LitElement {
         <span>&copy; ${new Date().getFullYear()} GriffiDi. All rights reserved.</span>
       </section>
     </footer>`;
+  }
+
+  #renderLink(text: string, className: string, href: string) {
+    return html`
+      <li class="logo ${className}">
+        <a class="link"
+          target="_blank"
+          href="${href}">
+          ${text}
+        </a>
+      </li>
+    `;
   }
 }
 

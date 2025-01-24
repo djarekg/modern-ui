@@ -30,12 +30,8 @@ article {
     padding-block: 5rem;
 
     &:first-child {
-      justify-content: flex-start;
+      justify-content: center;
       padding-inline-start: 7rem;
-
-      /* p {
-        text-align: left;
-      } */
     }
 
     &:nth-child(2) {
@@ -66,7 +62,6 @@ form {
 
 .login {
   inline-size: 420px;
-  block-size: 400px;
   border: 1px solid var(--mui-palette-surface-a30);
   border-radius: var(--mui-shape-large);
   padding: 1.5rem;
@@ -79,7 +74,8 @@ form {
 form {
   flex: 1 1 100%;
   justify-content: center;
-  gap: 0.7em;
+  gap: 0.8rem;
+  margin-block: 1.2rem;
 }
 
 fieldset,

@@ -37,12 +37,3 @@ body {
   overflow-wrap: break-word;
   overflow: hidden;
 }
-
-.link {
-  color: var(--mui-color-text);
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
