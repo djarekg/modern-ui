@@ -22,7 +22,7 @@ export class Footer extends LitElement {
           </ul>
         </div>
         <div>
-          <h5>Projects</h5>
+          <h5>Workspace Projects</h5>
           <ul>
             ${this.#renderLink(
               'core',
