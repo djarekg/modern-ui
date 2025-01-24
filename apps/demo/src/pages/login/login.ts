@@ -1,5 +1,6 @@
 import { signIn } from '@/auth/auth.js';
 import { navigate } from '@/router/index.js';
+import { routeTypes } from '@/router/route-types.js';
 import type { TypedEvent } from '@mui/core';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -20,7 +21,7 @@ export class Login extends LitElement {
         <section>
           <span class="app-section-title">Welcome to the demo {app}</span>
           <p>
-            This is a simple demo app that demonstrates how to use the MUI components in a LitElement project.
+            This is a demo app that demonstrates using a monorepo setup with workspace projects, an API project that includes a SQLite databae, and a frontend project all using Web Components.
           </p>
         </section>
 
@@ -93,8 +94,7 @@ export class Login extends LitElement {
 
     const signedIn = signIn(this.userName, this.password);
     if (signedIn) {
-      // TODO: use constants for routes
-      navigate('/');
+      navigate(routeTypes.home);
     }
   }
 }

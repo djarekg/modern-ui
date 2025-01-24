@@ -32,6 +32,10 @@ article {
     &:first-child {
       justify-content: flex-start;
       padding-inline-start: 7rem;
+
+      /* p {
+        text-align: left;
+      } */
     }
 
     &:nth-child(2) {

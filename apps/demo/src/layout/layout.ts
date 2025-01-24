@@ -1,15 +1,34 @@
 import { validate } from '@/auth/auth.js';
 import { initNavigation, navigate, routes } from '@/router/index.js';
 import { Router } from '@lit-labs/router';
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
+import { LitElement, type TemplateResult, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import css from './layout.css?inline';
 import './header/header.js';
 import './footer/footer.js';
+import { routeTypes } from '@/router/route-types.js';
+
+const styles = css`
+  :host,
+  main,
+  article {
+    block-size: 100%;
+    inline-size: 100%;
+  }
+
+  :host {
+    display: block;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden auto;
+  }
+`;
 
 @customElement('app-layout')
 export class Layout extends LitElement {
-  static override styles = [unsafeCSS(css)];
+  static override styles = [styles];
   readonly #router = new Router(this, routes);
 
   async connectedCallback(): Promise<void> {
@@ -21,8 +40,7 @@ export class Layout extends LitElement {
     const valid = await validate();
     if (!valid) {
       console.log('User is not signed in');
-      // TODO: use constants for routes
-      navigate('/login');
+      navigate(routeTypes.login);
     }
 
     console.log('User is signed in');
@@ -31,12 +49,7 @@ export class Layout extends LitElement {
   protected override render(): TemplateResult {
     return html`
       <main>
-        <app-header>
-          <!-- <nav>
-            <a href="/">Home</a>
-            <a href="/login">Login</a>
-          </nav> -->
-        </app-header>
+        <app-header></app-header>
         <article>
             ${this.#router.outlet()}
         </article>
