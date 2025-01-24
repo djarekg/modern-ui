@@ -1,65 +1,58 @@
-import { useCallback, useState } from 'haunted';
+import memoize from '@github/memoize';
+import { signal } from '@lit-labs/signals';
+import { effect } from 'signal-utils/subtle/microtask-effect';
 
 /**
  * Hook to manage app cache
  */
 export const useCache = () => {
-  const [cache, setCache] = useState(() => {
-    const initialCache = new Map<string, unknown>();
+  const cache = signal(new Map<string, unknown>());
+
+  // Initialize cache from localStorage
+  effect(() => {
     const data = localStorage.getItem('cache');
     if (data) {
       const parsedData = JSON.parse(data);
+      const initialCache = new Map<string, unknown>();
       for (const key in parsedData) {
         initialCache.set(key, parsedData[key]);
       }
+      cache.set(initialCache);
     }
-    return initialCache;
   });
 
-  // serialize current cache and save cache to local storage
-  const saveToLocal = useCallback(() => {
-    const data = JSON.stringify(Object.fromEntries(cache));
+  // Serialize current cache and save cache to local storage
+  const persistCache = memoize(() => {
+    const data = JSON.stringify(Object.fromEntries(cache.get()));
     localStorage.setItem('cache', data);
-  }, [cache]);
+  });
 
   /**
-   * Get a value from cache
+   * Get value from cache
    * @returns cache item stored at key
    */
-  const get = useCallback((key: string) => cache.get(key), [cache]);
+  const get = memoize((key: string) => cache.get().get(key));
 
   /**
    * Set a value to cache
    * @param key key of the value
    * @param value value to be stored
    */
-  const set = useCallback(
-    (key: string, value: unknown) => {
-      setCache(prevCache => {
-        const newCache = new Map(prevCache);
-        newCache.set(key, value);
-        return newCache;
-      });
-      saveToLocal();
-    },
-    [saveToLocal],
-  );
+  const set = memoize((key: string, value: unknown) => {
+    cache.set(new Map(cache.get()).set(key, value));
+    persistCache();
+  });
 
   /**
    * Remove a value from cache
    * @param key key of the value
    */
-  const remove = useCallback(
-    (key: string) => {
-      setCache(prevCache => {
-        const newCache = new Map(prevCache);
-        newCache.delete(key);
-        return newCache;
-      });
-      saveToLocal();
-    },
-    [saveToLocal],
-  );
+  const remove = memoize((key: string) => {
+    const newCache = new Map(cache.get());
+    newCache.delete(key);
+    cache.set(newCache);
+    persistCache();
+  });
 
   return [get, set, remove] as const;
 };

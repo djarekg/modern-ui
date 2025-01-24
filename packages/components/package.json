@@ -30,7 +30,7 @@
     }
   },
   "scripts": {
-    "dev": "task build -- --watch",
+    "dev": "task build",
     "build": "task build"
   },
   "dependencies": {

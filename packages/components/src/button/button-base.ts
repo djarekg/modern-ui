@@ -14,9 +14,7 @@ export class ButtonBase extends LitElement {
   }
 
   override render() {
-    const classes = {
-      disabled: this.disabled,
-    };
+    const classes = {};
 
     return html`
       <button

@@ -32,7 +32,8 @@
   /* White */
   --mui-palette-white: #ffffffff;
 
-  --mui-color-background: hsl(0, 0%, 12%);
+  --mui-color-background: var(--mui-palette-surface-a0);
+  /* --mui-color-background: hsl(0, 0%, 12%); */
   --mui-color-text: var(--mui-palette-white);
 
   --mui-color-primary: var(--mui-palette-primary-a10);

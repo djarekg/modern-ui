@@ -1,9 +1,11 @@
+import { signIn } from '@/auth/auth.js';
+import { navigate } from '@/router/index.js';
+import { routeTypes } from '@/router/route-types.js';
+import type { TypedEvent } from '@mui/core';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import styles from './login.css?inline';
 import '@mui/components/button/outline-button.js';
-import { useApi } from '@/hooks/use-api.js';
-import type { TypedEvent } from '@mui/core';
 
 @customElement('app-login')
 export class Login extends LitElement {
@@ -19,7 +21,7 @@ export class Login extends LitElement {
         <section>
           <span class="app-section-title">Welcome to the demo {app}</span>
           <p>
-            This is a simple demo app that demonstrates how to use the MUI components in a LitElement project.
+            This is a demo app that demonstrates using a monorepo setup with workspace projects, an API project that includes a SQLite databae, and a frontend project all using Web Components.
           </p>
         </section>
 
@@ -47,28 +49,24 @@ export class Login extends LitElement {
   #renderUsernameControl(): TemplateResult {
     return html`
       <label for="username">Username</label>
-      <span>
-        <input
-          required
-          type="text"
-          id="username"
-          name="username"
-          @change=${this.#onUsernameInputChange} />
-      </span>
+      <input
+        required
+        type="text"
+        id="username"
+        name="username"
+        @change=${this.#onUsernameInputChange} />
     `;
   }
 
   #renderPasaswordControl(): TemplateResult {
     return html`
       <label for="password">Password</label>
-      <span>
-        <input
-          required
-          type="password"
-          id="password"
-          name="password"
-          @change=${this.#onPasswordInputChange} />
-      </span>
+      <input
+        required
+        type="password"
+        id="password"
+        name="password"
+        @change=${this.#onPasswordInputChange} />
     `;
   }
 
@@ -77,7 +75,7 @@ export class Login extends LitElement {
 
     return html`
       <mui-outline-button
-        type="submit"
+        corner="round"
         .disabled=${disabled}
         @click=${this.#onSubmit}>Login</mui-outline-button>
     `;
@@ -91,12 +89,13 @@ export class Login extends LitElement {
     this.password = value;
   }
 
-  #onSubmit(e: Event) {
+  async #onSubmit(e: Event) {
     e.stopImmediatePropagation();
 
-    const { auth } = useApi();
-
-    auth.sign({ name: this.userName });
+    const signedIn = signIn(this.userName, this.password);
+    if (signedIn) {
+      navigate(routeTypes.home);
+    }
   }
 }
 

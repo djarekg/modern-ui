@@ -90,6 +90,16 @@
     },
     {
       "name": "Debug demo",
+      "configurations": ["Launch api", "Launch demo:serve", "Launch demo:client"],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "1",
+        "order": 1
+      }
+    },
+    {
+      "name": "Debug demo (w/ swagger)",
       "configurations": [
         "Launch api",
         "Launch api:swagger",

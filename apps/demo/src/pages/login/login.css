@@ -8,9 +8,11 @@
   align-items: center;
   block-size: 100%;
   inline-size: 100%;
-  background-image: url(../../../public/pexels-adam-spinos.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: radial-gradient(
+    ellipse at bottom right,
+    var(--mui-color-secondary) 10%,
+    var(--mui-color-background) 75%
+  );
 }
 
 article {
@@ -28,7 +30,7 @@ article {
     padding-block: 5rem;
 
     &:first-child {
-      justify-content: flex-start;
+      justify-content: center;
       padding-inline-start: 7rem;
     }
 
@@ -41,13 +43,13 @@ article {
 .app-section-title {
   font-size: 2.6rem;
   font-weight: 500;
-  letter-spacing: .1rem;
+  letter-spacing: 0.1rem;
   line-height: 3rem;
 
   & + p {
     font-size: 1.2rem;
     font-weight: 300;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
     line-height: 1.5rem;
   }
 }
@@ -60,20 +62,20 @@ form {
 
 .login {
   inline-size: 420px;
-  block-size: 400px;
   border: 1px solid var(--mui-palette-surface-a30);
   border-radius: var(--mui-shape-large);
   padding: 1.5rem;
   box-shadow: var(--mui-elevation-1);
   background: rgba(0, 0, 0, 0.5);
-  -webkit-backdrop-filter: blur(30px) saturate(180%);
-  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 form {
   flex: 1 1 100%;
   justify-content: center;
-  gap: .7em;
+  gap: 0.8rem;
+  margin-block: 1.2rem;
 }
 
 fieldset,
@@ -94,9 +96,9 @@ fieldset {
   }
 }
 
-span:has(> input) {
+input {
   background: #fff;
-  border-radius: .75rem;
-  padding: .5rem;
+  border-radius: var(--mui-shape-round);
+  padding: 0.8rem 0.5rem;
   box-shadow: var(--mui-elevation-1);
 }

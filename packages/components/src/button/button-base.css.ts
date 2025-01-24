@@ -11,11 +11,27 @@ export default css`
       text-align: center;
       transition: background 0.3s;
       box-shadow: var(--shadow-button);
+      border: 1px solid var(--mui-color-text);
     }
   }
 
-  [inert] :host button,
-  :host button[disabled] {
+  :host([corner='small']) button {
+    border-radius: var(--mui-shape-small);
+  }
+  :host([corner='medium']) button {
+    border-radius: var(--mui-shape-medium);
+  }
+
+  :host([corner='large']) button {
+    border-radius: var(--mui-shape-large);
+  }
+
+  :host([corner='round']) button {
+    border-radius: var(--mui-shape-round);
+  }
+
+  [inert] :host,
+  :host[disabled] {
     pointer-events: none;
   }
 `;
