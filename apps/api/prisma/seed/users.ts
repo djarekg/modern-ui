@@ -1,11 +1,9 @@
 import { faker } from '@faker-js/faker';
-import { PrismaClient } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
 import { randomUUIDv7 } from 'bun';
-import { generateHash } from '../src/crypto/hash.js';
+import { generateHash } from '../../src/crypto/hash.js';
 
-const prisma = new PrismaClient();
-
-const load = async () => {
+export const createUsers = async (prisma: PrismaClient) => {
   // create admin user
   await prisma.user.create({
     data: {
@@ -35,11 +33,3 @@ const load = async () => {
 
   Array.from({ length: 10 }).map(async () => createUser());
 };
-
-load()
-  .then(() => console.log('Seed completed'))
-  .catch(error => {
-    console.error(error);
-    process.exit(1);
-  })
-  .finally(async () => await prisma.$disconnect());

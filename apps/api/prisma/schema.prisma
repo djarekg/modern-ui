@@ -14,12 +14,21 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(cuid())
-  firstName   String
-  lastName    String
-  email       String   @unique
-  address     String
-  phone       String
-  password    String
-  dateCreated DateTime @default(now())
+  id           String         @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String         @unique
+  address      String
+  phone        String
+  password     String
+  dateCreated  DateTime       @default(now())
+  LoginHistory LoginHistory[]
+}
+
+model LoginHistory {
+  id         String    @id @default(cuid())
+  userId     String
+  loginTime  DateTime  @default(now())
+  logoutTime DateTime?
+  user       User      @relation(fields: [userId], references: [id])
 }
