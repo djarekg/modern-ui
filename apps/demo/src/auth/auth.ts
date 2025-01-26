@@ -1,4 +1,5 @@
 import { useApi } from '@/hooks/use-api.js';
+import { Signal } from '@lit-labs/signals';
 import { useCache } from '@mui/core';
 import { type AuthCache, authCacheKey } from './auth-cache.js';
 
@@ -31,8 +32,24 @@ export const signIn = async (username: string, password: string) => {
 };
 
 /**
- * Validate user
+ * Sign out
  * @returns True if the user is signed out, false otherwise
+ */
+export const signOut = async () => {
+  const { auth } = useApi();
+  const { data: signedOut } = await auth.signout.get();
+  if (signedOut) {
+    const [_, setCache] = useCache();
+    setCache(authCacheKey, null);
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ * Validate user
+ * @returns True if the user is signed in, false otherwise
  */
 export const validate = async () => {
   const [cache] = useCache();
@@ -55,3 +72,21 @@ export const validate = async () => {
   // check if the user is the same as what is stored in the auth token
   return name === data.name;
 };
+
+/**
+ * Check if the user is signed in
+ * @returns True if the user is signed in, false otherwise
+ */
+export const isSignedIn = () => {
+  const [cache] = useCache();
+  const cachedAuth = cache(authCacheKey) as AuthCache;
+
+  // if there is no cached auth
+  return !!cachedAuth;
+};
+
+// export const useAuth = () => {
+//   const [auth, setAuth] = useCache();
+//   const cachedAuth = auth(authCacheKey) as AuthCache;
+
+// }

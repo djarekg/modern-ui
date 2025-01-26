@@ -23,6 +23,14 @@ export default new Elysia().group('/auth', app => {
 
       return auth.value;
     })
+    .get('/signout', async ({ cookie: { auth } }) => {
+      auth.set({
+        value: '',
+        maxAge: 0,
+      });
+
+      return true;
+    })
     .post(
       '/validate',
       async ({ jwt, set, body }): Promise<{ name: string } | string> => {

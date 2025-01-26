@@ -28,7 +28,7 @@ export class Login extends LitElement {
         <section>
           <div class="login">
             <span class="app-section-title">Login</span>
-            <form>
+            <form method="post" @submit=${this.#onSubmit}>
               <fieldset>
                 ${this.#renderUsernameControl()}
               </fieldset>
