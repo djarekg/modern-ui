@@ -26,6 +26,14 @@ const styles = css`
     flex-direction: column;
     overflow: hidden auto;
   }
+
+  article {
+    background: radial-gradient(
+      ellipse at bottom right,
+      var(--mui-color-secondary) 10%,
+      var(--mui-color-background) 75%
+    );
+  }
 `;
 
 @customElement('app-layout')

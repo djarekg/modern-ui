@@ -25,6 +25,7 @@ export default defineConfig({
       'lit',
       'lit/decorators',
       'lit/directives',
+      'signal-utils',
     ],
   },
   plugins: [

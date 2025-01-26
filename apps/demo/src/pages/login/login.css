@@ -8,11 +8,6 @@
   align-items: center;
   block-size: 100%;
   inline-size: 100%;
-  background: radial-gradient(
-    ellipse at bottom right,
-    var(--mui-color-secondary) 10%,
-    var(--mui-color-background) 75%
-  );
 }
 
 article {
