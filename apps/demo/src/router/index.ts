@@ -1,12 +1,11 @@
-import type { RouteConfig, Router } from '@lit-labs/router';
-import { html } from 'lit';
+import { type RouteConfig, Router } from '@lit-labs/router';
+import { type ReactiveControllerHost, html } from 'lit';
+import { routes } from './routes.js';
 
-export const navigate = (path: string): void => globalThis.history.pushState({}, '', path);
-
-export const routes: RouteConfig[] = [
+const routeConfigs: RouteConfig[] = [
   {
     name: 'home',
-    path: '/',
+    path: routes.home,
     render: () => {
       import('../pages/index.js');
       return html`<app-home></app-home>`;
@@ -14,7 +13,7 @@ export const routes: RouteConfig[] = [
   },
   {
     name: 'login',
-    path: '/login',
+    path: routes.login,
     render: () => {
       import('../pages/login/login.js');
       return html`<app-login></app-login>`;
@@ -22,8 +21,16 @@ export const routes: RouteConfig[] = [
   },
 ];
 
+export const createRouter = (host: ReactiveControllerHost & HTMLElement) =>
+  new Router(host, routeConfigs);
+
 /**
- * Initialize navigation
+ * Setup a proxy for the pushState method to intercept and
+ * navigate to a new URL using the router.
+ *
+ * This allows router navitation via the 'navigate' method without
+ * having to expose the router instance to the global scope using
+ * something like the Context API.
  * @param router Router instance
  */
 export const initNavigation = (router: Router) => {
@@ -49,3 +56,9 @@ export const initNavigation = (router: Router) => {
     },
   });
 };
+
+/**
+ * Navigate to a new URL using the router
+ * @param path The path to navigate to
+ */
+export const navigate = (path: string): void => globalThis.history.pushState({}, '', path);

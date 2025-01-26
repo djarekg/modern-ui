@@ -39,7 +39,8 @@
     "@mui/components": "workspace:*",
     "@mui/core": "workspace:*",
     "@mui/web": "workspace:*",
-    "lit": "^3.2.1"
+    "lit": "^3.2.1",
+    "signal-utils": "^0.21.1"
   },
   "devDependencies": {
     "@types/bun": "^1.1.18",

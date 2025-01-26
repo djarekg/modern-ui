@@ -5,8 +5,8 @@ import { createUsers } from './users.js';
 const prisma = new PrismaClient();
 
 const load = async () => {
-  createUsers(prisma);
-  createLoginHistory(prisma);
+  await createUsers(prisma);
+  await createLoginHistory(prisma);
 };
 
 load()

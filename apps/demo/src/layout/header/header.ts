@@ -1,7 +1,10 @@
-import { isSignedIn, signOut } from '@/auth/auth.js';
+import { signOut } from '@/auth/auth.js';
+import { isSignedInContext } from '@/auth/is-signed-in.js';
 import { navigate } from '@/router/index.js';
-import { routeTypes } from '@/router/route-types.js';
+import { routes } from '@/router/routes.js';
 import { SignalWatcher } from '@lit-labs/signals';
+import { consume } from '@lit/context';
+import { log } from '@mui/core';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 import styles from './header.css?inline';
@@ -10,8 +13,11 @@ import styles from './header.css?inline';
 export class Header extends SignalWatcher(LitElement) {
   static override styles = [unsafeCSS(styles)];
 
+  @consume({ context: isSignedInContext, subscribe: true }) isSignedIn: boolean;
+
   @query('menu') protected userMenu!: HTMLElement;
 
+  @log()
   override render() {
     return html`
       <header>
@@ -33,7 +39,7 @@ export class Header extends SignalWatcher(LitElement) {
   }
 
   #renderUserMenu() {
-    if (!isSignedIn()) {
+    if (!this.isSignedIn) {
       return nothing;
     }
 
@@ -50,7 +56,7 @@ export class Header extends SignalWatcher(LitElement) {
             </a>
           </li>
           <li>
-            <a class="link" href="/logout" @click=${this.#signOut}>
+            <a class="link" href="#" @click=${this.#signOut}>
               <span class="material-symbols-sharp">logout</span>
               Logout
             </a>
@@ -64,7 +70,7 @@ export class Header extends SignalWatcher(LitElement) {
     // TODO: use a dialog component
     if (window.confirm('Are you sure you want to sign out?')) {
       if (await signOut()) {
-        navigate(routeTypes.login);
+        navigate(routes.login);
         this.userMenu.togglePopover();
       }
     }

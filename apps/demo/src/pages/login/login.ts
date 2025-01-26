@@ -1,6 +1,6 @@
 import { signIn } from '@/auth/auth.js';
 import { navigate } from '@/router/index.js';
-import { routeTypes } from '@/router/route-types.js';
+import { routes } from '@/router/routes.js';
 import type { TypedEvent } from '@mui/core';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
@@ -94,7 +94,7 @@ export class Login extends LitElement {
 
     const signedIn = signIn(this.userName, this.password);
     if (signedIn) {
-      navigate(routeTypes.home);
+      navigate(routes.home);
     }
   }
 }

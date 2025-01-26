@@ -1,11 +1,13 @@
 import { validate } from '@/auth/auth.js';
-import { initNavigation, navigate, routes } from '@/router/index.js';
-import { Router } from '@lit-labs/router';
-import { LitElement, type TemplateResult, css, html } from 'lit';
+import { isSignedInContext, isSignedInSignal } from '@/auth/is-signed-in.js';
+import { createRouter, initNavigation, navigate } from '@/router/index.js';
+import { routes } from '@/router/routes.js';
+import { Signal, SignalWatcher } from '@lit-labs/signals';
+import { provide } from '@lit/context';
+import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import './header/header.js';
 import './footer/footer.js';
-import { routeTypes } from '@/router/route-types.js';
 
 const styles = css`
   :host,
@@ -27,35 +29,64 @@ const styles = css`
 `;
 
 @customElement('app-layout')
-export class Layout extends LitElement {
+export class Layout extends SignalWatcher(LitElement) {
   static override styles = [styles];
-  readonly #router = new Router(this, routes);
 
-  async connectedCallback(): Promise<void> {
+  readonly #router = createRouter(this);
+  #watcher: Signal.subtle.Watcher;
+
+  @provide({ context: isSignedInContext }) isSignedIn = isSignedInSignal.get();
+
+  async connectedCallback() {
     super.connectedCallback();
 
     initNavigation(this.#router);
 
+    this.#watchIsSignedIn();
+
     // check if user is signed in and if not redirect to login page
     const valid = await validate();
     if (!valid) {
-      console.log('User is not signed in');
-      navigate(routeTypes.login);
+      navigate(routes.login);
     }
-
-    console.log('User is signed in');
   }
 
-  protected override render(): TemplateResult {
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.#watcher.unwatch();
+  }
+
+  override render() {
     return html`
       <main>
         <app-header></app-header>
-        <article>
-            ${this.#router.outlet()}
-        </article>
+        <article>${this.#router.outlet()}</article>
         <app-footer></app-footer>
       </main>
     `;
+  }
+
+  /**
+   * Watch the isSignedIn signal and update the isSignedIn property
+   */
+  #watchIsSignedIn() {
+    // TODO: a utility method should be created to handle this pattern (i.e. computed(() => ...))
+
+    const isSignedIn = new Signal.Computed(() => isSignedInSignal.get());
+
+    this.#watcher = new Signal.subtle.Watcher(async () => {
+      // notify callbacks are not allowed to access signals synchronously
+      await 0;
+      this.isSignedIn = isSignedIn.get();
+      // watchers have to be re-enabled after they run:
+      this.#watcher.watch();
+    });
+
+    this.#watcher.watch(isSignedIn);
+
+    // computed signals are lazy, so we need to read it to run the computation
+    // and notify watchers
+    isSignedIn.get();
   }
 }
 

@@ -1,10 +1,10 @@
+import { isSignedInSignal } from '@/auth/is-signed-in.js';
 import { useApi } from '@/hooks/use-api.js';
-import { Signal } from '@lit-labs/signals';
 import { useCache } from '@mui/core';
 import { type AuthCache, authCacheKey } from './auth-cache.js';
 
 /**
- * Sign in using JWT
+ * Sign in using the provided username and password
  * @param username The username of the user attempting to sign in
  * @param password The password of the user attempting to sign in
  * @returns True if the user is signed in, false otherwise
@@ -25,6 +25,7 @@ export const signIn = async (username: string, password: string) => {
       token,
     };
     setCache(authCacheKey, authCache);
+    isSignedInSignal.set(true);
     return true;
   }
 
@@ -32,7 +33,7 @@ export const signIn = async (username: string, password: string) => {
 };
 
 /**
- * Sign out
+ * Sign out current user
  * @returns True if the user is signed out, false otherwise
  */
 export const signOut = async () => {
@@ -41,6 +42,7 @@ export const signOut = async () => {
   if (signedOut) {
     const [_, setCache] = useCache();
     setCache(authCacheKey, null);
+    isSignedInSignal.set(false);
     return true;
   }
 
@@ -57,6 +59,7 @@ export const validate = async () => {
 
   // if there is no cached auth, the user is not signed in
   if (!cachedAuth) {
+    isSignedInSignal.set(false);
     return false;
   }
 
@@ -66,27 +69,11 @@ export const validate = async () => {
   const { auth } = useApi();
   const { data, status } = await auth.validate.post(token);
   if (status === 401 || !data || typeof data === 'string') {
+    isSignedInSignal.set(false);
     return false;
   }
 
   // check if the user is the same as what is stored in the auth token
-  return name === data.name;
+  isSignedInSignal.set(name === data.name);
+  return isSignedInSignal.get();
 };
-
-/**
- * Check if the user is signed in
- * @returns True if the user is signed in, false otherwise
- */
-export const isSignedIn = () => {
-  const [cache] = useCache();
-  const cachedAuth = cache(authCacheKey) as AuthCache;
-
-  // if there is no cached auth
-  return !!cachedAuth;
-};
-
-// export const useAuth = () => {
-//   const [auth, setAuth] = useCache();
-//   const cachedAuth = auth(authCacheKey) as AuthCache;
-
-// }
