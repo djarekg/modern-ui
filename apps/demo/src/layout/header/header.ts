@@ -1,13 +1,15 @@
+import styles from './header.css?inline';
+
 import { signOut } from '@/auth/auth.js';
 import { isSignedInContext } from '@/auth/is-signed-in.js';
 import { navigate } from '@/router/index.js';
 import { routes } from '@/router/routes.js';
 import { SignalWatcher } from '@lit-labs/signals';
 import { consume } from '@lit/context';
+import { confirm } from '@mui/components';
 import { log } from '@mui/core';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
-import styles from './header.css?inline';
 
 @customElement('app-header')
 export class Header extends SignalWatcher(LitElement) {
@@ -67,11 +69,11 @@ export class Header extends SignalWatcher(LitElement) {
   }
 
   async #signOut() {
-    // TODO: use a dialog component
-    if (window.confirm('Are you sure you want to sign out?')) {
+    this.userMenu.togglePopover();
+
+    if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {
       if (await signOut()) {
         navigate(routes.login);
-        this.userMenu.togglePopover();
       }
     }
   }

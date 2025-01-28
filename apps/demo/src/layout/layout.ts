@@ -28,11 +28,12 @@ const styles = css`
   }
 
   article {
-    background: radial-gradient(
-      ellipse at bottom right,
-      var(--mui-color-secondary) 10%,
-      var(--mui-color-background) 75%
+    background: linear-gradient(
+      45deg,
+      hsla(189, 100%, 50%, 0.7),
+      hsla(321, 100%, 53%, 0.7)
     );
+    backdrop-filter: blur(10px);
   }
 `;
 

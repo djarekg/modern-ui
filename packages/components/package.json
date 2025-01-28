@@ -13,6 +13,8 @@
     "bun": ">=1.1.41"
   },
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "exports": {
     "./package.json": "./package.json",
     "./theme/theme.css": "./dist/theme/theme.css",
@@ -34,8 +36,10 @@
     "build": "task build"
   },
   "dependencies": {
+    "@lit-labs/signals": "^0.1.1",
     "@mui/web": "workspace:*",
-    "@open-wc/dedupe-mixin": "^1.4.0"
+    "@open-wc/dedupe-mixin": "^1.4.0",
+    "signal-utils": "^0.21.1"
   },
   "peerDependencies": {
     "lit": "^3.2.1",

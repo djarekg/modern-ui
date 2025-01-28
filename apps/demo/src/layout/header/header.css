@@ -31,15 +31,20 @@ button {
   }
 }
 
+[popover] {
+  z-index: 900;
+}
+
 menu {
   inset: calc(var(--_header-height) - 0.8rem) 1rem auto auto;
   background-color: var(--mui-palette-surface-a10);
   border-radius: var(--mui-shape-medium);
   border: 1px solid var(--mui-palette-surface-a20);
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(20px) saturate(180%);
   box-shadow: var(--mui-elevation-4);
   padding: 0;
+  z-index: 900;
 
   ul {
     list-style: none;

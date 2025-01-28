@@ -6,14 +6,14 @@ footer {
   display: flex;
   flex-direction: column;
   color: white;
-  block-size: 250px;
+  block-size: auto;
   border-top: 2px solid var(--mui-palette-surface-a40);
 }
 
 .links {
   display: flex;
   justify-content: space-evenly;
-  padding-block: 24px;
+  padding-block: 6px;
 
   > div {
     display: flex;
@@ -39,6 +39,7 @@ footer {
 ul {
   list-style: none;
   padding: 0;
+  margin-block-end: 0;
 }
 
 li {
@@ -48,11 +49,14 @@ li {
 
 .logo {
   &::before {
+    --_size: 18px;
+
     display: inline-block;
-    width: 24px;
-    height: 24px;
-    vertical-align: top;
+    width: var(--_size);
+    height: var(--_size);
+    vertical-align: middle;
     margin-inline-end: 12px;
+    margin-block-end: 4px;
     background-size: contain;
     background-repeat: no;
   }
