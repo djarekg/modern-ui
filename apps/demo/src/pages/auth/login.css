@@ -57,12 +57,14 @@ form {
 
 .login {
   inline-size: 420px;
+}
+
+.app-container {
   border: 1px solid var(--mui-palette-surface-a30);
-  border-radius: var(--mui-shape-large);
+  border-radius: var(--mui-shape-medium);
   padding: 1.5rem;
-  box-shadow: var(--mui-elevation-1);
+  box-shadow: var(--mui-elevation-3);
   background: rgba(0, 0, 0, 0.5);
-  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 

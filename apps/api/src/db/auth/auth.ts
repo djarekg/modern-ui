@@ -1,5 +1,5 @@
-import { prisma } from '../client/index.js';
-import { compareHash } from '../crypto/hash.js';
+import { prisma } from '../../client/index.js';
+import { compareHash } from '../../crypto/hash.js';
 
 /**
  * Verify user

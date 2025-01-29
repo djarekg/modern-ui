@@ -1,4 +1,6 @@
-import { verifyUser } from '@/auth/auth.js';
+import { verifyUser } from '@/db/auth/auth.js';
+import { createLoginHistory } from '@/db/login-history/index.js';
+import { getUser } from '@/db/user/user.js';
 import { Elysia, t } from 'elysia';
 
 export default new Elysia().group('/sign', app => {
@@ -10,6 +12,10 @@ export default new Elysia().group('/sign', app => {
       if (!verified) {
         return 'Unauthorized';
       }
+
+      // get usesr id to log login history
+      const { id } = await getUser(username);
+      await createLoginHistory(id);
 
       return verified;
     },

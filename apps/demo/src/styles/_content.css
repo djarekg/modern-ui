@@ -1,0 +1,8 @@
+.app-container {
+  border: 1px solid var(--mui-palette-surface-a30);
+  border-radius: var(--mui-shape-large);
+  padding: 1.5rem;
+  box-shadow: var(--mui-elevation-1);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}

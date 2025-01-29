@@ -7,7 +7,6 @@ import { routes } from '@/router/routes.js';
 import { SignalWatcher } from '@lit-labs/signals';
 import { consume } from '@lit/context';
 import { confirm } from '@mui/components';
-import { log } from '@mui/core';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 
@@ -19,12 +18,11 @@ export class Header extends SignalWatcher(LitElement) {
 
   @query('menu') protected userMenu!: HTMLElement;
 
-  @log()
   override render() {
     return html`
       <header>
         <nav>
-          <a href="/">
+          <a href=${routes.home}>
             <img
               src="../../../public/img/token-branded--idia.svg"
               loading="lazy"
@@ -52,7 +50,7 @@ export class Header extends SignalWatcher(LitElement) {
       <menu id="userMenu" popover>
         <ul>
           <li>
-            <a class="link" href="/profile">
+            <a class="link" href=${routes.profile} @click=${this.close}>
               <span class="material-symbols-sharp">user_attributes</span>
               Profile
             </a>
@@ -69,13 +67,17 @@ export class Header extends SignalWatcher(LitElement) {
   }
 
   async #signOut() {
-    this.userMenu.togglePopover();
+    this.close();
 
     if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {
       if (await signOut()) {
         navigate(routes.login);
       }
     }
+  }
+
+  close() {
+    this.userMenu.hidePopover();
   }
 }
 

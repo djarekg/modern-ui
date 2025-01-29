@@ -15,8 +15,16 @@ const routeConfigs: RouteConfig[] = [
     name: 'login',
     path: routes.login,
     render: () => {
-      import('../pages/login/login.js');
+      import('../pages/auth/login.js');
       return html`<app-login></app-login>`;
+    },
+  },
+  {
+    name: 'profile',
+    path: routes.profile,
+    render: () => {
+      import('../pages/user/profile.js');
+      return html`<app-profile></app-profile>`;
     },
   },
 ];
