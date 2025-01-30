@@ -4,6 +4,7 @@ import user from '@/routes/user.js';
 import { cors } from '@elysiajs/cors';
 import { swagger } from '@elysiajs/swagger';
 import { Elysia } from 'elysia';
+import type { getLoginHistory } from './db/login-history/index.js';
 import type { getUser, getUsers } from './db/user/user.js';
 
 const app = new Elysia() // format - force new line
@@ -17,3 +18,4 @@ const app = new Elysia() // format - force new line
 export type App = typeof app;
 export type User = Awaited<ReturnType<typeof getUser>>;
 export type Users = Awaited<ReturnType<typeof getUsers>>;
+export type LoginHistories = Awaited<ReturnType<typeof getLoginHistory>>;

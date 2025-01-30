@@ -36,12 +36,20 @@
   --mui-palette-white: #ffffffff;
 
   --mui-color-background: var(--mui-palette-surface-a0);
+  --mui-color-on-background: var(--mui-palette-surface-a50);
   --mui-color-text: var(--mui-palette-white);
 
   --mui-color-primary: var(--mui-palette-primary-a0);
   --mui-color-primary-hsl: var(--mui-palette-primary-a0-hsl);
   --mui-color-secondary: var(--mui-palette-secondary-a0);
   --mui-color-secondary-hsl: var(--mui-palette-secondary-a0-hsl);
+
+  --mui-color-border: var(--mui-palette-surface-tonal-a20);
+  --mui-color-header: rgba(40, 41, 42, 0.6);
+  --mui-color-hover: rgba(40, 41, 42, 0.6);
+
+  --mui-icon-size: 24px;
+  --mui-color-icon: #fff;
 }
 
 .purple {

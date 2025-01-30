@@ -1,14 +1,17 @@
-import styles from './header.css?inline';
+import { SignalWatcher } from '@lit-labs/signals';
+import { consume } from '@lit/context';
+import { LitElement, html, nothing, unsafeCSS } from 'lit';
+import { customElement, query } from 'lit/decorators.js';
 
 import { signOut } from '@/auth/auth.js';
 import { isSignedInContext } from '@/auth/is-signed-in.js';
 import { navigate } from '@/router/index.js';
 import { routes } from '@/router/routes.js';
-import { SignalWatcher } from '@lit-labs/signals';
-import { consume } from '@lit/context';
 import { confirm } from '@mui/components';
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+
+import '@mui/components/icon/icon.js';
+
+import styles from './header.css?inline';
 
 @customElement('app-header')
 export class Header extends SignalWatcher(LitElement) {
@@ -45,19 +48,19 @@ export class Header extends SignalWatcher(LitElement) {
 
     return html`
       <button type="button" popovertarget="userMenu">
-        <span class="material-symbols-sharp">account_circle</span>
+        <mui-icon>account_circle</mui-icon>
       </button>
       <menu id="userMenu" popover>
         <ul>
           <li>
             <a class="link" href=${routes.profile} @click=${this.close}>
-              <span class="material-symbols-sharp">user_attributes</span>
+              <mui-icon>user_attributes</mui-icon>
               Profile
             </a>
           </li>
           <li>
             <a class="link" href="#" @click=${this.#signOut}>
-              <span class="material-symbols-sharp">logout</span>
+              <mui-icon>logout</mui-icon>
               Logout
             </a>
           </li>

@@ -10,6 +10,15 @@
   block-size: 100%;
 }
 
+article {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: center;
+  block-size: 100%;
+  inline-size: 100%;
+}
+
 /* TODO: add this to global */
 .app-container {
   border: 1px solid var(--mui-palette-surface-a30);
@@ -18,6 +27,14 @@
   box-shadow: var(--mui-elevation-3);
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
+
+  &:nth-child(1) {
+    inline-size: 30%;
+  }
+
+  &:nth-child(2) {
+    inline-size: 50%;
+  }
 }
 
 form {

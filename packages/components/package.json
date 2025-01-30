@@ -18,6 +18,10 @@
   "exports": {
     "./package.json": "./package.json",
     "./theme/theme.css": "./dist/theme/theme.css",
+    "./button/button.js": {
+      "types": "./dist/button/button.d.ts",
+      "import": "./dist/button/button.js"
+    },
     "./button/flat-button.js": {
       "types": "./dist/button/flat-button.d.ts",
       "import": "./dist/button/flat-button.js"
@@ -25,6 +29,22 @@
     "./button/outline-button.js": {
       "types": "./dist/button/outline-button.d.ts",
       "import": "./dist/button/outline-button.js"
+    },
+    "./dialog/dialog.js": {
+      "types": "./dist/dialog/dialog.d.ts",
+      "import": "./dist/dialog/dialog.js"
+    },
+    "./dialog/confirm.js": {
+      "types": "./dist/dialog/confirm.d.ts",
+      "import": "./dist/dialog/confirm.js"
+    },
+    "./icon/icon.js": {
+      "types": "./dist/icon/icon.d.ts",
+      "import": "./dist/icon/icon.js"
+    },
+    "./table/*.js": {
+      "types": "./dist/table/*.d.ts",
+      "import": "./dist/table/*.js"
     },
     ".": {
       "types": "./dist/index.d.ts",

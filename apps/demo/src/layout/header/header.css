@@ -22,13 +22,7 @@ button {
 }
 
 [popovertarget] {
-  span {
-    --_icon-size: 32px;
-
-    block-size: var(--_icon-size);
-    inline-size: var(--_icon-size);
-    font-size: var(--_icon-size);
-  }
+  --mui-icon-size: 32px;
 }
 
 [popover] {
@@ -64,19 +58,4 @@ menu {
       }
     }
   }
-}
-
-.material-symbols-sharp {
-  font-family: "Material Symbols Sharp", sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-smoothing: antialiased;
 }
