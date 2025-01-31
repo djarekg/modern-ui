@@ -46,6 +46,10 @@
       "types": "./dist/table/*.d.ts",
       "import": "./dist/table/*.js"
     },
+    "./text-field/text-field.js": {
+      "types": "./dist/text-field/text-field.d.ts",
+      "import": "./dist/text-field/text-field.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
@@ -57,6 +61,7 @@
   },
   "dependencies": {
     "@lit-labs/signals": "^0.1.1",
+    "@mui/core": "workspace:*",
     "@mui/web": "workspace:*",
     "@open-wc/dedupe-mixin": "^1.4.0",
     "signal-utils": "^0.21.1"

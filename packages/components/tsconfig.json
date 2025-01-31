@@ -6,6 +6,7 @@
     "resolveJsonModule": true,
     "paths": {
       "@/*": ["./*"],
+      "@mui/core/*": ["../core/*"],
       "@mui/web/*": ["../web/*"]
     }
   },

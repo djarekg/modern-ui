@@ -1,13 +1,14 @@
-import { useApi } from '@/hooks/use-api.js';
-import { getUserName } from '@/utils/cache-util.js';
 import { SignalWatcher, html, signal } from '@lit-labs/signals';
-import type { User } from '@mui/api';
 import { LitElement, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { effect } from 'signal-utils/subtle/microtask-effect';
 
-import '@/components/login-history.js';
+import type { User } from '@mui/api';
+import '@mui/components/text-field/text-field.js';
 
+import { useApi } from '@/hooks/use-api.js';
+import { getUserName } from '@/utils/cache-util.js';
+import '@/components/login-history.js';
 import styles from './profile.css?inline';
 
 @customElement('app-profile')
@@ -47,16 +48,31 @@ export class Profile extends SignalWatcher(LitElement) {
 
     return html`
       <form class="app-container">
-        <label for="firstName">First name</label>
-        <input id="firstName" name="firstName" type="text" .value=${firstName} />
-        <label for="lastName">Last name</label>
-        <input id="lastName" name="lastName" type="text" .value=${lastName} />
-        <label for="email">Email</label>
-        <input id="email" name="email" type="text" .value=${email} />
-        <label for="address">Address</label>
-        <input id="address" name="address" type="text" .value=${address} />
-        <label for="phone">Phone</label>
-        <input id="phone" name="phone" type="text" .value=${phone} />
+        <mui-text-field
+         appearance="filled"
+         label="First name"
+         .value=${firstName}>
+        </mui-text-field>
+        <mui-text-field
+         appearance="filled"
+         label="Last name"
+         .value=${lastName}>
+        </mui-text-field>
+        <mui-text-field
+         appearance="filled"
+         label="Email"
+         .value=${email}>
+        </mui-text-field>
+        <mui-text-field
+         appearance="filled"
+         label="Address"
+         .value=${address}>
+        </mui-text-field>
+        <mui-text-field
+         appearance="filled"
+         label="Phone"
+         .value=${phone}>
+        </mui-text-field>
       </form>
     `;
   }
