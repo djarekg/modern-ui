@@ -1,9 +1,11 @@
-import auth from '@/routes/auth.js';
-import login from '@/routes/login.js';
-import user from '@/routes/user.js';
 import { cors } from '@elysiajs/cors';
 import { swagger } from '@elysiajs/swagger';
 import { Elysia } from 'elysia';
+
+import auth from '@/routes/auth.js';
+import login from '@/routes/login.js';
+import user from '@/routes/user.js';
+
 import type { getLoginHistory } from './db/login-history/index.js';
 import type { getUser, getUsers } from './db/user/user.js';
 

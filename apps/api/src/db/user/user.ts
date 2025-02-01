@@ -1,3 +1,4 @@
+import type { User } from '@prisma/client';
 import { prisma } from '../../client/index.js';
 
 /**
@@ -26,6 +27,41 @@ export const getUsers = async () => {
   await prisma.$connect();
   try {
     return await prisma.user.findMany();
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+/**
+ * Create user
+ * @param user User object
+ * @returns Created user object
+ */
+export const createUser = async (user: User) => {
+  await prisma.$connect();
+  try {
+    return await prisma.user.create({
+      data: user,
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+/**
+ * Update user
+ * @param user User object
+ * @returns Updated user object
+ */
+export const updateUser = async (user: User) => {
+  await prisma.$connect();
+  try {
+    return await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: user,
+    });
   } finally {
     await prisma.$disconnect();
   }

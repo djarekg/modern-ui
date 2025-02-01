@@ -3,20 +3,48 @@
 }
 
 :host {
+  --_article-flex-direction: row;
+  --_container-1: 30%;
+  --_container-2: 50%;
+
+  container: article / inline-size;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   block-size: 100%;
+  inline-size: 100%;
 }
 
 article {
   display: flex;
+  flex-direction: var(--_article-flex-direction);
   gap: 2rem;
-  align-items: flex-start;
   justify-content: center;
   block-size: 100%;
   inline-size: 100%;
+  /* flex: 1 1 100%; */
+  /* flex-wrap: wrap; */
+}
+
+@container article (max-width: 900px) {
+  article {
+    display: block;
+    /* --_article-flex-direction: column; */
+    /* align-items: center; */
+    /* overflow: hidden; */
+    /* overflow: auto hidden; */
+  }
+
+  .app-container {
+    --_container-1: 400px;
+    --_container-2: 400px;
+
+    margin: 0 auto;
+
+    &:first-child {
+      margin-block-end: 2rem;
+    }
+  }
 }
 
 /* TODO: add this to global */
@@ -29,18 +57,10 @@ article {
   backdrop-filter: blur(10px);
 
   &:nth-child(1) {
-    inline-size: 30%;
+    inline-size: var(--_container-1);
   }
 
   &:nth-child(2) {
-    inline-size: 50%;
+    inline-size: var(--_container-2);
   }
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  max-inline-size: 400px;
 }

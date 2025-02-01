@@ -1,11 +1,15 @@
-import { signIn } from '@/auth/auth.js';
-import { navigate } from '@/router/index.js';
-import { routes } from '@/router/routes.js';
 import type { TypedEvent } from '@mui/core';
 import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import styles from './login.css?inline';
+
 import '@mui/components/button/outline-button.js';
+import '@mui/components/text-field/text-field.js';
+
+import { signIn } from '@/auth/auth.js';
+import { navigate } from '@/router/index.js';
+import { routes } from '@/router/routes.js';
+
+import styles from './login.css?inline';
 
 @customElement('app-login')
 export class Login extends LitElement {
@@ -48,25 +52,24 @@ export class Login extends LitElement {
 
   #renderUsernameControl(): TemplateResult {
     return html`
-      <label for="username">Username</label>
-      <input
+      <mui-text-field
         required
-        type="text"
-        id="username"
-        name="username"
-        @change=${this.#onUsernameInputChange} />
+        appearance="round"
+        label="Username"
+        @change=${this.#onUsernameInputChange}>
+      </mui-text-field>
     `;
   }
 
   #renderPasaswordControl(): TemplateResult {
     return html`
-      <label for="password">Password</label>
-      <input
+      <mui-text-field
         required
+        appearance="round"
+        label="Password"
         type="password"
-        id="password"
-        name="password"
-        @change=${this.#onPasswordInputChange} />
+        @change=${this.#onPasswordInputChange}>
+      </mui-text-field>
     `;
   }
 

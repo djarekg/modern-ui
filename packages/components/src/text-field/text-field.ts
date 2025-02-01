@@ -40,7 +40,7 @@ export type InvalidTextFieldType =
   | 'reset'
   | 'submit';
 
-export type AppearceType = 'filled' | 'outlined' | 'standard';
+export type AppearceType = 'filled' | 'outlined' | 'standard' | 'round';
 
 /**
  * @cssprop --mui-text-field-on-color - The color of the text field's text. Default is `#ffffff`.

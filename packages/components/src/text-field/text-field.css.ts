@@ -6,13 +6,16 @@ export default css`
   }
 
   :host {
-    --_input-font-size: var(--mui-typescale-label-large-size);
-    --_input-font-weight: var(--mui-typescale-label-large-weight);
     --_label-on-color: var(--mui-color-text-3);
     --_label-populated-color: var(--mui-text-field-label-populated-color, var(--mui-color-primary));
     --_label-inset-block-start: -2px;
-    --_input-font-size: var(--mui-typescale-label-large-size);
     --_label-font-weight: var(--mui-typescale-label-large-weight);
+    --_input-font-weight: var(--mui-typescale-label-large-weight);
+    --_label-font-size: var(--mui-typescale-label-large-size);
+    --_input-font-size: var(--mui-typescale-label-large-size);
+    --_input-border-radius: none;
+    --_input-padding-inline: 0;
+    --_input-color-disabled: var(--mui-color-text-disabled);
 
     outline: none;
   }
@@ -46,8 +49,9 @@ export default css`
     }
   }
 
-  :host([appearance=filled]) {
-    --_input-on-color: var(--mui-text-field-on-color, var(--mui-color-text-light-2));
+  :host([appearance=filled]),
+  :host([appearance=round]) {
+    --_input-on-color: var(--mui-text-field-on-color, var(--mui-color-text-light-1));
 
     .text-field {
       display: flex;
@@ -57,12 +61,24 @@ export default css`
 
     input {
       inline-size: 100%;
-      padding: 0.8rem 1rem;
       border: none;
-      border-radius: var(--mui-shape-round);
       background: #fff;
       box-shadow: var(--mui-elevation-1);
     }
+  }
+
+  :host([appearance=filled]) {
+    --_input-border-radius: var(--mui-shape-small);
+    --_input-padding-inline: 0.3rem;
+  }
+
+  :host([appearance=round]) {
+    --_input-border-radius: var(--mui-shape-round);
+    --_input-padding-inline: 0.9rem;
+  }
+
+  :host([disabled]) {
+    --_input-on-color: var(--_input-color-disabled);
   }
 
   .text-field {
@@ -75,6 +91,8 @@ export default css`
     color: var(--_input-on-color);
     font-size: var(--_input-font-size);
     font-weight: var(--_input-font-weight);
+    border-radius: var(--_input-border-radius);
+    padding: 0.6rem var(--_input-padding-inline)
   }
 
   label {

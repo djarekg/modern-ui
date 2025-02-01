@@ -24,6 +24,7 @@ const styles = css`
   main {
     display: flex;
     flex-direction: column;
+    /* flex: 1 1 100%; */
     overflow: hidden auto;
   }
 

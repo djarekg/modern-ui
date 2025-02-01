@@ -1,11 +1,7 @@
-import { useApi } from '@/hooks/use-api.js';
-import { getUserName } from '@/utils/cache-util.js';
-import { SignalWatcher, html, signal } from '@lit-labs/signals';
 import type { LoginHistories } from '@mui/api';
 import { DateTime } from '@mui/core';
-import { LitElement, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import { effect } from 'signal-utils/subtle/microtask-effect';
+import { LitElement, css, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 import '@mui/components/table/table.js';
 import '@mui/components/table/table-cell.js';
@@ -20,21 +16,10 @@ const styles = css`
 `;
 
 @customElement('app-login-history')
-export class LoginHistory extends SignalWatcher(LitElement) {
+export class LoginHistory extends LitElement {
   static override styles = [styles];
 
-  #loginHistories = signal<LoginHistories>([]);
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    effect(async () => {
-      const username = getUserName();
-      const { sign } = useApi();
-      const { data } = await sign.history({ username }).get();
-      this.#loginHistories.set(data);
-    });
-  }
+  @property({ type: Array }) loginHistories: LoginHistories = [];
 
   override render() {
     return html`
@@ -50,7 +35,7 @@ export class LoginHistory extends SignalWatcher(LitElement) {
   }
 
   #renderRows() {
-    return this.#loginHistories.get().map(
+    return this.loginHistories.map(
       ({ id, loginTime, userId }) => html`
         <mui-table-row .id=${id}>
           <mui-table-cell>${id}</mui-table-cell>

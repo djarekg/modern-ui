@@ -75,8 +75,7 @@ form {
   margin-block: 1.2rem;
 }
 
-fieldset,
-input {
+fieldset {
   border: none;
   outline: none;
   inline-size: 100%;
@@ -91,11 +90,4 @@ fieldset {
     flex-direction: row;
     justify-content: flex-end;
   }
-}
-
-input {
-  background: #fff;
-  border-radius: var(--mui-shape-round);
-  padding: 0.8rem 0.5rem;
-  box-shadow: var(--mui-elevation-1);
 }
