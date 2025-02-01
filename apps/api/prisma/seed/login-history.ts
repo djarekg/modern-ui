@@ -1,11 +1,12 @@
 import type { PrismaClient } from '@prisma/client';
-import { randomUUIDv7 } from 'bun';
+
+import { faker } from './init-faker.js';
 
 export const createLoginHistory = async (prisma: PrismaClient) => {
   const createLoginHistory = async () => {
     return await prisma.loginHistory.create({
       data: {
-        id: randomUUIDv7(),
+        id: faker.string.uuid(),
         userId: (await prisma.user.findFirst()).id,
       },
     });

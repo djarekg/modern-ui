@@ -12,8 +12,16 @@ const styles = css`
     --mui-icon-size: 20px;
   }
 
+  :host-context(:is(mui-table-row:last-child)):host(:is(:first-child)) {
+    border-end-start-radius: var(--mui-shape-large);
+  }
+
+  :host-context(:is(mui-table-row:last-child)):host(:is(:last-child)) {
+    border-end-end-radius: var(--mui-shape-large);
+  }
+
   :host-context(:is(mui-table-row:hover:not([header]), :is(mui-table-row[aria-selected="true"]))) {
-    --_-color: var(--mui-table-hover-color, var(--mui-color-on-background));
+    --_-color: var(--mui-table-hover-color, var(--mui-color-table-row-hover));
     --mui-color-icon: var(--_-color);
 
     background: var(--_container-hover-color);
@@ -23,8 +31,6 @@ const styles = css`
 
 /**
  * @cssprop --mui-table-hover-color - Background color of the table cell when hovered. Default is `var(--mui-color-on-background)`.
- *
- * @slot - Default slot for table cells.
  */
 @customElement('mui-table-cell')
 export class TableCell extends LitElement {

@@ -1,14 +1,16 @@
-import type { LoginHistories } from '@mui/api';
-import { DateTime } from '@mui/core';
 import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import type { LoginHistories } from '@mui/api';
+import { toDateTime } from '@mui/core';
 import '@mui/components/table/table.js';
 import '@mui/components/table/table-cell.js';
 import '@mui/components/table/table-row.js';
 
 const styles = css`
   :host {
+    --mui-color-table-row-hover: #fff;
+
     display: block;
     inline-size: 100%;
     block-size: 100%;
@@ -26,7 +28,6 @@ export class LoginHistory extends LitElement {
       <mui-table>
         <mui-table-row header>
           <mui-table-header-cell>ID</mui-table-header-cell>
-          <mui-table-header-cell>User ID</mui-table-header-cell>
           <mui-table-header-cell>Time</mui-table-header-cell>
         </mui-table-row>
         ${this.#renderRows()}
@@ -36,11 +37,10 @@ export class LoginHistory extends LitElement {
 
   #renderRows() {
     return this.loginHistories.map(
-      ({ id, loginTime, userId }) => html`
+      ({ id, loginTime }) => html`
         <mui-table-row .id=${id}>
           <mui-table-cell>${id}</mui-table-cell>
-          <mui-table-cell>${userId}</mui-table-cell>
-          <mui-table-cell>${DateTime.toISODate(loginTime)}</mui-table-cell>
+          <mui-table-cell>${toDateTime(loginTime)}</mui-table-cell>
         </mui-table-row>
       `,
     );

@@ -46,6 +46,9 @@ export class UserDetail extends LitElement {
 
     return html`
       <form>
+        <span>
+          ${this.user.id}
+        </span>
         <mui-text-field
           label="First name"
           appearance="filled"
@@ -91,6 +94,7 @@ export class UserDetail extends LitElement {
     e.stopImmediatePropagation();
 
     this.editing = false;
+    // TODO: not dispatching the changed user values. the original is being passed
     this.dispatchEvent(createSaveEvent(this.user));
   }
 }

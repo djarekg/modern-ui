@@ -26,7 +26,7 @@ function isoStringToDate(match: RegExpMatchArray): Date {
   // The ECMAScript specification (https://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.11)
   // defines that `DateTime` milliseconds should always be rounded down, so that `999.9ms`
   // becomes `999ms`.
-  const ms = Math.floor(parseFloat('0.' + (match[7] || 0)) * 1000);
+  const ms = Math.floor(Number.parseFloat(`0.${match[7] || 0}`) * 1000);
   timeSetter.call(date, h, m, s, ms);
   return date;
 }
@@ -53,71 +53,81 @@ function createDate(year: number, month: number, date: number): Date {
   return newDate;
 }
 
-export abstract class DateTime {
-  static format(value: Date | number | string, format?: FormatOptions): string {
-    const date = this.toDate(value);
-    const { locale = navigator.language, year = 'numeric', month = '2-digit', day = '2-digit' } = format ?? {};
-    const text = date.toLocaleString(locale, {
-      year,
-      month,
-      day,
-    });
+export const format = (value: Date | number | string, format?: FormatOptions): string => {
+  const date = toDate(value);
+  const {
+    locale = navigator.language,
+    year = 'numeric',
+    month = '2-digit',
+    day = '2-digit',
+  } = format ?? {};
+  const text = date.toLocaleString(locale, {
+    year,
+    month,
+    day,
+  });
 
-    return text;
+  return text;
+};
+
+export const toISODate = (value: Date | number | string): string => {
+  const date = toDate(value);
+  return date.toISOString().split('T')[0];
+};
+
+export const toDate = (value: Date | number | string): Date => {
+  if (isDate(value)) {
+    return value;
   }
 
-  static toISODate(value: Date | number | string): string {
-    const date = this.toDate(value);
-    return date.toISOString().split('T')[0];
+  if (typeof value === 'number' && !Number.isNaN(value)) {
+    return new Date(value);
   }
 
-  static toDate(value: Date | number | string): Date {
-    if (this.isDate(value)) {
-      return value;
-    }
+  if (typeof value === 'string') {
+    // biome-ignore lint/style/noParameterAssign: <explanation>
+    value = value.trim();
 
-    if (typeof value === 'number' && !isNaN(value)) {
-      return new Date(value);
-    }
-
-    if (typeof value === 'string') {
-      value = value.trim();
-
-      if (/^(\d{4}(-\d{1,2}(-\d{1,2})?)?)$/.test(value)) {
-        /* For ISO Strings without time the day, month and year must be extracted from the ISO String
+    if (/^(\d{4}(-\d{1,2}(-\d{1,2})?)?)$/.test(value)) {
+      /* For ISO Strings without time the day, month and year must be extracted from the ISO String
       before Date creation to avoid time offset and errors in the new Date.
       If we only replace '-' with ',' in the ISO String ("2015,01,01"), and try to create a new
       date, some browsers (e.g. IE 9) will throw an invalid Date error.
       If we leave the '-' ("2015-01-01") and try to create a new Date("2015-01-01") the timeoffset
       is applied.
       Note: ISO months are 0 for January, 1 for February, ... */
-        const [y, m = 1, d = 1] = value.split('-').map((val: string) => +val);
-        return createDate(y, m - 1, d);
-      }
-
-      const parsedNb = parseFloat(value);
-
-      // any string that only contains numbers, like "1234" but not like "1234hello"
-      // eslint-disable-next-line ts/no-explicit-any
-      if (!isNaN((value as any) - parsedNb)) {
-        return new Date(parsedNb);
-      }
-
-      let match: RegExpMatchArray | null;
-      if ((match = value.match(ISO8601_DATE_REGEX))) {
-        return isoStringToDate(match);
-      }
+      const [y, m = 1, d = 1] = value.split('-').map((val: string) => +val);
+      return createDate(y, m - 1, d);
     }
 
-    // eslint-disable-next-line ts/no-explicit-any
-    const date = new Date(value as any);
-    if (!this.isDate(date)) {
-      throw new Error(`Unable to convert "${value}" into a date`);
+    const parsedNb = Number.parseFloat(value);
+
+    // any string that only contains numbers, like "1234" but not like "1234hello"
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    if (!Number.isNaN((value as any) - parsedNb)) {
+      return new Date(parsedNb);
     }
-    return date;
+
+    let match: RegExpMatchArray | null;
+    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+    if ((match = value.match(ISO8601_DATE_REGEX))) {
+      return isoStringToDate(match);
+    }
   }
 
-  static isDate(value: unknown): value is Date {
-    return value instanceof Date && !isNaN(value.valueOf());
+  // eslint-disable-next-line ts/no-explicit-any
+  const date = new Date(value as number);
+  if (!isDate(date)) {
+    throw new Error(`Unable to convert "${value}" into a date`);
   }
-}
+  return date;
+};
+
+export const toDateTime = (value: Date | number | string): string => {
+  const date = toDate(value);
+  return `${date}T${date.toLocaleTimeString()}`;
+};
+
+export const isDate = (value: unknown): value is Date => {
+  return value instanceof Date && !Number.isNaN(value.valueOf());
+};

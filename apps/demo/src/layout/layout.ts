@@ -30,16 +30,16 @@ const styles = css`
 
   article {
     padding-block: 3rem;
-    background: linear-gradient(
+    /* background: linear-gradient(
       45deg,
       hsla(189, 100%, 50%, 0.4),
       hsla(321, 100%, 53%, 0.4) 80%
-    );
-    /* background: linear-gradient(
-      45deg,
-      hsla(222, 23%, 15%, 0.4) 10%,
-      hsla(321, 100%, 53%, 0.4)
     ); */
+    background: linear-gradient(
+      45deg,
+      hsla(222, 23%, 15%, 0.4) 30%,
+      hsla(321, 100%, 53%, 0.4) 90%
+    );
     backdrop-filter: blur(10px);
   }
 `;

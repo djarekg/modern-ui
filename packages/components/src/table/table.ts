@@ -18,6 +18,7 @@ const styles = css`
     border: 1px solid var(--_table-border-color);
     border-radius: var(--mui-shape-large);
     font-size: var(--_table-font-size);
+
   }
 `;
 
