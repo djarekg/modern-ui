@@ -5,8 +5,6 @@ import type { User } from '@mui/api';
 
 const styles = css`
   :host {
-    --mui-color-table-row-hover: #fff;
-
     display: block;
     inline-size: 100%;
     block-size: 100%;

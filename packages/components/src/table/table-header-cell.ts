@@ -8,9 +8,10 @@ import '../icon/icon.js';
 const styles = css`
   :host {
     /* --mui-color-icon: var(--md-sys-color-blue); */
+    --_table-header-cell-background-color: var(--mui-table-header-cell-background-color, var(--mui-color-background));
     --_container-padding-block: calc(var(--mui-table-cell-padding-block) - 3px);
 
-    background: var(--mui-color-hover);
+    background: var(--_table-header-cell-background-color);
     border-block-end: 1px solid var(--mui-color-border);
     padding-block: var(--_container-padding-block);
   }

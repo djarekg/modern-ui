@@ -9,8 +9,6 @@ import '@mui/components/table/table-row.js';
 
 const styles = css`
   :host {
-    --mui-color-table-row-hover: #fff;
-
     display: block;
     inline-size: 100%;
     block-size: 100%;

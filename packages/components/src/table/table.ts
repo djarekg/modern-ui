@@ -11,14 +11,15 @@ const styles = css`
   :host {
     --_table-border-color: var(--mui-table-border-color, var(--mui-color-border));
     --_table-font-size: var(--mui-table-font-size, 14px);
+    --_table-color-background: var(--mui-table-background-color, transparent);
 
     display: table;
     table-layout: auto;
     inline-size: 100%;
     border: 1px solid var(--_table-border-color);
-    border-radius: var(--mui-shape-large);
+    border-radius: var(--mui-shape-medium);
     font-size: var(--_table-font-size);
-
+    background: var(--_table-color-background);
   }
 `;
 

@@ -11,19 +11,11 @@ const styles = css`
   }
 
   :host {
-    --_container-hover-color: var(--mui-table-row-hover-color, var(--mui-color-hover));
-
     display: table-row;
     overflow: hidden;
   }
 `;
 
-/**
- * @cssprop --mui-table-row-hover-color - Background color of the table row when hovered.
- * Default is `var(--mui-color-hover)`.
- *
- * @slot - Default slot for table cells.
- */
 @customElement('mui-table-row')
 export class TableRow extends LitElement {
   static override styles = [styles];

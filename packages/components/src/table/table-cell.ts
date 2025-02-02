@@ -13,19 +13,20 @@ const styles = css`
   }
 
   :host-context(:is(mui-table-row:last-child)):host(:is(:first-child)) {
-    border-end-start-radius: var(--mui-shape-large);
+    border-end-start-radius: var(--mui-shape-medium);
   }
 
   :host-context(:is(mui-table-row:last-child)):host(:is(:last-child)) {
-    border-end-end-radius: var(--mui-shape-large);
+    border-end-end-radius: var(--mui-shape-medium);
   }
 
   :host-context(:is(mui-table-row:hover:not([header]), :is(mui-table-row[aria-selected="true"]))) {
-    --_-color: var(--mui-table-hover-color, var(--mui-color-table-row-hover));
-    --mui-color-icon: var(--_-color);
+    --_background-color: var(--mui-table-row-hover-background-color, var(--mui-palette-surface-a20));
+    --_color: var(--mui-table-row-hover-color, #fff);
+    --mui-color-icon: var(--_color);
 
-    background: var(--_container-hover-color);
-    color: var(--_-color);
+    background: var(--_background-color);
+    color: var(--_color);
   }
 `;
 

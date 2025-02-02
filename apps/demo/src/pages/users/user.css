@@ -53,8 +53,9 @@ article {
   border-radius: var(--mui-shape-medium);
   padding: 1.5rem;
   box-shadow: var(--mui-elevation-3);
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+  /* background: rgba(0, 0, 0, 0.5); */
+  /* backdrop-filter: blur(50px); */
+  background: var(--mui-palette-surface-a0);
 
   &:nth-child(1) {
     inline-size: var(--_container-1);
