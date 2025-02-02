@@ -61,9 +61,13 @@ export class UserPage extends SignalWatcher(LitElement) {
     }
 
     return html`
-      <section class="app-container">
+      <section>
         <h2>Profile</h2>
-        <app-user-detail .user=${user} @save=${this.#onProfileSave}></app-user-detail>
+        <app-user-detail
+          class="app-container"
+          .user=${user}
+          @save=${this.#onProfileSave}>
+        </app-user-detail>
       </section>
     `;
   }
@@ -76,9 +80,10 @@ export class UserPage extends SignalWatcher(LitElement) {
     }
 
     return html`
-      <section class="app-container">
+      <section>
         <h2>Login History</h2>
-        <app-user-login-history .loginHistories=${loginHistories}></app-user-login-history>
+        <app-user-login-history .loginHistories=${loginHistories}>
+        </app-user-login-history>
       </section>
     `;
   }

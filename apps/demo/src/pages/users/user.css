@@ -11,8 +11,8 @@
 
 article {
   --_article-flex-direction: row;
-  --_app-container-1: 30%;
-  --_app-container-2: 50%;
+  --_section-1: 30%;
+  --_section-2: 50%;
 
   display: flex;
   flex-direction: var(--_article-flex-direction);
@@ -27,9 +27,9 @@ article {
     --_article-flex-direction: column;
   }
 
-  .app-container {
-    --_app-container-1: 400px;
-    --_app-container-2: 400px;
+  section {
+    --_section-1: 400px;
+    --_section-2: 400px;
 
     margin: 0 auto;
 
@@ -39,12 +39,12 @@ article {
   }
 }
 
-.app-container {
+section {
   &:nth-child(1) {
-    inline-size: var(--_app-container-1);
+    inline-size: var(--_section-1);
   }
 
   &:nth-child(2) {
-    inline-size: var(--_app-container-2);
+    inline-size: var(--_section-2);
   }
 }

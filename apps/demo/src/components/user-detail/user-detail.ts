@@ -7,6 +7,10 @@ import type { User } from '@mui/api';
 import { createSaveEvent } from './events.js';
 
 const styles = css`
+  :host {
+    display: block;
+  }
+
   form {
     display: flex;
     flex-direction: column;

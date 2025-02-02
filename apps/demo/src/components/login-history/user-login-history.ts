@@ -10,8 +10,8 @@ import '@mui/components/table/table-row.js';
 const styles = css`
   :host {
     display: block;
-    inline-size: 100%;
-    block-size: 100%;
+    border-radius: var(--mui-shape-medium);
+    box-shadow: var(--mui-elevation-3);
   }
 `;
 
