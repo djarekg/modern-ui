@@ -56,18 +56,22 @@ export const initNavigation = (router: Router) => {
       thisArg,
       argArray: [data: unknown, unused: string, url?: string | URL | null | undefined],
     ) => {
-      const url = argArray[2];
-      if (url instanceof URL) {
-        router.goto(url.pathname);
-      } else if (typeof url === 'string') {
-        if (url.startsWith('/')) {
-          router.goto(url);
+      // TODO: customize view transition to something more animated
+      document.startViewTransition(() => {
+        const url = argArray[2];
+        if (url instanceof URL) {
+          router.goto(url.pathname);
+        } else if (typeof url === 'string') {
+          if (url.startsWith('/')) {
+            router.goto(url);
+          } else {
+            router.goto(new URL(url).pathname);
+          }
         } else {
-          router.goto(new URL(url).pathname);
+          router.goto(window.location.pathname);
         }
-      } else {
-        router.goto(window.location.pathname);
-      }
+      });
+
       return target.apply(thisArg, argArray);
     },
   });
