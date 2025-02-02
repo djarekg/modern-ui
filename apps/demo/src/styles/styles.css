@@ -23,3 +23,7 @@ body {
   overflow-wrap: break-word;
   overflow: hidden;
 }
+
+::view-transition-group(*) {
+  animation-duration: 0.4s;
+}
