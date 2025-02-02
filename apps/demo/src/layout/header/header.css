@@ -16,6 +16,17 @@ header {
   padding-inline: 1rem;
 }
 
+nav,
+a {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+nav mui-icon {
+  cursor: pointer;
+}
+
 button {
   all: unset;
   cursor: pointer;
@@ -27,6 +38,11 @@ button {
 
 [popover] {
   z-index: 900;
+  content-visibility: hidden;
+
+  &:popover-open {
+    content-visibility: visible;
+  }
 }
 
 menu {

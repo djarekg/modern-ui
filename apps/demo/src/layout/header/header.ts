@@ -21,10 +21,11 @@ export class Header extends SignalWatcher(LitElement) {
 
   @query('menu') protected userMenu!: HTMLElement;
 
-  override render() {
+  render() {
     return html`
       <header>
         <nav>
+          ${this.#renderNavButton()}
           <a href=${routes.home}>
             <img
               src="../../../public/img/token-branded--idia.svg"
@@ -33,11 +34,24 @@ export class Header extends SignalWatcher(LitElement) {
               width="28"
               height="28" />
           </a>
+          <navigation-drawer headline="Navigation"> </navigation-drawer>
         </nav>
         <section>
           ${this.#renderUserMenu()}
         </section>
       </header>
+    `;
+  }
+
+  #renderNavButton() {
+    if (!this.isSignedIn) {
+      return nothing;
+    }
+
+    return html`
+      <mui-icon @click=${this.#handleMenuClick}>
+        menu
+      </mui-icon>
     `;
   }
 
@@ -81,6 +95,15 @@ export class Header extends SignalWatcher(LitElement) {
 
   close() {
     this.userMenu.hidePopover();
+  }
+
+  #handleMenuClick(): void {
+    this.dispatchEvent(
+      new CustomEvent('nav-button-clicked', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
   }
 }
 

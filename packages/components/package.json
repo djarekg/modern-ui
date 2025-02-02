@@ -30,6 +30,10 @@
       "types": "./dist/button/outline-button.d.ts",
       "import": "./dist/button/outline-button.js"
     },
+    "./card/card.js": {
+      "types": "./dist/card/card.d.ts",
+      "import": "./dist/card/card.js"
+    },
     "./dialog/dialog.js": {
       "types": "./dist/dialog/dialog.d.ts",
       "import": "./dist/dialog/dialog.js"
@@ -41,6 +45,14 @@
     "./icon/icon.js": {
       "types": "./dist/icon/icon.d.ts",
       "import": "./dist/icon/icon.js"
+    },
+    "./navigation-drawer/navigation-drawer.js": {
+      "types": "./dist/navigation/navigation-drawer.d.ts",
+      "import": "./dist/navigation/navigation-drawer.js"
+    },
+    "./navigation-item/navigation-item.js": {
+      "types": "./dist/navigation/navigation-item.d.ts",
+      "import": "./dist/navigation/navigation-item.js"
     },
     "./table/*.js": {
       "types": "./dist/table/*.d.ts",

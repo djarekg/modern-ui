@@ -1,0 +1,65 @@
+import { css } from 'lit';
+
+export default css`
+  :host {
+    --_on-color: var(--rk-navigation-item-on-color, var(--md-sys-color-on-surface-variant-2));
+    --_font-weight: 300;
+    --_active-indicator-opacity: 0;
+    --_active-indicator-color: var(
+      --rk-navigation-item-hover-color,
+      var(--md-sys-color-on-surface-variant-2)
+    );
+    --_active-indicator-visibility: hidden;
+    --_icon-weight: var(--_font-weight);
+    --md-icon-size: 22px;
+  }
+
+  a {
+    --_anchor-block-size: 44px;
+    --md-icon-color: var(--_on-color);
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    block-size: var(--_anchor-block-size);
+    padding-inline: 18px;
+    box-sizing: border-box;
+    text-decoration: none;
+    inline-size: 100%;
+    color: var(--_on-color);
+    font-weight: var(--_font-weight);
+    outline: none;
+
+    &:hover,
+    &:focus {
+      --_active-indicator-opacity: 1;
+      --_active-indicator-visibility: visible;
+      /* --_on-color: var(--md-sys-color-blue); */
+    }
+  }
+
+  .active-indicator {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    content-visibility: hidden;
+    visibility: var(--_active-indicator-visibility);
+    opacity: var(--_active-indicator-opacity);
+    border-radius: var(--md-sys-shape-extra-large);
+    background: var(--_active-indicator-color);
+  }
+
+  .logo {
+    will-change: filter;
+    transition: filter 300ms;
+  }
+
+  .logo:hover {
+    filter: drop-shadow(0 0 10px var(--md-sys-color-light-blue-alpha));
+  }
+
+  md-icon {
+    font-variation-settings: "wght" var(--_icon-weight);
+  }
+`;

@@ -27,8 +27,10 @@
   --mui-palette-surface-tonal-a50: #959da2;
 
   /** colors */
-  --mui-palette-colors-purple: #711fee;
-  --mui-palette-colors-green: #2dd4bf;
+  --mui-palette-color-green: #2dd4bf;
+  --mui-palette-color-hot-pink: #ff0ea9;
+  --mui-palette-color-purple: #711fee;
+  --mui-palette-color-teal: #00daff;
 
   /* Black */
   --mui-palette-black: #000000ff;

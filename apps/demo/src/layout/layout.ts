@@ -1,11 +1,17 @@
-import { validate } from '@/auth/auth.js';
-import { isSignedInContext, isSignedInSignal } from '@/auth/is-signed-in.js';
-import { createRouter, initNavigation, navigate } from '@/router/index.js';
-import { routes } from '@/router/routes.js';
 import { Signal, SignalWatcher } from '@lit-labs/signals';
 import { provide } from '@lit/context';
 import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { type Ref, createRef, ref } from 'lit/directives/ref.js';
+
+import { validate } from '@/auth/auth.js';
+import { isSignedInContext, isSignedInSignal } from '@/auth/is-signed-in.js';
+import type { Nav } from '@/components/nav/nav.js';
+import { createRouter, initNavigation, navigate } from '@/router/index.js';
+import { routes } from '@/router/routes.js';
+
+import '@/components/nav/nav.js';
+
 import './header/header.js';
 import './footer/footer.js';
 
@@ -50,6 +56,7 @@ export class Layout extends SignalWatcher(LitElement) {
 
   readonly #router = createRouter(this);
   #watcher: Signal.subtle.Watcher;
+  #nav: Ref<Nav> = createRef();
 
   @provide({ context: isSignedInContext }) isSignedIn = isSignedInSignal.get();
 
@@ -74,11 +81,12 @@ export class Layout extends SignalWatcher(LitElement) {
 
   override render() {
     return html`
-      <main>
-        <app-header></app-header>
+      <main role="main">
+        <app-header @nav-button-clicked=${this.#showDrawer}></app-header>
         <article>${this.#router.outlet()}</article>
         <app-footer></app-footer>
       </main>
+      <app-nav ${ref(this.#nav)}></app-nav>
     `;
   }
 
@@ -103,6 +111,10 @@ export class Layout extends SignalWatcher(LitElement) {
     // computed signals are lazy, so we need to read it to run the computation
     // and notify watchers
     isSignedIn.get();
+  }
+
+  #showDrawer(): void {
+    this.#nav.value.show();
   }
 }
 
