@@ -30,12 +30,12 @@ button {
 }
 
 menu {
+  --mui-icon-size: 21px;
+
   inset: calc(var(--_header-height) - 0.8rem) 1rem auto auto;
-  background-color: var(--mui-palette-surface-a10);
   border-radius: var(--mui-shape-medium);
   border: 1px solid var(--mui-palette-surface-a20);
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: var(--mui-palette-surface-a0);
   box-shadow: var(--mui-elevation-4);
   padding: 0;
   z-index: 900;
@@ -45,10 +45,14 @@ menu {
     padding-inline: 0;
     margin-inline: 0;
 
+    li {
+      min-inline-size: 135px;
+    }
+
     a {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 1rem;
       padding: 0.5rem 1rem;
       text-decoration: none;
       color: var(--mui-color-text);

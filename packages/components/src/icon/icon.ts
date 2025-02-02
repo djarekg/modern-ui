@@ -14,7 +14,7 @@ const styles = css`
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;
-    display: inline-block;
+    display: block;
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;

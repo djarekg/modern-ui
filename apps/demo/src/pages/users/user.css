@@ -1,12 +1,6 @@
-* {
-  box-sizing: border-box;
-}
+@import "../../styles/_content.css";
 
 :host {
-  --_article-flex-direction: row;
-  --_container-1: 30%;
-  --_container-2: 50%;
-
   container: article / inline-size;
   display: flex;
   flex-direction: column;
@@ -16,28 +10,26 @@
 }
 
 article {
+  --_article-flex-direction: row;
+  --_app-container-1: 30%;
+  --_app-container-2: 50%;
+
   display: flex;
   flex-direction: var(--_article-flex-direction);
   gap: 2rem;
   justify-content: center;
   block-size: 100%;
   inline-size: 100%;
-  /* flex: 1 1 100%; */
-  /* flex-wrap: wrap; */
 }
 
 @container article (max-width: 900px) {
   article {
-    display: block;
-    /* --_article-flex-direction: column; */
-    /* align-items: center; */
-    /* overflow: hidden; */
-    /* overflow: auto hidden; */
+    --_article-flex-direction: column;
   }
 
   .app-container {
-    --_container-1: 400px;
-    --_container-2: 400px;
+    --_app-container-1: 400px;
+    --_app-container-2: 400px;
 
     margin: 0 auto;
 
@@ -47,21 +39,12 @@ article {
   }
 }
 
-/* TODO: add this to global */
 .app-container {
-  border: 1px solid var(--mui-palette-surface-a30);
-  border-radius: var(--mui-shape-medium);
-  padding: 1.5rem;
-  box-shadow: var(--mui-elevation-3);
-  /* background: rgba(0, 0, 0, 0.5); */
-  /* backdrop-filter: blur(50px); */
-  background: var(--mui-palette-surface-a0);
-
   &:nth-child(1) {
-    inline-size: var(--_container-1);
+    inline-size: var(--_app-container-1);
   }
 
   &:nth-child(2) {
-    inline-size: var(--_container-2);
+    inline-size: var(--_app-container-2);
   }
 }
