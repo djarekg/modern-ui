@@ -16,15 +16,23 @@ const routeConfigs: RouteConfig[] = [
     path: routes.login,
     render: () => {
       import('../pages/auth/login.js');
-      return html`<app-login></app-login>`;
+      return html`<app-login-page></app-login-page>`;
     },
   },
   {
-    name: 'profile',
-    path: routes.profile,
+    name: 'user',
+    path: `${routes.users}/:id`,
+    render: ({ id }) => {
+      import('../pages/users/user.js');
+      return html`<app-user-page .id=${id}></app-user-page>`;
+    },
+  },
+  {
+    name: 'users',
+    path: `${routes.users}`,
     render: () => {
-      import('../pages/user/profile.js');
-      return html`<app-profile></app-profile>`;
+      import('../pages/users/index.js');
+      return html`<app-users-page></app-users-page>`;
     },
   },
 ];

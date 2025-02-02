@@ -1,7 +1,7 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import type { LoginHistories } from '@mui/api';
+import type { LoginHistory } from '@mui/api';
 import { toDateTime } from '@mui/core';
 import '@mui/components/table/table.js';
 import '@mui/components/table/table-cell.js';
@@ -17,11 +17,11 @@ const styles = css`
   }
 `;
 
-@customElement('app-login-history')
-export class LoginHistory extends LitElement {
+@customElement('app-user-login-history')
+export class UserLoginHistory extends LitElement {
   static override styles = [styles];
 
-  @property({ type: Array }) loginHistories: LoginHistories = [];
+  @property({ type: Array }) loginHistories: LoginHistory[] = [];
 
   override render() {
     return html`
@@ -49,6 +49,6 @@ export class LoginHistory extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-login-history': LoginHistory;
+    'app-user-login-history': UserLoginHistory;
   }
 }

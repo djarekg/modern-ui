@@ -11,8 +11,8 @@ import { routes } from '@/router/routes.js';
 
 import styles from './login.css?inline';
 
-@customElement('app-login')
-export class Login extends LitElement {
+@customElement('app-login-page')
+export class LoginPage extends LitElement {
   static override styles = [unsafeCSS(styles)];
 
   @state() protected userName = '';
@@ -104,6 +104,6 @@ export class Login extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-login': Login;
+    'app-login-page': LoginPage;
   }
 }

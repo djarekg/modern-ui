@@ -1,25 +1,30 @@
 import { SignalWatcher, html, signal } from '@lit-labs/signals';
 import { LitElement, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { effect } from 'signal-utils/subtle/microtask-effect';
 
-import type { LoginHistories, User } from '@mui/api';
+import type { LoginHistory, User } from '@mui/api';
 import '@mui/components/text-field/text-field.js';
 
 import type { SaveEvent } from '@/components/user-detail/events.js';
 import { useApi } from '@/hooks/use-api.js';
 import { getUserName } from '@/utils/cache-util.js';
-import '@/components/login-history/login-history.js';
+import '@/components/login-history/user-login-history.js';
 import '@/components/user-detail/user-detail.js';
 
-import styles from './profile.css?inline';
+import styles from './user.css?inline';
 
-@customElement('app-profile')
-export class Profile extends SignalWatcher(LitElement) {
+@customElement('app-user-page')
+export class UserPage extends SignalWatcher(LitElement) {
   static override styles = [unsafeCSS(styles)];
 
-  #loginHistories = signal<LoginHistories>([]);
+  #loginHistories = signal<LoginHistory[]>([]);
   #user = signal<User | null>(null);
+
+  /**
+   * The user id passed in from the route params.
+   */
+  @property() id = '';
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -73,7 +78,7 @@ export class Profile extends SignalWatcher(LitElement) {
     return html`
       <section class="app-container">
         <h2>Login History</h2>
-        <app-login-history .loginHistories=${loginHistories}></app-login-history>
+        <app-user-login-history .loginHistories=${loginHistories}></app-user-login-history>
       </section>
     `;
   }
@@ -86,6 +91,6 @@ export class Profile extends SignalWatcher(LitElement) {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-profile': Profile;
+    'app-user-page': UserPage;
   }
 }

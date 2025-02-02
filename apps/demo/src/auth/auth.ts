@@ -1,7 +1,18 @@
-import { isSignedInSignal } from '@/auth/is-signed-in.js';
-import { useApi } from '@/hooks/use-api.js';
 import { useCache } from '@mui/core';
-import { type AuthCache, authCacheKey } from './auth-cache.js';
+
+import { isSignedInSignal } from '@/auth/is-signed-in.js';
+import { PROFILE_CACHE_KEY } from '@/auth/profile-cache-key.js';
+import { useApi } from '@/hooks/use-api.js';
+
+import { AUTH_CACHE_KEY } from './auth-cache-key.js';
+
+/**
+ * Auth cache type is the structure of the auth cache
+ */
+export type AuthCache = {
+  name: string;
+  token: string;
+};
 
 /**
  * Sign in using the provided username and password
@@ -10,7 +21,7 @@ import { type AuthCache, authCacheKey } from './auth-cache.js';
  * @returns True if the user is signed in, false otherwise
  */
 export const signIn = async (username: string, password: string) => {
-  const { sign, auth } = useApi();
+  const { auth, sign, users } = useApi();
 
   const { data: signedIn } = await sign.in.post({
     username,
@@ -18,14 +29,24 @@ export const signIn = async (username: string, password: string) => {
   });
 
   if (signedIn) {
-    const { data: token } = await auth.sign({ name: username }).get();
     const [_, setCache] = useCache();
+
+    // sign-in and store the user's auth token in the cache
+    const { data: token } = await auth.sign({ name: username }).get();
     const authCache: AuthCache = {
       name: username,
       token,
     };
-    setCache(authCacheKey, authCache);
+    setCache(AUTH_CACHE_KEY, authCache);
+
+    // set the signed in signal to true. this will trigger the user to be signed in
+    // to any components that are watching the signal
     isSignedInSignal.set(true);
+
+    // store the user's profile in the cache
+    const { data: user } = await users({ username }).get();
+    setCache(PROFILE_CACHE_KEY, user);
+
     return true;
   }
 
@@ -41,7 +62,7 @@ export const signOut = async () => {
   const { data: signedOut } = await auth.signout.get();
   if (signedOut) {
     const [_, setCache] = useCache();
-    setCache(authCacheKey, null);
+    setCache(AUTH_CACHE_KEY, null);
     isSignedInSignal.set(false);
     return true;
   }
@@ -55,7 +76,7 @@ export const signOut = async () => {
  */
 export const validate = async () => {
   const [cache] = useCache();
-  const cachedAuth = cache(authCacheKey) as AuthCache;
+  const cachedAuth = cache(AUTH_CACHE_KEY) as AuthCache;
 
   // if there is no cached auth, the user is not signed in
   if (!cachedAuth) {
