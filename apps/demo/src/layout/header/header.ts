@@ -1,10 +1,11 @@
 import { SignalWatcher } from '@lit-labs/signals';
 import { consume } from '@lit/context';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 
 import { confirm } from '@mui/components';
 import '@mui/components/icon/icon.js';
+import '@mui/components/menu/menu.js';
 
 import { signOut } from '@/auth/auth.js';
 import { isSignedInContext } from '@/auth/is-signed-in.js';
@@ -20,8 +21,6 @@ export class Header extends SignalWatcher(LitElement) {
 
   @consume({ context: isSignedInContext, subscribe: true }) isSignedIn: boolean;
 
-  @query('menu') protected userMenu!: HTMLElement;
-
   render() {
     return html`
       <header>
@@ -35,7 +34,7 @@ export class Header extends SignalWatcher(LitElement) {
               width="28"
               height="28" />
           </a>
-          <navigation-drawer headline="Navigation"> </navigation-drawer>
+          <navigation-drawer headline="Navigation"></navigation-drawer>
         </nav>
         <section>
           ${this.#renderUserMenu()}
@@ -64,13 +63,10 @@ export class Header extends SignalWatcher(LitElement) {
     const userProfilePath = `${routes.users}/${getUserId()}`;
 
     return html`
-      <button type="button" popovertarget="userMenu">
-        <mui-icon>account_circle</mui-icon>
-      </button>
-      <menu id="userMenu" popover>
+      <mui-menu icon="account_circle">
         <ul>
           <li>
-            <a class="link" href=${userProfilePath} @click=${this.close}>
+            <a class="link" href=${userProfilePath}>
               <mui-icon>user_attributes</mui-icon>
               Profile
             </a>
@@ -82,22 +78,16 @@ export class Header extends SignalWatcher(LitElement) {
             </a>
           </li>
         </ul>
-      </menu>
+      </mui-menu>
     `;
   }
 
   async #signOut() {
-    this.close();
-
     if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {
       if (await signOut()) {
         navigate(routes.login);
       }
     }
-  }
-
-  close() {
-    this.userMenu.hidePopover();
   }
 
   #handleMenuClick(): void {

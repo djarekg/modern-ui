@@ -46,6 +46,10 @@
       "types": "./dist/icon/icon.d.ts",
       "import": "./dist/icon/icon.js"
     },
+    "./menu/menu.js": {
+      "types": "./dist/menu/menu.d.ts",
+      "import": "./dist/menu/menu.js"
+    },
     "./navigation-drawer/navigation-drawer.js": {
       "types": "./dist/navigation/navigation-drawer.d.ts",
       "import": "./dist/navigation/navigation-drawer.js"

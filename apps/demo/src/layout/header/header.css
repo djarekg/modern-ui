@@ -27,55 +27,25 @@ nav mui-icon {
   cursor: pointer;
 }
 
-button {
-  all: unset;
-  cursor: pointer;
-}
+ul {
+  list-style: none;
+  padding-inline: 0;
+  margin-inline: 0;
 
-[popovertarget] {
-  --mui-icon-size: 32px;
-}
-
-[popover] {
-  z-index: 900;
-  content-visibility: hidden;
-
-  &:popover-open {
-    content-visibility: visible;
+  li {
+    min-inline-size: 135px;
   }
-}
 
-menu {
-  --mui-icon-size: 21px;
+  a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--mui-color-text);
 
-  inset: calc(var(--_header-height) - 0.8rem) 1rem auto auto;
-  border-radius: var(--mui-shape-medium);
-  border: 1px solid var(--mui-palette-surface-a20);
-  background: var(--mui-palette-surface-a0);
-  box-shadow: var(--mui-elevation-4);
-  padding: 0;
-  z-index: 900;
-
-  ul {
-    list-style: none;
-    padding-inline: 0;
-    margin-inline: 0;
-
-    li {
-      min-inline-size: 135px;
-    }
-
-    a {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.5rem 1rem;
-      text-decoration: none;
-      color: var(--mui-color-text);
-
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
     }
   }
 }
