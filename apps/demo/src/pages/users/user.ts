@@ -8,7 +8,7 @@ import '@mui/components/text-field/text-field.js';
 
 import type { SaveEvent } from '@/components/user-detail/events.js';
 import { useApi } from '@/hooks/use-api.js';
-import { getUserId, getUserName } from '@/utils/cache-util.js';
+import { getUserId } from '@/utils/cache-util.js';
 import '@/components/login-history/user-login-history.js';
 import '@/components/user-detail/user-detail.js';
 

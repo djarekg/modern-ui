@@ -17,8 +17,7 @@ import './footer/footer.js';
 
 const styles = css`
   :host,
-  main,
-  article {
+  main {
     block-size: 100%;
     inline-size: 100%;
   }
@@ -30,12 +29,11 @@ const styles = css`
   main {
     display: flex;
     flex-direction: column;
-    /* flex: 1 1 100%; */
     overflow: hidden auto;
   }
 
-  article {
-    padding-block: 3rem;
+  article{
+    padding-block: 1rem 3rem;
     background: linear-gradient(
       45deg,
       hsla(189, 100%, 50%, 0.4),

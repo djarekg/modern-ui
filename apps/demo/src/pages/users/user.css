@@ -1,50 +1,50 @@
 @import "../../styles/_content.css";
 
-:host {
-  container: article / inline-size;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+:host,
+article {
   block-size: 100%;
   inline-size: 100%;
+}
+
+:host {
+  container-type: inline-size;
+  display: block;
 }
 
 article {
   --_article-flex-direction: row;
+  --_article-gap: 2rem;
   --_section-1: 30%;
   --_section-2: 50%;
+  --_section-margin: 0;
+  --_section-first-child-margin-block-end: 0;
 
   display: flex;
   flex-direction: var(--_article-flex-direction);
-  gap: 2rem;
+  gap: var(--_article-gap);
   justify-content: center;
-  block-size: 100%;
-  inline-size: 100%;
-}
 
-@container article (max-width: 900px) {
-  article {
-    --_article-flex-direction: column;
-  }
+  > section {
+    margin: var(--_section-margin);
 
-  section {
-    --_section-1: 400px;
-    --_section-2: 400px;
+    &:nth-child(1) {
+      inline-size: var(--_section-1);
+      margin-block-end: var(--_section-first-child-margin-block-end);
+    }
 
-    margin: 0 auto;
-
-    &:first-child {
-      margin-block-end: 2rem;
+    &:nth-child(2) {
+      inline-size: var(--_section-2);
     }
   }
 }
 
-section {
-  &:nth-child(1) {
-    inline-size: var(--_section-1);
-  }
-
-  &:nth-child(2) {
-    inline-size: var(--_section-2);
+@container (max-width: 900px) {
+  article {
+    --_article-flex-direction: column;
+    --_article-gap: 0;
+    --_section-1: 400px;
+    --_section-2: 400px;
+    --_section-margin: 0 auto;
+    --_section-first-child-margin-block-end: 2rem;
   }
 }
