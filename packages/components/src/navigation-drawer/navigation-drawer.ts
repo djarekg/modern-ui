@@ -3,10 +3,11 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
 
+import type { NavigationItemEvent, NavigationItemEventDetail } from '../navigation-item/events.js';
 import type { NavItem } from '../navigation-item/types.js';
-
 import '../icon/icon.js';
 
+import { createNavigationDrawerNavigateEventEvent } from './events.js';
 import styles from './navigation-drawer.css.js';
 
 @customElement('mui-navigation-drawer')
@@ -49,7 +50,7 @@ export class NavigationDrawer extends LitElement {
           return html`
             <mui-navigation-item
               .item=${item}
-              @click=${this.#handleItemClicked}>
+              @navigate=${this.#handleItemClicked}>
             </mui-navigation-item>
           `;
         })}
@@ -117,9 +118,9 @@ export class NavigationDrawer extends LitElement {
     this.focus();
   }
 
-  #handleItemClicked(e: Event) {
-    e.stopImmediatePropagation();
+  #handleItemClicked(e: NavigationItemEvent) {
     this.#closeDrawer();
+    this.dispatchEvent(createNavigationDrawerNavigateEventEvent(e.detail.item));
   }
 
   #handleScrimClick(e: Event) {

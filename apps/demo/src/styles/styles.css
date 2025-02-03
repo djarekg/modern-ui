@@ -24,6 +24,9 @@ body {
   overflow: hidden;
 }
 
-::view-transition-group(*) {
-  animation-duration: 0.4s;
+::view-transition-old(*) {
+  animation-duration: 0.5s;
+}
+::view-transition-new(*) {
+  animation-duration: 0.7s;
 }

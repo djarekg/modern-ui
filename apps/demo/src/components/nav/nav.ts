@@ -2,8 +2,10 @@ import { LitElement, css, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { type Ref, createRef, ref } from 'lit/directives/ref.js';
 
-import type { NavigationDrawer } from '@mui/components';
+import type { NavigationDrawer, NavigationDrawerNavigateEvent } from '@mui/components';
 import '@mui/components/navigation-drawer/navigation-drawer.js';
+
+import { navigate } from '@/router/index.js';
 
 import navItems from './nav-items.js';
 
@@ -25,13 +27,22 @@ export class Nav extends LitElement {
       <mui-navigation-drawer
         ${ref(this.#drawer)}
         headline="Site Navigation"
-        .items=${navItems}>
+        .items=${navItems}
+        @navigate=${this.#handleNavigate}>
       </mui-navigation-drawer>
     `;
   }
 
   show(): void {
     this.#drawer.value.show();
+  }
+
+  #handleNavigate({
+    detail: {
+      item: { path },
+    },
+  }: NavigationDrawerNavigateEvent) {
+    navigate(path);
   }
 }
 

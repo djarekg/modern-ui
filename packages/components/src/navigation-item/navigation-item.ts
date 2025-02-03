@@ -28,12 +28,12 @@ export class NavigationItem extends LitElement {
   // }
 
   render() {
-    const { icon, label, path } = this.item;
+    const { icon, label } = this.item;
 
     return html`
       <a
         tabindex="0"
-        href=${path}
+        href="#"
         @click=${this.#handleClick}>
         <mui-icon>${icon}</mui-icon>
         <span>${label}</span>
@@ -65,7 +65,8 @@ export class NavigationItem extends LitElement {
   //   return isEmpty(icon) || isEmpty(label) || isEmpty(path);
   // }
 
-  #handleClick(): void {
+  #handleClick(e: Event): void {
+    e.stopImmediatePropagation();
     this.dispatchEvent(createNavigationItemClickedEvent(this.item));
   }
 }
