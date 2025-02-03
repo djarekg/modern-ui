@@ -20,6 +20,24 @@ export const getUser = async (username: string) => {
 };
 
 /**
+ * Get user by ID
+ * @param id ID of the user
+ * @returns User object if user is found, null otherwise
+ */
+export const getUserById = async (id: string) => {
+  await prisma.$connect();
+  try {
+    return await prisma.user.findFirst({
+      where: {
+        id,
+      },
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+/**
  * Get all users
  * @returns Array of all users
  */

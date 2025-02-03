@@ -30,8 +30,7 @@ export default new Elysia().group('/sign', app => {
         }),
       },
     )
-    .get('/history/:username', async ({ params: { username } }) => {
-      const { id } = await getUser(username);
+    .get('/history/:id', async ({ params: { id } }) => {
       return await getLoginHistory(id);
     });
 });

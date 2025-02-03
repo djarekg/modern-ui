@@ -8,7 +8,7 @@ import '@mui/components/text-field/text-field.js';
 
 import type { SaveEvent } from '@/components/user-detail/events.js';
 import { useApi } from '@/hooks/use-api.js';
-import { getUserName } from '@/utils/cache-util.js';
+import { getUserId, getUserName } from '@/utils/cache-util.js';
 import '@/components/login-history/user-login-history.js';
 import '@/components/user-detail/user-detail.js';
 
@@ -29,17 +29,17 @@ export class UserPage extends SignalWatcher(LitElement) {
   connectedCallback(): void {
     super.connectedCallback();
 
-    const username = getUserName();
+    const id = this.id ?? getUserId();
 
     effect(async () => {
       const { sign } = useApi();
-      const { data } = await sign.history({ username }).get();
+      const { data } = await sign.history({ id }).get();
       this.#loginHistories.set(data);
     });
 
     effect(async () => {
       const { users } = useApi();
-      const { data } = await users({ username }).get();
+      const { data } = await users.id({ id }).get();
       this.#user.set(data);
     });
   }

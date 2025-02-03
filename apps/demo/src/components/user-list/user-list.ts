@@ -2,6 +2,10 @@ import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import type { User } from '@mui/api';
+import type { TableRowSelectedEvent } from '@mui/components/table/events.js';
+
+import { navigate } from '@/router/index.js';
+import { routes } from '@/router/routes.js';
 
 const styles = css`
   :host {
@@ -19,7 +23,9 @@ export class UserList extends LitElement {
 
   render() {
     return html`
-      <mui-table>
+      <mui-table
+        selectable
+        @row-selected=${this.#handleTableRowSelected}>
         <mui-table-row header>
           <mui-table-header-cell>ID</mui-table-header-cell>
           <mui-table-header-cell>Name</mui-table-header-cell>
@@ -35,7 +41,7 @@ export class UserList extends LitElement {
   #renderRows() {
     return this.users.map(
       ({ id, firstName, lastName, email, address, phone }) => html`
-        <mui-table-row>
+        <mui-table-row .id=${id}>
           <mui-table-cell>${id}</mui-table-cell>
           <mui-table-cell>${firstName} ${lastName}</mui-table-cell>
           <mui-table-cell>${email}</mui-table-cell>
@@ -44,6 +50,11 @@ export class UserList extends LitElement {
         </mui-table-row>
       `,
     );
+  }
+
+  #handleTableRowSelected({ detail: { row } }: TableRowSelectedEvent) {
+    const { id } = row;
+    navigate(`${routes.users}/${id}`);
   }
 }
 

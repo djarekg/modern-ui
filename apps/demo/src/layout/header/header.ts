@@ -3,13 +3,14 @@ import { consume } from '@lit/context';
 import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement, query } from 'lit/decorators.js';
 
+import { confirm } from '@mui/components';
+import '@mui/components/icon/icon.js';
+
 import { signOut } from '@/auth/auth.js';
 import { isSignedInContext } from '@/auth/is-signed-in.js';
 import { navigate } from '@/router/index.js';
 import { routes } from '@/router/routes.js';
-import { confirm } from '@mui/components';
-
-import '@mui/components/icon/icon.js';
+import { getUserId } from '@/utils/cache-util.js';
 
 import styles from './header.css?inline';
 
@@ -60,6 +61,8 @@ export class Header extends SignalWatcher(LitElement) {
       return nothing;
     }
 
+    const userProfilePath = `${routes.users}/${getUserId()}`;
+
     return html`
       <button type="button" popovertarget="userMenu">
         <mui-icon>account_circle</mui-icon>
@@ -67,7 +70,7 @@ export class Header extends SignalWatcher(LitElement) {
       <menu id="userMenu" popover>
         <ul>
           <li>
-            <a class="link" href=${routes.profile} @click=${this.close}>
+            <a class="link" href=${userProfilePath} @click=${this.close}>
               <mui-icon>user_attributes</mui-icon>
               Profile
             </a>

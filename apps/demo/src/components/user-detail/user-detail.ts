@@ -39,8 +39,14 @@ const styles = css`
 export class UserDetail extends LitElement {
   static override styles = [styles];
 
+  /**
+   * User object.
+   */
   @property({ type: Object }) user: User = {} as User;
 
+  /**
+   * Whether the user is being edited.
+   */
   @property({ type: Boolean }) editing = false;
 
   override render() {

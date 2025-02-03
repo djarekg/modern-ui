@@ -39,13 +39,13 @@ export const signIn = async (username: string, password: string) => {
     };
     setCache(AUTH_CACHE_KEY, authCache);
 
-    // set the signed in signal to true. this will trigger the user to be signed in
-    // to any components that are watching the signal
-    isSignedInSignal.set(true);
-
     // store the user's profile in the cache
     const { data: user } = await users({ username }).get();
     setCache(PROFILE_CACHE_KEY, user);
+
+    // set the signed in signal to true. this will trigger the user to be signed in
+    // to any components that are watching the signal
+    isSignedInSignal.set(true);
 
     return true;
   }
