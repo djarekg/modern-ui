@@ -7,7 +7,7 @@ footer {
   flex-direction: column;
   color: white;
   block-size: auto;
-  border-top: 2px solid var(--mui-palette-surface-a40);
+  /* border-top: 1px solid var(--mui-palette-surface-a40); */
 }
 
 .links {

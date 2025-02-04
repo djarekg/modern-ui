@@ -1,3 +1,7 @@
+:host:not(:defined) {
+  display: none;
+}
+
 :host {
   --_header-height: 4rem;
 

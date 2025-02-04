@@ -7,7 +7,7 @@ const routeConfigs: RouteConfig[] = [
     name: 'home',
     path: routes.home,
     render: () => {
-      import('../pages/index.js');
+      import('../pages/home.js');
       return html`<app-home></app-home>`;
     },
   },
