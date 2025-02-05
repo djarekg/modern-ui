@@ -5,7 +5,7 @@ import { routes } from './routes.js';
 const routeConfigs: RouteConfig[] = [
   {
     name: 'home',
-    path: routes.home,
+    path: routes.home, // '/'
     render: () => {
       import('../pages/home.js');
       return html`<app-home></app-home>`;
@@ -33,6 +33,22 @@ const routeConfigs: RouteConfig[] = [
     render: () => {
       import('../pages/users/index.js');
       return html`<app-users-page></app-users-page>`;
+    },
+  },
+  {
+    name: 'accounting',
+    path: routes.accounting,
+    render: () => {
+      import('../pages/accounting/accounting.js');
+      return html`<app-accounting-page></app-accounting-page>`;
+    },
+  },
+  {
+    name: 'inventory',
+    path: routes.inventory,
+    render: () => {
+      import('../pages/inventory/inventory.js');
+      return html`<app-inventory-page></app-inventory-page>`;
     },
   },
 ];

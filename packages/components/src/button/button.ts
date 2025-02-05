@@ -7,7 +7,7 @@ const styles = css`
   :host {
     button {
       all: unset;
-      background: var(--mui-color-secondary);
+      background: var(--mui-color-secondary-hsl);
       padding: 0.3rem 1.5rem;
       border-radius: var(--mui-shape-small);
       font-size: var(--mui-typescale-label-large-size);
