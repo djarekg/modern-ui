@@ -35,6 +35,9 @@ const styles = css`
 `;
 
 @customElement('mui-icon-button')
+/**
+ * @cssprop --mui-icon-button-background-hover-color - The background color when the button is hovered.
+ */
 export class IconButton extends ButtonBase {
   static override styles = [baseStyles, styles];
 

@@ -137,8 +137,12 @@ export class NavigationDrawer extends LitElement {
   }
 
   #handleItemClicked(e: NavigationItemEvent) {
-    this.#closeDrawer();
     this.dispatchEvent(createNavigationDrawerNavigateEventEvent(e.detail.item));
+
+    // we dont' want to clsoe the drawer if it's pinned
+    if (!this.pinned) {
+      this.#closeDrawer();
+    }
   }
 
   #handleScrimClick(e: Event) {

@@ -12,21 +12,8 @@ import styles from './navigation-item.css.js';
 export class NavigationItem extends LitElement {
   static override styles = [styles];
 
-  // get isFooterItem(): boolean {
-  //   const { icon = '' } = this.item;
-  //   return /.[a-z]*$/.test(icon);
-  // }
-
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Object }) item: Readonly<NavItem> | undefined;
-
-  // override render(): TemplateResult {
-  //   if (this.#isInvalidItem()) {
-  //     return html``;
-  //   }
-
-  //   return this.isFooterItem ? this.renderExternalNavItem() : this.renderNavItem();
-  // }
 
   render() {
     const { icon, label, cssColorVar } = this.item;
@@ -50,29 +37,6 @@ export class NavigationItem extends LitElement {
       </a>
     `;
   }
-
-  protected renderExternalNavItem() {
-    const { icon, path } = this.item;
-
-    return html`
-      <a
-        class="logo"
-        target="_blank"
-        href=${path}>
-        <img
-          src=${icon}
-          alt="NavigationItem"
-          width="22px"
-          height="22px" />
-      </a>
-    `;
-  }
-
-  // #isInvalidItem(): boolean {
-  //   const { icon, label, path } = this.item;
-
-  //   return isEmpty(icon) || isEmpty(label) || isEmpty(path);
-  // }
 
   #handleClick(e: Event): void {
     e.stopImmediatePropagation();

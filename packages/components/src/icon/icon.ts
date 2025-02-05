@@ -30,6 +30,11 @@ const styles = css`
 `;
 
 @customElement('mui-icon')
+/**
+ * @cssprop --mui-icon-size - The size of the icon.
+ * @cssprop --mui-icon-color - The color of the icon.
+ * @cssprop --mui-icon-rotate - The rotation of the icon.
+ */
 export class Icon extends LitElement {
   static override styles = [styles];
 

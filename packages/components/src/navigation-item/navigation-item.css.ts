@@ -12,6 +12,7 @@ export default css`
     --_active-indicator-opacity: 0;
     --_active-indicator-color: var(--mui-navigation-item-hover-color, var(--mui-color-background-hover));
     --_active-indicator-visibility: hidden;
+    --_active-indicator-transition: opacity var(--mui-motion-duration-400) var(--mui-motion-acceleration-easing);
     --_icon-weight: var(--_font-weight);
     --md-icon-size: 22px;
   }
@@ -32,13 +33,12 @@ export default css`
     color: var(--_color);
     font-weight: var(--_font-weight);
     outline: none;
-    transition:  0.3s;
+    transition: 0.3s;
 
     &:hover,
     &:focus {
       --_active-indicator-opacity: 1;
       --_active-indicator-visibility: visible;
-
     }
   }
 
@@ -53,7 +53,7 @@ export default css`
     background: var(--_active-indicator-color);
     z-index: -1;
     will-transform: opacity;
-    transition: opacity 0.8s
+    transition: var(--_active-indicator-transition);
   }
 
   .logo {
