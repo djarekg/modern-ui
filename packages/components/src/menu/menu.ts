@@ -1,7 +1,7 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
-import '../icon/icon.js';
+import '../button/icon-button.js';
 
 const styles = css`
   button {
@@ -51,7 +51,7 @@ export class Menu extends LitElement {
   render() {
     return html`
       <button type="button" popovertarget="menu">
-        <mui-icon>${this.icon}</mui-icon>
+        <mui-icon-button>${this.icon}</mui-icon-button>
       </button>
       <menu id="menu" popover @click=${this.close}>
         <slot></slot>

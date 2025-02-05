@@ -26,6 +26,10 @@
       "types": "./dist/button/flat-button.d.ts",
       "import": "./dist/button/flat-button.js"
     },
+    "./button/icon-button.js": {
+      "types": "./dist/button/icon-button.d.ts",
+      "import": "./dist/button/icon-button.js"
+    },
     "./button/outline-button.js": {
       "types": "./dist/button/outline-button.d.ts",
       "import": "./dist/button/outline-button.js"

@@ -7,13 +7,13 @@ export default [
     path: routes.home,
     icon: 'home',
     label: 'Home',
-    cssColorVar: '--mui-palette-color-green',
+    // cssColorVar: '--mui-palette-color-green',
   },
   {
     path: routes.users,
     icon: 'groups',
     label: 'Users',
-    cssColorVar: '--mui-palette-color-hot-pink',
+    // cssColorVar: '--mui-palette-color-hot-pink',
   },
   // {
   //   path: routes.products,

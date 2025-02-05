@@ -4,7 +4,7 @@ import { LitElement, html, nothing, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 import { confirm } from '@mui/components';
-import '@mui/components/icon/icon.js';
+import '@mui/components/button/icon-button.js';
 import '@mui/components/menu/menu.js';
 
 import { signOut } from '@/auth/auth.js';
@@ -49,9 +49,9 @@ export class Header extends SignalWatcher(LitElement) {
     }
 
     return html`
-      <mui-icon @click=${this.#handleMenuClick}>
+      <mui-icon-button @click=${this.#handleMenuClick}>
         menu
-      </mui-icon>
+      </mui-icon-button>
     `;
   }
 

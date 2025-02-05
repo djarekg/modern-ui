@@ -29,6 +29,7 @@ export class Nav extends LitElement {
         headline="Site Navigation"
         .items=${navItems}
         @navigate=${this.#handleNavigate}>
+        <slot></slot>
       </mui-navigation-drawer>
     `;
   }

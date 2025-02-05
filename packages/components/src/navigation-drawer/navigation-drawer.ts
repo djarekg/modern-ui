@@ -3,9 +3,9 @@ import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
 
-import type { NavigationItemEvent, NavigationItemEventDetail } from '../navigation-item/events.js';
+import type { NavigationItemEvent } from '../navigation-item/events.js';
 import type { NavItem } from '../navigation-item/types.js';
-import '../icon/icon.js';
+import '../button/icon-button.js';
 
 import { createNavigationDrawerNavigateEventEvent } from './events.js';
 import styles from './navigation-drawer.css.js';
@@ -18,6 +18,7 @@ export class NavigationDrawer extends LitElement {
   @property({ type: String }) headline = '';
   @property({ type: Array }) items: ReadonlyArray<Readonly<NavItem>> | undefined;
   @property({ type: Boolean, reflect: true }) opened = false;
+  @property({ type: Boolean, reflect: true }) pinned = false;
 
   render() {
     const classes = {
@@ -33,19 +34,17 @@ export class NavigationDrawer extends LitElement {
         aria-expanded="${ariaExpanded}"
         aria-hidden="${ariaHidden}"
         class="${classMap(classes)}">
+        ${this.#renderHeader()}
         ${this.#renderNav()}
         ${this.#renderFooter()}
       </aside>
+      <slot></slot>
     `;
   }
 
   #renderNav() {
     return html`
       <nav>
-        <h4>
-          ${this.headline}
-          <mui-icon class="close-button" tabindex="0" @click=${this.#closeDrawer}>menu_open</mui-icon>
-        </h4>
         ${map(this.items, item => {
           return html`
             <mui-navigation-item
@@ -58,23 +57,37 @@ export class NavigationDrawer extends LitElement {
     `;
   }
 
+  #renderHeader() {
+    return html`
+      <header>
+        <h4>
+          ${this.headline}
+        </h4>
+        <div>
+          <mui-icon-button
+            rotatable
+            class="pin-button"
+            tabindex="0"
+            @click=${this.#togglePin}>
+            push_pin
+          </mui-icon-button>
+          <mui-icon-button
+            class="close-button"
+            tabindex="0"
+            @click=${this.#closeDrawer}>
+            close
+          </mui-icon-button>
+        </div>
+      </header>
+    `;
+  }
+
   #renderFooter() {
     return html`
       <footer>
         <slot name="footer"></slot>
       </footer>
     `;
-    //   if (isEmpty(this.footerItems)) {
-    //     return html``;
-    //   }
-
-    //   return html`
-    //     <footer>
-    //       ${map(this.footerItems, (item) => {
-    //         return html` <mui-navigation-item .item=${item}></mui-navigation-item> `;
-    //       })};
-    //     </footer>
-    //   `;
   }
 
   show(): void {
@@ -109,8 +122,13 @@ export class NavigationDrawer extends LitElement {
     }
   };
 
+  #togglePin() {
+    this.pinned = !this.pinned;
+  }
+
   #closeDrawer() {
     this.opened = false;
+    this.pinned = false;
   }
 
   #openDrawer() {

@@ -45,6 +45,7 @@ const styles = css`
       hsla(321, 100%, 53%, 0.4) 90%
     ); */
     backdrop-filter: blur(10px);
+    z-index: 1;
   }
 `;
 
@@ -79,12 +80,13 @@ export class Layout extends SignalWatcher(LitElement) {
 
   override render() {
     return html`
-      <main role="main">
-        <app-header @nav-button-clicked=${this.#showDrawer}></app-header>
-        <article>${this.#router.outlet()}</article>
-        <app-footer></app-footer>
-      </main>
-      <app-nav ${ref(this.#nav)}></app-nav>
+      <app-nav ${ref(this.#nav)}>
+        <main role="main">
+          <app-header @nav-button-clicked=${this.#showDrawer}></app-header>
+          <article>${this.#router.outlet()}</article>
+          <app-footer></app-footer>
+        </main>
+      </app-nav>
     `;
   }
 

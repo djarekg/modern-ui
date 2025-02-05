@@ -20,7 +20,7 @@ export class ButtonBase extends LitElement {
       <button
         class="${classMap(classes)}"
         type=${this.type}
-        .disabled=${this.disabled}>
+        ?disabled=${this.disabled}>
         <slot></slot>
       </button>`;
   }

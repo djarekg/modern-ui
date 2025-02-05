@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 import { createNavigationItemClickedEvent } from './events.js';
 import type { NavItem } from './types.js';
@@ -28,12 +29,20 @@ export class NavigationItem extends LitElement {
   // }
 
   render() {
-    const { icon, label } = this.item;
+    const { icon, label, cssColorVar } = this.item;
+    let styles = {};
+
+    if (cssColorVar) {
+      styles = {
+        color: `var(${cssColorVar})`,
+      };
+    }
 
     return html`
       <a
         tabindex="0"
         href="#"
+        style=${styleMap(styles)}
         @click=${this.#handleClick}>
         <mui-icon>${icon}</mui-icon>
         <span>${label}</span>

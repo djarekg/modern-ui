@@ -27,10 +27,6 @@ a {
   align-items: center;
 }
 
-nav mui-icon {
-  cursor: pointer;
-}
-
 ul {
   list-style: none;
   padding-inline: 0;

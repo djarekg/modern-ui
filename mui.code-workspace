@@ -82,7 +82,7 @@
     "typescript.tsserver.experimental.enableProjectDiagnostics": true,
     "typescript.updateImportsOnFileMove.enabled": "prompt",
     // "typescript.workspaceSymbols.excludeLibrarySymbols": true,
-    "typescript.workspaceSymbols.scope": "allOpenProjects",
+    // "typescript.workspaceSymbols.scope": "allOpenProjects",
 
     "[typescript]": {
       "editor.defaultFormatter": "biomejs.biome"
