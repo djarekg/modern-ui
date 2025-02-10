@@ -6,15 +6,17 @@ const styles = css`
     --_size: var(--mui-icon-size, 24px);
     --_color: var(--mui-icon-color, var(--mui-color-text));
     --_rotate: var(--mui-icon-rotate, 0deg);
+    --_icon-weight: 400;
 
     -webkit-transform: rotate(var(--_rotate));
     transform: rotate(var(--_rotate));
-    transition: transform var(--mui-motion-duration-100) var(--mui-motion-standard-easing);
+    transition: transform 100ms var(--mui-motion-standard-easing);
 
     font-family: "Material Symbols Sharp", sans-serif;
     font-weight: normal;
     font-style: normal;
     font-size: var(--_size);
+    font-variation-settings: "wght" var(--_icon-weight);
     inline-size: var(--_size);
     block-size: var(--_size);
     color: var(--_color);

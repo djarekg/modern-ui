@@ -23,8 +23,8 @@ export default [
   },
   {
     path: routes.inventory,
-    icon: 'Inventory',
-    label: 'inventory',
+    icon: 'inventory',
+    label: 'Inventory',
     // cssColorVar: '--md-sys-color-gray',
   },
 ] as const satisfies ReadonlyArray<Readonly<NavItem>>;

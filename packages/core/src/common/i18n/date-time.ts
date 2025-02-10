@@ -123,9 +123,8 @@ export const toDate = (value: Date | number | string): Date => {
   return date;
 };
 
-export const toDateTime = (value: Date | number | string): string => {
-  const date = toDate(value);
-  return `${date}T${date.toLocaleTimeString()}`;
+export const toDateTime = (value: Date | number | string = new Date()): string => {
+  return toDate(value).toLocaleString().replace(/,/g, '');
 };
 
 export const isDate = (value: unknown): value is Date => {

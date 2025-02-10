@@ -1,9 +1,8 @@
 import { LitElement, type TemplateResult, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { createTableInternalRowSelectedEvent } from './events.js';
-import type { Table } from './table.js';
 
-export const TABLE_ROW_SELECTOR = 'mui-table-row';
+import { createTableInternalRowSelectedEvent } from './events.js';
+import { Table } from './table.js';
 
 const styles = css`
   * {
@@ -16,8 +15,9 @@ const styles = css`
   }
 `;
 
-@customElement('mui-table-row')
+@customElement(TableRow.selector)
 export class TableRow extends LitElement {
+  static selector = 'mui-table-row';
   static override styles = [styles];
 
   @property({ type: Boolean, reflect: true }) header = false;
@@ -39,10 +39,9 @@ export class TableRow extends LitElement {
     `;
   }
 
-  #handleRowClick(e: MouseEvent): void {
-    e.stopPropagation();
-
-    const table = this.closest<Table>('mui-table');
+  #handleRowClick(): void {
+    console.log('TableRow#handleRowClick');
+    const table = this.closest<Table>(Table.selector);
 
     if (table) {
       table.dispatchEvent(createTableInternalRowSelectedEvent(this));

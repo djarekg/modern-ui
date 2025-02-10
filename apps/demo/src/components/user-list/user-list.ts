@@ -25,13 +25,15 @@ export class UserList extends LitElement {
     return html`
       <mui-table
         selectable
-        @row-selected=${this.#handleTableRowSelected}>
+        @row-selected=${this.#handleTableRowSelected}
+        @row-view=${this.#handleTableRowView}>
         <mui-table-row header>
           <mui-table-header-cell>ID</mui-table-header-cell>
           <mui-table-header-cell>Name</mui-table-header-cell>
           <mui-table-header-cell>Email</mui-table-header-cell>
           <mui-table-header-cell>Address</mui-table-header-cell>
           <mui-table-header-cell>Phone</mui-table-header-cell>
+          <mui-table-header-cell view></mui-table-header-cell>
         </mui-table-row>
         ${this.#renderRows()}
       </mui-table>
@@ -47,12 +49,17 @@ export class UserList extends LitElement {
           <mui-table-cell>${email}</mui-table-cell>
           <mui-table-cell>${address}</mui-table-cell>
           <mui-table-cell>${phone}</mui-table-cell>
+          <mui-table-cell view></mui-table-cell>
         </mui-table-row>
       `,
     );
   }
 
   #handleTableRowSelected({ detail: { row } }: TableRowSelectedEvent) {
+    console.log('UserList#handleTableRowSelected', row);
+  }
+
+  #handleTableRowView({ detail: { row } }: TableRowSelectedEvent) {
     const { id } = row;
     navigate(`${routes.users}/${id}`);
   }

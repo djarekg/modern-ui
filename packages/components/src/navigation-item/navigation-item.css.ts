@@ -12,14 +12,13 @@ export default css`
     --_active-indicator-opacity: 0;
     --_active-indicator-color: var(--mui-navigation-item-hover-color, var(--mui-color-background-hover));
     --_active-indicator-visibility: hidden;
-    --_active-indicator-transition: opacity var(--mui-motion-duration-400) var(--mui-motion-acceleration-easing);
-    --_icon-weight: var(--_font-weight);
-    --md-icon-size: 22px;
+    --_border-color: transparent;
+    --mui-icon-size: 21px;
   }
 
   a {
     --_anchor-block-size: 44px;
-    --md-icon-color: var(--_on-color);
+    --mui-icon-color: var(--_on-color);
 
     position: relative;
     display: flex;
@@ -33,12 +32,12 @@ export default css`
     color: var(--_color);
     font-weight: var(--_font-weight);
     outline: none;
-    transition: 0.3s;
 
     &:hover,
     &:focus {
       --_active-indicator-opacity: 1;
       --_active-indicator-visibility: visible;
+      --mui-icon-color: var(--_color);
     }
   }
 
@@ -50,22 +49,10 @@ export default css`
     visibility: var(--_active-indicator-visibility);
     opacity: var(--_active-indicator-opacity);
     border-radius: var(--mui-shape-round);
-    background: var(--_active-indicator-color);
+    border: 2px solid var(--_active-indicator-color);
+    /* background: var(--_active-indicator-color); */
     z-index: -1;
     will-transform: opacity;
-    transition: var(--_active-indicator-transition);
-  }
-
-  .logo {
-    will-change: filter;
-    transition: filter 300ms;
-  }
-
-  .logo:hover {
-    filter: drop-shadow(0 0 10px var(--md-sys-color-light-blue-alpha));
-  }
-
-  md-icon {
-    font-variation-settings: "wght" var(--_icon-weight);
+    transition: opacity 350ams var(--mui-motion-acceleration-easing);
   }
 `;

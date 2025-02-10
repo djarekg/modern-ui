@@ -1,7 +1,13 @@
 import { LitElement, type TemplateResult, css, html } from 'lit';
 import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
-import { type TableInternalRowSelectedEvent, createTableRowSelectedEvent } from './events.js';
-import type { TableRow } from './table-row.js';
+
+import {
+  type TableInternalRowSelectedEvent,
+  createTableRowEditEvent,
+  createTableRowSelectedEvent,
+  createTableRowViewEvent,
+} from './events.js';
+import { TableRow } from './table-row.js';
 
 const styles = css`
   * {
@@ -24,19 +30,23 @@ const styles = css`
 `;
 
 /**
+ * @fires row-selected - Fired when a row is selected.
+ * @fires row-view - Fired when a row is viewed.
+ * @fires row-edit - Fired when a row is edited.
  * @cssprops --mui-table-border-color - Border color of the table. Default is `var(--mui-color-border)`.
  * @cssprops --mui-table-font-size - Font size of the table. Default is `14px`.
  *
  * @slot - Default slot for table rows.
  */
-@customElement('mui-table')
+@customElement(Table.selector)
 export class Table extends LitElement {
+  static selector = 'mui-table';
   static override styles = [styles];
 
   @property({ reflect: true }) type = 'table';
   @property({ type: Boolean }) selectable = false;
 
-  @queryAssignedElements({ selector: 'mui-table-row:not([header])', flatten: true })
+  @queryAssignedElements({ selector: `${TableRow.selector}:not([header])`, flatten: true })
   rows: TableRow[];
 
   override connectedCallback(): void {
@@ -44,6 +54,7 @@ export class Table extends LitElement {
 
     if (this.selectable) {
       this.addEventListener('internal-row-selected', this.#handleInternalRowSelected);
+      this.addEventListener('internal-row-view', this.#handleInternalRowView);
       this.addEventListener('internal-row-edit', this.#handleInternalRowEdit);
     }
   }
@@ -55,6 +66,7 @@ export class Table extends LitElement {
   }
 
   async #handleInternalRowSelected(e: Event): Promise<void> {
+    console.log('Table#handleInternalRowSelected');
     e.stopPropagation();
 
     const { row } = (e as TableInternalRowSelectedEvent).detail;
@@ -72,6 +84,27 @@ export class Table extends LitElement {
     await this.updateComplete;
 
     this.dispatchEvent(createTableRowSelectedEvent(row));
+  }
+
+  async #handleInternalRowView(e: Event): Promise<void> {
+    console.log('Table#handleInternalRowView');
+    e.stopPropagation();
+
+    const { row } = (e as TableInternalRowSelectedEvent).detail;
+
+    const prevRowSelected = this.rows.find(r => r.getAttribute('aria-selected') === 'true');
+
+    if (prevRowSelected) {
+      prevRowSelected.removeAttribute('selected');
+      prevRowSelected.setAttribute('aria-selected', 'false');
+    }
+
+    row.setAttribute('selected', '');
+    row.setAttribute('aria-selected', 'true');
+
+    await this.updateComplete;
+
+    this.dispatchEvent(createTableRowViewEvent(row));
   }
 
   async #handleInternalRowEdit(e: Event): Promise<void> {
@@ -91,7 +124,7 @@ export class Table extends LitElement {
 
     await this.updateComplete;
 
-    this.dispatchEvent(createTableRowSelectedEvent(row));
+    this.dispatchEvent(createTableRowEditEvent(row));
   }
 }
 

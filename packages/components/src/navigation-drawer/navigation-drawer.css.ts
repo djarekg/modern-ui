@@ -9,10 +9,19 @@ export default css`
     --_aside-border-radius: var(--mui-shape-large);
     --_aside-box-shadow: var(--mui-elevation-3);
     --_aside-border-inline-end: none;
+    /* --_navigation-item-opacity: 0;
+    --_navigation-visibility: hidden; */
 
     display: block;
     inline-size: 100%;
     block-size: 100%;
+
+
+  @starting-style {
+    mui-navigation-item {
+      opacity: 0;
+    }
+  }
   }
 
   aside {
@@ -38,11 +47,16 @@ export default css`
       visibility 0s linear var(--mui-motion-duration-500);
   }
 
-  :host([opened]) aside {
-    content-visibility: visible;
-    visibility: visible;
-    transform: translateX(0);
-    transition: transform var(--mui-motion-duration-200) var(--mui-motion-standard-easing);
+  :host([opened]) {
+    --_navigation-item-opacity: 1;
+    --_navigation-visibility: visible;
+
+    aside {
+      content-visibility: visible;
+      visibility: visible;
+      transform: translateX(0);
+      transition: transform var(--mui-motion-duration-200) var(--mui-motion-standard-easing);
+    }
   }
 
   :host([pinned]) {
@@ -68,6 +82,7 @@ export default css`
     background-color: var(--mui-color-scrim);
     opacity: var(--_scrim-opacity);
     transition: opacity var(--mui-motion-duration-200) linear var(--mui-motion-duration-100);
+    z-index: 899;
   }
 
   :host([opened]:not([pinned])) .scrim {
@@ -76,6 +91,7 @@ export default css`
     content-visibility: visible;
     visibility: visible;
   }
+
 
   nav {
     position: relative;
@@ -118,5 +134,26 @@ export default css`
 
   .pin-button {
     --mui-icon-rotate: var(--_drawer-pinned-rotate);
+  }
+
+  :host([opened]) {
+    mui-navigation-item {
+      animation: fadeIn 0.5s ease-in-out forwards 0.3s;
+    }
+  }
+
+  :host {
+    mui-navigation-item {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;

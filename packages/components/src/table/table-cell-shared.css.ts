@@ -24,25 +24,25 @@ export default css`
     border-inline-end: 1px solid var(--mui-color-border);
   }
 
-  :host([edit]) {
+  :host(:is([edit], [add], [view])) {
     --mui-icon-size: 20px;
-    --_container-width: calc(calc(var(--mui-table-cell-padding-inline) * 2) + var(--mui-icon-size));
+    --_container-width: calc(var(--mui-icon-size) + 4);
 
     min-inline-size: var(--_container-width);
     inline-size: var(--_container-width);
-  }
 
-  :host(:is([edit], [add])) > div {
-    --_padding: 2px;
+    & > div {
+      --_padding: 2px;
 
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding-inline: var(--_padding);
-    padding-block: var(--_padding);
-  }
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding-inline: var(--_padding);
+      padding-block: var(--_padding);
+    }
 
-  :host(:is([edit], [add])) mui-icon {
-    cursor: pointer;
+    mui-icon {
+      cursor: pointer;
+    }
   }
 `;

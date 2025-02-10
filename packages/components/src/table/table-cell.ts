@@ -1,17 +1,13 @@
 import { LitElement, type TemplateResult, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
 
-import { createTableInternalRowSelectedEvent } from './events.js';
+import '../button/icon-button.js';
+
+import { createTableInternalRowSelectedEvent, createTableInternalRowViewEvent } from './events.js';
 import sharedCss from './table-cell-shared.css.js';
-
-import '../icon/icon.js';
+import { TableRow } from './table-row.js';
 
 const styles = css`
-  :host([edit]) mui-icon {
-    --mui-icon-size: 20px;
-  }
-
   :host-context(:is(mui-table-row:last-child)):host(:is(:first-child)) {
     border-end-start-radius: var(--mui-shape-medium);
   }
@@ -38,17 +34,21 @@ export class TableCell extends LitElement {
   static override styles = [sharedCss, styles];
 
   @property({ type: Boolean, reflect: true }) edit = false;
+  @property({ type: Boolean, reflect: true }) view = false;
   @property() editIcon = 'edit';
+  @property() viewIcon = 'pageview';
   @property({ reflect: true }) type = 'cell';
 
   override render(): TemplateResult {
-    return html`
-      ${when(
-        this.edit,
-        () => this.#renderEdit(),
-        () => this.#renderSlot(),
-      )}
-    `;
+    if (this.edit) {
+      return this.#renderEdit();
+    }
+
+    if (this.view) {
+      return this.#renderView();
+    }
+
+    return this.#renderSlot();
   }
 
   #renderSlot(): TemplateResult {
@@ -59,8 +59,16 @@ export class TableCell extends LitElement {
 
   #renderEdit(): TemplateResult {
     return html`
-      <div @click=${this.#handleEditClick}>
-        <mui-icon>${this.editIcon}</mui-icon>
+      <div>
+        <mui-icon-button @click=${this.#handleEditClick}>${this.editIcon}</mui-icon-button>
+      </div>
+    `;
+  }
+
+  #renderView(): TemplateResult {
+    return html`
+      <div>
+        <mui-icon-button @click=${this.#handleViewClick}>${this.viewIcon}</mui-icon-button>
       </div>
     `;
   }
@@ -68,10 +76,20 @@ export class TableCell extends LitElement {
   #handleEditClick(e: MouseEvent): void {
     e.stopPropagation();
 
-    const row = this.closest('mui-table-row');
+    const row = this.closest<TableRow>(TableRow.selector);
 
     if (row) {
       this.dispatchEvent(createTableInternalRowSelectedEvent(row));
+    }
+  }
+
+  #handleViewClick(e: MouseEvent): void {
+    e.stopPropagation();
+
+    const row = this.closest<TableRow>(TableRow.selector);
+
+    if (row) {
+      this.dispatchEvent(createTableInternalRowViewEvent(row));
     }
   }
 }
