@@ -7,7 +7,7 @@
     {
       "path": ".",
       // "name": "root"
-      "name": "🦄 root"
+      "name": "🦄  root"
       // "name": "root   🎄"
     },
     {
@@ -15,8 +15,8 @@
       // "name": "🤓 docs"
     },
     {
-      "path": "packages"
-      // "name": "packages   📦"
+      "path": "packages",
+      "name": "📦  packages"
     },
     {
       "path": "apps"
