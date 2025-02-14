@@ -6,34 +6,24 @@ import { type Ref, createRef, ref } from 'lit/directives/ref.js';
 
 import { validate } from '@/auth/auth.js';
 import { isSignedInContext, isSignedInSignal } from '@/auth/is-signed-in.js';
-import type { Nav } from '@/components/nav/nav.js';
+import type { Main } from '@/components/main/main.js';
 import { createRouter, initNavigation, navigate } from '@/router/index.js';
 import { routes } from '@/router/routes.js';
-
-import '@/components/nav/nav.js';
+import '@/components/main/main.js';
 
 import './header/header.js';
 import './footer/footer.js';
 
 const styles = css`
-  :host,
-  main {
+  :host {
+    display: block;
     block-size: 100%;
     inline-size: 100%;
   }
 
-  :host {
-    display: block;
-  }
-
-  main {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden auto;
-  }
-
   article{
-    padding-block: 1rem 3rem;
+    padding-block: 2rem 3rem;
+    padding-inline: 3rem;
     background: linear-gradient(
       45deg,
       hsla(189, 100%, 50%, 0.4),
@@ -55,7 +45,7 @@ export class Layout extends SignalWatcher(LitElement) {
 
   readonly #router = createRouter(this);
   #watcher: Signal.subtle.Watcher;
-  #nav: Ref<Nav> = createRef();
+  #nav: Ref<Main> = createRef();
 
   @provide({ context: isSignedInContext }) isSignedIn = isSignedInSignal.get();
 
@@ -80,13 +70,11 @@ export class Layout extends SignalWatcher(LitElement) {
 
   override render() {
     return html`
-      <app-nav ${ref(this.#nav)}>
-        <main role="main">
-          <app-header @nav-button-clicked=${this.#showDrawer}></app-header>
-          <article>${this.#router.outlet()}</article>
-          <app-footer></app-footer>
-        </main>
-      </app-nav>
+      <app-main ${ref(this.#nav)}>
+        <app-header @nav-button-clicked=${this.#showDrawer}></app-header>
+        <article>${this.#router.outlet()}</article>
+        <app-footer></app-footer>
+      </app-main>
     `;
   }
 

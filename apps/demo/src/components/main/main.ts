@@ -10,14 +10,18 @@ import { navigate } from '@/router/index.js';
 import navItems from './nav-items.js';
 
 const styles = css`
-  .items {
-    list-style-type: none;
+  main {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden auto;
+    block-size: 100%;
     inline-size: 100%;
+    /* padding: 1rem; */
   }
 `;
 
-@customElement('app-nav')
-export class Nav extends LitElement {
+@customElement('app-main')
+export class Main extends LitElement {
   static override styles = [styles];
 
   #drawer: Ref<NavigationDrawer> = createRef();
@@ -26,14 +30,19 @@ export class Nav extends LitElement {
     return html`
       <mui-navigation-drawer
         ${ref(this.#drawer)}
-        headline="Site Navigation"
+        headline="Main Menu"
         .items=${navItems}
         @navigate=${this.#handleNavigate}>
-        <slot></slot>
+        <main role="main">
+          <slot></slot>
+        </main>
       </mui-navigation-drawer>
     `;
   }
 
+  /**
+   * Show the navigation drawer.
+   */
   show(): void {
     this.#drawer.value.show();
   }
@@ -43,12 +52,18 @@ export class Nav extends LitElement {
       item: { path },
     },
   }: NavigationDrawerNavigateEvent) {
+    /**
+     * Since the navigation-drawer is outside the router context, we can't use native links.
+     * We have to use this navigation function that under the hood use's the router's
+     * navigation API. We need this to track navigation history and perform route transitions
+     * on any navigation from the drawer.
+     */
     navigate(path);
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-nav': Nav;
+    'app-main': Main;
   }
 }

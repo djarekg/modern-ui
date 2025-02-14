@@ -48,7 +48,7 @@
       "type": "node-terminal",
       "noDebug": false,
       "command": "bun run dev",
-      "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/nodea_modules/@mui/**"],
+      // "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/nodea_modules/@mui/**"],
       "sourceMaps": true,
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",

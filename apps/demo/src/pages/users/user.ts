@@ -1,10 +1,12 @@
 import { SignalWatcher, html, signal } from '@lit-labs/signals';
-import { LitElement, unsafeCSS } from 'lit';
+import { LitElement, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { effect } from 'signal-utils/subtle/microtask-effect';
 
 import type { LoginHistory, User } from '@mui/api';
 import '@mui/components/text-field/text-field.js';
+import '@mui/components/tabs/tabs.js';
+import '@mui/components/tabs/tab.js';
 
 import type { SaveEvent } from '@/components/user-detail/events.js';
 import { useApi } from '@/hooks/use-api.js';
@@ -47,8 +49,20 @@ export class UserPage extends SignalWatcher(LitElement) {
   render() {
     return html`
       <article>
-        ${this.#renderForm()}
-        ${this.#renderLoginHistory()}
+        <mui-tabs>
+          <mui-tab id="tab-1" aria-controls="tabpanel-1">
+            Profile
+            <section slot="panel">
+              ${this.#renderForm()}
+            </section>
+          </mui-tab>
+          <mui-tab id="tab-2" aria-controls="tabpanel-2">
+            Login History
+            <section slot="panel">
+              ${this.#renderLoginHistory()}
+            </section>
+          </mui-tab>
+        </mui-tabs>
       </article>
     `;
   }
@@ -57,18 +71,11 @@ export class UserPage extends SignalWatcher(LitElement) {
     const user = this.#user.get();
 
     if (!user) {
-      return html`<div>Loading...</div>`;
+      return nothing;
     }
 
     return html`
-      <section>
-        <h2>Profile</h2>
-        <app-user-detail
-          class="app-container"
-          .user=${user}
-          @save=${this.#onProfileSave}>
-        </app-user-detail>
-      </section>
+      <app-user-detail .user=${user} @save=${this.#onProfileSave}></app-user-detail>
     `;
   }
 
@@ -76,15 +83,11 @@ export class UserPage extends SignalWatcher(LitElement) {
     const loginHistories = this.#loginHistories.get();
 
     if (!loginHistories) {
-      return html`<div>Loading...</div>`;
+      return nothing;
     }
 
     return html`
-      <section>
-        <h2>Login History</h2>
-        <app-user-login-history .loginHistories=${loginHistories}>
-        </app-user-login-history>
-      </section>
+      <app-user-login-history .loginHistories=${loginHistories}></app-user-login-history>
     `;
   }
 

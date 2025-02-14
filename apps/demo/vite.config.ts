@@ -19,6 +19,7 @@ export default defineConfig({
     conditions: ['browser', 'development'],
     dedupe: [
       '@lit-labls/context',
+      '@lit-labs/observers',
       '@lit-labs/router',
       '@lit-labs/signals',
       '@lit-labs/task',
