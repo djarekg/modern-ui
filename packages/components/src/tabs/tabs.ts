@@ -1,16 +1,17 @@
 import type { TypedEvent } from '@mui/core';
 import { LitElement, css, html, isServer, nothing } from 'lit';
 import { customElement, property, query, queryAssignedElements } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
 
 import '../icon/icon.js';
 
-import type { Tab } from './tab.js';
+import { ANIMATE_INDICATOR, type Tab } from './tab.js';
 import { isTab } from './utils.js';
 
 const styles = css`
-  * {
+  /* * {
     box-sizing: border-box;
-  }
+  } */
 
   :host {
     display: flex;
@@ -24,11 +25,11 @@ const styles = css`
   }
 
   [role=tabpanel] {
-    /* margin: 1rem; */
+    border-radius: 0 var(--mui-shape-medium) var(--mui-shape-medium);
     background-color: var(--mui-tab-background-color, var(--mui-color-background));
   }
 
-  ::slotted([slot=panel]) {
+  [slot=panel] {
     padding: 1rem;
   }
 `;
@@ -41,6 +42,11 @@ const styles = css`
 @customElement('mui-tabs')
 export class Tabs extends LitElement {
   static styles = [styles];
+
+  /**
+   * Cache of mui-tab's tabpanel elements.
+   */
+  #tabpanelsCache: Record<string, Element> = {};
 
   /**
    * Cast to HTMLElement needed for closure.
@@ -105,10 +111,19 @@ export class Tabs extends LitElement {
    */
   @queryAssignedElements({ selector: 'mui-tab', flatten: true }) readonly tabs!: Tab[];
 
+  /**
+   * The element that contains the tabs.
+   */
   @query('.tabs') private readonly tabsScrollerElement!: HTMLElement | null;
 
+  /**
+   * The element that contains the tab panels.
+   */
   @query('slot') private readonly slotElement!: HTMLSlotElement | null;
 
+  /**
+   * The tab that is currently active/selected.
+   */
   get activeTab() {
     return this.tabs.find(({ active }) => active) ?? null;
   }
@@ -119,14 +134,9 @@ export class Tabs extends LitElement {
     }
   }
 
-  get activeTabpanel() {
-    return this.activeTab?.querySelector<HTMLElement>('[role=tabpanel]');
-  }
-
-  get activeTabSlotPanel() {
-    return this.activeTab?.querySelector<HTMLElement>('[slot=panel]');
-  }
-
+  /**
+   * The tab that is currently focused.
+   */
   get focusedTab() {
     return this.tabs.find(tab => tab.matches(':focus-within'));
   }
@@ -142,28 +152,16 @@ export class Tabs extends LitElement {
     }
   }
 
-  connectedCallback(): void {
-    super.connectedCallback();
-
-    this.#resizeObserver = new ResizeObserver(([entry]) => {
-      this.#adjustHeight(entry.target);
-    });
-  }
-
   disconnectedCallback(): void {
     super.disconnectedCallback();
-
-    if (this.#resizeObserver) {
-      this.#resizeObserver.disconnect();
-      this.#resizeObserver = null;
-    }
+    this.#resetObserver();
   }
 
   render() {
     return html`
       <div class="tabs">
         <slot
-          @slotchange=${this.#handleSlotChange}
+          @slotchange=${this.#handleSlotChange.bind(this)}
           @click=${this.#handleTabClick}></slot>
       </div>
       ${this.#renderActiveTabpanel()}
@@ -171,18 +169,24 @@ export class Tabs extends LitElement {
   }
 
   #renderActiveTabpanel() {
-    const slotpanel = this.activeTabSlotPanel;
+    const { id } = this.activeTab ?? {};
 
-    // there should always be a selected tab, but better to be safe than sorry 😉.
-    if (slotpanel) {
-      if (this.#resizeObserver) {
-        this.#resizeObserver.observe(slotpanel);
-      }
-
-      return html`<div id="tabpanel-${this.activeTab.id}" role="tabpanel">${slotpanel}</div>`;
+    if (!id) {
+      return nothing;
     }
 
-    return nothing;
+    let panel = this.#tabpanelsCache[id];
+
+    // If the panel does not exist in cache, then use the active tab's slotPanel
+    // and cache that panel for future use.
+    if (!panel) {
+      panel = this.activeTab.slotPanel;
+      this.#tabpanelsCache[id] = panel;
+    }
+
+    this.#resetObserver(panel);
+
+    return cache(html`<div id="tabpanel-${id}" role="tabpanel">${panel}</div>`);
   }
 
   #handleFocusout() {
@@ -312,11 +316,17 @@ export class Tabs extends LitElement {
     }
 
     if (previousTab) {
+      // B/c we are displaying the active tab component's tabpanel in
+      // the this component, we need to manual request an update to reflect
+      // the new active tabpanel.
+      this.requestUpdate();
+
       // Don't dispatch a change event if activating a tab when no previous tabs
-      // were selected, such as when md-tabs auto-selects the first tab.
+      // were selected, such as when mui-tabs auto-selects the first tab.
       const defaultPrevented = !this.dispatchEvent(
         new Event('change', { bubbles: true, cancelable: true }),
       );
+
       if (defaultPrevented) {
         for (const tab of tabs) {
           tab.active = tab === previousTab;
@@ -324,12 +334,14 @@ export class Tabs extends LitElement {
         return;
       }
 
-      // @biome-ignore lint/
+      // @ts-ignore
       // activeTab[ANIMATE_INDICATOR](previousTab);
     }
 
     this.#updateFocusableTab(activeTab);
     this.#scrollToTab(activeTab);
+
+    // this.#adjustHeight(this.activeTab?.slotPanel);
   }
 
   async #scrollToTab(tabToScrollTo: Tab | null = null) {
@@ -374,6 +386,38 @@ export class Tabs extends LitElement {
     }
   }
 
+  /**
+   * Reset the resize observer to observe the height of the active tabpanel.
+   * Because we are manually adding the child mui-tab's'tabpanel to
+   * the mui-tabs's shadow DOM, we need to use the resize observer to adjust
+   * the height of the tabs component.
+   *
+   * @param panel The panel to observe for height changes.
+   */
+  #resetObserver(panel?: Element) {
+    // Clean up and destroy current observer.
+    if (this.#resizeObserver) {
+      if (panel) {
+        this.#resizeObserver.unobserve(panel);
+      }
+
+      this.#resizeObserver.disconnect();
+      this.#resizeObserver = null;
+    }
+
+    if (panel) {
+      this.#resizeObserver = new ResizeObserver(([entry]) => {
+        this.#adjustHeight(entry.target);
+      });
+      this.#resizeObserver.observe(panel);
+    }
+  }
+
+  /**
+   * Adjust the height of the tabs component to match the height of the active.
+   *
+   * @param panel The panel to adjust the height to.
+   */
   #adjustHeight(panel: Element) {
     if (panel) {
       this.style.blockSize = `${panel.scrollHeight}px`;

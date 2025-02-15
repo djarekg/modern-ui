@@ -61,6 +61,10 @@ const styles = css`
     display: none;
   }
 
+  [slot=panel], section {
+    padding: 1rem;
+  }
+
   button {
     all: unset;
     display: flex;
@@ -119,15 +123,42 @@ export class Tab extends LitElement {
   @property({ type: Boolean, attribute: 'icon-only' })
   iconOnly = false;
 
+  /**
+   *  The indicator element that is used to indicate the active/hovered/selected tab.
+   */
   @query('.indicator')
   readonly [INDICATOR]!: HTMLElement | null;
 
+  /**
+   * The default slot nodes assigned to the tab.
+   */
   @queryAssignedNodes({ flatten: true })
   private readonly assignedDefaultNodes!: Node[];
 
+  /**
+   * The icon slot elements assigned to the tab.
+   */
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private readonly assignedIcons!: HTMLElement[];
 
+  /**
+   * The panel element that is associated with the tab.
+   */
+  get slotPanel() {
+    return this.querySelector<HTMLElement>('[slot="panel"]');
+  }
+
+  /**
+   * The tabpanel element that is associated with the tab. Thi will
+   * be a child node of the slotPanel.
+   */
+  get panel() {
+    return this.querySelector<HTMLElement>('[role="tabpanel"]');
+  }
+
+  /**
+   * Whether or not the indicator should be full width.
+   */
   @state()
   protected fullWidthIndicator = false;
 
@@ -167,6 +198,13 @@ export class Tab extends LitElement {
     `;
   }
 
+  /**
+   * Prevent default behavior when pressing the spacebar or enter key and
+   * trigger the click event.
+   *
+   * @param param0
+   * @returns
+   */
   async #handleKeydown(e: KeyboardEvent) {
     // allow event to bubble
     await 0;
@@ -176,17 +214,27 @@ export class Tab extends LitElement {
     }
 
     if (['Enter', ' '].includes(e.key)) {
-      // prevent default behavior such as scrolling when pressing spacebar
+      // Prevent default behavior such as scrolling when pressing spacebar.
       e.preventDefault();
       this.click();
     }
   }
 
+  /**
+   * Intercept content click event and trigger the component click event
+   * instead.
+   *
+   * @param e
+   */
   #handleContentClick(e: Event) {
     e.stopPropagation();
     this.click();
   }
 
+  /**
+   * When the default slot changes, check if there is label text or elements
+   * and set the iconOnly property accordingly.
+   */
   #handleSlotChange() {
     // Check if there is label text or elements and if not,
     // then there is only an icon.
@@ -197,6 +245,9 @@ export class Tab extends LitElement {
     this.iconOnly = !this.assignedDefaultNodes.some(hasTextOrElement);
   }
 
+  /**
+   * Handles the slotchange event for the icon slot.
+   */
   #handleIconSlotChange() {
     this.hasIcon = this.assignedIcons.length > 0;
   }

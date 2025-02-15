@@ -57,6 +57,12 @@ export class UserPage extends SignalWatcher(LitElement) {
             </section>
           </mui-tab>
           <mui-tab id="tab-2" aria-controls="tabpanel-2">
+            Address
+            <section slot="panel">
+              Address
+            </section>
+          </mui-tab>
+          <mui-tab id="tab-3" aria-controls="tabpanel-3">
             Login History
             <section slot="panel">
               ${this.#renderLoginHistory()}
