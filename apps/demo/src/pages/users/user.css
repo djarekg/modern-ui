@@ -19,14 +19,14 @@ article {
   }
 }
 
-article {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 mui-tabs {
   inline-size: var(--_tabs-inline-size);
   min-inline-size: 450px;
   margin-block-end: 2rem;
+}
+
+article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
