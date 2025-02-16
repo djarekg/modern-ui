@@ -11,6 +11,7 @@
   /** Dark theme surface colors */
   --mui-palette-surface-a0: #1d222e;
   --mui-palette-surface-a0-hsl: hsl(222, 23%, 15%);
+  --mui-palette-surface-a05: #252833;
   --mui-palette-surface-a10: #323742;
   --mui-palette-surface-a20: #494c57;
   --mui-palette-surface-a30: #60636d;
@@ -31,6 +32,12 @@
   --mui-palette-color-hot-pink: #ff0ea9;
   --mui-palette-color-purple: #711fee;
   --mui-palette-color-teal: #00daff;
+
+  /* Alert colors */
+  --mui-color-alert-error: #f44336;
+  --mui-color-alert-info: #3857f3;
+  --mui-color-alert-success: #58ae5b;
+  --mui-color-alert-warning: #ff9800;
 
   /* Black */
   --mui-palette-black: #000000ff;
@@ -101,8 +108,8 @@
 
 .green {
   /** Dark theme primary colors */
-  --mui-palette-primary-a0: hsl(172, 66%, 50%);
-  --mui-palette-primary-a0-hsl: #2dd4bf;
+  --mui-palette-primary-a0: #2dd4bf;
+  --mui-palette-primary-a0-hsl: hsl(172, 66%, 50%);
   --mui-palette-primary-a10: #56d9c6;
   --mui-palette-primary-a20: #72decd;
   --mui-palette-primary-a30: #8ae3d4;

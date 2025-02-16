@@ -6,6 +6,7 @@ type ConfirmOptions = {
   content: string;
   confirmText?: string;
   cancelText?: string;
+  appendToLitElement?: string;
 };
 
 /**
@@ -16,7 +17,7 @@ type ConfirmOptions = {
  */
 export const confirm = (options: ConfirmOptions) => {
   const dialog = document.createElement('mui-confirm') as Confirm;
-  const { title, content, confirmText, cancelText } = options;
+  const { appendToLitElement = 'app-index', title, content, confirmText, cancelText } = options;
 
   dialog.title = title;
   dialog.content = content;
@@ -37,7 +38,7 @@ export const confirm = (options: ConfirmOptions) => {
   });
 
   if (!isServer) {
-    const app = document.querySelector<LitElement>('app-index');
+    const app = document.querySelector<LitElement>(appendToLitElement);
     app.shadowRoot?.appendChild(dialog);
   }
 

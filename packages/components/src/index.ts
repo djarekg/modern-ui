@@ -5,6 +5,7 @@ export * from './icon/index.js';
 export * from './menu/index.js';
 export * from './navigation-drawer/index.js';
 export * from './navigation-item/index.js';
+export * from './notifications/index.js';
 export * from './table/index.js';
 export * from './tabs/index.js';
 export * from './text-field/index.js';

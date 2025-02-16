@@ -24,11 +24,12 @@ const styles = css`
   article{
     padding-block: 2rem 3rem;
     padding-inline: 3rem;
-    background: linear-gradient(
+    background: var(--mui-palette-surface-a10);
+    /* background: linear-gradient
       45deg,
       hsla(189, 100%, 50%, 0.4),
       hsla(321, 100%, 53%, 0.4) 80%
-    );
+    ); */
     /* background: linear-gradient(
       45deg,
       hsla(222, 23%, 15%, 0.4) 30%,

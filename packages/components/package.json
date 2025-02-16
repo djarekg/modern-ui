@@ -62,6 +62,10 @@
       "types": "./dist/navigation/navigation-item.d.ts",
       "import": "./dist/navigation/navigation-item.js"
     },
+    "./notifications/toast.js": {
+      "types": "./dist/notifications/toast.d.ts",
+      "import": "./dist/notifications/toast.js"
+    },
     "./table/*.js": {
       "types": "./dist/table/*.d.ts",
       "import": "./dist/table/*.js"
