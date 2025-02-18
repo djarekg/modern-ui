@@ -8,6 +8,14 @@ import '../icon/icon.js';
 
 import styles from './navigation-item.css.js';
 
+/**
+ * @cssprop --mui-navigation-item-color - The color of the navigation item.
+ * @cssprop --mui-navigation-item-hover-color - The color of the navigation item when hovered.
+ * @cssprop --mui-navigation-item-active-indicator-border-radius - The border radius of the active indicator.
+ * @cssprop --mui-navigation-active-indicator-background-color - The background color of the active indicator.
+ *
+ * General use navigation item with icon, label, hover and selection states.
+ */
 @customElement('mui-navigation-item')
 export class NavigationItem extends LitElement {
   static override styles = [styles];

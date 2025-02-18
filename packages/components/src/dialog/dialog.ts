@@ -1,37 +1,104 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 const styles = css`
   :host {
+    --_dialog-inline-size: var(--mui-dialog-inline-size, 320px);
+    --_dialog-block-size: var(--mui-dialog-block-size, 50px);
+    --_dialog-inset: var(--mui-dialog-inset, 0);
+    --_dialog-background-color: var(--mui-dialog-background-color, var(--mui-palette-surface-a10));
+    --_dialog-border-color: var(--mui-dialog-border-color, var(--mui-palette-surface-a20));
+    --_dialog-border-width: var(--mui-dialog-border-width, 1px);
+    --_dialog-padding: var(--mui-dialog-padding, 1rem);
+
     margin: auto;
   }
 
   .scrim {
     position: fixed;
     inset: 0;
+    display: none;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+
+    &.open {
+      display: block;
+    }
   }
 
   dialog {
-    min-block-size: 50px;
-    min-inline-size: 320px;
-    z-index: 1001;
-    inset: 0;
-    background: var(--mui-palette-surface-a10);
+    content-visibility: hidden;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    inline-size: var(--_dialog-inline-size);
+    block-size: var(--_dialog-block-size);
+    inset: var(--_dialog-inset);
+    background: var(--_dialog-background-color);
     box-shadow: var(--mui-elevation-5);
     border-radius: var(--mui-shape-large);
-    border: 1px solid var(--mui-palette-surface-a20);
+    border-color: var(--_dialog-border-color);
+    border-width: var(--_dialog-border-width);
+    border-style: solid;
     color: var(--mui-color-text);
+    padding: var(--_dialog-padding);
+    z-index: 1001;
     overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out, block-size 0.4s ease-in-out 0.5s;
+
+    &[open] {
+      content-visibility: visible;
+      visibility: visible;
+      opacity: 1;
+    }
   }
 `;
 
+/**
+ * @cssprop --mui-dialog-inline-size - The inline size of the dialog.
+ * @cssprop --mui-dialog-block-size - The block size of the dialog.
+ * @cssprop --mui-dialog-inset - The inset of the dialog.
+ * @cssprop --mui-dialog-background-color - The background color of the dialog.
+ * @cssprop --mui-dialog-border-color - The border color of the dialog.
+ * @cssprop --mui-dialog-border-width - The border width of the dialog.
+ * @cssprop --mui-dialog-padding - The padding of the dialog.
+ *
+ * @trigger close - Dispatched when the dialog is closed.
+ * @trigger opened - Dispatched when the dialog is opened.
+ * @trigger transitionend - Dispatched when the dialog transition ends.
+ *
+ * A dialog is a type of modal window that appears in front of app content to
+ */
 @customElement('mui-dialog')
 export class Dialog extends LitElement {
   static override styles = [styles];
 
-  @property({ type: Boolean }) open = false;
+  #open = false;
+
+  /**
+   * If true, the dialog will close when the scrim is clicked.
+   */
+  @property({ type: Boolean }) closeOnClick = false;
+
+  /**
+   * If true, the dialog is open.
+   */
+  @property({ type: Boolean })
+  get open() {
+    return this.#open;
+  }
+  set open(value: boolean) {
+    if (value === this.#open) {
+      return;
+    }
+
+    this.#open = value;
+    // Trigger change detection for the `open` property.
+    this.requestUpdate('open', value);
+    this.dispatchEvent(new CustomEvent('opened', { bubbles: true, composed: true }));
+  }
 
   /**
    * Gets or sets the dialog's return value, usually to indicate which button
@@ -48,33 +115,39 @@ export class Dialog extends LitElement {
   @property() type?: 'alert';
 
   override render() {
+    const scrimClasses = {
+      open: this.open,
+    };
+
     return html`
-      <div class="scrim"></div>
+      <div
+        class="scrim ${classMap(scrimClasses)}"
+        @click=${this.#handleScrimClick}>
+      </div>
       <dialog
-        ?open=${this.open}
         role=${this.type === 'alert' ? 'alertdialog' : 'dialog'}
+        .returnValue=${this.returnValue || ''}
+        ?open=${this.open}
         @cancel=${this.#handleCancel}
         @close=${this.#handleClose}
         @click=${this.#handleDialogClick}
-        .returnValue=${this.returnValue || ''}>
-        <article>
-          <header class="header">
-            <slot name="title"></slot>
-            <slot name="icon"></slot>
-          </header>
-          <section class="content">
-            <slot name="content"></slot>
-          </section>
-          <footer class="actions">
-            <slot name="actions"></slot>
-          </footer>
-        </article>
+        @transitionend=${this.#handleDialogTransitionEnd}>
+        <header class="header">
+          <slot name="title"></slot>
+          <slot name="icon"></slot>
+        </header>
+        <section class="content">
+          <slot name="content"></slot>
+        </section>
+        <footer class="actions">
+          <slot name="actions"></slot>
+        </footer>
       </dialog>
     `;
   }
 
   #handleCancel() {
-    this.dispatchEvent(new CustomEvent('cancel', { bubbles: true, composed: true }));
+    this.dispatchEvent(new CustomEvent('close', { bubbles: true, composed: true }));
     this.open = false;
   }
 
@@ -87,6 +160,23 @@ export class Dialog extends LitElement {
     if (target === this) {
       this.#handleCancel();
     }
+  }
+
+  #handleScrimClick() {
+    if (this.closeOnClick) {
+      this.#handleCancel();
+    }
+  }
+
+  #handleDialogTransitionEnd() {
+    if (this.open) {
+      // Native modal dialogs ignore autofocus and instead focus the first
+      // focusable element in the dialog. This is a workaround to focus the first
+      // autofocus element in the dialog.
+      this.querySelector<HTMLElement>('[autofocus]')?.focus();
+    }
+
+    this.dispatchEvent(new CustomEvent('transitionend', { bubbles: true, composed: true }));
   }
 }
 

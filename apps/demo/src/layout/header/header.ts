@@ -5,6 +5,7 @@ import { customElement } from 'lit/decorators.js';
 
 import { confirm } from '@mui/components';
 import '@mui/components/button/icon-button.js';
+import '@mui/components/command-palette/command-palette.js';
 import '@mui/components/menu/menu.js';
 
 import { signOut } from '@/auth/auth.js';
@@ -19,6 +20,10 @@ import styles from './header.css?inline';
 export class Header extends SignalWatcher(LitElement) {
   static override styles = [unsafeCSS(styles)];
 
+  /**
+   * Indicates whether the user is signed in. When the user signs in or out,
+   * this property is updated.
+   */
   @consume({ context: isSignedInContext, subscribe: true }) isSignedIn: boolean;
 
   render() {
@@ -37,6 +42,7 @@ export class Header extends SignalWatcher(LitElement) {
           <navigation-drawer headline="Navigation"></navigation-drawer>
         </nav>
         <section>
+          ${this.#renderSearch()}
           ${this.#renderUserMenu()}
         </section>
       </header>
@@ -52,6 +58,12 @@ export class Header extends SignalWatcher(LitElement) {
       <mui-icon-button @click=${this.#handleMenuClick}>
         menu
       </mui-icon-button>
+    `;
+  }
+
+  #renderSearch() {
+    return html`
+      <mui-command-palette logoSrc="../../../public/img/token-branded--idia.svg"></mui-command-palette>
     `;
   }
 

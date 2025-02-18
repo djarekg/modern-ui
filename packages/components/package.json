@@ -38,6 +38,10 @@
       "types": "./dist/card/card.d.ts",
       "import": "./dist/card/card.js"
     },
+    "./command-palette/command-palette.js": {
+      "types": "./dist/command-palette/command-palette.d.ts",
+      "import": "./dist/command-palette/command-palette.js"
+    },
     "./dialog/dialog.js": {
       "types": "./dist/dialog/dialog.d.ts",
       "import": "./dist/dialog/dialog.js"
@@ -49,6 +53,10 @@
     "./icon/icon.js": {
       "types": "./dist/icon/icon.d.ts",
       "import": "./dist/icon/icon.js"
+    },
+    "./list/*.js": {
+      "types": "./dist/list/*.d.ts",
+      "import": "./dist/list/*.js"
     },
     "./menu/menu.js": {
       "types": "./dist/menu/menu.d.ts",

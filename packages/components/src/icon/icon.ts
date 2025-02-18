@@ -7,6 +7,7 @@ const styles = css`
     --_color: var(--mui-icon-color, var(--mui-color-text));
     --_rotate: var(--mui-icon-rotate, 0deg);
     --_icon-weight: 400;
+    --_box-shadow: var(--mui-icon-elevation, none);
 
     -webkit-transform: rotate(var(--_rotate));
     transform: rotate(var(--_rotate));
@@ -26,6 +27,7 @@ const styles = css`
     display: block;
     white-space: nowrap;
     word-wrap: normal;
+    box-shadow: var(--_box-shadow);
     direction: ltr;
     -webkit-font-smoothing: antialiased;
   }

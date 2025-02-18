@@ -5,4 +5,5 @@ export * from './common/utils/delay.js';
 export * from './controllers/index.js';
 export * from './decorators/index.js';
 export * from './directives/index.js';
+export * from './reactivity/index.js';
 export * from './types/index.js';

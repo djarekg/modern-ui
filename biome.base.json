@@ -17,6 +17,7 @@
         "useImportExtensions": "warn"
       },
       "suspicious": {
+        "noAssignInExpressions": "off",
         "noConsole": "off",
         "noConsoleLog": "off"
       },
