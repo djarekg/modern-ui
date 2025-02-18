@@ -9,21 +9,18 @@
     "module": "esnext",
     "target": "esnext",
     "moduleDetection": "force",
-    // "noEmit": true,
     "allowJs": false,
     "jsx": "react-jsx",
     "downlevelIteration": true,
 
     // Bundler mode
     "moduleResolution": "bundler",
-    // "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
     "verbatimModuleSyntax": true,
     "sourceMap": false,
     "composite": true,
     "incremental": true,
     "esModuleInterop": false,
-    // "resolvePackageJsonImports": true,
     "resolvePackageJsonExports": true,
 
     // Best practices
@@ -36,7 +33,6 @@
     "strict": true,
 
     // Some stricter flags (disabled by default)
-    // "isolatedDeclarations": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
