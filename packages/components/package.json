@@ -96,8 +96,8 @@
     "build": "task build"
   },
   "dependencies": {
-    "@lit-labs/observers": "^2.0.4",
-    "@lit-labs/signals": "^0.1.1",
+    "@lit-labs/observers": "^2.0.5",
+    "@lit-labs/signals": "^0.1.2",
     "@mui/core": "workspace:*",
     "@mui/web": "workspace:*",
     "@open-wc/dedupe-mixin": "^1.4.0",
@@ -105,6 +105,6 @@
   },
   "peerDependencies": {
     "lit": "^3.2.1",
-    "typescript": "^5"
+    "typescript": "^5.7.3"
   }
 }

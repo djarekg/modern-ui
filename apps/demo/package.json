@@ -32,9 +32,9 @@
   },
   "dependencies": {
     "@elysiajs/eden": "^1.2.0",
-    "@lit-labs/router": "^0.1.3",
-    "@lit-labs/signals": "^0.1.1",
-    "@lit/context": "^1.1.3",
+    "@lit-labs/router": "^0.1.4",
+    "@lit-labs/signals": "^0.1.2",
+    "@lit/context": "^1.1.4",
     "@mui/api": "workspace:*",
     "@mui/components": "workspace:*",
     "@mui/core": "workspace:*",
@@ -43,11 +43,11 @@
     "signal-utils": "^0.21.1"
   },
   "devDependencies": {
-    "@types/bun": "^1.1.18",
-    "elysia": "^1.2.10",
+    "@types/bun": "^1.2.2",
+    "elysia": "^1.2.14",
     "typescript": "^5.7.3",
     "unplugin-fonts": "^1.3.1",
-    "vite": "^6.0.11"
+    "vite": "^6.1.0"
   },
   "trustedDependencies": ["esbuild"]
 }

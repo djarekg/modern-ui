@@ -33,15 +33,15 @@
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
     "@elysiajs/swagger": "^1.2.0",
-    "@prisma/client": "^6.2.1",
-    "elysia": "^1.2.10",
-    "haunted": "^5.0.0"
+    "@prisma/client": "^6.4.0",
+    "elysia": "^1.2.14",
+    "haunted": "^6.0.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.4.0",
-    "@types/bun": "^1.1.16",
-    "prisma": "^6.2.1",
-    "typescript": "^5"
+    "@faker-js/faker": "^9.5.0",
+    "@types/bun": "^1.2.2",
+    "prisma": "^6.4.0",
+    "typescript": "^5.7.3"
   },
   "trustedDependencies": ["@prisma/client", "@prisma/engines", "prisma"]
 }
