@@ -267,6 +267,9 @@ export class CommandPalette extends SignalWatcher(LitElement) {
   #handleInputChange(e: TypedEvent<HTMLInputElement>) {
     const { value } = e.target;
 
+    console.group('#handleInputChange');
+    console.log('value', value);
+    console.groupEnd();
     e.stopPropagation();
 
     this.#value.set(value);
