@@ -39,7 +39,6 @@ export class Header extends SignalWatcher(LitElement) {
               width="28"
               height="28" />
           </a>
-          <navigation-drawer headline="Navigation"></navigation-drawer>
         </nav>
         <section>
           ${this.#renderSearch()}

@@ -8,6 +8,8 @@ export default css`
   :host {
     --_color: var(--mui-navigation-item-color, var(--mui-color-text));
     --_on-color: var(--mui-navigation-item-hover-color, var(--mui-color-background-hover));
+    --_icon-color: var(--mui-navigation-item-icon-color, var(--mui-color-text));
+    --_icon-on-color: var(--mui-navigation-item-icon-hover-color, var(--mui-color-background-hover));
     --_font-weight: 400;
     --_active-indicator-opacity: 0;
     --_active-indicator-visibility: hidden;
@@ -20,7 +22,7 @@ export default css`
 
   a {
     --_anchor-block-size: 44px;
-    --mui-icon-color: var(--_on-color);
+    --mui-icon-color: var(--_icon-color);
 
     position: relative;
     display: flex;
@@ -39,7 +41,7 @@ export default css`
     &:focus {
       --_active-indicator-opacity: 1;
       --_active-indicator-visibility: visible;
-      --mui-icon-color: var(--_color);
+      --mui-icon-color: var(--_icon-on-color);
     }
   }
 

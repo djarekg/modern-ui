@@ -4,10 +4,10 @@ export interface ListEventDetail {
   item: ListItem;
 }
 
-export interface ListChangeEvent extends CustomEvent<ListEventDetail> {}
+export type ListActiveListItemChangeEvent = CustomEvent<ListEventDetail>;
 
-export const createListChangeEvent = (item: ListItem) => {
-  return new CustomEvent<ListEventDetail>('change', {
+export const createListActiveListItemChange = (item: ListItem) => {
+  return new CustomEvent<ListEventDetail>('active-list-item-change', {
     detail: { item },
     bubbles: true,
     composed: true,

@@ -10,13 +10,16 @@ import { signalArray } from 'signal-utils/array';
 
 import type { TypedEvent } from '@mui/core';
 
-import { NAVIGABLE_KEYS, isNavigableKey } from '../navigation/navigable.js';
+import '../button/link-button.js';
 import '../dialog/dialog.js';
 import '../icon/icon.js';
 import '../list/list-item-link.js';
 import '../list/list.js';
+
+import type { ListActiveListItemChangeEvent } from '../list/events.js';
 import { List } from '../list/list.js';
 import type { NavItem } from '../navigation-item/types.js';
+import { NAVIGABLE_KEYS, isNavigableKey } from '../navigation/navigable.js';
 
 import styles from './command-palette.css.js';
 
@@ -31,6 +34,8 @@ export class CommandPalette extends SignalWatcher(LitElement) {
 
   #resultListRef = createRef<List>();
   #open = signal(false);
+  #value = signal('');
+  #inputPrependPaths = signal<string[]>([]);
   #resultItems = signalArray<NavItem>([
     {
       icon: 'group',
@@ -48,12 +53,16 @@ export class CommandPalette extends SignalWatcher(LitElement) {
       path: '/accounting',
     },
     {
+      icon: 'analytics',
+      label: 'Accounting Reports',
+      path: '/accounting/reports',
+    },
+    {
       icon: 'inventory',
       label: 'Inventory',
       path: '/inventory',
     },
   ]);
-  #value = signal('');
 
   /**
    * Whether the command palette is closing. This is used to animate the
@@ -104,17 +113,7 @@ export class CommandPalette extends SignalWatcher(LitElement) {
         @transitionend=${this.#handleDialogTransitionEnd}>
 
         <section slot="content">
-          <div class="search-input">
-            <mui-icon>search</mui-icon>
-            <span class="prepend-text"></span>
-            <input
-              autofocus
-              type="search"
-              tabindex="0"
-              placeholder="Type to search..."
-              @keydown=${this.#handleInputKeydown}
-              @input=${this.#handleInputChange} />
-          </div>
+          ${this.#renderInput()}
         </section>
 
         <section slot="actions">
@@ -136,10 +135,50 @@ export class CommandPalette extends SignalWatcher(LitElement) {
     `;
   }
 
+  #renderInput() {
+    return html`
+      <div class="search-input">
+        <mui-icon>search</mui-icon>
+        ${this.#renderInputPrependPaths()}
+        <input
+          autofocus
+          autocomplete="off"
+          spellcheck="false"
+          aria-expanded="false"
+          type="search"
+          tabindex="0"
+          role="combobox"
+          placeholder="Type to search..."
+          @keydown=${this.#handleInputKeydown}
+          @input=${this.#handleInputChange} />
+      </div>
+    `;
+  }
+
+  #renderInputPrependPaths() {
+    const separator = html`<span>&nbsp;/&nbsp;</span>`;
+    const paths = this.#inputPrependPaths.get();
+    const count = paths.length - 1;
+
+    return html`
+      <span class="prepend-text">
+        ${map(paths, (path, index) => {
+          return html`
+            ${separator}
+            <mui-link-button .href=${path}>${path}</mui-link-button>
+            ${when(index === count, () => separator)}
+          `;
+        })}
+      </span>
+    `;
+  }
+
   #renderResults() {
     return html`
       <div class="search-results">
-        <mui-list ${ref(this.#resultListRef)}>
+        <mui-list
+          ${ref(this.#resultListRef)}
+          @active-list-item-change=${this.#handleActiveListItemChange}>
           ${map(this.#resultItems, ({ cssColorVar, icon, label, path }) => {
             let iconStyle = {};
 
@@ -265,22 +304,18 @@ export class CommandPalette extends SignalWatcher(LitElement) {
   }
 
   #handleInputChange(e: TypedEvent<HTMLInputElement>) {
-    const { value } = e.target;
+    const { value: query } = e.target;
 
-    console.group('#handleInputChange');
-    console.log('value', value);
-    console.groupEnd();
     e.stopPropagation();
 
-    this.#value.set(value);
+    this.#value.set(query);
+    this.dispatchEvent(new CustomEvent('search', { detail: { query } }));
+  }
 
-    this.dispatchEvent(
-      new CustomEvent('search', {
-        detail: {
-          query: value,
-        },
-      }),
-    );
+  #handleActiveListItemChange({ detail: { item } }: ListActiveListItemChangeEvent) {
+    const { path = '' } = this.#resultItems.at(item.index);
+    const paths = path.split('/').filter(({ length }) => length);
+    this.#inputPrependPaths.set(paths);
   }
 }
 

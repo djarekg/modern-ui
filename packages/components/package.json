@@ -30,6 +30,10 @@
       "types": "./dist/button/icon-button.d.ts",
       "import": "./dist/button/icon-button.js"
     },
+    "./button/link-button.js": {
+      "types": "./dist/button/link-button.d.ts",
+      "import": "./dist/button/link-button.js"
+    },
     "./button/outline-button.js": {
       "types": "./dist/button/outline-button.d.ts",
       "import": "./dist/button/outline-button.js"

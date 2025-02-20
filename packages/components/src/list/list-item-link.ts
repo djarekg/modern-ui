@@ -2,12 +2,12 @@ import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import { ListItemEl } from './list-item.js';
+import { ListItem } from './list-item.js';
 
 type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 
 @customElement('mui-list-item-link')
-export class ListItemLink extends ListItemEl {
+export class ListItemLink extends ListItem {
   @property() href: string | undefined;
 
   /**

@@ -44,6 +44,14 @@ const routeConfigs: RouteConfig[] = [
     },
   },
   {
+    name: 'accounting',
+    path: routes.accountingReports,
+    render: () => {
+      import('../pages/accounting/reports/index.js');
+      return html`<app-accounting-reports-page></app-accounting-reports-page>`;
+    },
+  },
+  {
     name: 'inventory',
     path: routes.inventory,
     render: () => {

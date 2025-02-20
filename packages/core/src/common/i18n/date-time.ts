@@ -115,7 +115,6 @@ export const toDate = (value: Date | number | string): Date => {
     }
   }
 
-  // eslint-disable-next-line ts/no-explicit-any
   const date = new Date(value as number);
   if (!isDate(date)) {
     throw new Error(`Unable to convert "${value}" into a date`);

@@ -4,10 +4,15 @@ import { type ClassInfo, classMap } from 'lit/directives/class-map.js';
 
 import { NAVIGABLE_KEYS, isNavigableKey } from '../navigation/navigable.js';
 
-import { createListChangeEvent } from './events.js';
+import { createListActiveListItemChange } from './events.js';
 import type { ListItem } from './list-item.js';
 import styles from './list.css.js';
 
+/**
+ * @trigger active-list-item-change - Dispatched when the active list item changes.
+ *
+ * A list component that can be navigated with the keyboard.
+ */
 @customElement('mui-list')
 export class List extends LitElement {
   static override shadowRootOptions: ShadowRootInit = { mode: 'open', delegatesFocus: true };
@@ -115,7 +120,7 @@ export class List extends LitElement {
   #setActiveListItem(item: ListItem): void {
     if (item) {
       item.active = true;
-      this.dispatchEvent(createListChangeEvent(item));
+      this.dispatchEvent(createListActiveListItemChange(item));
     }
   }
 

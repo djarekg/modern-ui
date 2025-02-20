@@ -10,13 +10,17 @@ import { navigate } from '@/router/index.js';
 import navItems from './nav-items.js';
 
 const styles = css`
+  :host {
+    --mui-navigation-item-icon-color: var(--mui-palette-surface-tonal-a40);
+    --mui-navigation-item-icon-hover-color: var(--mui-color-primary);
+   }
+
   main {
     display: flex;
     flex-direction: column;
     overflow: hidden auto;
     block-size: 100%;
     inline-size: 100%;
-    /* padding: 1rem; */
   }
 `;
 

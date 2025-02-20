@@ -20,6 +20,16 @@ export class NavigationDrawer extends LitElement {
   @property({ type: Boolean, reflect: true }) opened = false;
   @property({ type: Boolean, reflect: true }) pinned = false;
 
+  connectedCallback() {
+    super.connectedCallback();
+    document.addEventListener('keydown', this.onKeydown);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    document.removeEventListener('keydown', this.onKeydown);
+  }
+
   render() {
     const classes = {
       visible: this.opened,

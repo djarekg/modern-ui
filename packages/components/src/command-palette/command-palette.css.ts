@@ -75,21 +75,32 @@ export default css`
       inline-size: 100%;
       block-size: 36px;
       line-height: 36px;
-      font-size: 1.1rem;
+      font-size: 0.9rem;
       outline: none;
       border: none;
       color: var(--mui-color-text);
       padding: 0;
 
       &::placeholder {
-        font-size: 1rem;
+        font-size: 0.9rem;
         color: var(--_neutral-color);
         opacity: 0.4;
       }
     }
 
     .prepend-text {
-      display: none;
+      --mui-link-button-color: var(--mui-color-text-2);
+      --mui-link-button-font-size: 0.9rem;
+      --mui-link-button-align-items: flex-end;
+
+      display: flex;
+      align-items: center;
+      /* gap: 0.2rem; */
+
+      span {
+        /* font-weight: 900; */
+        color: var(--mui-color-primary);
+      }
     }
   }
 
