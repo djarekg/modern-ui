@@ -60,6 +60,7 @@ export default css`
   .search-input {
     --mui-icon-size: 1.4rem;
 
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -78,8 +79,9 @@ export default css`
       font-size: 0.9rem;
       outline: none;
       border: none;
-      color: var(--mui-color-text);
+      color: transparent;
       padding: 0;
+      caret-color: var(--mui-color-text);
 
       &::placeholder {
         font-size: 0.9rem;
@@ -93,12 +95,13 @@ export default css`
       --mui-link-button-font-size: 0.9rem;
       --mui-link-button-align-items: flex-end;
 
+      position: absolute;
+      inset-block-start: 6px;
+      inset-inline-start: 37px;
       display: flex;
       align-items: center;
-      /* gap: 0.2rem; */
 
       span {
-        /* font-weight: 900; */
         color: var(--mui-color-primary);
       }
     }

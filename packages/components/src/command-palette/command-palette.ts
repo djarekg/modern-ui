@@ -149,6 +149,7 @@ export class CommandPalette extends SignalWatcher(LitElement) {
           tabindex="0"
           role="combobox"
           placeholder="Type to search..."
+          .value=${this.#value.get()}
           @keydown=${this.#handleInputKeydown}
           @input=${this.#handleInputChange} />
       </div>
@@ -156,16 +157,19 @@ export class CommandPalette extends SignalWatcher(LitElement) {
   }
 
   #renderInputPrependPaths() {
-    const separator = html`<span>&nbsp;/&nbsp;</span>`;
+    const separator = html`<span>/</span>`;
     const paths = this.#inputPrependPaths.get();
     const count = paths.length - 1;
+    const concatedPath: string[] = [];
 
     return html`
       <span class="prepend-text">
         ${map(paths, (path, index) => {
+          concatedPath.push(path);
+
           return html`
             ${separator}
-            <mui-link-button .href=${path}>${path}</mui-link-button>
+            <mui-link-button .href=${concatedPath.join('/')}>${path}</mui-link-button>
             ${when(index === count, () => separator)}
           `;
         })}
@@ -309,6 +313,42 @@ export class CommandPalette extends SignalWatcher(LitElement) {
     e.stopPropagation();
 
     this.#value.set(query);
+
+    const paths = this.#inputPrependPaths.get();
+    const valuePaths = query
+      .replace(/\s\/\s/g, '/')
+      .split('/')
+      .map(path => path.trim())
+      .filter(({ length }) => length);
+
+    console.group('#handleInputChange');
+    console.log('query', query.replace(/\s/g, 's'));
+    console.log('paths', paths);
+    console.log('valuePaths', valuePaths);
+
+    for (const [index, path] of paths.entries()) {
+      if (path === valuePaths[index]) {
+        continue;
+      }
+
+      valuePaths.splice(index, 1);
+      paths.splice(index, 1);
+
+      this.requestUpdate();
+      break;
+    }
+
+    console.log('new paths', paths);
+
+    const newPath = valuePaths.join('/');
+    console.log('newPath', newPath.replace(/\s/g, 's'));
+    // const value = `${newPath.replace(/\//g, ' / ')} /`;
+    const value = `${newPath}/`;
+    console.log('value', value.replace(/\s/g, 's'));
+    this.#value.set(value);
+
+    console.groupEnd();
+
     this.dispatchEvent(new CustomEvent('search', { detail: { query } }));
   }
 
@@ -316,6 +356,16 @@ export class CommandPalette extends SignalWatcher(LitElement) {
     const { path = '' } = this.#resultItems.at(item.index);
     const paths = path.split('/').filter(({ length }) => length);
     this.#inputPrependPaths.set(paths);
+
+    // Pad `/` with spaces to match the visual representation of the path.
+    // const value = `${path.replace(/\//g, ' / ')} /`;
+    const value = `${path}/`;
+    this.#value.set(value);
+
+    console.group('#handleActiveListItemChange');
+    console.log('path', path);
+    console.log('value', value);
+    console.groupEnd();
   }
 }
 
