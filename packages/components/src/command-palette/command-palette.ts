@@ -345,7 +345,7 @@ export class CommandPalette extends SignalWatcher(LitElement) {
     // const value = `${newPath.replace(/\//g, ' / ')} /`;
     const value = `${newPath}/`;
     console.log('value', value.replace(/\s/g, 's'));
-    this.#value.set(value);
+    this.#value.set(value.trim());
 
     console.groupEnd();
 
