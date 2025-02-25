@@ -1,48 +1,9 @@
-import { LitElement, css, html } from 'lit';
+import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-type TooltipPosition = 'start' | 'center' | 'end' | 'self-start' | 'self-end';
+import styles from './tooltip.css.js';
 
-const ElementInternalsKey = 'ElementInternals';
-/**
- * @alpha
- */
-export const supportsElementInternals =
-  ElementInternalsKey in window && 'setFormValue' in window[ElementInternalsKey].prototype;
-
-const InternalsMap = new WeakMap();
-
-const styles = css`
-  :host {
-    position: absolute;
-    position-area: block-start;
-    position-try-options: flip-block;
-    display: inline-block;
-    inset-block-start: anchor(end);
-    background: var(--mui-color-background);
-    color: var(--mui-color-text);
-    border-radius: var(--mui-shape-small);
-    box-shadow: var(--mui-elevation-1);
-    padding: 0.5rem;
-    border: 1px solid var(--mui-color-border);
-    font-size: 0.7rem;
-    line-height: 0.7rem;
-    margin: 0;
-    inline-size: max-content;
-    z-index: 600;
-    content-visibility: hidden;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.4s ease-in-out 0.7s;
-    position-area: bottom center;
-  }
-
-  :host(:popover-open) {
-    content-visibility: visible;
-    visibility: visible;
-    opacity: 1;
-  }
-`;
+type TooltipPosition = 'start' | 'center' | 'end';
 
 @customElement('mui-tooltip')
 export class Tooltip extends LitElement {
@@ -62,28 +23,38 @@ export class Tooltip extends LitElement {
   @property({ reflect: true }) readonly popover = '';
 
   /**
-   * The horizontal position of the tooltip relative to the anchor element.
+   * The inline position of the tooltip relative to the anchor element.
    */
-  @property({ attribute: 'horizontal-position' }) horizontalPosition: TooltipPosition = 'start';
+  @property({ attribute: 'inline-position' }) inlinePosition: TooltipPosition = 'center';
 
   /**
-   * The horizontal offset of the tooltip relative to the anchor element.
+   * The inline start offset of the tooltip relative to the anchor element.
    */
-  @property({ type: Number, attribute: 'horizontal-offset' }) horizontalOffset = 0;
+  @property({ type: Number, attribute: 'inline-start-offset' }) inlineStartOffset = 0;
 
   /**
-   * The vertical position of the tooltip relative to the anchor element.
+   * The inline end offset of the tooltip relative to the anchor element.
    */
-  @property({ attribute: 'vertical-position' }) verticalPosition: TooltipPosition = 'self-end';
+  @property({ type: Number, attribute: 'inline-end-offset' }) inlineEndOffset = 0;
 
   /**
-   * The vertical offset of the tooltip relative to the anchor element.
+   * The block position of the tooltip relative to the anchor element.
    */
-  @property({ type: Number, attribute: 'vertical-offset' }) verticalOffset = -35;
+  @property({ attribute: 'block-position' }) blockPosition: TooltipPosition = 'end';
+
+  /**
+   * The block start offset of the tooltip relative to the anchor element.
+   */
+  @property({ type: Number, attribute: 'block-start-offset' }) blockStartOffset = 0;
+
+  /**
+   * The block end offset of the tooltip relative to the anchor element.
+   */
+  @property({ type: Number, attribute: 'block-end-offset' }) blockEndOffset = 0;
 
   /**
    * Reference to the anchor element
-   * @internal
+   * @internl
    */
   get #anchorElement(): HTMLElement | null {
     const rootNode = this.getRootNode();
@@ -95,6 +66,7 @@ export class Tooltip extends LitElement {
 
     this.setAttribute('role', 'tooltip');
     this.setAttribute('aria-hidden', 'true');
+    this.#setPosition();
 
     const anchorElement = this.#anchorElement;
 
@@ -113,7 +85,6 @@ export class Tooltip extends LitElement {
     }
 
     anchorElement.setAttribute('aria-labelledby', this.id);
-    anchorElement.parentElement.style.anchorScope = anchorName;
 
     // Add event listeners to show and hide the tooltip.
     anchorElement.addEventListener('focus', this.#handleFocus);
@@ -143,7 +114,6 @@ export class Tooltip extends LitElement {
    */
   show() {
     this.setAttribute('aria-hidden', 'false');
-    this.#setPosition();
     this.showPopover();
   }
 
@@ -156,30 +126,23 @@ export class Tooltip extends LitElement {
   }
 
   /**
-   * Set the position of the tooltip.
-   *
-   * This method should be called every time the tooltip is shown to ensure
-   * that the position is correct.
+   * Set the tooltip position.
    */
-  #setPosition(): void {
-    const anchorElement = this.#anchorElement;
-    const { anchor } = this;
+  #setPosition() {
+    this.style.positionArea = `${this.blockPosition} ${this.inlinePosition}`;
 
-    if (!anchorElement) {
-      return;
+    if (this.blockStartOffset) {
+      this.style.marginBlockStart = `${this.blockStartOffset}px`;
     }
-
-    console.group(`Tooltip: ${this.anchor}`);
-    console.log('Anchor:', anchorElement);
-    console.log('Tooltip:', this);
-    console.log('Anchor parent', anchorElement.parentElement);
-    console.log('Anchor parent parent', anchorElement.parentElement.parentElement);
-    console.groupEnd();
-
-    // Calculate the position of the tooltip based on the horizontalPosition,
-    // verticalPosition, offsets, anchor element demensions and the tooltip demensions.
-    // this.style.insetInlineStart = `calc(anchor(--${anchor} ${this.horizontalPosition}) - ${this.offsetWidth}px) + (${this.horizontalOffset}px)`;
-    // this.style.insetBlockStart = `calc(anchor(--${anchor} ${this.verticalPosition}) + (${this.verticalOffset}px))`;
+    if (this.blockEndOffset) {
+      this.style.marginBlockEnd = `${this.blockEndOffset}px`;
+    }
+    if (this.inlineStartOffset) {
+      this.style.marginInlineStart = `${this.inlineStartOffset}px`;
+    }
+    if (this.inlineEndOffset) {
+      this.style.marginInlineEnd = `${this.inlineEndOffset}px`;
+    }
   }
 
   #handleFocus = () => this.show();

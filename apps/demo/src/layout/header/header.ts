@@ -58,7 +58,7 @@ export class Header extends SignalWatcher(LitElement) {
       <mui-icon-button id="siteMenu" @click=${this.#handleMenuClick}>
         menu
       </mui-icon-button>
-      <mui-tooltip anchor="siteMenu">Open site menu</mui-tooltip>
+      <mui-tooltip anchor="siteMenu" inline-start-offset="40">Open site menu</mui-tooltip>
     `;
   }
 
@@ -92,7 +92,7 @@ export class Header extends SignalWatcher(LitElement) {
           </li>
         </ul>
       </mui-menu>
-      <mui-tooltip anchor="profileMenu">User profile</mui-tooltip>
+      <mui-tooltip anchor="profileMenu" inline-end-offset="10">User profile</mui-tooltip>
     `;
   }
 
