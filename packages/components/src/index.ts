@@ -11,3 +11,4 @@ export * from './notifications/index.js';
 export * from './table/index.js';
 export * from './tabs/index.js';
 export * from './text-field/index.js';
+export * from './tooltip/index.js';

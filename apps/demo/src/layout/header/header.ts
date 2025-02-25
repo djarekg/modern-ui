@@ -7,6 +7,7 @@ import { confirm } from '@mui/components';
 import '@mui/components/button/icon-button.js';
 import '@mui/components/command-palette/command-palette.js';
 import '@mui/components/menu/menu.js';
+import '@mui/components/tooltip/tooltip.js';
 
 import { signOut } from '@/auth/auth.js';
 import { isSignedInContext } from '@/auth/is-signed-in.js';
@@ -54,9 +55,10 @@ export class Header extends SignalWatcher(LitElement) {
     }
 
     return html`
-      <mui-icon-button @click=${this.#handleMenuClick}>
+      <mui-icon-button id="siteMenu" @click=${this.#handleMenuClick}>
         menu
       </mui-icon-button>
+      <mui-tooltip anchor="siteMenu">Open site menu</mui-tooltip>
     `;
   }
 
@@ -74,7 +76,7 @@ export class Header extends SignalWatcher(LitElement) {
     const userProfilePath = `${routes.users}/${getUserId()}`;
 
     return html`
-      <mui-menu icon="account_circle">
+      <mui-menu id="profileMenu" icon="account_circle">
         <ul>
           <li>
             <a class="link" href=${userProfilePath}>
@@ -90,6 +92,7 @@ export class Header extends SignalWatcher(LitElement) {
           </li>
         </ul>
       </mui-menu>
+      <mui-tooltip anchor="profileMenu">User profile</mui-tooltip>
     `;
   }
 

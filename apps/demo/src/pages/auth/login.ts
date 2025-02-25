@@ -56,6 +56,7 @@ export class LoginPage extends LitElement {
         required
         appearance="round"
         label="Username"
+        tabindex="0"
         @change=${this.#onUsernameInputChange}>
       </mui-text-field>
     `;
@@ -68,6 +69,7 @@ export class LoginPage extends LitElement {
         appearance="round"
         label="Password"
         type="password"
+        tabindex="1"
         @change=${this.#onPasswordInputChange}>
       </mui-text-field>
     `;

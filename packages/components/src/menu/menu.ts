@@ -40,12 +40,21 @@ const styles = css`
   }
 `;
 
+/**
+ * Menu component.
+ */
 @customElement('mui-menu')
 export class Menu extends LitElement {
   static override styles = [styles];
 
+  /**
+   * The icon to display in the button.
+   */
   @property() icon = 'menu';
 
+  /**
+   * The menu element.
+   */
   @query('menu') private _menu!: HTMLElement;
 
   render() {
@@ -53,14 +62,24 @@ export class Menu extends LitElement {
       <button type="button" popovertarget="menu">
         <mui-icon-button>${this.icon}</mui-icon-button>
       </button>
-      <menu id="menu" popover @click=${this.close}>
+      <menu id="menu" popover @click=${this.hide}>
         <slot></slot>
       </menu>
     `;
   }
 
-  close() {
+  /**
+   * Hide the menu.
+   */
+  hide() {
     this._menu.hidePopover();
+  }
+
+  /**
+   * Show the menu.
+   */
+  show() {
+    this._menu.showPopover();
   }
 }
 
