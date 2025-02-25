@@ -45,7 +45,7 @@ export class Tooltip extends LitElement {
   /**
    * The block start offset of the tooltip relative to the anchor element.
    */
-  @property({ type: Number, attribute: 'block-start-offset' }) blockStartOffset = 0;
+  @property({ type: Number, attribute: 'block-start-offset' }) blockStartOffset = 10;
 
   /**
    * The block end offset of the tooltip relative to the anchor element.
