@@ -3,9 +3,7 @@ import { css } from 'lit';
 export default css`
   :host {
     position: absolute;
-    position-try-options: flip-block;
     display: inline-block;
-    inset-block-start: anchor(end);
     background: var(--mui-color-background);
     color: var(--mui-color-text);
     border-radius: var(--mui-shape-small);
