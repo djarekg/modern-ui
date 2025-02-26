@@ -6,6 +6,7 @@ import { map } from 'lit/directives/map.js';
 import type { NavigationItemEvent } from '../navigation-item/events.js';
 import type { NavItem } from '../navigation-item/types.js';
 import '../button/icon-button.js';
+import '../tooltip/tooltip.js';
 
 import { createNavigationDrawerNavigateEventEvent } from './events.js';
 import styles from './navigation-drawer.css.js';
@@ -75,18 +76,23 @@ export class NavigationDrawer extends LitElement {
         </h4>
         <div>
           <mui-icon-button
+            id="pinDrawer"
             rotatable
             class="pin-button"
             tabindex="0"
             @click=${this.#togglePin}>
             push_pin
           </mui-icon-button>
+          <mui-tooltip anchor="pinDrawer">${this.pinned ? 'Un-pin drawer' : 'Pin drawer'}</mui-tooltip>
+
           <mui-icon-button
+            id="closeDrawer"
             class="close-button"
             tabindex="0"
             @click=${this.#closeDrawer}>
             close
           </mui-icon-button>
+          <mui-tooltip anchor="closeDrawer">Close drawer</mui-tooltip>
         </div>
       </header>
     `;
