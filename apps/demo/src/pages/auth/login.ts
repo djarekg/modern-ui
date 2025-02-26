@@ -1,6 +1,7 @@
+import { SignalWatcher, signal } from '@lit-labs/signals';
 import type { TypedEvent } from '@mui/core';
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { LitElement, html, unsafeCSS } from 'lit';
+import { customElement } from 'lit/decorators.js';
 
 import '@mui/components/button/outline-button.js';
 import '@mui/components/text-field/text-field.js';
@@ -12,13 +13,13 @@ import { routes } from '@/router/routes.js';
 import styles from './login.css?inline';
 
 @customElement('app-login-page')
-export class LoginPage extends LitElement {
+export class LoginPage extends SignalWatcher(LitElement) {
   static override styles = [unsafeCSS(styles)];
 
-  @state() protected userName = '';
-  @state() protected password = '';
+  userName = signal('');
+  password = signal('');
 
-  override render(): TemplateResult {
+  render() {
     return html`
       <article>
 
@@ -50,19 +51,20 @@ export class LoginPage extends LitElement {
     `;
   }
 
-  #renderUsernameControl(): TemplateResult {
+  #renderUsernameControl() {
     return html`
       <mui-text-field
         required
         appearance="round"
         label="Username"
         tabindex="0"
-        @change=${this.#onUsernameInputChange}>
+        .value=${this.userName.get()}
+        @change=${this.#handleUsernameChange}>
       </mui-text-field>
     `;
   }
 
-  #renderPasaswordControl(): TemplateResult {
+  #renderPasaswordControl() {
     return html`
       <mui-text-field
         required
@@ -70,34 +72,37 @@ export class LoginPage extends LitElement {
         label="Password"
         type="password"
         tabindex="1"
-        @change=${this.#onPasswordInputChange}>
+        .value=${this.password.get()}
+        @change=${this.#handlePasswordChange}>
       </mui-text-field>
     `;
   }
 
-  #renderLoginButton(): TemplateResult {
-    const disabled = this.userName.length === 0 || this.password.length === 0;
+  #renderLoginButton() {
+    const disabled = this.userName.get().length === 0 || this.password.get().length === 0;
 
     return html`
       <mui-outline-button
         corner="round"
         .disabled=${disabled}
-        @click=${this.#onSubmit}>Login</mui-outline-button>
+        @click=${this.#onSubmit}>
+        Login
+      </mui-outline-button>
     `;
   }
 
-  #onUsernameInputChange({ target: { value } }: TypedEvent<HTMLInputElement>) {
-    this.userName = value;
+  #handleUsernameChange({ target: { value } }: TypedEvent<HTMLInputElement>) {
+    this.userName.set(value);
   }
 
-  #onPasswordInputChange({ target: { value } }: TypedEvent<HTMLInputElement>) {
-    this.password = value;
+  #handlePasswordChange({ target: { value } }: TypedEvent<HTMLInputElement>) {
+    this.password.set(value);
   }
 
   async #onSubmit(e: Event) {
     e.stopImmediatePropagation();
 
-    const signedIn = signIn(this.userName, this.password);
+    const signedIn = await signIn(this.userName.get(), this.password.get());
     if (signedIn) {
       navigate(routes.home);
     }
