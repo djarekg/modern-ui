@@ -74,15 +74,10 @@ export class Tooltip extends LitElement {
       return;
     }
 
-    // Get or set the anchor name from the anchor component. We need this
-    // to so we can set the positionAnchor on the tooltip.
-    const anchorName = anchorElement.style.anchorName || `--${this.anchor}`;
+    // Use anchorName to associate the tooltip with its anchor element.
+    const anchorName = `--${this.anchor}`;
     this.style.positionAnchor = anchorName;
-
-    // The anchorName and positionAnchor must match.
-    if (anchorElement.style.anchorName !== anchorName) {
-      anchorElement.style.anchorName = anchorName;
-    }
+    anchorElement.style.anchorName = anchorName;
 
     anchorElement.setAttribute('aria-labelledby', this.id);
 
