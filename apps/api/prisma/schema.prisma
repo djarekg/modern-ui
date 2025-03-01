@@ -22,8 +22,17 @@ model User {
   address      String
   phone        String
   password     String
+  role         Role           @default(USER)
   dateCreated  DateTime       @default(now())
   LoginHistory LoginHistory[]
+  productSales ProductSales[]
+}
+
+enum Role {
+  ADMIN
+  USER
+  SALES
+  ACCOUNTING
 }
 
 model LoginHistory {
@@ -31,4 +40,96 @@ model LoginHistory {
   userId    String
   loginTime DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Customer {
+  id           String         @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String         @unique
+  address      String
+  phone        String
+  dateCreated  DateTime       @default(now())
+  dateUpdated  DateTime       @updatedAt
+  productSales ProductSales[]
+}
+
+model Product {
+  id           String         @id @default(uuid())
+  name         String
+  description  String
+  price        Float
+  type         ProductType
+  dateCreated  DateTime       @default(now())
+  dateUpdated  DateTime       @updatedAt
+  Inventory    Inventory[]
+  ProductSales ProductSales[]
+  ProductColor ProductColor[]
+}
+
+enum ProductType {
+  DRESS
+  HAT
+  HOODIE
+  JACKET
+  PANTS
+  SHIRT
+  SHOES
+  SHORTS
+  SOCKS
+  SWEATER
+  UNDERWEAR
+}
+
+model Color {
+  id           String         @id @default(uuid())
+  name         String
+  dateCreated  DateTime       @default(now())
+  dateUpdated  DateTime       @updatedAt
+  ProductColor ProductColor[]
+}
+
+model ProductColor {
+  id          String   @id @default(uuid())
+  productId   String
+  colorId     String
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id])
+  color       Color    @relation(fields: [colorId], references: [id])
+}
+
+model Inventory {
+  id          String   @id @default(uuid())
+  productId   String
+  size        Size
+  quantity    Int
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+enum Size {
+  XSMALL
+  SMALL
+  MEDIUM
+  LARGE
+  XLARGE
+  XXLARGE
+  XXXLARGE
+  ONESIZE
+}
+
+model ProductSales {
+  id          String   @id @default(uuid())
+  productId   String
+  customerId  String
+  userId      String
+  quantity    Int
+  price       Float
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id])
+  Customer    Customer @relation(fields: [customerId], references: [id])
+  User        User     @relation(fields: [userId], references: [id])
 }
