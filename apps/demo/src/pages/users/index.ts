@@ -1,12 +1,11 @@
-import { SignalWatcher, html, signal } from '@lit-labs/signals';
-import { LitElement, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import { effect } from 'signal-utils/subtle/microtask-effect';
+import { html, useEffect, useState } from 'haunted';
+import { css } from 'lit';
 
 import type { User } from '@mui/api';
+import { define, useStyles } from '@mui/core';
 
-import { useApi } from '@/hooks/use-api.js';
 import '@/components/user-list/user-list.js';
+import { useApi } from '@/hooks/use-api.js';
 
 const styles = css`
   :host {
@@ -19,36 +18,32 @@ const styles = css`
   }
 `;
 
-@customElement('app-users-page')
-export class UsersPage extends SignalWatcher(LitElement) {
-  static override styles = [styles];
+const UsersPage = () => {
+  useStyles(styles);
 
-  #users = signal<User[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
-  connectedCallback(): void {
-    super.connectedCallback();
+  // Fetch users data.
+  useEffect(async () => {
+    const { users: api } = useApi();
+    const { data } = await api.index.get();
+    setUsers(data);
+  }, []);
 
-    effect(async () => {
-      const { users } = useApi();
-      const { data } = await users.index.get();
-      this.#users.set(data);
-    });
-  }
+  return html`
+    <article>
+      <section class="app-container">
+        <h2>Users</h2>
+        <app-user-list .users=${users}></app-user-list>-
+      </section>
+    </article>
+  `;
+};
 
-  render() {
-    return html`
-      <article>
-        <section class="app-container">
-          <h2>Users</h2>
-          <app-user-list .users=${this.#users.get()}></app-user-list>
-        </section>
-      </article>
-    `;
-  }
-}
+define('app-users-page', UsersPage);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-users-page': UsersPage;
+    'app-users-page': HTMLElement;
   }
 }

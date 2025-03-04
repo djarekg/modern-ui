@@ -1,9 +1,7 @@
-import { SignalWatcher, html, signal } from '@lit-labs/signals';
-import { LitElement, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { effect } from 'signal-utils/subtle/microtask-effect';
+import { html, nothing, unsafeCSS } from 'lit';
 
 import type { LoginHistory, User } from '@mui/api';
+import { define, useStyles } from '@mui/core';
 import '@mui/components/text-field/text-field.js';
 import '@mui/components/tabs/tabs.js';
 import '@mui/components/tabs/tab.js';
@@ -14,97 +12,86 @@ import { getUserId } from '@/utils/cache-util.js';
 import '@/components/login-history/user-login-history.js';
 import '@/components/user-detail/user-detail.js';
 
+import { useCallback, useEffect, useMemo, useState } from 'haunted';
 import styles from './user.css?inline';
 
-@customElement('app-user-page')
-export class UserPage extends SignalWatcher(LitElement) {
-  static override styles = [unsafeCSS(styles)];
+type UserPageProps = {
+  id: string;
+};
 
-  #loginHistories = signal<LoginHistory[]>([]);
-  #user = signal<User | null>(null);
+const UserPage = ({ id = getUserId() }: UserPageProps) => {
+  useStyles(unsafeCSS(styles));
 
-  /**
-   * The user id passed in from the route params.
-   */
-  @property() id = '';
+  const [user, setUser] = useState<User | null>(null);
+  const [loginHistories, setLoginHistories] = useState<LoginHistory[]>([]);
 
-  connectedCallback(): void {
-    super.connectedCallback();
+  // Fetch the user data
+  useEffect(async () => {
+    const { users } = useApi();
+    const { data } = await users.id({ id }).get();
+    setUser(data);
+  }, []);
 
-    const id = this.id ?? getUserId();
+  // Fetch the login history and user data
+  useEffect(async () => {
+    const { sign } = useApi();
+    const { data } = await sign.history({ id }).get();
+    setLoginHistories(data);
+  }, []);
 
-    effect(async () => {
-      const { sign } = useApi();
-      const { data } = await sign.history({ id }).get();
-      this.#loginHistories.set(data);
-    });
-
-    effect(async () => {
-      const { users } = useApi();
-      const { data } = await users.id({ id }).get();
-      this.#user.set(data);
-    });
-  }
-
-  render() {
-    return html`
-      <article>
-        <mui-tabs>
-          <mui-tab id="tab-1" aria-controls="tabpanel-1">
-            Profile
-            <section slot="panel">
-              ${this.#renderForm()}
-            </section>
-          </mui-tab>
-          <mui-tab id="tab-2" aria-controls="tabpanel-2">
-            Address
-            <section slot="panel">
-              Address
-            </section>
-          </mui-tab>
-          <mui-tab id="tab-3" aria-controls="tabpanel-3">
-            Login History
-            <section slot="panel">
-              ${this.#renderLoginHistory()}
-            </section>
-          </mui-tab>
-        </mui-tabs>
-      </article>
-    `;
-  }
-
-  #renderForm() {
-    const user = this.#user.get();
-
-    if (!user) {
-      return nothing;
-    }
-
-    return html`
-      <app-user-detail .user=${user} @save=${this.#onProfileSave}></app-user-detail>
-    `;
-  }
-
-  #renderLoginHistory() {
-    const loginHistories = this.#loginHistories.get();
-
-    if (!loginHistories) {
-      return nothing;
-    }
-
-    return html`
-      <app-user-login-history .loginHistories=${loginHistories}></app-user-login-history>
-    `;
-  }
-
-  async #onProfileSave({ detail: { user } }: SaveEvent) {
+  const onProfileSave = useCallback(async ({ detail: { user } }: SaveEvent) => {
     const { users } = useApi();
     await users.index.put(user);
-  }
-}
+  }, []);
+
+  const renderForm = useMemo(
+    () =>
+      user
+        ? html`<app-user-detail .user=${user} @save=${onProfileSave}></app-user-detail>`
+        : nothing,
+    [user],
+  );
+
+  const renderAddress = useMemo(() => html`<div>Address</div>`, []);
+
+  const renderLoginHistory = useMemo(
+    () =>
+      loginHistories
+        ? html`<app-user-login-history .loginHistories=${loginHistories}></app-user-login-history>`
+        : nothing,
+    [loginHistories],
+  );
+
+  return html`
+    <article>
+      <mui-tabs>
+        <mui-tab id="tab-1" aria-controls="tabpanel-1">
+          Profile
+          <section slot="panel">
+            ${renderForm}
+          </section>
+        </mui-tab>
+        <mui-tab id="tab-2" aria-controls="tabpanel-2">
+          Address
+          <section slot="panel">
+            ${renderAddress}
+          </section>
+        </mui-tab>
+        <mui-tab id="tab-3" aria-controls="tabpanel-3">
+          Login History
+          <section slot="panel">
+            ${renderLoginHistory}
+          </section>
+        </mui-tab>
+      </mui-tabs>
+    </article>
+  `;
+};
+
+define('app-user-page', UserPage);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-user-page': UserPage;
+    'app-user-page': HTMLElement & UserPageProps;
   }
 }

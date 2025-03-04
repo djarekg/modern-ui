@@ -54,10 +54,6 @@
       "types": "./dist/dialog/confirm.d.ts",
       "import": "./dist/dialog/confirm.js"
     },
-    "./hooks/*.js": {
-      "types": "./dist/hooks/*.d.ts",
-      "import": "./dist/hooks/*.js"
-    },
     "./icon/icon.js": {
       "types": "./dist/icon/icon.d.ts",
       "import": "./dist/icon/icon.js"

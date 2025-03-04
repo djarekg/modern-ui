@@ -1,7 +1,6 @@
-import { component } from 'haunted';
-import { type LitElement, css, html } from 'lit';
+import { css, html } from 'lit';
 
-import { useStyles } from '@mui/components';
+import { define, useStyles } from '@mui/core';
 
 const styles = css`
   h1 {
@@ -10,7 +9,7 @@ const styles = css`
 `;
 
 const ProductsPage = () => {
-  useStyles([styles]);
+  useStyles(styles);
 
   const handleClick = () => {
     console.log('Product 1 clicked');
@@ -24,10 +23,10 @@ const ProductsPage = () => {
   `;
 };
 
-customElements.define('app-products-page', component(ProductsPage));
+define('app-products-page', ProductsPage);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-products-page': LitElement;
+    'app-products-page': HTMLElement;
   }
 }

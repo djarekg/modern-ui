@@ -1,5 +1,6 @@
-import { LitElement, css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { css, html } from 'lit';
+
+import { define, useStyles } from '@mui/core';
 
 const styles = css`
   :host:not(:defined) {
@@ -23,17 +24,16 @@ const styles = css`
   }
 `;
 
-@customElement('app-home')
-export class Home extends LitElement {
-  static styles = styles;
+const Home = () => {
+  useStyles(styles);
 
-  override render() {
-    return html`<span>Modern UI ~ by GriffiDi</span>`;
-  }
-}
+  return html`<span>Modern UI ~ by GriffiDi</span>`;
+};
+
+define('app-home', Home);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-home': Home;
+    'app-home': HTMLElement;
   }
 }

@@ -1,8 +1,9 @@
-import { LitElement, css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { useCallback, useEffect } from 'haunted';
+import { css, html } from 'lit';
 import { type Ref, createRef, ref } from 'lit/directives/ref.js';
 
 import type { NavigationDrawer, NavigationDrawerNavigateEvent } from '@mui/components';
+import { define, useHost, useStyles } from '@mui/core';
 import '@mui/components/navigation-drawer/navigation-drawer.js';
 
 import { navigate } from '@/router/index.js';
@@ -24,38 +25,33 @@ const styles = css`
   }
 `;
 
-@customElement('app-main')
-export class Main extends LitElement {
-  static override styles = [styles];
+type MainProps = {
+  drawerOpen: boolean;
+};
 
-  #drawer: Ref<NavigationDrawer> = createRef();
+/**
+ * Main component.
+ * @param {MainProps} Main properties.
+ * @fires drawer-close - Dispatched when the drawer is closed.
+ */
+export const Main = ({ drawerOpen }: MainProps) => {
+  useStyles(styles);
 
-  render() {
-    return html`
-      <mui-navigation-drawer
-        ${ref(this.#drawer)}
-        headline="Main Menu"
-        .items=${navItems}
-        @navigate=${this.#handleNavigate}>
-        <main role="main">
-          <slot></slot>
-        </main>
-      </mui-navigation-drawer>
-    `;
-  }
+  const element = useHost();
 
-  /**
-   * Show the navigation drawer.
-   */
-  show(): void {
-    this.#drawer.value.show();
-  }
+  const drawer: Ref<NavigationDrawer> = createRef();
 
-  #handleNavigate({
+  useEffect(() => {
+    if (drawerOpen) {
+      drawer.value.show();
+    }
+  }, [drawerOpen]);
+
+  const handleNavigate = ({
     detail: {
       item: { path },
     },
-  }: NavigationDrawerNavigateEvent) {
+  }: NavigationDrawerNavigateEvent) => {
     /**
      * Since the navigation-drawer is outside the router context, we can't use native links.
      * We have to use this navigation function that under the hood use's the router's
@@ -63,11 +59,30 @@ export class Main extends LitElement {
      * on any navigation from the drawer.
      */
     navigate(path);
-  }
-}
+  };
+
+  const handleDrawerClose = useCallback(() => {
+    element.dispatchEvent(new CustomEvent('drawer-close'));
+  }, []);
+
+  return html`
+      <mui-navigation-drawer
+        ${ref(drawer)}
+        headline="Main Menu"
+        .items=${navItems}
+        @close=${handleDrawerClose}
+        @navigate=${handleNavigate}>
+        <main role="main">
+          <slot></slot>
+        </main>
+      </mui-navigation-drawer>
+    `;
+};
+
+define('app-main', Main);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-main': Main;
+    'app-main': HTMLElement & MainProps;
   }
 }

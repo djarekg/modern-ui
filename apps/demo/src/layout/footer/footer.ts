@@ -1,85 +1,84 @@
-import { LitElement, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { useCallback } from 'haunted';
+import { html, unsafeCSS } from 'lit';
+
+import { define, useStyles } from '@mui/core';
+
 import styles from './footer.css?inline';
 
-@customElement('app-footer')
-export class Footer extends LitElement {
-  static override styles = [unsafeCSS(styles)];
+type Link = {
+  text: string;
+  className: string;
+  href: string;
+};
 
-  override render() {
-    return html`
-    <footer>
-      <section class="links">
-        <div>
-          <h5>Resources</h5>
-          <ul>
-            ${this.#renderLink('GitHub', 'github', 'https://github.com/djarekg/modern-ui')}
-            ${this.#renderLink(
-              'Docs',
-              'docs',
-              'https://github.com/djarekg/modern-ui/blob/main/docs/getting-started/quick-start.md',
-            )}
-          </ul>
-        </div>
-        <div>
-          <h5>Workspace Projects</h5>
-          <ul>
-            ${this.#renderLink(
-              'core',
-              'project',
-              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/core',
-            )}
-            ${this.#renderLink(
-              'web',
-              'project',
-              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/web',
-            )}
-            ${this.#renderLink(
-              'components',
-              'project',
-              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/components',
-            )}
-            ${this.#renderLink(
-              'api',
-              'project',
-              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/apps/api',
-            )}
-            ${this.#renderLink(
-              'demo',
-              'project',
-              'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/apps/demo',
-            )}
-          </ul>
-        </div>
-        <div>
-          <h5>Project</h5>
-          <ul>
-          ${this.#renderLink(
-            'Feature Considerations',
-            'rnd',
-            'https://github.com/djarekg/modern-ui/blob/main/docs/features/feature_considerations.md',
-          )}
-            ${this.#renderLink(
-              'Roadmap',
-              'roadmap',
-              'https://github.com/djarekg/modern-ui/blob/main/docs/roadmap.md',
-            )}
-            ${this.#renderLink('Organization', 'org', 'https://github.com/griffidi')}
-            ${this.#renderLink(
-              'License',
-              'license',
-              'https://github.com/djarekg/modern-ui/blob/main/LICENSE',
-            )}
-          </ul>
-        </div>
-      </section>
-      <section class="copyright">
-        <span>&copy; ${new Date().getFullYear()} GriffiDi. All rights reserved.</span>
-      </section>
-    </footer>`;
-  }
+const resourceLinks: Link[] = [
+  {
+    text: 'GitHub',
+    className: 'github',
+    href: 'https://github.com/djarekg/modern-ui',
+  },
+  {
+    text: 'Docs',
+    className: 'docs',
+    href: 'https://github.com/djarekg/modern-ui/blob/main/docs/getting-started/quick-start.md',
+  },
+] as const;
 
-  #renderLink(text: string, className: string, href: string) {
+const workspaceLinks: Link[] = [
+  {
+    text: 'core',
+    className: 'project',
+    href: 'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/core',
+  },
+  {
+    text: 'web',
+    className: 'project',
+    href: 'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/web',
+  },
+  {
+    text: 'components',
+    className: 'project',
+    href: 'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/components',
+  },
+  {
+    text: 'api',
+    className: 'project',
+    href: 'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/apps/api',
+  },
+  {
+    text: 'demo',
+    className: 'project',
+    href: 'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/apps/demo',
+  },
+];
+
+const projectLinks: Link[] = [
+  {
+    text: 'Feature Considerations',
+    className: 'rnd',
+    href: 'https://github.com/djarekg/modern-ui/blob/main/docs/features/feature_considerations.md',
+  },
+  {
+    text: 'Roadmap',
+    className: 'roadmap',
+    href: 'https://github.com/djarekg/modern-ui/blob/main/docs/roadmap.md',
+  },
+  {
+    text: 'Organization',
+    className: 'org',
+    href: 'https://github.com/djarekg/modern-ui/blob/main/LICENSE',
+  },
+  {
+    text: 'License',
+    className: 'license',
+    href: 'https://github.com/djarekg/modern-ui/blob/main/LICENSE',
+  },
+];
+
+const Footer = () => {
+  useStyles(unsafeCSS(styles));
+
+  const renderLink = useCallback(({ text, className, href }: Link) => {
     return html`
       <li class="logo ${className}">
         <a class="link"
@@ -89,11 +88,40 @@ export class Footer extends LitElement {
         </a>
       </li>
     `;
-  }
-}
+  }, []);
+
+  return html`
+    <footer>
+      <section class="links">
+        <div>
+          <h5>Resources</h5>
+          <ul>
+            ${resourceLinks.map(renderLink)}
+          </ul>
+        </div>
+        <div>
+          <h5>Workspace Projects</h5>
+          <ul>
+            ${workspaceLinks.map(renderLink)}
+          </ul>
+        </div>
+        <div>
+          <h5>Project</h5>
+          <ul>
+          ${projectLinks.map(renderLink)}
+          </ul>
+        </div>
+      </section>
+      <section class="copyright">
+        <span>&copy; ${new Date().getFullYear()} GriffiDi. All rights reserved.</span>
+      </section>
+    </footer>`;
+};
+
+define('app-footer', Footer);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-footer': Footer;
+    'app-footer': HTMLElement;
   }
 }

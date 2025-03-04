@@ -1,20 +1,19 @@
-import { SignalWatcher, html } from '@lit-labs/signals';
-import { LitElement, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { css, html } from 'lit';
+
+import { define, useStyles } from '@mui/core';
 
 const styles = css``;
 
-@customElement('app-accounting-reports-page')
-export class AccountingReportsPage extends SignalWatcher(LitElement) {
-  static styles = [styles];
+const AccountingReportsPage = () => {
+  useStyles(styles);
 
-  render() {
-    return html`<div>Accounting Reports</div>`;
-  }
-}
+  return html`<div>Accounting Reports</div>`;
+};
+
+define('app-accounting-reports-page', AccountingReportsPage);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-accounting-reports-page': AccountingReportsPage;
+    'app-accounting-reports-page': HTMLElement;
   }
 }

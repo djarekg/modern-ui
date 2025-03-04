@@ -1,20 +1,19 @@
-import { SignalWatcher, html } from '@lit-labs/signals';
-import { LitElement, css } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { css, html } from 'lit';
+
+import { define, useStyles } from '@mui/core';
 
 const styles = css``;
 
-@customElement('app-inventory-page')
-export class InventoryPage extends SignalWatcher(LitElement) {
-  static styles = [styles];
+const InventoryPage = () => {
+  useStyles(styles);
 
-  render() {
-    return html`<div>Inventory</div>`;
-  }
-}
+  return html`<div>Inventory</div>`;
+};
+
+define('app-inventory-page', InventoryPage);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-inventory-page': InventoryPage;
+    'app-inventory-page': HTMLElement;
   }
 }

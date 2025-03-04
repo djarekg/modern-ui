@@ -11,6 +11,11 @@ import '../tooltip/tooltip.js';
 import { createNavigationDrawerNavigateEventEvent } from './events.js';
 import styles from './navigation-drawer.css.js';
 
+/**
+ * Navigation drawer component.
+ * @fires close - Dispatched when the drawer is closed.
+ * @fires navigate - Dispatched when a navigation item is clicked.
+ */
 @customElement('mui-navigation-drawer')
 export class NavigationDrawer extends LitElement {
   static override styles = [styles];
@@ -145,6 +150,7 @@ export class NavigationDrawer extends LitElement {
   #closeDrawer() {
     this.opened = false;
     this.pinned = false;
+    this.dispatchEvent(new CustomEvent('close'));
   }
 
   #openDrawer() {

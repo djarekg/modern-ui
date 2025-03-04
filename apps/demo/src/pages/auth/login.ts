@@ -1,11 +1,9 @@
-import { signal } from '@lit-labs/signals';
-import type { TypedEvent } from '@mui/core';
-import { component } from 'haunted';
-import { type LitElement, html, unsafeCSS } from 'lit';
+import { type StateUpdater, useCallback, useMemo, useState } from 'haunted';
+import { html, unsafeCSS } from 'lit';
 
 import '@mui/components/button/outline-button.js';
 import '@mui/components/text-field/text-field.js';
-import { useStyles } from '@mui/components';
+import { type TypedEvent, define, useStyles } from '@mui/core';
 
 import { signIn } from '@/auth/auth.js';
 import { navigate } from '@/router/index.js';
@@ -13,58 +11,60 @@ import { routes } from '@/router/routes.js';
 
 import styles from './login.css?inline';
 
+/**
+ * On input event handler update the state.
+ * @param setter The state setter.
+ */
+const input =
+  (setter: StateUpdater<string>) =>
+  ({ target: { value } }: TypedEvent<HTMLInputElement>) =>
+    setter(value);
+
 const LoginPage = () => {
-  useStyles([unsafeCSS(styles)]);
+  useStyles(unsafeCSS(styles));
 
-  const userName = signal('');
-  const password = signal('');
-  const disabled = userName.get().length === 0 || password.get().length === 0;
+  const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [disabled] = useState(() => userName.length === 0 || password.length === 0);
 
-  const handleUsernameChange = ({ target: { value } }: TypedEvent<HTMLInputElement>) => {
-    userName.set(value);
-  };
+  const onSubmit = useCallback(
+    async (e: Event) => {
+      e.stopImmediatePropagation();
 
-  const handlePasswordChange = ({ target: { value } }: TypedEvent<HTMLInputElement>) => {
-    password.set(value);
-  };
+      const signedIn = await signIn(userName, password);
+      if (signedIn) {
+        navigate(routes.home);
+      }
+    },
+    [userName, password],
+  );
 
-  const onSubmit = async (e: Event) => {
-    e.stopImmediatePropagation();
-
-    const signedIn = await signIn(userName.get(), password.get());
-    if (signedIn) {
-      navigate(routes.home);
-    }
-  };
-
-  const renderUsernameControl = () => {
+  const renderUsernameControl = useMemo(() => {
     return html`
       <mui-text-field
         required
         appearance="round"
         label="Username"
-        tabindex="0"
-        .value=${userName.get()}
-        @change=${handleUsernameChange}>
+        .value=${userName}
+        @input=${input(setUserName)}>
       </mui-text-field>
     `;
-  };
+  }, [userName]);
 
-  const renderPasaswordControl = () => {
+  const renderPasaswordControl = useMemo(() => {
     return html`
       <mui-text-field
         required
         appearance="round"
         label="Password"
         type="password"
-        tabindex="1"
-        .value=${password.get()}
-        @change=${handlePasswordChange}>
+        .value=${password}
+        @input=${input(setPassword)}>
       </mui-text-field>
     `;
-  };
+  }, [password]);
 
-  const renderLoginButton = () => {
+  const renderLoginButton = useMemo(() => {
     return html`
       <button @click=${onSubmit}>Working Submit</button>
       <mui-outline-button
@@ -75,7 +75,7 @@ const LoginPage = () => {
         Login
       </mui-outline-button>
     `;
-  };
+  }, [disabled]);
 
   return html`
     <article>
@@ -92,13 +92,13 @@ const LoginPage = () => {
           <span class="app-section-title">Login</span>
           <form method="post" @submit=${onSubmit}>
             <fieldset>
-              ${renderUsernameControl()}
+              ${renderUsernameControl}
             </fieldset>
             <fieldset>
-              ${renderPasaswordControl()}
+              ${renderPasaswordControl}
             </fieldset>
             <fieldset>
-              ${renderLoginButton()}
+              ${renderLoginButton}
             </fieldset>
           </form>
         </div>
@@ -108,10 +108,10 @@ const LoginPage = () => {
   `;
 };
 
-customElements.define('app-login-page', component(LoginPage));
+define('app-login-page', LoginPage);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-login-page': LitElement;
+    'app-login-page': HTMLElement;
   }
 }

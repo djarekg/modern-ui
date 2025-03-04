@@ -1,8 +1,9 @@
-import { LitElement, css, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { useMemo } from 'haunted';
+import { css, html } from 'lit';
 
 import type { User } from '@mui/api';
 import type { TableRowSelectedEvent } from '@mui/components/table/events.js';
+import { define, useStyles } from '@mui/core';
 
 import { navigate } from '@/router/index.js';
 import { routes } from '@/router/routes.js';
@@ -15,34 +16,30 @@ const styles = css`
   }
 `;
 
-@customElement('app-user-list')
-export class UserList extends LitElement {
-  static override styles = [styles];
+type UserListProps = {
+  users: User[];
+};
 
-  @property({ type: Array }) users: User[] = [];
+/**
+ * User list component.
+ * @param UserListProps Component properties.
+ */
+const UserList = ({ users = [] }: UserListProps) => {
+  useStyles(styles);
 
-  render() {
-    return html`
-      <mui-table
-        selectable
-        @row-selected=${this.#handleTableRowSelected}
-        @row-view=${this.#handleTableRowView}>
-        <mui-table-row header>
-          <mui-table-header-cell>ID</mui-table-header-cell>
-          <mui-table-header-cell>Name</mui-table-header-cell>
-          <mui-table-header-cell>Email</mui-table-header-cell>
-          <mui-table-header-cell>Address</mui-table-header-cell>
-          <mui-table-header-cell>Phone</mui-table-header-cell>
-          <mui-table-header-cell view></mui-table-header-cell>
-        </mui-table-row>
-        ${this.#renderRows()}
-      </mui-table>
-    `;
-  }
+  const handleTableRowSelected = ({ detail: { row } }: TableRowSelectedEvent) => {
+    console.log('UserList#handleTableRowSelected', row);
+  };
 
-  #renderRows() {
-    return this.users.map(
-      ({ id, firstName, lastName, email, address, phone }) => html`
+  const handleTableRowView = ({ detail: { row } }: TableRowSelectedEvent) => {
+    const { id } = row;
+    navigate(`${routes.users}/${id}`);
+  };
+
+  const renderRows = useMemo(
+    () =>
+      users.map(
+        ({ id, firstName, lastName, email, address, phone }) => html`
         <mui-table-row .id=${id}>
           <mui-table-cell>${id}</mui-table-cell>
           <mui-table-cell>${firstName} ${lastName}</mui-table-cell>
@@ -52,21 +49,32 @@ export class UserList extends LitElement {
           <mui-table-cell view></mui-table-cell>
         </mui-table-row>
       `,
-    );
-  }
+      ),
+    [users],
+  );
 
-  #handleTableRowSelected({ detail: { row } }: TableRowSelectedEvent) {
-    console.log('UserList#handleTableRowSelected', row);
-  }
+  return html`
+    <mui-table
+      selectable
+      @row-selected=${handleTableRowSelected}
+      @row-view=${handleTableRowView}>
+      <mui-table-row header>
+        <mui-table-header-cell>ID</mui-table-header-cell>
+        <mui-table-header-cell>Name</mui-table-header-cell>
+        <mui-table-header-cell>Email</mui-table-header-cell>
+        <mui-table-header-cell>Address</mui-table-header-cell>
+        <mui-table-header-cell>Phone</mui-table-header-cell>
+        <mui-table-header-cell view></mui-table-header-cell>
+      </mui-table-row>
+      ${renderRows}
+    </mui-table>
+  `;
+};
 
-  #handleTableRowView({ detail: { row } }: TableRowSelectedEvent) {
-    const { id } = row;
-    navigate(`${routes.users}/${id}`);
-  }
-}
+define('app-user-list', UserList);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-user-list': UserList;
+    'app-user-list': HTMLElement & UserListProps;
   }
 }

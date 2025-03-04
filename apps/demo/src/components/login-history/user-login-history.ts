@@ -1,8 +1,8 @@
-import { LitElement, css, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { useMemo } from 'haunted';
+import { css, html } from 'lit';
 
 import type { LoginHistory } from '@mui/api';
-import { toDateTime } from '@mui/core';
+import { define, toDateTime, useStyles } from '@mui/core';
 import '@mui/components/table/table.js';
 import '@mui/components/table/table-cell.js';
 import '@mui/components/table/table-row.js';
@@ -15,38 +15,41 @@ const styles = css`
   }
 `;
 
-@customElement('app-user-login-history')
-export class UserLoginHistory extends LitElement {
-  static override styles = [styles];
+type UserLoginHistoryProps = {
+  loginHistories: LoginHistory[];
+};
 
-  @property({ type: Array }) loginHistories: LoginHistory[] = [];
+const UserLoginHistory = ({ loginHistories = [] }: UserLoginHistoryProps) => {
+  useStyles(styles);
 
-  override render() {
-    return html`
-      <mui-table>
-        <mui-table-row header>
-          <mui-table-header-cell>ID</mui-table-header-cell>
-          <mui-table-header-cell>Time</mui-table-header-cell>
-        </mui-table-row>
-        ${this.#renderRows()}
-      </mui-table>
-    `;
-  }
-
-  #renderRows() {
-    return this.loginHistories.map(
-      ({ id, loginTime }) => html`
+  const renderRows = useMemo(
+    () =>
+      loginHistories.map(
+        ({ id, loginTime }) => html`
         <mui-table-row .id=${id}>
           <mui-table-cell>${id}</mui-table-cell>
           <mui-table-cell>${toDateTime(loginTime)}</mui-table-cell>
         </mui-table-row>
       `,
-    );
-  }
-}
+      ),
+    [loginHistories],
+  );
+
+  return html`
+    <mui-table>
+      <mui-table-row header>
+        <mui-table-header-cell>ID</mui-table-header-cell>
+        <mui-table-header-cell>Time</mui-table-header-cell>
+      </mui-table-row>
+      ${renderRows}
+    </mui-table>
+  `;
+};
+
+define('app-user-login-history', UserLoginHistory);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-user-login-history': UserLoginHistory;
+    'app-user-login-history': HTMLElement & UserLoginHistoryProps;
   }
 }

@@ -1,12 +1,10 @@
 import { Signal, SignalWatcher } from '@lit-labs/signals';
 import { provide } from '@lit/context';
 import { LitElement, css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import { type Ref, createRef, ref } from 'lit/directives/ref.js';
+import { customElement, state } from 'lit/decorators.js';
 
 import { validate } from '@/auth/auth.js';
 import { isSignedInContext, isSignedInSignal } from '@/auth/is-signed-in.js';
-import type { Main } from '@/components/main/main.js';
 import { createRouter, initNavigation, navigate } from '@/router/index.js';
 import { routes } from '@/router/routes.js';
 import '@/components/main/main.js';
@@ -46,7 +44,8 @@ export class Layout extends SignalWatcher(LitElement) {
 
   readonly #router = createRouter(this);
   #watcher: Signal.subtle.Watcher;
-  #nav: Ref<Main> = createRef();
+
+  @state() private _drawerOpen = false;
 
   @provide({ context: isSignedInContext }) isSignedIn = isSignedInSignal.get();
 
@@ -71,7 +70,9 @@ export class Layout extends SignalWatcher(LitElement) {
 
   override render() {
     return html`
-      <app-main ${ref(this.#nav)}>
+      <app-main
+        .drawerOpen=${this._drawerOpen}
+        @drawer-close=${() => (this._drawerOpen = false)}>
         <app-header @nav-button-clicked=${this.#showDrawer}></app-header>
         <article>${this.#router.outlet()}</article>
         <app-footer></app-footer>
@@ -103,7 +104,7 @@ export class Layout extends SignalWatcher(LitElement) {
   }
 
   #showDrawer(): void {
-    this.#nav.value.show();
+    this._drawerOpen = true;
   }
 }
 
