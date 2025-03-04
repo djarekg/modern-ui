@@ -27,7 +27,7 @@
   "dependencies": {
     "@github/memoize": "^1.1.5",
     "@lit-labs/signals": "^0.1.2",
-    "haunted": "^6.0.0",
+    "haunted": "^6.1.0",
     "signal-utils": "^0.21.1"
   },
   "devDependencies": {

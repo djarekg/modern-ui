@@ -6,4 +6,6 @@ export const routes = {
   accounting: '/accounting',
   accountingReports: '/accounting/reports',
   inventory: '/inventory',
-};
+  products: '/products',
+  product: '/products/:id',
+} as const;

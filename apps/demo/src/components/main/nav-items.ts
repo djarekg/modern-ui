@@ -33,4 +33,10 @@ export default [
     label: 'Inventory',
     // cssColorVar: '--md-sys-color-gray',
   },
+  {
+    path: routes.products,
+    icon: 'shopping_cart',
+    label: 'Products',
+    // cssColorVar: '--md-sys-color-gray',
+  },
 ] as const satisfies ReadonlyArray<Readonly<NavItem>>;

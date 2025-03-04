@@ -1,10 +1,11 @@
-import { SignalWatcher, signal } from '@lit-labs/signals';
+import { signal } from '@lit-labs/signals';
 import type { TypedEvent } from '@mui/core';
-import { LitElement, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { component } from 'haunted';
+import { type LitElement, html, unsafeCSS } from 'lit';
 
 import '@mui/components/button/outline-button.js';
 import '@mui/components/text-field/text-field.js';
+import { useStyles } from '@mui/components';
 
 import { signIn } from '@/auth/auth.js';
 import { navigate } from '@/router/index.js';
@@ -12,59 +13,44 @@ import { routes } from '@/router/routes.js';
 
 import styles from './login.css?inline';
 
-@customElement('app-login-page')
-export class LoginPage extends SignalWatcher(LitElement) {
-  static override styles = [unsafeCSS(styles)];
+const LoginPage = () => {
+  useStyles([unsafeCSS(styles)]);
 
-  userName = signal('');
-  password = signal('');
+  const userName = signal('');
+  const password = signal('');
+  const disabled = userName.get().length === 0 || password.get().length === 0;
 
-  render() {
-    return html`
-      <article>
+  const handleUsernameChange = ({ target: { value } }: TypedEvent<HTMLInputElement>) => {
+    userName.set(value);
+  };
 
-        <section>
-          <span class="app-section-title">Welcome to the demo {app}</span>
-          <p>
-            This is a demo app that demonstrates using a monorepo setup with workspace projects, an API project that includes a SQLite databae, and a frontend project all using Web Components.
-          </p>
-        </section>
+  const handlePasswordChange = ({ target: { value } }: TypedEvent<HTMLInputElement>) => {
+    password.set(value);
+  };
 
-        <section>
-          <div class="app-container login">
-            <span class="app-section-title">Login</span>
-            <form method="post" @submit=${this.#onSubmit}>
-              <fieldset>
-                ${this.#renderUsernameControl()}
-              </fieldset>
-              <fieldset>
-                ${this.#renderPasaswordControl()}
-              </fieldset>
-              <fieldset>
-                ${this.#renderLoginButton()}
-              </fieldset>
-            </form>
-          </div>
-        </section>
+  const onSubmit = async (e: Event) => {
+    e.stopImmediatePropagation();
 
-      </article>
-    `;
-  }
+    const signedIn = await signIn(userName.get(), password.get());
+    if (signedIn) {
+      navigate(routes.home);
+    }
+  };
 
-  #renderUsernameControl() {
+  const renderUsernameControl = () => {
     return html`
       <mui-text-field
         required
         appearance="round"
         label="Username"
         tabindex="0"
-        .value=${this.userName.get()}
-        @change=${this.#handleUsernameChange}>
+        .value=${userName.get()}
+        @change=${handleUsernameChange}>
       </mui-text-field>
     `;
-  }
+  };
 
-  #renderPasaswordControl() {
+  const renderPasaswordControl = () => {
     return html`
       <mui-text-field
         required
@@ -72,45 +58,60 @@ export class LoginPage extends SignalWatcher(LitElement) {
         label="Password"
         type="password"
         tabindex="1"
-        .value=${this.password.get()}
-        @change=${this.#handlePasswordChange}>
+        .value=${password.get()}
+        @change=${handlePasswordChange}>
       </mui-text-field>
     `;
-  }
+  };
 
-  #renderLoginButton() {
-    const disabled = this.userName.get().length === 0 || this.password.get().length === 0;
-
+  const renderLoginButton = () => {
     return html`
+      <button @click=${onSubmit}>Working Submit</button>
       <mui-outline-button
         corner="round"
         .disabled=${disabled}
-        @click=${this.#onSubmit}>
+        @mouseup=${onSubmit}
+        @click=${onSubmit}>
         Login
       </mui-outline-button>
     `;
-  }
+  };
 
-  #handleUsernameChange({ target: { value } }: TypedEvent<HTMLInputElement>) {
-    this.userName.set(value);
-  }
+  return html`
+    <article>
 
-  #handlePasswordChange({ target: { value } }: TypedEvent<HTMLInputElement>) {
-    this.password.set(value);
-  }
+      <section>
+        <span class="app-section-title">Welcome to the demo {app}</span>
+        <p>
+          This is a demo app that demonstrates using a monorepo setup with workspace projects, an API project that includes a SQLite databae, and a frontend project all using Web Components.
+        </p>
+      </section>
 
-  async #onSubmit(e: Event) {
-    e.stopImmediatePropagation();
+      <section>
+        <div class="app-container login">
+          <span class="app-section-title">Login</span>
+          <form method="post" @submit=${onSubmit}>
+            <fieldset>
+              ${renderUsernameControl()}
+            </fieldset>
+            <fieldset>
+              ${renderPasaswordControl()}
+            </fieldset>
+            <fieldset>
+              ${renderLoginButton()}
+            </fieldset>
+          </form>
+        </div>
+      </section>
 
-    const signedIn = await signIn(this.userName.get(), this.password.get());
-    if (signedIn) {
-      navigate(routes.home);
-    }
-  }
-}
+    </article>
+  `;
+};
+
+customElements.define('app-login-page', component(LoginPage));
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-login-page': LoginPage;
+    'app-login-page': LitElement;
   }
 }

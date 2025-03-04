@@ -15,7 +15,7 @@
   },
   "scripts": {
     "setup": "task install",
-    "postinstall": "bun run --filter './apps/api' db:generate && bun run build:all",
+    "//postinstall": "bun run --filter './apps/api' db:generate && bun run build:all",
     "build:packages": "bun run --filter './packages/*' build",
     "build:apps": "bun run --filter './apps/*' build",
     "build:all": "bun run build:packages && bun run --filter './apps/api' build"

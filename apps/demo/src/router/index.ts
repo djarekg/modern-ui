@@ -59,6 +59,14 @@ const routeConfigs: RouteConfig[] = [
       return html`<app-inventory-page></app-inventory-page>`;
     },
   },
+  {
+    name: 'products',
+    path: routes.products,
+    render: () => {
+      import('../pages/products/index.js');
+      return html`<app-products-page></app-products-page>`;
+    },
+  },
 ];
 
 export const createRouter = (host: ReactiveControllerHost & HTMLElement) =>

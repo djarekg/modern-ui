@@ -2,6 +2,7 @@ export * from './button/index.js';
 export * from './card/index.js';
 export * from './command-palette/index.js';
 export * from './dialog/index.js';
+export * from './hooks/index.js';
 export * from './icon/index.js';
 export * from './list/index.js';
 export * from './menu/index.js';
