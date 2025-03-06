@@ -24,7 +24,7 @@ type UserDetailProps = {
 const UserDetail = ({ user, editing }: UserDetailProps) => {
   useStyles(unsafeCSS(styles));
 
-  const element = useHost();
+  const _this = useHost();
 
   const handleCopyId = async () => {
     const { id } = user;
@@ -39,7 +39,7 @@ const UserDetail = ({ user, editing }: UserDetailProps) => {
     editing = false;
 
     // TODO: not dispatching the changed user values. the original is being passed
-    element.dispatchEvent(createSaveEvent(user));
+    _this.dispatchEvent(createSaveEvent(user));
   };
 
   const action = useMemo(

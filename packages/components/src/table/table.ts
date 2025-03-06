@@ -1,13 +1,15 @@
-import { LitElement, type TemplateResult, css, html } from 'lit';
-import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
+import { useEffect } from 'haunted';
+import { css, html } from 'lit';
+
+import { define, useHost, useStyles } from '@mui/core';
 
 import {
-  type TableInternalRowSelectedEvent,
+  type TableEvent,
   createTableRowEditEvent,
   createTableRowSelectedEvent,
   createTableRowViewEvent,
 } from './events.js';
-import { TableRow } from './table-row.js';
+import type { TableRow } from './table-row.js';
 
 const styles = css`
   * {
@@ -29,104 +31,70 @@ const styles = css`
   }
 `;
 
+type TableProps = {
+  selectable: boolean;
+};
+
 /**
+ * Table component.
+ * @cssprops --mui-table-border-color - Border color of the table. Default is `var(--mui-color-border)`.
+ * @cssprops --mui-table-font-size - Font size of the table. Default is `14px`.
  * @fires row-selected - Fired when a row is selected.
  * @fires row-view - Fired when a row is viewed.
  * @fires row-edit - Fired when a row is edited.
- * @cssprops --mui-table-border-color - Border color of the table. Default is `var(--mui-color-border)`.
- * @cssprops --mui-table-font-size - Font size of the table. Default is `14px`.
- *
- * @slot - Default slot for table rows.
  */
-@customElement(Table.selector)
-export class Table extends LitElement {
-  static selector = 'mui-table';
-  static override styles = [styles];
+const Table = ({ selectable }: TableProps) => {
+  useStyles(styles);
 
-  @property({ reflect: true }) type = 'table';
-  @property({ type: Boolean }) selectable = false;
+  const _this = useHost();
+  const rows = Array.from(_this.querySelectorAll<TableRow>('mui-table-row:not([header])'));
 
-  @queryAssignedElements({ selector: `${TableRow.selector}:not([header])`, flatten: true })
-  rows: TableRow[];
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    if (this.selectable) {
-      this.addEventListener('internal-row-selected', this.#handleInternalRowSelected);
-      this.addEventListener('internal-row-view', this.#handleInternalRowView);
-      this.addEventListener('internal-row-edit', this.#handleInternalRowEdit);
-    }
-  }
-
-  override render(): TemplateResult {
-    return html`
-      <slot></slot>
-    `;
-  }
-
-  async #handleInternalRowSelected(e: Event): Promise<void> {
-    console.log('Table#handleInternalRowSelected');
+  const handleInternalEvent = async (e: Event, customEvent: (row: TableRow) => TableEvent) => {
     e.stopPropagation();
 
-    const { row } = (e as TableInternalRowSelectedEvent).detail;
-
-    const prevRowSelected = this.rows.find(r => r.getAttribute('aria-selected') === 'true');
-
+    const prevRowSelected = rows.find(r => r.getAttribute('aria-selected') === 'true');
     if (prevRowSelected) {
       prevRowSelected.removeAttribute('selected');
       prevRowSelected.setAttribute('aria-selected', 'false');
     }
 
+    const { row } = (e as TableEvent).detail;
     row.setAttribute('selected', '');
     row.setAttribute('aria-selected', 'true');
 
-    await this.updateComplete;
+    await 0;
 
-    this.dispatchEvent(createTableRowSelectedEvent(row));
-  }
+    _this.dispatchEvent(customEvent(row));
+  };
 
-  async #handleInternalRowView(e: Event): Promise<void> {
-    console.log('Table#handleInternalRowView');
-    e.stopPropagation();
+  const addEventListener = (event: string, customEvent: (row: TableRow) => TableEvent) => {
+    _this.addEventListener(event, e => handleInternalEvent(e, customEvent));
+  };
 
-    const { row } = (e as TableInternalRowSelectedEvent).detail;
+  const removeEventListener = (event: string, customEvent: (row: TableRow) => TableEvent) => {
+    _this.removeEventListener(event, e => handleInternalEvent(e, customEvent));
+  };
 
-    const prevRowSelected = this.rows.find(r => r.getAttribute('aria-selected') === 'true');
-
-    if (prevRowSelected) {
-      prevRowSelected.removeAttribute('selected');
-      prevRowSelected.setAttribute('aria-selected', 'false');
+  useEffect(() => {
+    if (selectable) {
+      addEventListener('internal-row-selected', createTableRowSelectedEvent);
+      addEventListener('internal-row-view', createTableRowViewEvent);
+      addEventListener('internal-row-edit', createTableRowEditEvent);
     }
 
-    row.setAttribute('selected', '');
-    row.setAttribute('aria-selected', 'true');
+    return () => {
+      removeEventListener('internal-row-selected', createTableRowSelectedEvent);
+      removeEventListener('internal-row-view', createTableRowViewEvent);
+      removeEventListener('internal-row-edit', createTableRowEditEvent);
+    };
+  }, []);
 
-    await this.updateComplete;
+  return html`<slot></slot>`;
+};
 
-    this.dispatchEvent(createTableRowViewEvent(row));
-  }
+define('mui-table', Table, { observedAttributes: ['selectable'] });
 
-  async #handleInternalRowEdit(e: Event): Promise<void> {
-    e.stopPropagation();
-
-    const { row } = (e as TableInternalRowSelectedEvent).detail;
-
-    const prevRowSelected = this.rows.find(r => r.getAttribute('aria-selected') === 'true');
-
-    if (prevRowSelected) {
-      prevRowSelected.removeAttribute('selected');
-      prevRowSelected.setAttribute('aria-selected', 'false');
-    }
-
-    row.setAttribute('selected', '');
-    row.setAttribute('aria-selected', 'true');
-
-    await this.updateComplete;
-
-    this.dispatchEvent(createTableRowEditEvent(row));
-  }
-}
+export type Table = HTMLElement & TableProps;
 
 declare global {
   interface HTMLElementTagNameMap {

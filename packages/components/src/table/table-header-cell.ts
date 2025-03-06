@@ -1,13 +1,14 @@
-import { LitElement, type TemplateResult, css, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
+import { css, html } from 'lit';
+
+import { define, useStyles } from '@mui/core';
+
 import sharedCss from './table-cell-shared.css.js';
 
 import '../icon/icon.js';
+import { useMemo } from 'haunted';
 
 const styles = css`
   :host {
-    /* --mui-color-icon: var(--md-sys-color-blue); */
     --_table-header-cell-background-color: var(--mui-table-header-cell-background-color, var(--mui-color-background));
     --_container-padding-block: calc(var(--mui-table-cell-padding-block) - 3px);
 
@@ -29,51 +30,44 @@ const styles = css`
   }
 `;
 
+type TableHeaderCellProps = {
+  align: 'center' | 'left' | 'right';
+  add: boolean;
+  addIcon: string;
+  minWidth: number | undefined;
+  edit: boolean;
+  scope: 'col' | 'row';
+  type: string;
+  width: number;
+};
+
 /**
+ * @cssprop --mui-table-header-cell-background-color - Background color of the table header cell. Default is `var(--mui-color-background)`.
  * @cssprop --mui-table-cell-padding-block - Block padding of the table cell. Default is `12px`.
- *
- * @slot - Default slot for table header cells.
  */
-@customElement('mui-table-header-cell')
-export class TableHeaderCell extends LitElement {
-  static override styles = [sharedCss, styles];
+const TableHeaderCell = ({ add = false, addIcon = 'add' }: TableHeaderCellProps) => {
+  useStyles([sharedCss, styles]);
 
-  @property() align: 'center' | 'left' | 'right' = 'left';
-  @property({ type: Boolean, reflect: true }) add = false;
-  @property() addIcon = 'add';
-  @property({ type: Number }) minWidth: number | undefined;
-  @property({ type: Boolean, reflect: true }) edit = false;
-  @property({ reflect: true }) scope: 'col' | 'row' = 'col';
-  @property({ reflect: true }) type = 'columnheader';
-  @property({ type: Number }) width = 100;
-
-  override render(): TemplateResult {
-    return html`
-      ${when(
-        this.add,
-        () => this.#renderAdd(),
-        () => this.#renderSlot(),
-      )}
-    `;
-  }
-
-  #renderSlot(): TemplateResult {
-    return html`
-      <slot></slot>
-    `;
-  }
-
-  #renderAdd(): TemplateResult {
-    return html`
+  const renderAdd = useMemo(
+    () => html`
       <div>
-        <mui-icon>${this.addIcon}</mui-icon>
+        <mui-icon>${addIcon}</mui-icon>
       </div>
-    `;
-  }
-}
+    `,
+    [addIcon],
+  );
+
+  return html`
+    ${add ? renderAdd : html`<slot></slot>`}
+  `;
+};
+
+define('mui-table-header-cell', TableHeaderCell, {
+  observedAttributes: ['add', 'edit', 'scope', 'type'],
+});
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mui-table-header-cell': TableHeaderCell;
+    'mui-table-header-cell': HTMLElement & TableHeaderCellProps;
   }
 }

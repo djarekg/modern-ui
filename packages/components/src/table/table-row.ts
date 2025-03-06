@@ -1,8 +1,10 @@
-import { LitElement, type TemplateResult, css, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { useEffect } from 'haunted';
+import { css, html } from 'lit';
+
+import { define, useHost, useStyles } from '@mui/core';
 
 import { createTableInternalRowSelectedEvent } from './events.js';
-import { Table } from './table.js';
+import type { Table } from './table.js';
 
 const styles = css`
   * {
@@ -15,39 +17,32 @@ const styles = css`
   }
 `;
 
-@customElement(TableRow.selector)
-export class TableRow extends LitElement {
-  static selector = 'mui-table-row';
-  static override styles = [styles];
+type TableRowProps = {
+  header: boolean;
+  type: string;
+};
 
-  @property({ type: Boolean, reflect: true }) header = false;
-  @property({ reflect: true }) type = 'row';
+const TableRow = () => {
+  useStyles(styles);
 
-  override connectedCallback(): void {
-    super.connectedCallback();
+  const _this = useHost();
+  const table = _this.closest<Table>('mui-table');
+  const handleRowClick = () => table.dispatchEvent(createTableInternalRowSelectedEvent(this));
 
-    const table = this.closest<Table>('mui-table');
-
-    if (table?.hasAttribute('selectable')) {
-      this.addEventListener('click', this.#handleRowClick, { capture: true });
+  useEffect(() => {
+    if (table.hasAttribute('selectable')) {
+      _this.addEventListener('click', handleRowClick, { capture: true });
     }
-  }
 
-  override render(): TemplateResult {
-    return html`
-      <slot></slot>
-    `;
-  }
+    return () => _this.removeEventListener('click', handleRowClick, { capture: true });
+  }, []);
 
-  #handleRowClick(): void {
-    console.log('TableRow#handleRowClick');
-    const table = this.closest<Table>(Table.selector);
+  return html`<slot></slot>`;
+};
 
-    if (table) {
-      table.dispatchEvent(createTableInternalRowSelectedEvent(this));
-    }
-  }
-}
+define('mui-table-row', TableRow, { observedAttributes: ['header', 'type'] });
+
+export type TableRow = HTMLElement & TableRowProps;
 
 declare global {
   interface HTMLElementTagNameMap {

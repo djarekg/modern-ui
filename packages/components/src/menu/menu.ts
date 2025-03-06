@@ -1,5 +1,7 @@
-import { LitElement, css, html } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { useCallback } from 'haunted';
+import { css, html } from 'lit';
+
+import { define, useHost, useStyles } from '@mui/core';
 
 import '../button/icon-button.js';
 
@@ -40,51 +42,30 @@ const styles = css`
   }
 `;
 
-/**
- * Menu component.
- */
-@customElement('mui-menu')
-export class Menu extends LitElement {
-  static override styles = [styles];
+type MenuProps = {
+  icon: string;
+};
 
-  /**
-   * The icon to display in the button.
-   */
-  @property() icon = 'menu';
+const Menu = ({ icon }: MenuProps) => {
+  useStyles(styles);
 
-  /**
-   * The menu element.
-   */
-  @query('menu') private _menu!: HTMLElement;
+  const _this = useHost();
+  const hide = useCallback(() => _this.shadowRoot.querySelector('menu').hidePopover(), []);
 
-  render() {
-    return html`
-      <button type="button" popovertarget="menu">
-        <mui-icon-button>${this.icon}</mui-icon-button>
-      </button>
-      <menu id="menu" popover @click=${this.hide}>
-        <slot></slot>
-      </menu>
-    `;
-  }
+  return html`
+    <button type="button" popovertarget="menu">
+      <mui-icon-button>${icon}</mui-icon-button>
+    </button>
+    <menu id="menu" popover @click=${hide}>
+      <slot></slot>
+    </menu>
+  `;
+};
 
-  /**
-   * Hide the menu.
-   */
-  hide() {
-    this._menu.hidePopover();
-  }
-
-  /**
-   * Show the menu.
-   */
-  show() {
-    this._menu.showPopover();
-  }
-}
+define('mui-menu', Menu, { observedAttributes: ['icon'] });
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mui-menu': Menu;
+    'mui-menu': HTMLElement & MenuProps;
   }
 }

@@ -34,11 +34,10 @@ type MainProps = {
  * @param {MainProps} Main properties.
  * @fires drawer-close - Dispatched when the drawer is closed.
  */
-export const Main = ({ drawerOpen }: MainProps) => {
+const Main = ({ drawerOpen }: MainProps) => {
   useStyles(styles);
 
-  const element = useHost();
-
+  const _this = useHost();
   const drawer: Ref<NavigationDrawer> = createRef();
 
   useEffect(() => {
@@ -62,7 +61,7 @@ export const Main = ({ drawerOpen }: MainProps) => {
   };
 
   const handleDrawerClose = useCallback(() => {
-    element.dispatchEvent(new CustomEvent('drawer-close'));
+    _this.dispatchEvent(new CustomEvent('drawer-close'));
   }, []);
 
   return html`

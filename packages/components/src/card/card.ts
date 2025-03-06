@@ -1,5 +1,6 @@
-import { LitElement, css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { css, html } from 'lit';
+
+import { define, useStyles } from '@mui/core';
 
 const styles = css`
   :host {
@@ -8,17 +9,16 @@ const styles = css`
   }
 `;
 
-@customElement('mui-card')
-export class Card extends LitElement {
-  static override styles = styles;
+const Card = () => {
+  useStyles(styles);
 
-  render() {
-    return html`<slot></slot>`;
-  }
-}
+  return html`<slot></slot>`;
+};
+
+define('mui-card', Card);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mui-card': Card;
+    'mui-card': HTMLElement;
   }
 }

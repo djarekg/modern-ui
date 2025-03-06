@@ -1,5 +1,4 @@
 import { type LitElement, isServer } from 'lit';
-import type { Confirm } from './confirm-dialog.js';
 
 type ConfirmOptions = {
   title: string;
@@ -16,14 +15,14 @@ type ConfirmOptions = {
  * @returns A promise that resolves when the user confirms the dialog, and rejects when the user cancels
  */
 export const confirm = (options: ConfirmOptions) => {
-  const dialog = document.createElement('mui-confirm') as Confirm;
+  const dialog = document.createElement('mui-confirm');
   const { appendToLitElement = 'app-index', title, content, confirmText, cancelText } = options;
 
   dialog.title = title;
   dialog.content = content;
   dialog.confirmText = confirmText ?? 'OK';
   dialog.cancelText = cancelText ?? 'Cancel';
-  dialog.show();
+  dialog.openOnInit = true;
 
   const promise = new Promise<boolean>(resolve => {
     dialog.addEventListener('confirm', () => {

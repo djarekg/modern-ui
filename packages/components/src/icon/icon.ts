@@ -1,5 +1,6 @@
-import { LitElement, css, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { css, html } from 'lit';
+
+import { define, useStyles } from '@mui/core';
 
 const styles = css`
   .material-symbols-sharp {
@@ -33,24 +34,22 @@ const styles = css`
   }
 `;
 
-@customElement('mui-icon')
 /**
+ * Icon component.
  * @cssprop --mui-icon-size - The size of the icon.
  * @cssprop --mui-icon-color - The color of the icon.
  * @cssprop --mui-icon-rotate - The rotation of the icon.
  */
-export class Icon extends LitElement {
-  static override styles = [styles];
+const Icon = () => {
+  useStyles(styles);
 
-  @property({ type: Boolean, reflect: true }) rotatable = false;
+  return html`<span class="material-symbols-sharp"><slot></slot></span>`;
+};
 
-  override render() {
-    return html`<span class="material-symbols-sharp"><slot></slot></span>`;
-  }
-}
+define('mui-icon', Icon, { observedAttributes: ['rotatable'] });
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mui-icon': Icon;
+    'mui-icon': HTMLElement;
   }
 }

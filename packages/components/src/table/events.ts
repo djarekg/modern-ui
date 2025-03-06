@@ -1,17 +1,16 @@
 import type { TableRow } from './table-row.js';
 
-/**
- * @event internal-row-selected - Fired when a row is selected.
- */
-export interface TableInternalRowSelectedEventDetail {
+export interface TableEventDetail {
   row: TableRow;
 }
 
-export interface TableInternalRowSelectedEvent
-  extends CustomEvent<TableInternalRowSelectedEventDetail> {}
+export interface TableEvent extends CustomEvent<TableEventDetail> {}
 
+/**
+ * @event internal-row-selected - Fired when a row is selected.
+ */
 export const createTableInternalRowSelectedEvent = (row: TableRow) => {
-  return new CustomEvent<TableInternalRowSelectedEventDetail>('internal-row-selected', {
+  return new CustomEvent<TableEventDetail>('internal-row-selected', {
     detail: { row },
     bubbles: true,
     composed: true,
@@ -21,14 +20,8 @@ export const createTableInternalRowSelectedEvent = (row: TableRow) => {
 /**
  * @event row-selected - Fired when a row is selected.
  */
-export interface TableRowSelectedEventDetail {
-  row: TableRow;
-}
-
-export interface TableRowSelectedEvent extends CustomEvent<TableRowSelectedEventDetail> {}
-
 export const createTableRowSelectedEvent = (row: TableRow) => {
-  return new CustomEvent<TableRowSelectedEventDetail>('row-selected', {
+  return new CustomEvent<TableEventDetail>('row-selected', {
     detail: { row },
     bubbles: true,
     composed: true,
@@ -38,14 +31,8 @@ export const createTableRowSelectedEvent = (row: TableRow) => {
 /**
  * @event internal-row-view - Fired when a row is viewed.
  */
-export interface TableInternalRowViewEventDetail {
-  row: TableRow;
-}
-
-export interface TableInternalRowViewEvent extends CustomEvent<TableInternalRowViewEventDetail> {}
-
 export const createTableInternalRowViewEvent = (row: TableRow) => {
-  return new CustomEvent<TableInternalRowViewEventDetail>('internal-row-view', {
+  return new CustomEvent<TableEventDetail>('internal-row-view', {
     detail: { row },
     bubbles: true,
     composed: true,
@@ -55,14 +42,8 @@ export const createTableInternalRowViewEvent = (row: TableRow) => {
 /**
  * @event row-view - Fired when a row is viewed.
  */
-export interface TableRowViewEventDetail {
-  row: TableRow;
-}
-
-export interface TableRowViewEvent extends CustomEvent<TableRowViewEventDetail> {}
-
 export const createTableRowViewEvent = (row: TableRow) => {
-  return new CustomEvent<TableRowViewEventDetail>('row-view', {
+  return new CustomEvent<TableEventDetail>('row-view', {
     detail: { row },
     bubbles: true,
     composed: true,
@@ -72,14 +53,8 @@ export const createTableRowViewEvent = (row: TableRow) => {
 /**
  * @event internal-row-edit - Fired when a row is edited.
  */
-export interface TableInternalRowEditEventDetail {
-  row: TableRow;
-}
-
-export interface TableInternalRowEditEvent extends CustomEvent<TableInternalRowEditEventDetail> {}
-
 export const createTableInternalRowEditEvent = (row: TableRow) => {
-  return new CustomEvent<TableInternalRowEditEventDetail>('internal-row-edit', {
+  return new CustomEvent<TableEventDetail>('internal-row-edit', {
     detail: { row },
     bubbles: true,
     composed: true,
@@ -89,14 +64,8 @@ export const createTableInternalRowEditEvent = (row: TableRow) => {
 /**
  * @event row-edit - Fired when a row is edited.
  */
-export interface TableRowEditEventDetail {
-  row: TableRow;
-}
-
-export interface TableRowEditEvent extends CustomEvent<TableRowEditEventDetail> {}
-
 export const createTableRowEditEvent = (row: TableRow) => {
-  return new CustomEvent<TableRowEditEventDetail>('row-edit', {
+  return new CustomEvent<TableEventDetail>('row-edit', {
     detail: { row },
     bubbles: true,
     composed: true,

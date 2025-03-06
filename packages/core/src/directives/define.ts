@@ -20,30 +20,17 @@ interface Options<P> {
  * @param name Name of the custom element to define.
  * @param renderer The component function to render.
  */
-export function define<P extends object>(name: string, renderer: Renderer<P>): void;
-/**
- * Define a custom element with Haunted component.
- * @param name Name of the custom element to define.
- * @param renderer The component function to render.
- * @param options Options for the custom element.
- */
+// @ts-ignore
+export function define<P extends object>(
+  name: string,
+  renderer: Renderer<P>,
+  options?: Omit<Options<P>, 'baseElement'>,
+): void;
 export function define<P extends object>(
   name: string,
   renderer: Renderer<P>,
   baseElement: Constructor<object>,
-): void;
-/**
- * Define a custom element with Haunted component.
- * @param name Name of the custom element to define.
- * @param renderer The component function to render.
- * @param baseElement The base element to extend.
- * @param options Options for the custom element.
- */
-export function define<P extends object>(
-  name: string,
-  renderer: Renderer<P>,
-  baseElement?: Constructor<object>,
-  options?: Omit<Options<P>, 'baseElement'>,
+  options: Omit<Options<P>, 'baseElement'>,
 ): void {
   customElements.define(name, component(renderer, baseElement, options));
 }

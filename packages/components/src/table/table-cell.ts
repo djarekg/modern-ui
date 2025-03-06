@@ -1,11 +1,14 @@
-import { LitElement, type TemplateResult, css, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { useMemo } from 'haunted';
+import { css, html } from 'lit';
+
+import { define, useHost, useStyles } from '@mui/core';
 
 import '../button/icon-button.js';
 
 import { createTableInternalRowSelectedEvent, createTableInternalRowViewEvent } from './events.js';
+import type { TableRow } from './table-row.js';
+
 import sharedCss from './table-cell-shared.css.js';
-import { TableRow } from './table-row.js';
 
 const styles = css`
   :host-context(:is(mui-table-row:last-child)):host(:is(:first-child)) {
@@ -26,76 +29,73 @@ const styles = css`
   }
 `;
 
+type TableCellProps = {
+  edit: boolean;
+  view: boolean;
+  editIcon: string;
+  viewIcon: string;
+  type: string;
+};
+
 /**
  * @cssprop --mui-table-hover-color - Background color of the table cell when hovered. Default is `var(--mui-color-on-background)`.
  */
-@customElement('mui-table-cell')
-export class TableCell extends LitElement {
-  static override styles = [sharedCss, styles];
+const TableCell = ({ edit, view, editIcon = 'edit', viewIcon = 'pageview' }: TableCellProps) => {
+  useStyles([sharedCss, styles]);
 
-  @property({ type: Boolean, reflect: true }) edit = false;
-  @property({ type: Boolean, reflect: true }) view = false;
-  @property() editIcon = 'edit';
-  @property() viewIcon = 'pageview';
-  @property({ reflect: true }) type = 'cell';
+  const _this = useHost();
 
-  override render(): TemplateResult {
-    if (this.edit) {
-      return this.#renderEdit();
-    }
-
-    if (this.view) {
-      return this.#renderView();
-    }
-
-    return this.#renderSlot();
-  }
-
-  #renderSlot(): TemplateResult {
-    return html`
-      <slot></slot>
-    `;
-  }
-
-  #renderEdit(): TemplateResult {
-    return html`
-      <div>
-        <mui-icon-button @click=${this.#handleEditClick}>${this.editIcon}</mui-icon-button>
-      </div>
-    `;
-  }
-
-  #renderView(): TemplateResult {
-    return html`
-      <div>
-        <mui-icon-button @click=${this.#handleViewClick}>${this.viewIcon}</mui-icon-button>
-      </div>
-    `;
-  }
-
-  #handleEditClick(e: MouseEvent): void {
+  const handleEditClick = (e: MouseEvent) => {
     e.stopPropagation();
 
-    const row = this.closest<TableRow>(TableRow.selector);
-
+    const row = _this.closest<TableRow>('mui-table-row');
     if (row) {
-      this.dispatchEvent(createTableInternalRowSelectedEvent(row));
+      _this.dispatchEvent(createTableInternalRowSelectedEvent(row));
     }
-  }
+  };
 
-  #handleViewClick(e: MouseEvent): void {
+  const handleViewClick = (e: MouseEvent) => {
     e.stopPropagation();
 
-    const row = this.closest<TableRow>(TableRow.selector);
-
+    const row = _this.closest<TableRow>('mui-table-row');
     if (row) {
-      this.dispatchEvent(createTableInternalRowViewEvent(row));
+      _this.dispatchEvent(createTableInternalRowViewEvent(row));
     }
+  };
+
+  const renderEdit = useMemo(
+    () => html`
+      <div>
+        <mui-icon-button @click=${handleEditClick}>${editIcon}</mui-icon-button>
+      </div>
+    `,
+    [editIcon],
+  );
+
+  const renderView = useMemo(
+    () => html`
+      <div>
+        <mui-icon-button @click=${handleViewClick}>${viewIcon}</mui-icon-button>
+      </div>
+    `,
+    [viewIcon],
+  );
+
+  if (edit) {
+    return renderEdit;
   }
-}
+
+  if (view) {
+    return renderView;
+  }
+
+  return html`<slot></slot>`;
+};
+
+define('mui-table-cell', TableCell, { observedAttributes: ['edit', 'view', 'type'] });
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mui-table-cell': TableCell;
+    'mui-table-cell': HTMLElement;
   }
 }
