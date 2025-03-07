@@ -1,12 +1,17 @@
-import { LitElement, css, html, isServer } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { useCallback, useEffect } from 'haunted';
+import { type LitElement, html, isServer } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
 
-import { delay } from '@mui/core';
+import { define, delay, useHost, useStyles } from '@mui/core';
 
 import '../icon/icon.js';
 
+import styles from './toast.css.js';
 import type { ToastOptions, ToastType } from './types.js';
+
+const DISPLAYED_DURATION = 3_000;
+const SHOWING_DURATION = 300;
+const HIDING_DURATION = 500;
 
 /**
  * Show a toast notification.
@@ -16,7 +21,7 @@ import type { ToastOptions, ToastType } from './types.js';
 export const toast = async (options: ToastOptions) => {
   const {
     message,
-    duration = DEFAULT_DURATION,
+    duration = DISPLAYED_DURATION,
     type = 'info',
     appendToLitElement = 'app-index',
   } = options;
@@ -31,141 +36,65 @@ export const toast = async (options: ToastOptions) => {
     // Wait for the toast to be appended to the DOM.
     await 0;
 
-    await toast.show();
+    toast.show = true;
     await delay(duration);
-    await toast.hide();
+    toast.show = false;
+    await delay(HIDING_DURATION);
     toast.remove();
   }
 };
 
-const DEFAULT_DURATION = 3_000;
+type ToastProps = {
+  message: string;
+  show: boolean;
+  type: ToastType;
+};
 
-const styles = css`
-  :host {
-    --_popover-background-color: var(--mui-palette-surface-a0);
-  }
+const popoverRef = createRef<HTMLElement>();
 
-  [popover] {
-    --mui-icon-size: 24px;
+const Toast = ({ message = '', show, type = 'info' }: ToastProps) => {
+  useStyles(styles);
 
-    content-visibility: hidden;
-    visibility: hidden;
-    min-block-size: 50px;
-    z-index: 900;
-    inset: 1rem 0 auto 0;
-    background: var(--_popover-background-color);
-    box-shadow: var(--mui-elevation-4);
-    border-radius: var(--mui-shape-small);
-    border: none;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 0 1rem;
-    opacity: 0;
+  const _this = useHost();
 
-    &:popover-open {
-      content-visibility: visible;
-      visibility: visible;
-    }
+  const _show = useCallback(async () => {
+    const popover = popoverRef.value;
+    popover.showPopover();
+    popover.setAttribute('opening', '');
+    await delay(SHOWING_DURATION);
+    popover.removeAttribute('opening');
+    popover.setAttribute('opened', '');
+  }, []);
 
-    &:is([opened]) {
-      opacity: 1;
-    }
+  const _hide = useCallback(async () => {
+    const popover = popoverRef.value;
+    popover.setAttribute('closing', '');
+    await delay(SHOWING_DURATION);
+    popover.removeAttribute('opened');
+    popover.removeAttribute('closing');
+    popover.hidePopover();
+  }, []);
 
-    &:is([opening]) {
-      opacity: 1;
-      transition: opacity 0.3s;
-    }
+  useEffect(() => {
+    _this.setAttribute('type', type);
+  }, [type]);
 
-    &:is([closing]) {
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-  }
+  useEffect(async () => {
+    await (show ? _show() : _hide());
+  }, [show]);
 
-  aside {
-    color: var(--mui-color-text);
+  return html`
+    <aside ${ref(popoverRef)} popover>
+      <mui-icon>info</mui-icon>
+      <span>${message}</span>
+    </aside>
+  `;
+};
 
-    mui-icon {
-      color: var(--mui-color-text);
-      /* margin-inline-end: 0.5rem; */
-    }
-  }
-
-  :host([toast-type=info]) {
-    --_popover-background-color: var(--mui-color-alert-info);
-  }
-
-  :host([toast-type=success]) {
-    --_popover-background-color: var(--mui-color-alert-success);
-  }
-
-  :host([toast-type=warning]) {
-    --_popover-background-color: var(--mui-color-alert-warning);
-  }
-
-  :host([toast-type=error]) {
-    --_popover-background-color: var(--mui-color-alert-error);
-  }
-`;
-
-@customElement('mui-toast')
-export class Toast extends LitElement {
-  static styles = [styles];
-
-  /**
-   * Reference to the popover element.
-   */
-  #popoverRef = createRef<HTMLElement>();
-
-  /**
-   * Popover element.
-   */
-  get #popover() {
-    return this.#popoverRef.value;
-  }
-
-  /**
-   * The type of toast to display.
-   */
-  @property({ attribute: 'toast-type', reflect: true }) type: ToastType = 'info';
-
-  @property() message = '';
-
-  render() {
-    return html`
-      <aside ${ref(this.#popoverRef)} popover>
-        <mui-icon>info</mui-icon>
-        <span>${this.message}</span>
-      </aside>
-    `;
-  }
-
-  /**
-   * Show the toast.
-   */
-  async show() {
-    this.#popover.showPopover();
-    this.#popover.setAttribute('opening', '');
-    await delay(300);
-    this.#popover.removeAttribute('opening');
-    this.#popover.setAttribute('opened', '');
-  }
-
-  /**
-   * Hide the toast.
-   */
-  async hide() {
-    this.#popover.setAttribute('closing', '');
-    await delay(500);
-    this.#popover.removeAttribute('opened');
-    this.#popover.removeAttribute('closing');
-    this.#popover.hidePopover();
-  }
-}
+define('mui-toast', Toast, { observedAttributes: ['type'] });
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mui-toast': Toast;
+    'mui-toast': HTMLElement & ToastProps;
   }
 }
