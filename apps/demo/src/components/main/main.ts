@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'haunted';
 import { css, html } from 'lit';
-import { type Ref, createRef, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 
 import type { NavigationDrawer, NavigationDrawerNavigateEvent } from '@mui/components';
 import { define, useHost, useStyles } from '@mui/core';
@@ -38,13 +38,7 @@ const Main = ({ drawerOpen }: MainProps) => {
   useStyles(styles);
 
   const _this = useHost();
-  const drawer: Ref<NavigationDrawer> = createRef();
-
-  useEffect(() => {
-    if (drawerOpen) {
-      drawer.value.show();
-    }
-  }, [drawerOpen]);
+  const drawer = createRef<NavigationDrawer>();
 
   const handleNavigate = ({
     detail: {
@@ -64,18 +58,24 @@ const Main = ({ drawerOpen }: MainProps) => {
     _this.dispatchEvent(new CustomEvent('drawer-close'));
   }, []);
 
+  useEffect(() => {
+    if (drawerOpen) {
+      drawer.value.show();
+    }
+  }, [drawerOpen]);
+
   return html`
-      <mui-navigation-drawer
-        ${ref(drawer)}
-        headline="Main Menu"
-        .items=${navItems}
-        @close=${handleDrawerClose}
-        @navigate=${handleNavigate}>
-        <main role="main">
-          <slot></slot>
-        </main>
-      </mui-navigation-drawer>
-    `;
+    <mui-navigation-drawer
+      ${ref(drawer)}
+      headline="Main Menu"
+      .items=${navItems}
+      @close=${handleDrawerClose}
+      @navigate=${handleNavigate}>
+      <main role="main">
+        <slot></slot>
+      </main>
+    </mui-navigation-drawer>
+  `;
 };
 
 define('app-main', Main);
