@@ -87,7 +87,7 @@ const Table = ({ selectable }: TableProps) => {
       removeEventListener('internal-row-view', createTableRowViewEvent);
       removeEventListener('internal-row-edit', createTableRowEditEvent);
     };
-  }, []);
+  }, [selectable]);
 
   return html`<slot></slot>`;
 };

@@ -2,7 +2,7 @@ import { useMemo } from 'haunted';
 import { css, html } from 'lit';
 
 import type { User } from '@mui/api';
-import type { TableRowSelectedEvent } from '@mui/components/table/events.js';
+import type { TableEvent } from '@mui/components/table/events.js';
 import { define, useStyles } from '@mui/core';
 
 import { navigate } from '@/router/index.js';
@@ -27,11 +27,11 @@ type UserListProps = {
 const UserList = ({ users = [] }: UserListProps) => {
   useStyles(styles);
 
-  const handleTableRowSelected = ({ detail: { row } }: TableRowSelectedEvent) => {
+  const handleTableRowSelected = ({ detail: { row } }: TableEvent) => {
     console.log('UserList#handleTableRowSelected', row);
   };
 
-  const handleTableRowView = ({ detail: { row } }: TableRowSelectedEvent) => {
+  const handleTableRowView = ({ detail: { row } }: TableEvent) => {
     const { id } = row;
     navigate(`${routes.users}/${id}`);
   };

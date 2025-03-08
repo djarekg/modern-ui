@@ -78,6 +78,14 @@
       "types": "./dist/notifications/toast.d.ts",
       "import": "./dist/notifications/toast.js"
     },
+    "./skeleton/skeleton-table.js": {
+      "types": "./dist/skeleton/skeleton-table.d.ts",
+      "import": "./dist/skeleton/skeleton-table.js"
+    },
+    "./skeleton/skeleton.js": {
+      "types": "./dist/skeleton/skeleton.d.ts",
+      "import": "./dist/skeleton/skeleton.js"
+    },
     "./table/*.js": {
       "types": "./dist/table/*.d.ts",
       "import": "./dist/table/*.js"
