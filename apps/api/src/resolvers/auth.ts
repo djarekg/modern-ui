@@ -1,6 +1,7 @@
-import { Args, ArgsType, Ctx, Field, Mutation, Query, Resolver } from 'type-graphql';
+import { Args, ArgsType, Ctx, Field, Query, Resolver } from 'type-graphql';
 
 import type { Context } from '@/client/context.js';
+import { prisma } from '@/client/index.js';
 import { compareHash } from '@/crypto/hash.js';
 import { createLoginHistory } from '@/db/login-history/index.js';
 import { NotFoundError, UnauthorizedError } from '@/errors.js';
@@ -28,7 +29,7 @@ export class AuthResolver {
   @Query(() => String)
   async signIn(
     @Args(() => AuthArgs) { userName, password }: AuthArgs,
-    @Ctx() { cookie: { auth }, jwt, prisma }: Context,
+    @Ctx() { cookie: { auth }, jwt }: Context,
   ) {
     const { id, password: storedPassword } = await prisma.user.findFirst({
       where: {
@@ -69,11 +70,13 @@ export class AuthResolver {
    *
    * @param {Context} - Context object.
    */
-  @Mutation()
-  async signOut(@Ctx() { cookie: { auth } }: Context) {
+  @Query(() => Boolean)
+  signOut(@Ctx() { cookie: { auth } }: Context) {
     auth.set({
       value: '',
       maxAge: 0, // Expire the cookie
     });
+
+    return true;
   }
 }

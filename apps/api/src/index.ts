@@ -10,7 +10,6 @@ import { buildSchema } from 'type-graphql';
 
 import type { Context } from '@/client/context.js';
 import { corsConfig, isDev, jwtConfig, port } from '@/config.js';
-import { getUserById } from '@/db/user/user.js';
 import { ForbiddenError, UnauthorizedError } from '@/errors.js';
 import { AuthResolver } from '@/resolvers/auth.js';
 
@@ -31,7 +30,7 @@ new Elysia()
       schema,
       enablePlayground: isDev,
       introspection: isDev,
-      context: async ({ cookie, jwt, request, prisma }) => {
+      context: async ({ cookie, jwt, request }) => {
         const token = request.headers.get('authorization');
         if (!token) {
           UnauthorizedError('Token is missing');
@@ -43,12 +42,7 @@ new Elysia()
           ForbiddenError('Access Token is invalid');
         }
 
-        const user = await getUserById(userId);
-        if (!user) {
-          UnauthorizedError('User is not authenticated');
-        }
-
-        return { cookie, jwt, request, prisma, user };
+        return { cookie, jwt, request, userId };
       },
     }),
   )

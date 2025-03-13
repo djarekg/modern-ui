@@ -1251,7 +1251,6 @@ type Mutation {
   deleteOneProductColor(where: ProductColorWhereUniqueInput!): ProductColor
   deleteOneProductSales(where: ProductSalesWhereUniqueInput!): ProductSales
   deleteOneUser(where: UserWhereUniqueInput!): User
-  signOut: Boolean!
   updateManyColor(data: ColorUpdateManyMutationInput!, where: ColorWhereInput): AffectedRowsOutput!
   updateManyCustomer(data: CustomerUpdateManyMutationInput!, where: CustomerWhereInput): AffectedRowsOutput!
   updateManyInventory(data: InventoryUpdateManyMutationInput!, where: InventoryWhereInput): AffectedRowsOutput!
@@ -2672,6 +2671,7 @@ type Query {
   productColors(cursor: ProductColorWhereUniqueInput, distinct: [ProductColorScalarFieldEnum!], orderBy: [ProductColorOrderByWithRelationInput!], skip: Int, take: Int, where: ProductColorWhereInput): [ProductColor!]!
   products(cursor: ProductWhereUniqueInput, distinct: [ProductScalarFieldEnum!], orderBy: [ProductOrderByWithRelationInput!], skip: Int, take: Int, where: ProductWhereInput): [Product!]!
   signIn(password: String!, userName: String!): String!
+  signOut: Boolean!
   user(where: UserWhereUniqueInput!): User
   users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
 }
