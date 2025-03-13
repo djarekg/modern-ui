@@ -7,7 +7,7 @@
     "url": "https://github.com/djarekg/mw"
   },
   "license": "MIT",
-  "packageManager": "bun@1.1.41",
+  "packageManager": "bun",
   "engines": {
     "bun": ">=1.1.41"
   },

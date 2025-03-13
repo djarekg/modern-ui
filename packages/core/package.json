@@ -10,7 +10,7 @@
     "bun": ">=1.1.41"
   },
   "license": "MIT",
-  "packageManager": "bun@1.1.41",
+  "packageManager": "bun",
   "type": "module",
   "main": "./src/index.ts",
   "exports": {

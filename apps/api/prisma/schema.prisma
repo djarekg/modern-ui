@@ -4,14 +4,24 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["views"]
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+generator typegraphql {
+  provider         = "typegraphql-prisma"
+  output           = "../../../node_modules/@prisma/generated/type-graphql"
+  // output           = "generated/type-graphql"
+  contextPrismaKey = "prisma"
+  // emitRedundantTypesInfo = true
+  simpleResolvers  = true
+  useSimpleInputs  = true
 }
 
 model User {
@@ -22,18 +32,18 @@ model User {
   address      String
   phone        String
   password     String
-  role         Role           @default(USER)
+  role         String
   dateCreated  DateTime       @default(now())
   LoginHistory LoginHistory[]
   productSales ProductSales[]
 }
 
-enum Role {
-  ADMIN
-  USER
-  SALES
-  ACCOUNTING
-}
+// enum Role {
+//   ADMIN
+//   USER
+//   SALES
+//   ACCOUNTING
+// }
 
 model LoginHistory {
   id        String   @id @default(uuid())
@@ -59,7 +69,7 @@ model Product {
   name         String
   description  String
   price        Float
-  type         ProductType
+  type         String
   dateCreated  DateTime       @default(now())
   dateUpdated  DateTime       @updatedAt
   Inventory    Inventory[]
@@ -67,19 +77,19 @@ model Product {
   ProductColor ProductColor[]
 }
 
-enum ProductType {
-  DRESS
-  HAT
-  HOODIE
-  JACKET
-  PANTS
-  SHIRT
-  SHOES
-  SHORTS
-  SOCKS
-  SWEATER
-  UNDERWEAR
-}
+// enum ProductType {
+//   DRESS
+//   HAT
+//   HOODIE
+//   JACKET
+//   PANTS
+//   SHIRT
+//   SHOES
+//   SHORTS
+//   SOCKS
+//   SWEATER
+//   UNDERWEAR
+// }
 
 model Color {
   id           String         @id @default(uuid())
@@ -102,23 +112,23 @@ model ProductColor {
 model Inventory {
   id          String   @id @default(uuid())
   productId   String
-  size        Size
+  size        String
   quantity    Int
   dateCreated DateTime @default(now())
   dateUpdated DateTime @updatedAt
   product     Product  @relation(fields: [productId], references: [id])
 }
 
-enum Size {
-  XSMALL
-  SMALL
-  MEDIUM
-  LARGE
-  XLARGE
-  XXLARGE
-  XXXLARGE
-  ONESIZE
-}
+// enum Size {
+//   XSMALL
+//   SMALL
+//   MEDIUM
+//   LARGE
+//   XLARGE
+//   XXLARGE
+//   XXXLARGE
+//   ONESIZE
+// }
 
 model ProductSales {
   id          String   @id @default(uuid())

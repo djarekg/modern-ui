@@ -9,13 +9,13 @@
   },
   "license": "MIT",
   "type": "module",
-  "packageManager": "bun@1.1.41",
+  "packageManager": "bun",
   "engines": {
     "bun": ">=1.1.41"
   },
   "scripts": {
     "setup": "task install",
-    "//postinstall": "bun run --filter './apps/api' db:generate && bun run build:all",
+    "postsetup": "bun run --filter './apps/api' db:generate && bun run build:all",
     "build:packages": "bun run --filter './packages/*' build",
     "build:apps": "bun run --filter './apps/*' build",
     "build:all": "bun run build:packages && bun run --filter './apps/api' build"
@@ -26,11 +26,11 @@
     "@jspm/core": "^2.1.0",
     "@jspm/generator": "^2.5.1",
     "@jspm/import-map": "^1.1.0",
-    "@types/bun": "^1.2.2",
-    "typedoc": "^0.27.7"
+    "@types/bun": "^1.2.4",
+    "typedoc": "^0.27.9"
   },
   "peerDependencies": {
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   },
   "overrides": {
     "@lit-labs/signals": "latest",

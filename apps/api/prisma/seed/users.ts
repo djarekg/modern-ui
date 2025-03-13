@@ -1,5 +1,7 @@
-import { type PrismaClient, Role } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
+
 import { generateHash } from '../../src/crypto/hash.js';
+import { Role } from '../enums/role.js';
 
 import { faker } from './init-faker.js';
 
@@ -15,7 +17,7 @@ export const createUsers = async (prisma: PrismaClient) => {
         email: 'admin@fu.com',
         address: '123 Admin St',
         phone: '123-456-7890',
-        role: Role.ADMIN,
+        role: Role.Admin,
         password: generateHash('admin'),
       },
     });
@@ -29,7 +31,7 @@ export const createUsers = async (prisma: PrismaClient) => {
         email: faker.internet.email(),
         address: faker.lorem.words(5),
         phone: faker.phone.number(),
-        role: Role.USER,
+        role: Role.User,
         password: generateHash(faker.internet.password()),
       },
     });
@@ -43,7 +45,7 @@ export const createUsers = async (prisma: PrismaClient) => {
         email: faker.internet.email(),
         address: faker.lorem.words(5),
         phone: faker.phone.number(),
-        role: Role.SALES,
+        role: Role.Sales,
         password: generateHash(faker.internet.password()),
       },
     });
@@ -57,7 +59,7 @@ export const createUsers = async (prisma: PrismaClient) => {
         email: faker.internet.email(),
         address: faker.lorem.words(5),
         phone: faker.phone.number(),
-        role: Role.ACCOUNTING,
+        role: Role.Accounting,
         password: generateHash(faker.internet.password()),
       },
     });

@@ -54,6 +54,9 @@
       "attributePosition": "auto",
       "indentStyle": "space",
       "lineEnding": "lf"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
     }
   },
   "json": {

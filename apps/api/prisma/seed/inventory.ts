@@ -1,4 +1,7 @@
-import { type PrismaClient, ProductType, Size } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
+
+import { ProductType } from '../enums/product-type.js';
+import { Size } from '../enums/size.js';
 
 export const createInventories = async (prisma: PrismaClient) => {
   console.log('Seeding inventories...');
@@ -15,108 +18,108 @@ export const createInventories = async (prisma: PrismaClient) => {
     prisma.inventory.createMany({
       data: [
         {
-          productId: await getProductId(ProductType.DRESS),
-          size: Size.XSMALL,
+          productId: await getProductId(ProductType.Dress),
+          size: Size.XSmall,
           quantity: 10,
         },
         {
-          productId: await getProductId(ProductType.DRESS),
-          size: Size.SMALL,
+          productId: await getProductId(ProductType.Dress),
+          size: Size.Small,
           quantity: 8,
         },
         {
-          productId: await getProductId(ProductType.DRESS),
-          size: Size.MEDIUM,
+          productId: await getProductId(ProductType.Dress),
+          size: Size.Medium,
           quantity: 2,
         },
         {
-          productId: await getProductId(ProductType.DRESS),
-          size: Size.LARGE,
+          productId: await getProductId(ProductType.Dress),
+          size: Size.Large,
           quantity: 13,
         },
         {
-          productId: await getProductId(ProductType.DRESS),
-          size: Size.XLARGE,
+          productId: await getProductId(ProductType.Dress),
+          size: Size.XLarge,
           quantity: 10,
         },
         {
-          productId: await getProductId(ProductType.DRESS),
-          size: Size.XXLARGE,
+          productId: await getProductId(ProductType.Dress),
+          size: Size.XXLarge,
           quantity: 10,
         },
         {
-          productId: await getProductId(ProductType.DRESS),
-          size: Size.XXXLARGE,
+          productId: await getProductId(ProductType.Dress),
+          size: Size.XXXLarge,
           quantity: 4,
         },
         {
-          productId: await getProductId(ProductType.DRESS),
-          size: Size.XSMALL,
+          productId: await getProductId(ProductType.Dress),
+          size: Size.XSmall,
           quantity: 44,
         },
         {
-          productId: await getProductId(ProductType.HAT),
-          size: Size.ONESIZE,
+          productId: await getProductId(ProductType.Hat),
+          size: Size.Onesize,
           quantity: 33,
         },
         {
-          productId: await getProductId(ProductType.HOODIE),
-          size: Size.SMALL,
+          productId: await getProductId(ProductType.Hoodie),
+          size: Size.Small,
           quantity: 10,
         },
         {
-          productId: await getProductId(ProductType.JACKET),
-          size: Size.MEDIUM,
+          productId: await getProductId(ProductType.Jacket),
+          size: Size.Medium,
           quantity: 10,
         },
         {
-          productId: await getProductId(ProductType.PANTS),
-          size: Size.SMALL,
+          productId: await getProductId(ProductType.Pants),
+          size: Size.Small,
           quantity: 10,
         },
         {
-          productId: await getProductId(ProductType.SHIRT),
-          size: Size.SMALL,
+          productId: await getProductId(ProductType.Shirt),
+          size: Size.Small,
           quantity: 2,
         },
         {
-          productId: await getProductId(ProductType.SHOES),
-          size: Size.SMALL,
+          productId: await getProductId(ProductType.Shorts),
+          size: Size.Small,
           quantity: 10,
         },
         {
-          productId: await getProductId(ProductType.SHORTS),
-          size: Size.SMALL,
+          productId: await getProductId(ProductType.Shorts),
+          size: Size.Small,
           quantity: 9,
         },
         {
-          productId: await getProductId(ProductType.SHORTS),
-          size: Size.MEDIUM,
+          productId: await getProductId(ProductType.Shorts),
+          size: Size.Medium,
           quantity: 10,
         },
         {
-          productId: await getProductId(ProductType.SHORTS),
-          size: Size.LARGE,
+          productId: await getProductId(ProductType.Shorts),
+          size: Size.Large,
           quantity: 3,
         },
         {
-          productId: await getProductId(ProductType.SOCKS),
-          size: Size.MEDIUM,
+          productId: await getProductId(ProductType.Socks),
+          size: Size.Medium,
           quantity: 76,
         },
         {
-          productId: await getProductId(ProductType.SWEATER),
-          size: Size.SMALL,
+          productId: await getProductId(ProductType.Sweater),
+          size: Size.Small,
           quantity: 4,
         },
         {
-          productId: await getProductId(ProductType.SWEATER),
-          size: Size.MEDIUM,
+          productId: await getProductId(ProductType.Sweater),
+          size: Size.Medium,
           quantity: 4,
         },
         {
-          productId: await getProductId(ProductType.UNDERWEAR),
-          size: Size.MEDIUM,
+          productId: await getProductId(ProductType.Underwear),
+          size: Size.Medium,
           quantity: 50,
         },
       ],

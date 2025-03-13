@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": false,
   "license": "MIT",
-  "packageManager": "bun@1.1.41",
+  "packageManager": "bun",
   "author": "Dustin Griffith",
   "repository": {
     "type": "git",

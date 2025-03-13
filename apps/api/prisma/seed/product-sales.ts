@@ -1,4 +1,7 @@
-import { type PrismaClient, ProductType, Role } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
+
+import { ProductType } from '../enums/product-type.js';
+import { Role } from '../enums/role.js';
 
 export const createProductSales = async (prisma: PrismaClient) => {
   console.group('Seeding product sales...');
@@ -13,7 +16,7 @@ export const createProductSales = async (prisma: PrismaClient) => {
   };
 
   const customerIds = (await prisma.customer.findMany()).map(({ id }) => id);
-  const salesUserIds = (await prisma.user.findMany({ where: { role: Role.SALES } })).map(
+  const salesUserIds = (await prisma.user.findMany({ where: { role: Role.Sales } })).map(
     ({ id }) => id,
   );
 
@@ -21,21 +24,21 @@ export const createProductSales = async (prisma: PrismaClient) => {
     prisma.productSales.createMany({
       data: [
         {
-          productId: await getProductId(ProductType.DRESS),
+          productId: await getProductId(ProductType.Dress),
           customerId: customerIds[0],
           userId: salesUserIds[0],
           quantity: 10,
           price: 50.0,
         },
         {
-          productId: await getProductId(ProductType.DRESS),
+          productId: await getProductId(ProductType.Dress),
           customerId: customerIds[1],
           userId: salesUserIds[0],
           quantity: 10,
           price: 50.0,
         },
         {
-          productId: await getProductId(ProductType.HAT),
+          productId: await getProductId(ProductType.Hat),
           customerId: customerIds[0],
           userId: salesUserIds[1],
           quantity: 10,

@@ -8,7 +8,7 @@
     "url": "https://github.com/djarekg/modern-ui"
   },
   "license": "MIT",
-  "packageManager": "bun@1.1.41",
+  "packageManager": "bun",
   "engines": {
     "bun": ">=1.1.41"
   },
@@ -45,6 +45,7 @@
     "stylis": "^4.3.6"
   },
   "devDependencies": {
+    "@apollo/client-devtools-vscode": "^4.19.11",
     "@types/bun": "^1.2.2",
     "@types/stylis": "^4.2.7",
     "elysia": "^1.2.14",

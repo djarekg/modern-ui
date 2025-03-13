@@ -1,5 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { type PrismaClient, ProductType } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
+
+import { ProductType } from '../enums/product-type.js';
 
 export const createProducts = async (prisma: PrismaClient) => {
   console.group('Seeding products');
@@ -11,7 +13,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Silk Dress',
         description: 'A beautiful silk dress with a floral pattern.',
         price: 50.0,
-        type: ProductType.DRESS,
+        type: ProductType.Dress,
       },
     });
 
@@ -22,7 +24,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Camo Hat',
         description: 'An adjustable hat with a camouflage pattern.',
         price: 24.5,
-        type: ProductType.HAT,
+        type: ProductType.Hat,
       },
     });
 
@@ -33,7 +35,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Pullover Hoodie',
         description: 'A comfortable hoodie with a kangaroo pocket.',
         price: 45.0,
-        type: ProductType.HOODIE,
+        type: ProductType.Hoodie,
       },
     });
 
@@ -44,7 +46,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Jean Jacket',
         description: 'A warm jacket with a zip-up front and hood.',
         price: 75.0,
-        type: ProductType.JACKET,
+        type: ProductType.Jacket,
       },
     });
 
@@ -55,7 +57,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Cargo Pants',
         description: 'A pair of durable cargo pants with multiple pockets.',
         price: 30.0,
-        type: ProductType.PANTS,
+        type: ProductType.Pants,
       },
     });
 
@@ -66,7 +68,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Graphic T-Shirt',
         description: 'A soft cotton t-shirt with a graphic print.',
         price: 15.0,
-        type: ProductType.SHIRT,
+        type: ProductType.Shirt,
       },
     });
 
@@ -77,7 +79,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Running Shoes',
         description: 'A pair of lightweight running shoes with cushioned soles.',
         price: 60.0,
-        type: ProductType.SHOES,
+        type: ProductType.Shoes,
       },
     });
 
@@ -88,7 +90,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Athletic Shorts',
         description: 'A pair of breathable athletic shorts with an elastic waistband.',
         price: 20.0,
-        type: ProductType.SHORTS,
+        type: ProductType.Shorts,
       },
     });
 
@@ -99,7 +101,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Ankle Socks',
         description: 'A pack of six pairs of ankle socks in assorted colors.',
         price: 10.0,
-        type: ProductType.SOCKS,
+        type: ProductType.Socks,
       },
     });
 
@@ -110,7 +112,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Crewneck Sweater',
         description: 'A cozy crewneck sweater with ribbed cuffs and hem.',
         price: 35.0,
-        type: ProductType.SWEATER,
+        type: ProductType.Sweater,
       },
     });
 
@@ -121,7 +123,7 @@ export const createProducts = async (prisma: PrismaClient) => {
         name: 'Boxer Briefs',
         description: 'A pack of three boxer briefs in assorted colors.',
         price: 18.0,
-        type: ProductType.UNDERWEAR,
+        type: ProductType.Underwear,
       },
     });
 
