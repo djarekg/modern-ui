@@ -31,6 +31,6 @@
     "haunted": "^6.1.0"
   },
   "devDependencies": {
-    "@types/bun": "^1.2.2"
+    "@types/bun": "^1.2.5"
   }
 }

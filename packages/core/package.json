@@ -31,13 +31,13 @@
     "signal-utils": "^0.21.1"
   },
   "devDependencies": {
-    "@types/bun": "^1.2.2"
+    "@types/bun": "^1.2.5"
   },
   "peerDependencies": {
     "@lit-labs/signals": "^0.1.2",
     "haunted": "^6.1.0",
     "lit": "^3.2.1",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.2",
     "signal-utils": "^0.21.1"
   }
 }
