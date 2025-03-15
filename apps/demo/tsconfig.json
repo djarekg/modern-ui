@@ -8,8 +8,7 @@
       "@/*": ["./*"],
       "@mui/api/*": ["../api/*"],
       "@mui/components/*": ["../../packages/components/*"],
-      "@mui/core/*": ["../../packages/core/*"],
-      "@mui/web/*": ["../../packages/web/*"]
+      "@mui/core/*": ["../../packages/core/*"]
     },
 
     // required by vite

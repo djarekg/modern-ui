@@ -1,7 +1,6 @@
 import { useMemo } from 'haunted';
 import { css, html } from 'lit';
 
-import type { LoginHistory } from '@mui/api';
 import { define, toDateTime, useStyles } from '@mui/core';
 import '@mui/components/table/table.js';
 import '@mui/components/table/table-cell.js';

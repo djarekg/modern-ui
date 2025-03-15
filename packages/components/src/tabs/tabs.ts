@@ -5,7 +5,7 @@ import { cache } from 'lit/directives/cache.js';
 
 import '../icon/icon.js';
 
-import { ANIMATE_INDICATOR, type Tab } from './tab.js';
+import type { Tab } from './tab.js';
 import { isTab } from './utils.js';
 
 const styles = css`

@@ -30,7 +30,7 @@ export const useCache = () => {
    * Get value from cache
    * @returns cache item stored at key
    */
-  const get = (key: string) => cache.get().get(key);
+  const get = <T = unknown>(key: string) => cache.get().get(key) as T;
 
   /**
    * Set a value to cache

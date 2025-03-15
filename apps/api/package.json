@@ -36,6 +36,7 @@
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
     "@elysiajs/swagger": "^1.2.2",
+    "@mui/graphql": "workspace:*",
     "@prisma/client": "^6.4.1",
     "elysia": "1.2.6",
     "graphql": "^16.10.0",
@@ -51,5 +52,13 @@
     "typegraphql-prisma": "^0.28.0",
     "typescript": "^5.8.2"
   },
-  "trustedDependencies": ["@prisma/client", "@prisma/engines", "prisma"]
+  "trustedDependencies": [
+    "@apollo/protobufjs",
+    "core-js",
+    "core-js-pure",
+    "yarn",
+    "@prisma/client",
+    "@prisma/engines",
+    "prisma"
+  ]
 }

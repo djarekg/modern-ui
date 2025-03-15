@@ -31,14 +31,14 @@ const workspaceLinks: Link[] = [
     href: 'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/core',
   },
   {
-    text: 'web',
-    className: 'project',
-    href: 'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/web',
-  },
-  {
     text: 'components',
     className: 'project',
     href: 'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/components',
+  },
+  {
+    text: 'graphql',
+    className: 'project',
+    href: 'https://github.com/djarekg/modern-ui/blob/feature/add-prisma/packages/graphql',
   },
   {
     text: 'api',

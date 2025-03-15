@@ -111,7 +111,6 @@
     "@lit-labs/observers": "^2.0.5",
     "@lit-labs/signals": "^0.1.2",
     "@mui/core": "workspace:*",
-    "@mui/web": "workspace:*",
     "@open-wc/dedupe-mixin": "^1.4.0",
     "haunted": "^6.1.0",
     "signal-utils": "^0.21.1"

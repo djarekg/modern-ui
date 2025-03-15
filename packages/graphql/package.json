@@ -1,17 +1,18 @@
 {
-  "name": "@mui/web",
+  "name": "@mui/graphql",
   "version": "1.0.0",
   "author": "Dustin Griffith",
   "repository": {
     "type": "git",
-    "url": "https://github.com/djarekg/mw"
+    "url": "https://github.com/djarekg/modern-ui"
   },
-  "license": "MIT",
-  "packageManager": "bun",
   "engines": {
     "bun": ">=1.1.41"
   },
+  "license": "MIT",
+  "packageManager": "bun",
   "type": "module",
+  "main": "./src/index.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -23,7 +24,13 @@
     "dev": "task build",
     "build": "task build"
   },
-  "peerDependencies": {
-    "typescript": "^5.7.3"
+  "dependencies": {
+    "@apollo/client": "^3.13.4",
+    "@mui/core": "workspace:*",
+    "graphql": "^16.10.0",
+    "haunted": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.2"
   }
 }

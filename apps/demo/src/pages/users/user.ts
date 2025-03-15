@@ -1,18 +1,18 @@
-import { html, nothing, unsafeCSS } from 'lit';
+import { html, useCallback, useEffect, useMemo, useState } from 'haunted';
+import { nothing, unsafeCSS } from 'lit';
 
-import type { LoginHistory, User } from '@mui/api';
 import { define, useStyles } from '@mui/core';
+import { useClient } from '@mui/graphql';
 import '@mui/components/text-field/text-field.js';
 import '@mui/components/tabs/tabs.js';
 import '@mui/components/tabs/tab.js';
 
 import type { SaveEvent } from '@/components/user-detail/events.js';
-import { useApi } from '@/hooks/use-api.js';
+import { clientConfig } from '@/config.js';
 import { getUserId } from '@/utils/cache-util.js';
 import '@/components/login-history/user-login-history.js';
 import '@/components/user-detail/user-detail.js';
 
-import { useCallback, useEffect, useMemo, useState } from 'haunted';
 import styles from './user.css?inline';
 
 type UserPageProps = {
@@ -22,12 +22,14 @@ type UserPageProps = {
 const UserPage = ({ id = getUserId() }: UserPageProps) => {
   useStyles(unsafeCSS(styles));
 
+  const { query } = useClient(clientConfig);
+
   const [user, setUser] = useState<User | null>(null);
   const [loginHistories, setLoginHistories] = useState<LoginHistory[]>([]);
 
   // Fetch the user data
   useEffect(async () => {
-    const { users } = useApi();
+    const user = query(null, {});
     const { data } = await users.id({ id }).get();
     setUser(data);
   }, []);

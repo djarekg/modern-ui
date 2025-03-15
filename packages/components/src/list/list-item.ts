@@ -1,4 +1,4 @@
-import { LitElement, type PropertyValues, type TemplateResult, html } from 'lit';
+import { LitElement, type PropertyValues, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { type ClassInfo, classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';

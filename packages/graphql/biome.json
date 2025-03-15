@@ -5,13 +5,5 @@
     "include": ["**/*"],
     "ignoreUnknown": false,
     "ignore": ["dist", "node_modules"]
-  },
-  "css": {
-    "formatter": {
-      "enabled": true
-    },
-    "linter": {
-      "enabled": true
-    }
   }
 }

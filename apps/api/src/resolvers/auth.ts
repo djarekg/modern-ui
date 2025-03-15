@@ -1,10 +1,12 @@
 import { Args, ArgsType, Ctx, Field, Query, Resolver } from 'type-graphql';
 
+// import { NotFoundError, UnauthorizedError } from '@mui/graphql';
+import { NotFoundError, UnauthorizedError } from '../errors.js';
+
 import type { Context } from '@/client/context.js';
 import { prisma } from '@/client/index.js';
 import { compareHash } from '@/crypto/hash.js';
 import { createLoginHistory } from '@/db/login-history/index.js';
-import { NotFoundError, UnauthorizedError } from '@/errors.js';
 
 const TOKEN_MAX_AGE = 7 * 86400;
 

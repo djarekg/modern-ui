@@ -8,9 +8,11 @@ import { resolvers } from '@prisma/generated/type-graphql/index.js';
 import { Elysia } from 'elysia';
 import { buildSchema } from 'type-graphql';
 
+// import { ForbiddenError, UnauthorizedError } from '@mui/graphql';
+import { ForbiddenError, UnauthorizedError } from './errors.js';
+
 import type { Context } from '@/client/context.js';
 import { corsConfig, isDev, jwtConfig, port } from '@/config.js';
-import { ForbiddenError, UnauthorizedError } from '@/errors.js';
 import { AuthResolver } from '@/resolvers/auth.js';
 
 const schema = await buildSchema({
@@ -31,17 +33,18 @@ new Elysia()
       enablePlayground: isDev,
       introspection: isDev,
       context: async ({ cookie, jwt, request }) => {
-        const token = request.headers.get('authorization');
-        if (!token) {
-          UnauthorizedError('Token is missing');
-        }
+        // const token = request.headers.get('authorization');
+        // if (!token) {
+        //   UnauthorizedError('Token is missing');
+        // }
 
-        // Extract userId from token.
-        const { sub: userId } = (await jwt.verify(token)) as JWTPayloadSpec;
-        if (!userId) {
-          ForbiddenError('Access Token is invalid');
-        }
+        // // Extract userId from token.
+        // const { sub: userId } = (await jwt.verify(token)) as JWTPayloadSpec;
+        // if (!userId) {
+        //   ForbiddenError('Access Token is invalid');
+        // }
 
+        const userId = 1;
         return { cookie, jwt, request, userId };
       },
     }),

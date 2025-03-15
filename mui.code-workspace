@@ -133,7 +133,8 @@
       "**/dist": true,
       "**/build": true,
       "**/public": true,
-      "CHANGELOG.md": true
+      "CHANGELOG.md": true,
+      "bun.lock": true
     },
 
     "files.exclude": {

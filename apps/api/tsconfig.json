@@ -5,7 +5,8 @@
     "baseUrl": "src",
     "rootDir": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@mui/graphql/*": ["../../packages/graphql/*"]
     }
   },
   "include": ["src/**/*", "prisma/**/*"],

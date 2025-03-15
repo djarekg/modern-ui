@@ -1,7 +1,7 @@
 import { useCallback, useLayoutEffect } from 'haunted';
 import { type CSSResult, supportsAdoptingStyleSheets } from 'lit-element';
 
-import { useHost } from '@mui/core';
+import { useHost } from './use-host.js';
 
 /**
  * Applies styling to the element shadowRoot.

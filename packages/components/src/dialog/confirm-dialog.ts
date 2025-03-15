@@ -1,4 +1,3 @@
-import { useLayoutEffect } from 'haunted';
 import { css, html } from 'lit';
 
 import { define, useStyles } from '@mui/core';

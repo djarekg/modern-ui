@@ -8,3 +8,4 @@ tasks:
     desc: Build the project
     cmds:
       - task: root-task:build
+

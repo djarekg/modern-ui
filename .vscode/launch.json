@@ -1,20 +1,13 @@
 {
   "configurations": [
     {
-      "name": "Attach to Edge",
-      "port": 4004,
-      "request": "attach",
-      "type": "msedge",
-      "webRoot": "${workspaceFolder}/apps/api"
-    },
-    {
       "name": "Launch api",
       "cwd": "${workspaceFolder}/apps/api",
       "request": "launch",
       "type": "node-terminal",
       "noDebug": false,
       "command": "bun run dev:debug",
-      "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/nodea_modules/@mui/**"],
+      "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/node_modules/@mui/**"],
       "sourceMaps": true,
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
@@ -48,11 +41,10 @@
       "type": "node-terminal",
       "noDebug": false,
       "command": "bun run dev",
-      // "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/nodea_modules/@mui/**"],
+      "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/node_modules/@mui/**"],
       "sourceMaps": true,
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
-      // "preLaunchTask": "Run projects script: dev",
       "presentation": {
         "hidden": false,
         "group": "3",

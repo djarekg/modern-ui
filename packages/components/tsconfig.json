@@ -5,9 +5,7 @@
     "baseUrl": "src",
     "resolveJsonModule": true,
     "paths": {
-      "@/*": ["./*"],
-      "@mui/core/*": ["../core/*"],
-      "@mui/web/*": ["../web/*"]
+      "@mui/core/*": ["../core/*"]
     }
   },
   "include": ["src/**/*"]

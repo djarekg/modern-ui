@@ -1,0 +1,8 @@
+query GetLoginHistoryByUser($id: String) {
+  loginHistoryByUser(id: $id) {
+    id
+    userId
+    loginTime
+    logoutTime
+  }
+}
