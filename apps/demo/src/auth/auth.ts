@@ -2,7 +2,6 @@ import { useCache } from '@mui/core';
 
 import { isSignedInSignal } from '@/auth/is-signed-in.js';
 import { PROFILE_CACHE_KEY } from '@/auth/profile-cache-key.js';
-import { useApi } from '@/hooks/use-api.js';
 
 import { AUTH_CACHE_KEY } from './auth-cache-key.js';
 
@@ -21,8 +20,6 @@ export type AuthCache = {
  * @returns True if the user is signed in, false otherwise
  */
 export const signIn = async (username: string, password: string) => {
-  const { auth, sign, users } = useApi();
-
   const { data: signedIn } = await sign.in.post({
     username,
     password,

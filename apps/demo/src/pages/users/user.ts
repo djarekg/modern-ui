@@ -12,6 +12,12 @@ import { clientConfig } from '@/config.js';
 import { getUserId } from '@/utils/cache-util.js';
 import '@/components/login-history/user-login-history.js';
 import '@/components/user-detail/user-detail.js';
+import {
+  GetLoginHistoryByUserIdDocument,
+  type GetLoginHistoryByUserIdQuery,
+  GetUserByIdDocument,
+  type GetUserByIdQuery,
+} from '@/types/graphql.js';
 
 import styles from './user.css?inline';
 
@@ -24,26 +30,29 @@ const UserPage = ({ id = getUserId() }: UserPageProps) => {
 
   const { query } = useClient(clientConfig);
 
-  const [user, setUser] = useState<User | null>(null);
-  const [loginHistories, setLoginHistories] = useState<LoginHistory[]>([]);
+  const [user, setUser] = useState<GetUserByIdQuery['user']>(null);
+  const [loginHistories, setLoginHistories] = useState<
+    GetLoginHistoryByUserIdQuery['loginHistories']
+  >([]);
 
   // Fetch the user data
   useEffect(async () => {
-    const user = query(null, {});
-    const { data } = await users.id({ id }).get();
-    setUser(data);
+    const { user } = await query(GetUserByIdDocument, { variables: { id } });
+    setUser(user);
   }, []);
 
   // Fetch the login history and user data
   useEffect(async () => {
-    const { sign } = useApi();
-    const { data } = await sign.history({ id }).get();
-    setLoginHistories(data);
+    const userId = getUserId();
+    const { loginHistories } = await query(GetLoginHistoryByUserIdDocument, {
+      variables: { userId },
+    });
+    setLoginHistories(loginHistories);
   }, []);
 
   const onProfileSave = useCallback(async ({ detail: { user } }: SaveEvent) => {
-    const { users } = useApi();
-    await users.index.put(user);
+    // const { users } = useApi();
+    // await users.index.put(user);
   }, []);
 
   const renderForm = useMemo(

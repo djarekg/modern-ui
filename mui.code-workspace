@@ -81,6 +81,7 @@
     "typescript.suggest.includeCompletionsForImportStatements": true,
     "typescript.suggest.jsdoc.generateReturns": true,
     "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
     "typescript.tsserver.experimental.enableProjectDiagnostics": true,
     "typescript.updateImportsOnFileMove.enabled": "prompt",
     // "typescript.workspaceSymbols.excludeLibrarySymbols": true,

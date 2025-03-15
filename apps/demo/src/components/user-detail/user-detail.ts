@@ -2,17 +2,17 @@ import { useMemo } from 'haunted';
 import { html, unsafeCSS } from 'lit';
 import { live } from 'lit/directives/live.js';
 
-import type { User } from '@mui/api';
 import { toast } from '@mui/components';
 import { define, useHost, useStyles } from '@mui/core';
 import '@mui/components/button/icon-button.js';
 
-import { createSaveEvent } from './events.js';
+import type { GetUserByIdQuery } from '@/types/graphql.js';
 
+import { createSaveEvent } from './events.js';
 import styles from './user-detail.css?inline';
 
 type UserDetailProps = {
-  user: User;
+  user: GetUserByIdQuery['user'];
   editing: boolean;
 };
 

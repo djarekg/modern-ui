@@ -1,12 +1,12 @@
 import { useMemo } from 'haunted';
 import { css, html } from 'lit';
 
-import type { User } from '@mui/api';
 import type { TableEvent } from '@mui/components/table/events.js';
 import { define, useStyles } from '@mui/core';
 
 import { navigate } from '@/router/index.js';
 import { routes } from '@/router/routes.js';
+import type { GetUsersQuery } from '@/types/graphql.js';
 
 const styles = css`
   :host {
@@ -17,7 +17,7 @@ const styles = css`
 `;
 
 type UserListProps = {
-  users: User[];
+  users: GetUsersQuery['users'];
 };
 
 /**

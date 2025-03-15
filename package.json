@@ -34,8 +34,9 @@
   },
   "overrides": {
     "@lit-labs/signals": "latest",
-    "typescript": "^5",
+    "graphql": "^16.10.0",
     "lit": "^3",
+    "typescript": "^5",
     "signal-polyfill": "^0.2.0",
     "signal-utils": "^0.21.0"
   },

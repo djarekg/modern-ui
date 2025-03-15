@@ -1,11 +1,12 @@
 import { html, useEffect, useState } from 'haunted';
 import { css } from 'lit';
 
-import type { User } from '@mui/api';
 import { define, useStyles } from '@mui/core';
+import { useClient } from '@mui/graphql';
 
+import { clientConfig } from '@/config.js';
 import '@/components/user-list/user-list.js';
-import { useApi } from '@/hooks/use-api.js';
+import { GetUsersDocument, type GetUsersQuery } from '@/types/graphql.js';
 
 const styles = css`
   :host {
@@ -21,13 +22,13 @@ const styles = css`
 const UsersPage = () => {
   useStyles(styles);
 
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<GetUsersQuery['users']>([]);
+  const { query } = useClient(clientConfig);
 
   // Fetch users data.
   useEffect(async () => {
-    const { users: api } = useApi();
-    const { data } = await api.index.get();
-    setUsers(data);
+    const { users } = await query(GetUsersDocument);
+    setUsers(users);
   }, []);
 
   return html`

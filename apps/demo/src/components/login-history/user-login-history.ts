@@ -6,6 +6,8 @@ import '@mui/components/table/table.js';
 import '@mui/components/table/table-cell.js';
 import '@mui/components/table/table-row.js';
 
+import type { GetLoginHistoryByUserIdQuery } from '@/types/graphql.js';
+
 const styles = css`
   :host {
     display: block;
@@ -15,7 +17,7 @@ const styles = css`
 `;
 
 type UserLoginHistoryProps = {
-  loginHistories: LoginHistory[];
+  loginHistories: GetLoginHistoryByUserIdQuery['loginHistories'];
 };
 
 const UserLoginHistory = ({ loginHistories = [] }: UserLoginHistoryProps) => {

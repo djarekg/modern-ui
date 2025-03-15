@@ -1,8 +1,7 @@
-query GetLoginHistoryByUser($id: String) {
-  loginHistoryByUser(id: $id) {
+query GetLoginHistoryByUserId($userId: String!) {
+  loginHistories(where: { userId: { equals: $userId } }) {
     id
     userId
     loginTime
-    logoutTime
   }
 }
