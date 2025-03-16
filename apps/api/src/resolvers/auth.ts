@@ -11,7 +11,7 @@ import { createLoginHistory } from '@/db/login-history/index.js';
 const TOKEN_MAX_AGE = 7 * 86400;
 
 @ArgsType()
-export class AuthArgs {
+export class SignInArgs {
   @Field(() => String, { simple: true })
   userName: string;
 
@@ -19,18 +19,24 @@ export class AuthArgs {
   password: string;
 }
 
+@ArgsType()
+export class ValidateArgs {
+  @Field(() => String, { simple: true })
+  token: string;
+}
+
 @Resolver()
 export class AuthResolver {
   /**
    * Validate user credentials and return a JWT if valid.
    *
-   * @param {AuthArgs} - Credentials to validate.
+   * @param {SignInArgs} - Credentials to validate.
    * @param {Context} - Context object.
    * @returns {Promise<string>} Access token if valid, null if invalid.
    */
   @Query(() => String)
   async signIn(
-    @Args(() => AuthArgs) { userName, password }: AuthArgs,
+    @Args(() => SignInArgs) { userName, password }: SignInArgs,
     @Ctx() { cookie: { auth }, jwt }: Context,
   ) {
     const { id, password: storedPassword } = await prisma.user.findFirst({
@@ -79,6 +85,22 @@ export class AuthResolver {
       maxAge: 0, // Expire the cookie
     });
 
+    return true;
+  }
+
+  /**
+   * Validate user.
+   *
+   * @param {Context} - Context object.
+   * @returns {Promise<boolean>} True if valid, false if invalid.
+   */
+  @Query(() => Boolean)
+  async validate(@Args(() => ValidateArgs) { token }: ValidateArgs, @Ctx() { jwt }: Context) {
+    if (!token) {
+      return false;
+    }
+
+    await jwt.verify(token);
     return true;
   }
 }

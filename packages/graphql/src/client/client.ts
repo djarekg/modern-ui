@@ -4,7 +4,7 @@ import type {
   OperationVariables,
   QueryOptions,
   TypedDocumentNode,
-} from '@apollo/client';
+} from '@apollo/client/core';
 import { useCallback } from 'haunted';
 
 import { isEmpty } from '@mui/core';
@@ -39,47 +39,44 @@ export type ClientOptions = {
  * const { mutate, query } = useClient();
  * ```
  */
-export const useClient = useCallback(
-  ({ name, version, uri, token }: ClientOptions) => {
-    if (isEmpty(uri)) {
-      BadRequestError('ApolloClient requires a uri');
-    }
+export const useClient = ({ name, version, uri, token }: ClientOptions) => {
+  if (isEmpty(uri)) {
+    BadRequestError('ApolloClient requires a uri');
+  }
 
-    if (isEmpty(token)) {
-      BadRequestError('ApolloClient requires a token');
-    }
+  if (isEmpty(token)) {
+    BadRequestError('ApolloClient requires a token');
+  }
 
-    const client = createApolloClient({ name, version, uri, token });
+  const client = createApolloClient({ name, version, uri, token });
 
-    /**
-     * Execute a mutate operation.
-     *
-     * @param {MutationOptions} options Mutate options.
-     * @returns {Promise<FetchResult<R>>} Result from mutate operation.
-     */
-    const mutate = async <R = unknown>(options: MutationOptions) => {
-      const result = await client.mutate(options);
-      return unwrapMutateResult<R>(result);
-    };
+  /**
+   * Execute a mutate operation.
+   *
+   * @param {MutationOptions} options Mutate options.
+   * @returns {Promise<FetchResult<R>>} Result from mutate operation.
+   */
+  const mutate = async <R = unknown>(options: MutationOptions) => {
+    const result = await client.mutate(options);
+    return unwrapMutateResult<R>(result);
+  };
 
-    /**
-     * Execute a query operation.
-     *
-     * @param {QueryOptions} options Query options.
-     * @returns {Promise<ApolloQueryResult<R>>} Result from query operation.
-     */
-    const query = async <V = OperationVariables, R = unknown>(
-      query: DocumentNode | TypedDocumentNode<R, V>,
-      options: ClientQueryOptions = {},
-    ): Promise<R> => {
-      const result = await client.query({
-        ...options,
-        query,
-      } as QueryOptions);
-      return extractDataFromQueryResult<R>(result);
-    };
+  /**
+   * Execute a query operation.
+   *
+   * @param {QueryOptions} options Query options.
+   * @returns {Promise<ApolloQueryResult<R>>} Result from query operation.
+   */
+  const query = async <V = OperationVariables, R = unknown>(
+    query: DocumentNode | TypedDocumentNode<R, V>,
+    options: ClientQueryOptions = {},
+  ): Promise<R> => {
+    const result = await client.query({
+      ...options,
+      query,
+    } as QueryOptions);
+    return extractDataFromQueryResult<R>(result);
+  };
 
-    return { mutate, query };
-  },
-  [createApolloClient],
-);
+  return { mutate, query };
+};

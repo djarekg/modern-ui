@@ -4,7 +4,7 @@ import {
   HttpLink,
   InMemoryCache,
   type TypePolicies,
-} from '@apollo/client';
+} from '@apollo/client/core';
 import { onError } from '@apollo/client/link/error';
 
 import { BadRequestError } from '../errors.js';

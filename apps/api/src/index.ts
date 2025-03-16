@@ -33,18 +33,17 @@ new Elysia()
       enablePlayground: isDev,
       introspection: isDev,
       context: async ({ cookie, jwt, request }) => {
-        // const token = request.headers.get('authorization');
-        // if (!token) {
-        //   UnauthorizedError('Token is missing');
-        // }
+        const token = request.headers.get('authorization');
+        if (!token) {
+          UnauthorizedError('Token is missing');
+        }
 
-        // // Extract userId from token.
-        // const { sub: userId } = (await jwt.verify(token)) as JWTPayloadSpec;
-        // if (!userId) {
-        //   ForbiddenError('Access Token is invalid');
-        // }
+        // Extract userId from token.
+        const { sub: userId } = (await jwt.verify(token)) as JWTPayloadSpec;
+        if (!userId) {
+          ForbiddenError('Access Token is invalid');
+        }
 
-        const userId = 1;
         return { cookie, jwt, request, userId };
       },
     }),

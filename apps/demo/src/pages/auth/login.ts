@@ -3,7 +3,7 @@ import { html, unsafeCSS } from 'lit';
 
 import '@mui/components/button/outline-button.js';
 import '@mui/components/text-field/text-field.js';
-import { type TypedEvent, define, useStyles } from '@mui/core';
+import { type TypedEvent, define, isEmpty, useStyles } from '@mui/core';
 
 import { signIn } from '@/auth/auth.js';
 import { navigate } from '@/router/index.js';
@@ -27,55 +27,64 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [disabled] = useState(() => userName.length === 0 || password.length === 0);
 
-  const onSubmit = useCallback(
-    async (e: Event) => {
-      e.stopImmediatePropagation();
+  const handleInput = ({ target: { value } }: TypedEvent<HTMLInputElement>) => {
+    setUserName(value);
+  };
 
-      const signedIn = await signIn(userName, password);
-      if (signedIn) {
-        navigate(routes.home);
-      }
-    },
-    [userName, password],
-  );
+  const onSubmit = async (e: Event) => {
+    e.preventDefault();
 
-  const renderUsernameControl = useMemo(() => {
-    return html`
+    if (isEmpty(userName) || isEmpty(password)) {
+      return;
+    }
+
+    const signedIn = await signIn(userName, password);
+    if (signedIn) {
+      navigate(routes.home);
+    }
+  };
+
+  const renderUsernameControl = useMemo(
+    () => html`
       <mui-text-field
         required
         appearance="round"
         label="Username"
         .value=${userName}
-        @input=${input(setUserName)}>
+        @change=${(e: TypedEvent<HTMLInputElement>) => setUserName(e.target.value)}></mui-text-field>
+        <!-- @change=${handleInput}> -->
       </mui-text-field>
-    `;
-  }, [userName]);
+    `,
+    [userName],
+  );
 
-  const renderPasaswordControl = useMemo(() => {
-    return html`
+  const renderPasaswordControl = useMemo(
+    () => html`
       <mui-text-field
         required
         appearance="round"
         label="Password"
         type="password"
         .value=${password}
-        @input=${input(setPassword)}>
+        @change=${(e: TypedEvent<HTMLInputElement>) => setPassword(e.target.value)}>
       </mui-text-field>
-    `;
-  }, [password]);
+    `,
+    [password],
+  );
 
-  const renderLoginButton = useMemo(() => {
-    return html`
+  const renderLoginButton = useMemo(
+    () => html`
       <button @click=${onSubmit}>Working Submit</button>
       <mui-outline-button
+        type="submit"
         corner="round"
         .disabled=${disabled}
-        @mouseup=${onSubmit}
         @click=${onSubmit}>
         Login
       </mui-outline-button>
-    `;
-  }, [disabled]);
+    `,
+    [disabled],
+  );
 
   return html`
     <article>

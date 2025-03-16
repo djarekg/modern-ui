@@ -29,7 +29,7 @@ const UserLoginHistory = ({ loginHistories = [] }: UserLoginHistoryProps) => {
         ({ id, loginTime }) => html`
         <mui-table-row .id=${id}>
           <mui-table-cell>${id}</mui-table-cell>
-          <mui-table-cell>${toDateTime(loginTime)}</mui-table-cell>
+          <mui-table-cell>${toDateTime(loginTime as string)}</mui-table-cell>
         </mui-table-row>
       `,
       ),

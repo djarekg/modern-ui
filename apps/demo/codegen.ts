@@ -15,6 +15,7 @@ const config: CodegenConfig = {
     numericEnums: true,
     // dedupeOperationSuffix: true,
     enumsAsConst: true,
+    defaultScalarType: 'unknown',
     overwrite: true,
     declarationKind: 'interface',
     immutableTypes: false,

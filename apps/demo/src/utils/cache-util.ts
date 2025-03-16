@@ -33,6 +33,6 @@ export const getUserId = (): string | undefined => {
  */
 export const getAuthToken = () => {
   const [cache] = useCache();
-  const { token } = cache<AuthCache>(AUTH_CACHE_KEY);
-  return token;
+  const auth = cache<AuthCache>(AUTH_CACHE_KEY);
+  return auth?.token;
 };

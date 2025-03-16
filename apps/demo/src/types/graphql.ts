@@ -27,7 +27,7 @@ export interface Scalars {
   Int: { input: number; output: number };
   Float: { input: number; output: number };
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.This scalar is serialized to a string in ISO 8601 format and parsed from a string in ISO 8601 format. */
-  DateTimeISO: { input: any; output: any };
+  DateTimeISO: { input: unknown; output: unknown };
 }
 
 export interface AffectedRowsOutput {
@@ -3107,6 +3107,7 @@ export interface Query {
   signOut: Scalars["Boolean"]["output"];
   user?: Maybe<User>;
   users: Array<User>;
+  validate: Scalars["Boolean"]["output"];
 }
 
 export interface QueryAggregateColorArgs {
@@ -3528,6 +3529,10 @@ export interface QueryUsersArgs {
   skip?: InputMaybe<Scalars["Int"]["input"]>;
   take?: InputMaybe<Scalars["Int"]["input"]>;
   where?: InputMaybe<UserWhereInput>;
+}
+
+export interface QueryValidateArgs {
+  token: Scalars["String"]["input"];
 }
 
 export enum SortOrder {
@@ -3959,12 +3964,29 @@ export interface UserWhereUniqueInput {
   role?: InputMaybe<StringFilter>;
 }
 
+export type SignInQueryVariables = Exact<{
+  userName: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
+}>;
+
+export type SignInQuery = { signIn: string };
+
+export type SignOutQueryVariables = Exact<{ [key: string]: never }>;
+
+export type SignOutQuery = { signOut: boolean };
+
+export type ValidateQueryVariables = Exact<{
+  token: Scalars["String"]["input"];
+}>;
+
+export type ValidateQuery = { validate: boolean };
+
 export type GetLoginHistoryByUserIdQueryVariables = Exact<{
   userId: Scalars["String"]["input"];
 }>;
 
 export type GetLoginHistoryByUserIdQuery = {
-  loginHistories: Array<{ id: string; userId: string; loginTime: any }>;
+  loginHistories: Array<{ id: string; userId: string; loginTime: unknown }>;
 };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never }>;
@@ -3978,7 +4000,7 @@ export type GetUsersQuery = {
     address: string;
     phone: string;
     role: string;
-    dateCreated: any;
+    dateCreated: unknown;
   }>;
 };
 
@@ -3996,7 +4018,26 @@ export type GetUserByIdQuery = {
         address: string;
         phone: string;
         role: string;
-        dateCreated: any;
+        dateCreated: unknown;
+      }
+    | undefined;
+};
+
+export type GetUserByUserNameQueryVariables = Exact<{
+  userName: Scalars["String"]["input"];
+}>;
+
+export type GetUserByUserNameQuery = {
+  user?:
+    | {
+        id: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+        address: string;
+        phone: string;
+        role: string;
+        dateCreated: unknown;
       }
     | undefined;
 };
@@ -4009,7 +4050,7 @@ export type UserPartsFragment = {
   address: string;
   phone: string;
   role: string;
-  dateCreated: any;
+  dateCreated: unknown;
 };
 
 export const UserPartsFragmentDoc = {
@@ -4038,6 +4079,134 @@ export const UserPartsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<UserPartsFragment, unknown>;
+export const SignInDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "signIn" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "userName" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "password" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "signIn" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "userName" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "userName" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "password" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "password" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SignInQuery, SignInQueryVariables>;
+export const SignOutDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "signOut" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "signOut" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<SignOutQuery, SignOutQueryVariables>;
+export const ValidateDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "validate" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "token" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "validate" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "token" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "token" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ValidateQuery, ValidateQueryVariables>;
 export const GetLoginHistoryByUserIdDocument = {
   kind: "Document",
   definitions: [
@@ -4242,3 +4411,90 @@ export const GetUserByIdDocument = {
     },
   ],
 } as unknown as DocumentNode<GetUserByIdQuery, GetUserByIdQueryVariables>;
+export const GetUserByUserNameDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "getUserByUserName" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "userName" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "user" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "where" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "email" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "userName" },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "UserParts" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "UserParts" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "User" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "firstName" } },
+          { kind: "Field", name: { kind: "Name", value: "lastName" } },
+          { kind: "Field", name: { kind: "Name", value: "email" } },
+          { kind: "Field", name: { kind: "Name", value: "address" } },
+          { kind: "Field", name: { kind: "Name", value: "phone" } },
+          { kind: "Field", name: { kind: "Name", value: "role" } },
+          { kind: "Field", name: { kind: "Name", value: "dateCreated" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetUserByUserNameQuery,
+  GetUserByUserNameQueryVariables
+>;

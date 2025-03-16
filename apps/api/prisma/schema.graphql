@@ -2674,6 +2674,7 @@ type Query {
   signOut: Boolean!
   user(where: UserWhereUniqueInput!): User
   users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
+  validate(token: String!): Boolean!
 }
 
 enum SortOrder {
