@@ -6,9 +6,38 @@ import { NotFoundError, UnauthorizedError } from '../errors.js';
 import type { Context } from '@/client/context.js';
 import { prisma } from '@/client/index.js';
 import { compareHash } from '@/crypto/hash.js';
-import { createLoginHistory } from '@/db/login-history/index.js';
 
 const TOKEN_MAX_AGE = 7 * 86400;
+
+/**
+ * Get userId and password by userName.
+ *
+ * @param userName The user name to get the user by.
+ * @returns {Promise<{id: string, password: string}>} The user id and password.
+ */
+const getUser = (userName: string) =>
+  prisma.user.findFirst({
+    where: {
+      email: userName,
+    },
+    select: {
+      id: true,
+      password: true,
+    },
+  });
+
+/**
+ * Create login history.
+ *
+ * @param userId The user id to create the login history for.
+ * @returns {Promise<void>} A promise that resolves when the login history is created.
+ */
+const createLoginHistory = (userId: string) =>
+  prisma.loginHistory.create({
+    data: {
+      userId,
+    },
+  });
 
 @ArgsType()
 export class SignInArgs {
@@ -39,27 +68,21 @@ export class AuthResolver {
     @Args(() => SignInArgs) { userName, password }: SignInArgs,
     @Ctx() { cookie: { auth }, jwt }: Context,
   ) {
-    const { id, password: storedPassword } = await prisma.user.findFirst({
-      where: {
-        email: userName,
-      },
-      select: {
-        id: true,
-        password: true,
-      },
-    });
+    const { id: userId, password: storedPassword } = await getUser(userName);
 
-    if (!id) {
+    if (!userId) {
       NotFoundError('User not found');
     }
 
+    // Valiate password.
     const isValid = compareHash(password, storedPassword);
     if (!isValid) {
       UnauthorizedError();
     }
 
+    // Sign user in.
     auth.set({
-      value: await jwt.sign({ sub: id }),
+      value: await jwt.sign({ sub: userId }),
       httpOnly: true,
       maxAge: TOKEN_MAX_AGE,
       path: '/profile',
@@ -67,7 +90,7 @@ export class AuthResolver {
 
     const { value: token } = auth;
 
-    await createLoginHistory(id);
+    await createLoginHistory(userId);
 
     return token;
   }
