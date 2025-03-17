@@ -54,7 +54,6 @@ export class AuthResolver {
     }
 
     const isValid = compareHash(password, storedPassword);
-
     if (!isValid) {
       UnauthorizedError();
     }

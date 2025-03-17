@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly GRAPHQL_API: string;
+  readonly VITE_GRAPHQL_API: string;
 }
 
 interface ImportMeta {

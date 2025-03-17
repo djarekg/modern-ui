@@ -6,14 +6,17 @@ import { type JWTPayloadSpec, jwt } from '@elysiajs/jwt';
 import { swagger } from '@elysiajs/swagger';
 import { resolvers } from '@prisma/generated/type-graphql/index.js';
 import { Elysia } from 'elysia';
+import { isNotEmpty } from 'elysia/utils';
 import { buildSchema } from 'type-graphql';
 
 // import { ForbiddenError, UnauthorizedError } from '@mui/graphql';
-import { ForbiddenError, UnauthorizedError } from './errors.js';
 
 import type { Context } from '@/client/context.js';
+import { prisma } from '@/client/index.js';
 import { corsConfig, isDev, jwtConfig, port } from '@/config.js';
 import { AuthResolver } from '@/resolvers/auth.js';
+
+import { ForbiddenError } from './errors.js';
 
 const schema = await buildSchema({
   resolvers: [...resolvers, AuthResolver],
@@ -33,18 +36,22 @@ new Elysia()
       enablePlayground: isDev,
       introspection: isDev,
       context: async ({ cookie, jwt, request }) => {
-        const token = request.headers.get('authorization');
-        if (!token) {
-          UnauthorizedError('Token is missing');
+        const authorization = request.headers.get('authorization');
+        let userId: string | null = null;
+
+        if (isNotEmpty(authorization)) {
+          // Extract userId from token.
+          const token = authorization.split(' ')[1];
+          const { sub: storedUserId } = (await jwt.verify(token)) as JWTPayloadSpec;
+
+          if (!storedUserId) {
+            ForbiddenError('Access Token is invalid');
+          }
+
+          userId = storedUserId;
         }
 
-        // Extract userId from token.
-        const { sub: userId } = (await jwt.verify(token)) as JWTPayloadSpec;
-        if (!userId) {
-          ForbiddenError('Access Token is invalid');
-        }
-
-        return { cookie, jwt, request, userId };
+        return { cookie, jwt, prisma, request, userId };
       },
     }),
   )

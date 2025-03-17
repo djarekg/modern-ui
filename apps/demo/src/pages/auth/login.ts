@@ -1,9 +1,11 @@
+import { html, signal } from '@lit-labs/signals';
 import { type StateUpdater, useCallback, useMemo, useState } from 'haunted';
-import { html, unsafeCSS } from 'lit';
+import { unsafeCSS } from 'lit';
 
 import '@mui/components/button/outline-button.js';
 import '@mui/components/text-field/text-field.js';
 import { type TypedEvent, define, isEmpty, useStyles } from '@mui/core';
+import { useLogger } from '@mui/logger';
 
 import { signIn } from '@/auth/auth.js';
 import { navigate } from '@/router/index.js';
@@ -11,34 +13,37 @@ import { routes } from '@/router/routes.js';
 
 import styles from './login.css?inline';
 
+const logger = useLogger({ ui: true });
 /**
  * On input event handler update the state.
  * @param setter The state setter.
  */
-const input =
-  (setter: StateUpdater<string>) =>
-  ({ target: { value } }: TypedEvent<HTMLInputElement>) =>
+const input = (setter: StateUpdater<string>) => {
+  return ({ target: { value } }: TypedEvent<HTMLInputElement>) => {
+    logger.info('input', value);
     setter(value);
+  };
+};
 
 const LoginPage = () => {
   useStyles(unsafeCSS(styles));
 
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [disabled] = useState(() => userName.length === 0 || password.length === 0);
+  // const [userName, setUserName] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [disabled] = useState(() => userName.length === 0 || password.length === 0);
 
-  const handleInput = ({ target: { value } }: TypedEvent<HTMLInputElement>) => {
-    setUserName(value);
-  };
+  const userName = signal('');
+  const password = signal('');
+  const disabled = signal(() => isEmpty(userName.get()) || isEmpty(password.get()));
 
   const onSubmit = async (e: Event) => {
     e.preventDefault();
 
-    if (isEmpty(userName) || isEmpty(password)) {
+    if (isEmpty(userName.get()) || isEmpty(password.get())) {
       return;
     }
 
-    const signedIn = await signIn(userName, password);
+    const signedIn = await signIn(userName.get(), password.get());
     if (signedIn) {
       navigate(routes.home);
     }
@@ -50,9 +55,8 @@ const LoginPage = () => {
         required
         appearance="round"
         label="Username"
-        .value=${userName}
-        @change=${(e: TypedEvent<HTMLInputElement>) => setUserName(e.target.value)}></mui-text-field>
-        <!-- @change=${handleInput}> -->
+        .value=${userName.get()}
+        @change=${({ target: { value } }: TypedEvent<HTMLInputElement>) => userName.set(value)}>
       </mui-text-field>
     `,
     [userName],
@@ -65,8 +69,8 @@ const LoginPage = () => {
         appearance="round"
         label="Password"
         type="password"
-        .value=${password}
-        @change=${(e: TypedEvent<HTMLInputElement>) => setPassword(e.target.value)}>
+        .value=${password.get()}
+        @change=${({ target: { value } }: TypedEvent<HTMLInputElement>) => password.set(value)}>
       </mui-text-field>
     `,
     [password],
@@ -78,7 +82,7 @@ const LoginPage = () => {
       <mui-outline-button
         type="submit"
         corner="round"
-        .disabled=${disabled}
+        .disabled=${disabled.get()()}
         @click=${onSubmit}>
         Login
       </mui-outline-button>
@@ -99,7 +103,7 @@ const LoginPage = () => {
       <section>
         <div class="app-container login">
           <span class="app-section-title">Login</span>
-          <form method="post" @submit=${onSubmit}>
+          <form>
             <fieldset>
               ${renderUsernameControl}
             </fieldset>

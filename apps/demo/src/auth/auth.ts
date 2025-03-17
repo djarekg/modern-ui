@@ -24,26 +24,26 @@ export type AuthCache = {
 /**
  * Sign in using the provided username and password.
  *
- * @param username The username of the user attempting to sign in.
+ * @param userName The username of the user attempting to sign in.
  * @param password The password of the user attempting to sign in.
  * @returns True if the user is signed in, false otherwise.
  */
-export const signIn = async (username: string, password: string) => {
+export const signIn = async (userName: string, password: string) => {
   const { query } = useClient(clientConfig);
-  const { signIn: token } = await query(SignInDocument, { variables: { username, password } });
+  const { signIn: token } = await query(SignInDocument, { variables: { userName, password } });
 
   if (token) {
     const [_, setCache] = useCache();
 
     // Store username and token in the cache.
     const authCache: AuthCache = {
-      name: username,
+      name: userName,
       token,
     };
     setCache(AUTH_CACHE_KEY, authCache);
 
     // Store the user's profile in the cache
-    const { user } = await query(GetUserByUserNameDocument, { variables: { username } });
+    const { user } = await query(GetUserByUserNameDocument, { variables: { userName } });
     setCache(PROFILE_CACHE_KEY, user);
 
     // set the signed in signal to true. this will trigger the user to be signed in

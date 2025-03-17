@@ -8,7 +8,9 @@
       "@/*": ["./*"],
       "@mui/api/*": ["../api/*"],
       "@mui/components/*": ["../../packages/components/*"],
-      "@mui/core/*": ["../../packages/core/*"]
+      "@mui/core/*": ["../../packages/core/*"],
+      "@mui/graphql/*": ["../../packages/graphql/*"],
+      "@mui/logger/*": ["../../packages/logger/*"]
     },
 
     // required by vite

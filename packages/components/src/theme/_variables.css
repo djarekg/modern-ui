@@ -36,6 +36,7 @@
   /* Alert colors */
   --mui-color-alert-error: #f44336;
   --mui-color-alert-info: #3857f3;
+  --mui-color-alert-debug: #9a44c2;
   --mui-color-alert-success: #58ae5b;
   --mui-color-alert-warning: #ff9800;
 

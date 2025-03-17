@@ -54,6 +54,7 @@
         "@mui/components": "workspace:*",
         "@mui/core": "workspace:*",
         "@mui/graphql": "workspace:*",
+        "@mui/logger": "workspace:*",
         "graphql": "^16.10.0",
         "haunted": "^6.1.0",
         "lit": "^3.2.1",
@@ -123,7 +124,22 @@
         "haunted": "^6.1.0",
       },
       "devDependencies": {
+        "@apollo/client": "^3.13.4",
         "@types/bun": "^1.2.5",
+      },
+    },
+    "packages/logger": {
+      "name": "@mui/logger",
+      "version": "1.0.0",
+      "dependencies": {
+        "@github/memoize": "^1.1.5",
+      },
+      "devDependencies": {
+        "@types/bun": "^1.2.5",
+      },
+      "peerDependencies": {
+        "@github/memoize": "^1.1.5",
+        "typescript": "^5.8.2",
       },
     },
   },
@@ -465,6 +481,8 @@
     "@mui/demo": ["@mui/demo@workspace:apps/demo"],
 
     "@mui/graphql": ["@mui/graphql@workspace:packages/graphql"],
+
+    "@mui/logger": ["@mui/logger@workspace:packages/logger"],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "https://artifactory.nml.com:443/artifactory/api/npm/npm/@nodelib%2ffs.scandir/-/fs.scandir-2.1.5.tgz", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, ""],
 

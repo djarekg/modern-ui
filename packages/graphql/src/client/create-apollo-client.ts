@@ -36,9 +36,9 @@ export const createApolloClient = ({
     BadRequestError('ApolloClient requires a uri');
   }
 
-  if (!token) {
-    BadRequestError('ApolloClient requires a token');
-  }
+  // if (!token) {
+  //   BadRequestError('ApolloClient requires a token');
+  // }
 
   const cache = new InMemoryCache({
     typePolicies: typePolicies || {},
@@ -58,7 +58,7 @@ export const createApolloClient = ({
     operation.setContext(({ headers = {} }) => ({
       headers: {
         ...headers,
-        authorization: `Bearer ${token}`,
+        authorization: token ? `Bearer ${token}` : '',
       },
     }));
 

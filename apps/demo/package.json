@@ -38,6 +38,7 @@
     "@mui/components": "workspace:*",
     "@mui/core": "workspace:*",
     "@mui/graphql": "workspace:*",
+    "@mui/logger": "workspace:*",
     "graphql": "^16.10.0",
     "haunted": "^6.1.0",
     "lit": "^3.2.1",

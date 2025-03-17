@@ -14,6 +14,7 @@ export default defineConfig({
       '@mui/components': resolve(__dirname, '../../packages/components/src'),
       '@mui/core': resolve(__dirname, '../../packages/core/src'),
       '@mui/graphql': resolve(__dirname, '../../packages/graphql/src'),
+      '@mui/logger': resolve(__dirname, '../../packages/logger/src'),
     },
     preserveSymlinks: true,
     conditions: ['browser', 'development'],
@@ -39,4 +40,5 @@ export default defineConfig({
       },
     }),
   ],
+  define: {},
 });

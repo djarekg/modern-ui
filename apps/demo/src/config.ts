@@ -14,6 +14,6 @@ import { getAuthToken } from './utils/cache-util.js';
 export const clientConfig = {
   name: '@mui/demo',
   version: '1.0.0',
-  uri: import.meta.env.GRAPHQL_API,
+  uri: import.meta.env.VITE_GRAPHQL_API,
   token: getAuthToken(),
 } as const;

@@ -24,6 +24,9 @@
     },
     {
       "path": "./packages/graphql"
+    },
+    {
+      "path": "./packages/logger"
     }
   ]
 }
