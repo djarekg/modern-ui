@@ -27,7 +27,8 @@ const TableRow = () => {
 
   const _this = useHost();
   const table = _this.closest<Table>('mui-table');
-  const handleRowClick = () => table.dispatchEvent(createTableInternalRowSelectedEvent(this));
+  const handleRowClick = () =>
+    table.dispatchEvent(createTableInternalRowSelectedEvent(_this as TableRow));
 
   useEffect(() => {
     if (table.hasAttribute('selectable')) {

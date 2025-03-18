@@ -1,28 +1,31 @@
-import { useMemo } from 'haunted';
+import { useMemo, virtual } from 'haunted';
 import { html, unsafeCSS } from 'lit';
 import { live } from 'lit/directives/live.js';
 
 import { toast } from '@mui/components';
-import { define, useHost, useStyles } from '@mui/core';
+import { useHost, useStyles } from '@mui/core';
 import '@mui/components/button/icon-button.js';
 
 import type { GetUserByIdQuery } from '@/types/graphql.js';
 
 import { createSaveEvent } from './events.js';
-import styles from './user-detail.css?inline';
+import css from './user-detail.css?inline';
+
+const styles = unsafeCSS(css);
 
 type UserDetailProps = {
   user: GetUserByIdQuery['user'];
-  editing: boolean;
+  editing?: boolean;
 };
 
 /**
  * User detail component.
+ *
  * @param {UserDetailProps} UserDetail properties.
  * @fires save - Dispatched when the user clicks the save button.
  */
-const UserDetail = ({ user, editing }: UserDetailProps) => {
-  useStyles(unsafeCSS(styles));
+export const UserDetail = virtual(({ user, editing = false }: UserDetailProps) => {
+  useStyles(styles);
 
   const _this = useHost();
 
@@ -119,12 +122,4 @@ const UserDetail = ({ user, editing }: UserDetailProps) => {
         ${action}
       </footer>
     `;
-};
-
-define('app-user-detail', UserDetail);
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'app-user-detail': HTMLElement & UserDetailProps;
-  }
-}
+});

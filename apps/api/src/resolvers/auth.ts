@@ -1,7 +1,7 @@
 import { Args, ArgsType, Ctx, Field, Query, Resolver } from 'type-graphql';
 
 // import { NotFoundError, UnauthorizedError } from '@mui/graphql';
-import { NotFoundError, UnauthorizedError } from '../errors.js';
+import { UnauthorizedError } from '../errors.js';
 
 import type { Context } from '@/client/context.js';
 import { prisma } from '@/client/index.js';
@@ -15,8 +15,8 @@ const TOKEN_MAX_AGE = 7 * 86400;
  * @param userName The user name to get the user by.
  * @returns {Promise<{id: string, password: string}>} The user id and password.
  */
-const getUser = (userName: string) =>
-  prisma.user.findFirst({
+const getUserIdAndPassword = (userName: string) =>
+  prisma.user.findUniqueOrThrow({
     where: {
       email: userName,
     },
@@ -39,6 +39,12 @@ const createLoginHistory = (userId: string) =>
     },
   });
 
+/**
+ * Sign in arguments.
+ *
+ * @property {string} userName - The username of the user to validate the password against.
+ * @property {string} password - The password to validate.
+ */
 @ArgsType()
 export class SignInArgs {
   @Field(() => String, { simple: true })
@@ -48,6 +54,11 @@ export class SignInArgs {
   password: string;
 }
 
+/**
+ * Validate arguments.
+ *
+ * @property {string} token - The access token to validate.
+ */
 @ArgsType()
 export class ValidateArgs {
   @Field(() => String, { simple: true })
@@ -68,11 +79,7 @@ export class AuthResolver {
     @Args(() => SignInArgs) { userName, password }: SignInArgs,
     @Ctx() { cookie: { auth }, jwt }: Context,
   ) {
-    const { id: userId, password: storedPassword } = await getUser(userName);
-
-    if (!userId) {
-      NotFoundError('User not found');
-    }
+    const { id: userId, password: storedPassword } = await getUserIdAndPassword(userName);
 
     // Valiate password.
     const isValid = compareHash(password, storedPassword);
@@ -87,7 +94,6 @@ export class AuthResolver {
       maxAge: TOKEN_MAX_AGE,
       path: '/profile',
     });
-
     const { value: token } = auth;
 
     await createLoginHistory(userId);

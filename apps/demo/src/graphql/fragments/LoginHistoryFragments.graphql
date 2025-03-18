@@ -1,0 +1,5 @@
+fragment LoginHistoryParts on LoginHistory {
+  id
+  userId
+  loginTime
+}

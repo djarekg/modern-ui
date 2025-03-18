@@ -1,3 +1,4 @@
+import { connectApolloClientToVSCodeDevTools } from '@apollo/client-devtools-vscode';
 import {
   ApolloClient,
   ApolloLink,
@@ -6,6 +7,8 @@ import {
   type TypePolicies,
 } from '@apollo/client/core';
 import { onError } from '@apollo/client/link/error';
+
+import { isDev } from '@mui/core';
 
 import { BadRequestError } from '../errors.js';
 
@@ -95,6 +98,18 @@ export const createApolloClient = ({
     //   enabled: true
     // }
   });
+
+  if (isDev) {
+    const { onCleanup } = connectApolloClientToVSCodeDevTools(client, 'ws://localhost:7095');
+
+    onCleanup(reason => {
+      console.log(
+        'disconnected',
+        reason,
+        /* Referencing client here prevents in from getting garabage collected */ client.version,
+      );
+    });
+  }
 
   return client;
 };

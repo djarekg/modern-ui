@@ -1,4 +1,4 @@
-import { html, useCallback, useEffect, useMemo, useState } from 'haunted';
+import { html, useEffect, useMemo, useState } from 'haunted';
 import { nothing, unsafeCSS } from 'lit';
 
 import { define, useStyles } from '@mui/core';
@@ -7,19 +7,20 @@ import '@mui/components/text-field/text-field.js';
 import '@mui/components/tabs/tabs.js';
 import '@mui/components/tabs/tab.js';
 
-import type { SaveEvent } from '@/components/user-detail/events.js';
+import { UserLoginHistory } from '@/components/login-history/user-login-history.js';
+import { UserDetail } from '@/components/user-detail/user-detail.js';
 import { clientConfig } from '@/config.js';
-import { getUserId } from '@/utils/cache-util.js';
-import '@/components/login-history/user-login-history.js';
-import '@/components/user-detail/user-detail.js';
 import {
   GetLoginHistoryByUserIdDocument,
   type GetLoginHistoryByUserIdQuery,
   GetUserByIdDocument,
   type GetUserByIdQuery,
 } from '@/types/graphql.js';
+import { getUserId } from '@/utils/cache-util.js';
 
 import styles from './user.css?inline';
+
+type LoginHistories = GetLoginHistoryByUserIdQuery['loginHistories'];
 
 type UserPageProps = {
   id: string;
@@ -29,19 +30,16 @@ const UserPage = ({ id = getUserId() }: UserPageProps) => {
   useStyles(unsafeCSS(styles));
 
   const { query } = useClient(clientConfig);
-
   const [user, setUser] = useState<GetUserByIdQuery['user']>(null);
-  const [loginHistories, setLoginHistories] = useState<
-    GetLoginHistoryByUserIdQuery['loginHistories']
-  >([]);
+  const [loginHistories, setLoginHistories] = useState<LoginHistories>([]);
 
-  // Fetch the user data
+  // Fetch the user data.
   useEffect(async () => {
     const { user } = await query(GetUserByIdDocument, { variables: { id } });
     setUser(user);
   }, []);
 
-  // Fetch the login history and user data
+  // Fetch the login history and user data.
   useEffect(async () => {
     const userId = getUserId();
     const { loginHistories } = await query(GetLoginHistoryByUserIdDocument, {
@@ -50,26 +48,19 @@ const UserPage = ({ id = getUserId() }: UserPageProps) => {
     setLoginHistories(loginHistories);
   }, []);
 
-  const onProfileSave = useCallback(async ({ detail: { user } }: SaveEvent) => {
-    // const { users } = useApi();
-    // await users.index.put(user);
-  }, []);
+  // const onProfileSave = useCallback(async ({ detail: { user } }: SaveEvent) => {
+  //   // const { users } = useApi();
+  //   // await users.index.put(user);
+  // }, []);
 
-  const renderForm = useMemo(
-    () =>
-      user
-        ? html`<app-user-detail .user=${user} @save=${onProfileSave}></app-user-detail>`
-        : nothing,
-    [user],
-  );
+  // <app-user-detail .user=${user} @save=${onProfileSave}></app-user-detail>
+
+  const renderForm = useMemo(() => (user ? html`${UserDetail({ user })}` : nothing), [user]);
 
   const renderAddress = useMemo(() => html`<div>Address</div>`, []);
 
   const renderLoginHistory = useMemo(
-    () =>
-      loginHistories
-        ? html`<app-user-login-history .loginHistories=${loginHistories}></app-user-login-history>`
-        : nothing,
+    () => (loginHistories ? html`${UserLoginHistory({ loginHistories })}` : nothing),
     [loginHistories],
   );
 

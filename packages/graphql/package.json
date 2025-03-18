@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.13.4",
+    "@apollo/client-devtools-vscode": "^4.19.11",
     "@types/bun": "^1.2.5"
   }
 }

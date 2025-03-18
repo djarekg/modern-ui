@@ -1,7 +1,5 @@
 query GetLoginHistoryByUserId($userId: String!) {
   loginHistories(where: { userId: { equals: $userId } }) {
-    id
-    userId
-    loginTime
+    ...LoginHistoryParts
   }
 }

@@ -3989,6 +3989,12 @@ export type GetLoginHistoryByUserIdQuery = {
   loginHistories: Array<{ id: string; userId: string; loginTime: unknown }>;
 };
 
+export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetProductsQuery = {
+  products: Array<{ id: string; name: string; description: string }>;
+};
+
 export type GetUsersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetUsersQuery = {
@@ -4042,6 +4048,12 @@ export type GetUserByUserNameQuery = {
     | undefined;
 };
 
+export type LoginHistoryPartsFragment = {
+  id: string;
+  userId: string;
+  loginTime: unknown;
+};
+
 export type UserPartsFragment = {
   id: string;
   firstName: string;
@@ -4053,6 +4065,27 @@ export type UserPartsFragment = {
   dateCreated: unknown;
 };
 
+export const LoginHistoryPartsFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LoginHistoryParts" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "LoginHistory" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "loginTime" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LoginHistoryPartsFragment, unknown>;
 export const UserPartsFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -4267,12 +4300,29 @@ export const GetLoginHistoryByUserIdDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "userId" } },
-                { kind: "Field", name: { kind: "Name", value: "loginTime" } },
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "LoginHistoryParts" },
+                },
               ],
             },
           },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "LoginHistoryParts" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "LoginHistory" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "userId" } },
+          { kind: "Field", name: { kind: "Name", value: "loginTime" } },
         ],
       },
     },
@@ -4281,6 +4331,33 @@ export const GetLoginHistoryByUserIdDocument = {
   GetLoginHistoryByUserIdQuery,
   GetLoginHistoryByUserIdQueryVariables
 >;
+export const GetProductsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "getProducts" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "products" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "description" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetProductsQuery, GetProductsQueryVariables>;
 export const GetUsersDocument = {
   kind: "Document",
   definitions: [

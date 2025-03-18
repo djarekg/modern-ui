@@ -9,7 +9,7 @@ export const port = process.env.PORT || 4000;
 export const corsConfig = {
   methods: ['POST'],
   preflight: true,
-  origin: corsOrigin,
+  origin: [corsOrigin, 'localhost:7095'],
 } satisfies Parameters<typeof cors>[0];
 
 export const jwtConfig = {

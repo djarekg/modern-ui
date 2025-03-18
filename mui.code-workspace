@@ -80,7 +80,7 @@
     "typescript.suggest.completeJSDocs": true,
     "typescript.suggest.includeCompletionsForImportStatements": true,
     "typescript.suggest.jsdoc.generateReturns": true,
-    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.tsdk": "../node_modules/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "typescript.tsserver.experimental.enableProjectDiagnostics": true,
     "typescript.updateImportsOnFileMove.enabled": "prompt",
@@ -173,7 +173,11 @@
     // christian-kohler.path-intellisense - required for extension to work
     "typescript.suggest.paths": false,
     "javascript.suggest.paths": false,
-    "apollographql.devTools.showPanel": "detect"
+
+    // recommended ApolloGraphQL extension settings.
+    // https://github.com/apollographql/vscode-graphql/blob/main/sampleWorkspace/sampleWorkspace.code-workspace
+    "apollographql.devTools.showPanel": "detect",
+    "apollographql.devTools.serverPort": 7095
   },
   "extensions": {
     "recommendations": [

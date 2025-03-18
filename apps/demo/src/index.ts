@@ -6,12 +6,11 @@ import '@mui/components/theme/theme.css';
 import './layout/header/header.js';
 import './layout/footer/footer.js';
 import './layout/layout.js';
-import styles from './styles/styles.css?inline';
-
 import css from './index.css?inline';
+import stylesCss from './styles/styles.css?inline';
 
 const Index = () => {
-  useStyles([unsafeCSS(styles), unsafeCSS(css)]);
+  useStyles([unsafeCSS(stylesCss), unsafeCSS(css)]);
 
   return html`<app-layout></app-layout>`;
 };

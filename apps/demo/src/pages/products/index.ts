@@ -1,24 +1,31 @@
+import { useEffect, useState } from 'haunted';
 import { css, html } from 'lit';
 
 import { define, useStyles } from '@mui/core';
+import { useClient } from '@mui/graphql';
 
-const styles = css`
-  h1 {
-    color: purple;
-  }
-`;
+import { clientConfig } from '@/config.js';
+import { GetProductsDocument, type GetProductsQuery } from '@/types/graphql.js';
+import '@/components/product-list/product-list.js';
+import { ProductList } from '@/components/product-list/product-list.js';
+
+const styles = css``;
 
 const ProductsPage = () => {
   useStyles(styles);
 
-  const handleClick = () => {
-    console.log('Product 1 clicked');
-  };
+  const { query } = useClient(clientConfig);
+  const [products, setProducts] = useState<GetProductsQuery['products']>([]);
+
+  useEffect(async () => {
+    const { products } = await query(GetProductsDocument);
+    setProducts(products);
+  }, []);
 
   return html`
     <div>
       <h1>Products</h1>
-      <button @click=${handleClick}>Product 1</button>
+      ${ProductList({ products })}
     </div>
   `;
 };
