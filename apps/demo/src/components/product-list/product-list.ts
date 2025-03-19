@@ -1,15 +1,66 @@
-import { html, virtual } from 'haunted';
+import { html, useCallback, virtual } from 'haunted';
+import { css } from 'lit';
 
-import '@mui/components/table/index.js';
-import type { TableEvent } from '@mui/components/table/events.js';
+import { type ArrayElement, useStyles } from '@mui/core';
+import '@mui/components/card/index.js';
+import '@mui/components/button/icon-button.js';
+import '@mui/components/tooltip/tooltip.js';
 
 import { navigate } from '@/router/index.js';
 import { routes } from '@/router/routes.js';
 import type { GetProductsQuery } from '@/types/graphql.js';
 
+type Products = GetProductsQuery['products'];
+
 type ProductListProps = {
-  products: GetProductsQuery['products'];
+  products: Products;
 };
+
+const styles = css`
+  .container {
+    --mui-card-header-color: var(--mui-color-secondary);
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2.5rem;
+  }
+
+  mui-card {
+    &:hover {
+      --mui-card-elevation: var(--mui-elevation-3);
+
+      transform: scale(1.03);
+      transition: transform 0.3s;
+    }
+  }
+
+  mui-card-header {
+    --mui-icon-color: var(--mui-card-header-color);
+    --mui-icon-size: 1.25rem;
+  }
+
+  mui-card-content {
+    padding: 0;
+    align-items: flex-end;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: fit;
+    }
+  }
+
+  mui-card-footer {
+    .description {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .price {
+      font-size: 0.7rem;
+    }
+  }
+`;
 
 /**
  * Product list component. Displays a list of products in a table.
@@ -19,33 +70,41 @@ type ProductListProps = {
  * @param {ProductListProps} ProductList component properties.
  */
 export const ProductList = virtual(({ products }: ProductListProps) => {
-  const handleRowView = ({ detail: { row } }: TableEvent) => {
-    const { id } = row;
-    navigate(`${routes.users}/${id}`);
-  };
+  useStyles(styles);
 
-  const renderRows = products.map(
-    ({ id, name, description }) => html`
-    <mui-table-row .id=${id}>
-      <mui-table-cell>${id}</mui-table-cell>
-      <mui-table-cell>${name}</mui-table-cell>
-      <mui-table-cell>${description}</mui-table-cell>
-    </mui-table-row>
-  `,
-  );
+  const handleOpenClick = useCallback((id: string) => {
+    navigate(`${routes.products}/${id}`);
+  }, []);
+
+  const renderCards = ({ id, name, description, price }: ArrayElement<Products>) => html`
+    <mui-card>
+      <mui-card-header>
+        ${name}
+        <div>
+          <mui-icon-button id="openNew" @click=${() => handleOpenClick(id)}>open_in_new</mui-icon-button>
+          <!-- <mui-tooltip anchor="openNew">Open product</mui-tooltip> -->
+          <mui-icon-button id="preview" @click=${() => handleOpenClick(id)}>preview</mui-icon-button>
+          <!-- <mui-tooltip anchor="preview">Preview product</mui-tooltip> -->
+        </div>
+      </mui-card-header>
+      <mui-card-content>
+        <img src="../../../public/img/products/${id}.jpeg" alt=${name} />
+      </mui-card-content>
+      <mui-card-footer>
+        <span class="description">${description}</span>
+        <span class="price">price: ${
+          new Intl.NumberFormat('en-US', {
+            currency: 'USD',
+            style: 'currency',
+          }).format(price ?? 0) ?? 'N/A'
+        }</span>
+      </mui-card-footer>
+    </mui-card>
+  `;
 
   return html`
-    <div>
-      <mui-table
-        selectable
-        @row-view=${handleRowView}>
-        <mui-table-row header>
-          <mui-table-header-cell>ID</mui-table-header-cell>
-          <mui-table-header-cell>Name</mui-table-header-cell>
-          <mui-table-header-cell>Description</mui-table-header-cell>
-        </mui-table-row>
-        ${renderRows}
-      </mui-table>
+    <div class="container">
+      ${products.map(renderCards)}
     </div>
   `;
 });

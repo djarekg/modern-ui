@@ -6,6 +6,7 @@ import { useClient } from '@mui/graphql';
 
 import { clientConfig } from '@/config.js';
 import '@/components/user-list/user-list.js';
+import { UserList } from '@/components/user-list/user-list.js';
 import { GetUsersDocument, type GetUsersQuery } from '@/types/graphql.js';
 
 const styles = css`
@@ -35,7 +36,7 @@ const UsersPage = () => {
     <article>
       <section class="app-container">
         <h2>Users</h2>
-        <app-user-list .users=${users}></app-user-list>-
+        ${UserList({ users })}
       </section>
     </article>
   `;

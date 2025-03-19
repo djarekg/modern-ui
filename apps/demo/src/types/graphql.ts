@@ -3992,7 +3992,12 @@ export type GetLoginHistoryByUserIdQuery = {
 export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetProductsQuery = {
-  products: Array<{ id: string; name: string; description: string }>;
+  products: Array<{
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+  }>;
 };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never }>;
@@ -4350,6 +4355,7 @@ export const GetProductsDocument = {
                 { kind: "Field", name: { kind: "Name", value: "id" } },
                 { kind: "Field", name: { kind: "Name", value: "name" } },
                 { kind: "Field", name: { kind: "Name", value: "description" } },
+                { kind: "Field", name: { kind: "Name", value: "price" } },
               ],
             },
           },

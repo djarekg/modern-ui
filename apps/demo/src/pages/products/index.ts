@@ -9,7 +9,16 @@ import { GetProductsDocument, type GetProductsQuery } from '@/types/graphql.js';
 import '@/components/product-list/product-list.js';
 import { ProductList } from '@/components/product-list/product-list.js';
 
-const styles = css``;
+const styles = css`
+  .page-title {
+    display: flex;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--mui-color-secondary);
+    margin-block-end: 2rem;
+  }
+`;
 
 const ProductsPage = () => {
   useStyles(styles);
@@ -24,7 +33,7 @@ const ProductsPage = () => {
 
   return html`
     <div>
-      <h1>Products</h1>
+      <div class="page-title">Products</div>
       ${ProductList({ products })}
     </div>
   `;

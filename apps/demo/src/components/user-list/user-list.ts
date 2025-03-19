@@ -1,20 +1,10 @@
-import { useMemo } from 'haunted';
-import { css, html } from 'lit';
+import { html, useCallback, useMemo, virtual } from 'haunted';
 
 import type { TableEvent } from '@mui/components/table/events.js';
-import { define, useStyles } from '@mui/core';
 
 import { navigate } from '@/router/index.js';
 import { routes } from '@/router/routes.js';
 import type { GetUsersQuery } from '@/types/graphql.js';
-
-const styles = css`
-  :host {
-    display: block;
-    inline-size: 100%;
-    block-size: 100%;
-  }
-`;
 
 type UserListProps = {
   users: GetUsersQuery['users'];
@@ -24,17 +14,15 @@ type UserListProps = {
  * User list component.
  * @param UserListProps Component properties.
  */
-const UserList = ({ users = [] }: UserListProps) => {
-  useStyles(styles);
-
-  const handleTableRowSelected = ({ detail: { row } }: TableEvent) => {
+export const UserList = virtual(({ users = [] }: UserListProps) => {
+  const handleTableRowSelected = useCallback(({ detail: { row } }: TableEvent) => {
     console.log('UserList#handleTableRowSelected', row);
-  };
+  }, []);
 
-  const handleTableRowView = ({ detail: { row } }: TableEvent) => {
+  const handleTableRowView = useCallback(({ detail: { row } }: TableEvent) => {
     const { id } = row;
     navigate(`${routes.users}/${id}`);
-  };
+  }, []);
 
   const renderRows = useMemo(
     () =>
@@ -69,12 +57,4 @@ const UserList = ({ users = [] }: UserListProps) => {
       ${renderRows}
     </mui-table>
   `;
-};
-
-define('app-user-list', UserList);
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'app-user-list': HTMLElement & UserListProps;
-  }
-}
+});

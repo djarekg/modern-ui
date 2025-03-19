@@ -4,11 +4,18 @@ import { define, useStyles } from '@mui/core';
 
 const styles = css`
   :host {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    --_background-color: var(--mui-card-background-color, var(--mui-color-background));
+    --_color: var(--mui-card-color, var(--mui-color-text));
+    --_elevation: var(--mui-card-elevation, var(--mui-elevation-2));
+
+    display: flex;
+    flex-direction: column;
+    inline-size: minmax(300px, 100%);
+    border: 2px solid var(--_background-color);
+    border-radius: var(--mui-shape-medium);
+    box-shadow: var(--_elevation);
   }
 `;
-
 const Card = () => {
   useStyles(styles);
 

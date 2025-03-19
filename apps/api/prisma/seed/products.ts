@@ -21,8 +21,8 @@ export const createProducts = async (prisma: PrismaClient) => {
     prisma.product.create({
       data: {
         id: faker.string.uuid(),
-        name: 'Camo Hat',
-        description: 'An adjustable hat with a camouflage pattern.',
+        name: 'Cool Ass Hat',
+        description: 'An awesome hat !!!',
         price: 24.5,
         type: ProductType.Hat,
       },

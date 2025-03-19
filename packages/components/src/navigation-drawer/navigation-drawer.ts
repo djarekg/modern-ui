@@ -41,14 +41,13 @@ export class NavigationDrawer extends LitElement {
       visible: this.opened,
     };
     const ariaExpanded = this.opened ? 'true' : 'false';
-    const ariaHidden = !this.opened ? 'true' : 'false';
+    // const ariaHidden = !this.opened ? 'true' : 'false';
 
     return html`
       <div class="scrim" @click=${this.#handleScrimClick}></div>
       <aside
         role="dialog"
         aria-expanded="${ariaExpanded}"
-        aria-hidden="${ariaHidden}"
         class="${classMap(classes)}">
         ${this.#renderHeader()}
         ${this.#renderNav()}

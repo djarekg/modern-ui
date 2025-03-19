@@ -31,6 +31,7 @@ type MainProps = {
 
 /**
  * Main component.
+ *
  * @param {MainProps} Main properties.
  * @fires drawer-close - Dispatched when the drawer is closed.
  */

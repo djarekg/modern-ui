@@ -38,6 +38,18 @@
       "types": "./dist/button/outline-button.d.ts",
       "import": "./dist/button/outline-button.js"
     },
+    "./card/card-content.js": {
+      "types": "./dist/card/card-content.d.ts",
+      "import": "./dist/card/card-content.js"
+    },
+    "./card/card-footer.js": {
+      "types": "./dist/card/card-footer.d.ts",
+      "import": "./dist/card/card-footer.js"
+    },
+    "./card/card-header.js": {
+      "types": "./dist/card/card-header.d.ts",
+      "import": "./dist/card/card-header.js"
+    },
     "./card/card.js": {
       "types": "./dist/card/card.d.ts",
       "import": "./dist/card/card.js"

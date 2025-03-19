@@ -1,5 +1,8 @@
 import { type RouteConfig, Router } from '@lit-labs/router';
 import { type ReactiveControllerHost, html } from 'lit';
+
+import { ProductPage } from '@/pages/products/product.js';
+
 import { routes } from './routes.js';
 
 const routeConfigs: RouteConfig[] = [
@@ -65,6 +68,14 @@ const routeConfigs: RouteConfig[] = [
     render: () => {
       import('../pages/products/index.js');
       return html`<app-products-page></app-products-page>`;
+    },
+  },
+  {
+    name: 'product',
+    path: `${routes.products}/:id`,
+    render: ({ id }) => {
+      import('../pages/products/product.js');
+      return html`${ProductPage({ id })}`;
     },
   },
 ];

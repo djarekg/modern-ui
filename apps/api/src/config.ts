@@ -10,9 +10,9 @@ export const corsConfig = {
   methods: ['POST'],
   preflight: true,
   origin: [corsOrigin, 'localhost:7095'],
-} satisfies Parameters<typeof cors>[0];
+} as const satisfies Parameters<typeof cors>[0];
 
 export const jwtConfig = {
   name: 'jwt',
   secret: accessTokenSecret,
-} satisfies JWTOption;
+} as const satisfies JWTOption;
