@@ -1,13 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 
-import { createColors } from './colors.js';
-import { createCustomers } from './customers.js';
+import { createColors } from './color.js';
+import { createCustomers } from './customer.js';
 import { createInventories } from './inventory.js';
-import { createLoginHistories } from './login-histories.js';
+import { createLoginHistories } from './login-history.js';
 import { createProductColors } from './product-color.js';
-import { createProductSales } from './product-sales.js';
-import { createProducts } from './products.js';
-import { createUsers } from './users.js';
+import { createProductSales } from './product-sale.js';
+import { createProducts } from './product.js';
+import { createUsers } from './user.js';
 
 const prisma = new PrismaClient();
 
