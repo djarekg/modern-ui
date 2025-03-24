@@ -1,4 +1,4 @@
-import type { Router } from '@lit-labs/router';
+import type { PathRouteConfig, Router } from '@lit-labs/router';
 import { html } from '@lit-labs/signals';
 import { useCallback, useEffect, useState } from 'haunted';
 import { css } from 'lit';
@@ -7,7 +7,7 @@ import { define, useStyles } from '@mui/core';
 
 import { validate } from '@/auth/auth.js';
 import { useIsSignedInWatcher } from '@/auth/is-signed-in.js';
-import { navigate } from '@/router/index.js';
+import { getCurrentRoute, navigate } from '@/router/index.js';
 import { routeType } from '@/router/route-type.js';
 import '@/auth/is-signed-in.js';
 import '@/router/router-provider-element.js';
@@ -48,8 +48,14 @@ const Layout = () => {
 
       setRouter(_router);
 
+      // Set the page title.
+      const { name = '' } = getCurrentRoute(_router);
+      setTitle(name);
+
       // Override every route's enter method to set the page title.
       _router.routes.map(route => {
+        // Incase the route already has an enter method defined,
+        // we need to call it frist and then set the page title.
         const origEnter = route.enter;
 
         route.enter = async params => {
