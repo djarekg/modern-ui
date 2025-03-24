@@ -10,7 +10,9 @@ export const createProductSales = async (prisma: PrismaClient) => {
   const productIdCache: Record<ProductType, string> = {} as Record<ProductType, string>;
   const getProductId = async (type: ProductType) => {
     if (!productIdCache[type]) {
-      productIdCache[type] = (await prisma.product.findFirst({ where: { type } })).id;
+      productIdCache[type] = (
+        await prisma.product.findFirst({ where: { productTypeId: type } })
+      ).id;
     }
     return productIdCache[type];
   };

@@ -9,7 +9,7 @@ export const createInventories = async (prisma: PrismaClient) => {
   const idCache: Record<ProductType, string> = {} as Record<ProductType, string>;
   const getProductId = async (type: ProductType) => {
     if (!idCache[type]) {
-      idCache[type] = (await prisma.product.findFirst({ where: { type } })).id;
+      idCache[type] = (await prisma.product.findFirst({ where: { productTypeId: type } })).id;
     }
     return idCache[type];
   };

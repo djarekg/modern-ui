@@ -1,121 +1,112 @@
-import { SignalWatcher } from '@lit-labs/signals';
-import { consume } from '@lit/context';
-import { LitElement, html, nothing, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, useCallback, useMemo } from 'haunted';
+import { nothing, unsafeCSS } from 'lit';
 
-import { confirm } from '@mui/components';
-import '@mui/components/button/icon-button.js';
-import '@mui/components/command-palette/command-palette.js';
-import '@mui/components/menu/menu.js';
-// import '@mui/components/tooltip/tooltip.js';
+import { define, useHost, useStyles } from '@mui/core';
 
 import { signOut } from '@/auth/auth.js';
-import { isSignedInContext } from '@/auth/is-signed-in.js';
 import { navigate } from '@/router/index.js';
-import { routes } from '@/router/routes.js';
+import { routePaths } from '@/router/route-path.js';
 import { getUserId } from '@/utils/cache-util.js';
+import { confirm } from '@mui/components';
 
 import styles from './header.css?inline';
 
-@customElement('app-header')
-export class Header extends SignalWatcher(LitElement) {
-  static override styles = [unsafeCSS(styles)];
+type HeaderProps = {
+  isSignedIn: boolean;
+  pageTitle: string;
+};
 
-  /**
-   * Indicates whether the user is signed in. When the user signs in or out,
-   * this property is updated.
-   */
-  @consume({ context: isSignedInContext, subscribe: true }) isSignedIn: boolean;
+const Header = ({ isSignedIn, pageTitle }: HeaderProps) => {
+  useStyles(unsafeCSS(styles));
 
-  render() {
-    return html`
-      <header>
-        <nav>
-          ${this.#renderNavButton()}
-          <a href=${routes.home}>
-            <img
-              src="../../../public/img/token-branded--idia.svg"
-              loading="lazy"
-              alt="Home"
-              width="28"
-              height="28" />
-          </a>
-        </nav>
-        <section>
-          ${this.#renderSearch()}
-          ${this.#renderUserMenu()}
-        </section>
-      </header>
-    `;
-  }
+  const _this = useHost();
 
-  #renderNavButton() {
-    if (!this.isSignedIn) {
-      return nothing;
-    }
-
-    return html`
-      <mui-icon-button id="siteMenu" @click=${this.#handleMenuClick}>
-        menu
-      </mui-icon-button>
-      <!-- <mui-tooltip anchor="siteMenu" inline-start-offset="40">Open site menu</mui-tooltip> -->
-    `;
-  }
-
-  #renderSearch() {
-    return html`
-      <mui-command-palette logoSrc="../../../public/img/token-branded--idia.svg"></mui-command-palette>
-    `;
-  }
-
-  #renderUserMenu() {
-    if (!this.isSignedIn) {
-      return nothing;
-    }
-
-    const userProfilePath = `${routes.users}/${getUserId()}`;
-
-    return html`
-      <mui-menu id="profileMenu" icon="account_circle">
-        <ul>
-          <li>
-            <a class="link" href=${userProfilePath}>
-              <mui-icon>user_attributes</mui-icon>
-              Profile
-            </a>
-          </li>
-          <li>
-            <a class="link" href="#" @click=${this.#signOut}>
-              <mui-icon>logout</mui-icon>
-              Logout
-            </a>
-          </li>
-        </ul>
-      </mui-menu>
-      <!-- <mui-tooltip anchor="profileMenu" inline-end-offset="10">User profile</mui-tooltip> -->
-    `;
-  }
-
-  async #signOut() {
+  const handleSignOut = useCallback(async () => {
     if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {
       if (await signOut()) {
-        navigate(routes.login);
+        navigate(routePaths.login);
       }
     }
-  }
+  }, []);
 
-  #handleMenuClick(): void {
-    this.dispatchEvent(
+  const handleMenuClick = useCallback(() => {
+    _this.dispatchEvent(
       new CustomEvent('nav-button-clicked', {
         bubbles: true,
         composed: true,
       }),
     );
-  }
-}
+  }, []);
+
+  const renderNavButton = useMemo(() => {
+    return isSignedIn
+      ? html`
+        <mui-icon-button id="siteMenu" @click=${handleMenuClick}>
+          menu
+        </mui-icon-button>
+        <!-- <mui-tooltip anchor="siteMenu" inline-start-offset="40">Open site menu</mui-tooltip> -->
+      `
+      : nothing;
+  }, [isSignedIn]);
+
+  const renderSearch = useMemo(
+    () =>
+      html`<mui-command-palette logoSrc="../../../public/img/token-branded--idia.svg"></mui-command-palette>`,
+    [],
+  );
+
+  const renderUserMenu = useMemo(
+    () =>
+      isSignedIn
+        ? html`
+          <mui-menu id="profileMenu" icon="account_circle">
+            <ul>
+              <li>
+                <a class="link" href=${`${routePaths.users}/${getUserId()}`}>
+                  <mui-icon>user_attributes</mui-icon>
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a class="link" href="#" @click=${handleSignOut}>
+                  <mui-icon>logout</mui-icon>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </mui-menu>
+          <!-- <mui-tooltip anchor="profileMenu" inline-end-offset="10">User profile</mui-tooltip> -->
+        `
+        : nothing,
+    [isSignedIn],
+  );
+
+  return html`
+    <header>
+      <nav>
+        ${renderNavButton}
+        <a href=${routePaths.home}>
+          <img
+            src="../../../public/img/token-branded--idia.svg"
+            loading="lazy"
+            alt="Home"
+            width="28"
+            height="28" />
+        </a>
+      </nav>
+      <h2>${pageTitle}</h2>
+      <section>
+        ${renderSearch}
+        ${renderUserMenu}
+      </section>
+    </header>
+  `;
+};
+
+define('app-header', Header);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-header': Header;
+    'app-header': HTMLElement & HeaderProps;
   }
 }

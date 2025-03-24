@@ -1,29 +1,29 @@
 import { html, signal } from '@lit-labs/signals';
-import { type StateUpdater, useCallback, useMemo, useState } from 'haunted';
+import { useMemo } from 'haunted';
 import { unsafeCSS } from 'lit';
 
 import '@mui/components/button/outline-button.js';
 import '@mui/components/text-field/text-field.js';
 import { type TypedEvent, define, isEmpty, useStyles } from '@mui/core';
-import { useLogger } from '@mui/logger';
+// import { useLogger } from '@mui/logger';
 
 import { signIn } from '@/auth/auth.js';
 import { navigate } from '@/router/index.js';
-import { routes } from '@/router/routes.js';
+import { routePaths } from '@/router/route-path.js';
 
 import styles from './login.css?inline';
 
-const logger = useLogger({ ui: true });
-/**
- * On input event handler update the state.
- * @param setter The state setter.
- */
-const input = (setter: StateUpdater<string>) => {
-  return ({ target: { value } }: TypedEvent<HTMLInputElement>) => {
-    logger.info('input', value);
-    setter(value);
-  };
-};
+// const logger = useLogger({ ui: true });
+// /**
+//  * On input event handler update the state.
+//  * @param setter The state setter.
+//  */
+// const input = (setter: StateUpdater<string>) => {
+//   return ({ target: { value } }: TypedEvent<HTMLInputElement>) => {
+//     logger.info('input', value);
+//     setter(value);
+//   };
+// };
 
 const LoginPage = () => {
   useStyles(unsafeCSS(styles));
@@ -45,7 +45,7 @@ const LoginPage = () => {
 
     const signedIn = await signIn(userName.get(), password.get());
     if (signedIn) {
-      navigate(routes.home);
+      navigate(routePaths.home);
     }
   };
 

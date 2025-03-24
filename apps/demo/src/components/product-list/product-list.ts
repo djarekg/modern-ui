@@ -7,13 +7,13 @@ import '@mui/components/button/icon-button.js';
 import '@mui/components/tooltip/tooltip.js';
 
 import { navigate } from '@/router/index.js';
-import { routes } from '@/router/routes.js';
-import type { GetProductsQuery } from '@/types/graphql.js';
+import { routePaths } from '@/router/route-path.js';
+import type { GetProductTypesQuery } from '@/types/graphql.js';
 
-type Products = GetProductsQuery['products'];
+type ProductTypes = GetProductTypesQuery['productTypes'];
 
 type ProductListProps = {
-  products: Products;
+  productTypes: ProductTypes;
 };
 
 const styles = css`
@@ -63,20 +63,19 @@ const styles = css`
 `;
 
 /**
- * Product list component. Displays a list of products in a table.
- * The table rows are clickable and can navigate to the product
- * detail page.
+ * Product list component. Displays a list of product types with
+ * @mui/card components.
  *
  * @param {ProductListProps} ProductList component properties.
  */
-export const ProductList = virtual(({ products }: ProductListProps) => {
+export const ProductList = virtual(({ productTypes }: ProductListProps) => {
   useStyles(styles);
 
   const handleOpenClick = useCallback((id: string) => {
-    navigate(`${routes.products}/${id}`);
+    navigate(`${routePaths.products}/${id}`);
   }, []);
 
-  const renderCards = ({ id, name, description, price }: ArrayElement<Products>) => html`
+  const renderCards = ({ id, name }: ArrayElement<ProductTypes>) => html`
     <mui-card>
       <mui-card-header>
         ${name}
@@ -90,21 +89,12 @@ export const ProductList = virtual(({ products }: ProductListProps) => {
       <mui-card-content>
         <img src="../../../public/img/products/${id}.jpeg" alt=${name} />
       </mui-card-content>
-      <mui-card-footer>
-        <span class="description">${description}</span>
-        <span class="price">price: ${
-          new Intl.NumberFormat('en-US', {
-            currency: 'USD',
-            style: 'currency',
-          }).format(price ?? 0) ?? 'N/A'
-        }</span>
-      </mui-card-footer>
     </mui-card>
   `;
 
   return html`
     <div class="container">
-      ${products.map(renderCards)}
+      ${productTypes.map(renderCards)}
     </div>
   `;
 });

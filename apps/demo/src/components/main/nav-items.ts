@@ -1,40 +1,40 @@
 import type { NavItem } from '@mui/components';
 
-import { routes } from '@/router/routes.js';
+import { routePaths } from '@/router/route-path.js';
 
 export default [
   {
-    path: routes.home,
+    path: routePaths.home,
     icon: 'home',
     label: 'Home',
     // cssColorVar: '--mui-palette-color-green',
   },
   {
-    path: routes.users,
+    path: routePaths.users,
     icon: 'groups',
     label: 'Users',
     // cssColorVar: '--mui-palette-color-hot-pink',
   },
   {
-    path: routes.accounting,
+    path: routePaths.accounting,
     icon: 'account_balance',
     label: 'Accounting',
     // cssColorVar: '--md-sys-color-purple',
   },
   {
-    path: routes.accountingReports,
+    path: routePaths.accountingReports,
     icon: 'analytics',
     label: 'Accounting Reports',
     // cssColorVar: '--md-sys-color-purple',
   },
   {
-    path: routes.products,
+    path: routePaths.products,
     icon: 'shopping_cart',
     label: 'Products',
     // cssColorVar: '--md-sys-color-gray',
   },
   {
-    path: routes.inventory,
+    path: routePaths.inventory,
     icon: 'inventory',
     label: 'Inventory',
     // cssColorVar: '--md-sys-color-gray',

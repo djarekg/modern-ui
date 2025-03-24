@@ -9,48 +9,68 @@ export const createProductColors = async (prisma: PrismaClient) => {
     prisma.productColor.createMany({
       data: [
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Dress } })).id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Dress } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'Black' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Hat } })).id,
+          productId: (await prisma.product.findFirst({ where: { productTypeId: ProductType.Hat } }))
+            .id,
           colorId: (await prisma.color.findFirst({ where: { name: 'Green' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Hoodie } })).id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Hoodie } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'Blue' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Jacket } })).id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Jacket } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'Pink' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Pants } })).id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Pants } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'Blue' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Shirt } })).id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Shirt } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'Red' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Shoes } })).id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Shoes } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'White' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Shorts } })).id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Shorts } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'Yellow' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Socks } })).id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Socks } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'White' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Sweater } })).id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Sweater } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'Black' } })).id,
         },
         {
-          productId: (await prisma.product.findFirst({ where: { type: ProductType.Underwear } }))
-            .id,
+          productId: (
+            await prisma.product.findFirst({ where: { productTypeId: ProductType.Underwear } })
+          ).id,
           colorId: (await prisma.color.findFirst({ where: { name: 'Orange' } })).id,
         },
       ],

@@ -82,6 +82,12 @@ export interface AggregateProductSales {
   _sum?: Maybe<ProductSalesSumAggregate>;
 }
 
+export interface AggregateProductType {
+  _count?: Maybe<ProductTypeCountAggregate>;
+  _max?: Maybe<ProductTypeMaxAggregate>;
+  _min?: Maybe<ProductTypeMinAggregate>;
+}
+
 export interface AggregateUser {
   _count?: Maybe<UserCountAggregate>;
   _max?: Maybe<UserMaxAggregate>;
@@ -339,13 +345,18 @@ export interface CreateManyAndReturnLoginHistory {
 }
 
 export interface CreateManyAndReturnProduct {
+  ProductType?: Maybe<ProductType>;
   dateCreated: Scalars["DateTimeISO"]["output"];
   dateUpdated: Scalars["DateTimeISO"]["output"];
   description: Scalars["String"]["output"];
   id: Scalars["String"]["output"];
   name: Scalars["String"]["output"];
   price: Scalars["Float"]["output"];
-  type: Scalars["String"]["output"];
+  productTypeId?: Maybe<Scalars["String"]["output"]>;
+}
+
+export interface CreateManyAndReturnProductProductTypeArgs {
+  where?: InputMaybe<ProductTypeWhereInput>;
 }
 
 export interface CreateManyAndReturnProductColor {
@@ -370,6 +381,13 @@ export interface CreateManyAndReturnProductSales {
   productId: Scalars["String"]["output"];
   quantity: Scalars["Int"]["output"];
   userId: Scalars["String"]["output"];
+}
+
+export interface CreateManyAndReturnProductType {
+  dateCreated: Scalars["DateTimeISO"]["output"];
+  dateUpdated: Scalars["DateTimeISO"]["output"];
+  id: Scalars["String"]["output"];
+  name: Scalars["String"]["output"];
 }
 
 export interface CreateManyAndReturnUser {
@@ -1278,6 +1296,7 @@ export interface Mutation {
   createManyAndReturnProduct: Array<CreateManyAndReturnProduct>;
   createManyAndReturnProductColor: Array<CreateManyAndReturnProductColor>;
   createManyAndReturnProductSales: Array<CreateManyAndReturnProductSales>;
+  createManyAndReturnProductType: Array<CreateManyAndReturnProductType>;
   createManyAndReturnUser: Array<CreateManyAndReturnUser>;
   createManyColor: AffectedRowsOutput;
   createManyCustomer: AffectedRowsOutput;
@@ -1286,6 +1305,7 @@ export interface Mutation {
   createManyProduct: AffectedRowsOutput;
   createManyProductColor: AffectedRowsOutput;
   createManyProductSales: AffectedRowsOutput;
+  createManyProductType: AffectedRowsOutput;
   createManyUser: AffectedRowsOutput;
   createOneColor: Color;
   createOneCustomer: Customer;
@@ -1294,6 +1314,7 @@ export interface Mutation {
   createOneProduct: Product;
   createOneProductColor: ProductColor;
   createOneProductSales: ProductSales;
+  createOneProductType: ProductType;
   createOneUser: User;
   deleteManyColor: AffectedRowsOutput;
   deleteManyCustomer: AffectedRowsOutput;
@@ -1302,6 +1323,7 @@ export interface Mutation {
   deleteManyProduct: AffectedRowsOutput;
   deleteManyProductColor: AffectedRowsOutput;
   deleteManyProductSales: AffectedRowsOutput;
+  deleteManyProductType: AffectedRowsOutput;
   deleteManyUser: AffectedRowsOutput;
   deleteOneColor?: Maybe<Color>;
   deleteOneCustomer?: Maybe<Customer>;
@@ -1310,6 +1332,7 @@ export interface Mutation {
   deleteOneProduct?: Maybe<Product>;
   deleteOneProductColor?: Maybe<ProductColor>;
   deleteOneProductSales?: Maybe<ProductSales>;
+  deleteOneProductType?: Maybe<ProductType>;
   deleteOneUser?: Maybe<User>;
   updateManyColor: AffectedRowsOutput;
   updateManyCustomer: AffectedRowsOutput;
@@ -1318,6 +1341,7 @@ export interface Mutation {
   updateManyProduct: AffectedRowsOutput;
   updateManyProductColor: AffectedRowsOutput;
   updateManyProductSales: AffectedRowsOutput;
+  updateManyProductType: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
   updateOneColor?: Maybe<Color>;
   updateOneCustomer?: Maybe<Customer>;
@@ -1326,6 +1350,7 @@ export interface Mutation {
   updateOneProduct?: Maybe<Product>;
   updateOneProductColor?: Maybe<ProductColor>;
   updateOneProductSales?: Maybe<ProductSales>;
+  updateOneProductType?: Maybe<ProductType>;
   updateOneUser?: Maybe<User>;
   upsertOneColor: Color;
   upsertOneCustomer: Customer;
@@ -1334,6 +1359,7 @@ export interface Mutation {
   upsertOneProduct: Product;
   upsertOneProductColor: ProductColor;
   upsertOneProductSales: ProductSales;
+  upsertOneProductType: ProductType;
   upsertOneUser: User;
 }
 
@@ -1363,6 +1389,10 @@ export interface MutationCreateManyAndReturnProductColorArgs {
 
 export interface MutationCreateManyAndReturnProductSalesArgs {
   data: Array<ProductSalesCreateManyInput>;
+}
+
+export interface MutationCreateManyAndReturnProductTypeArgs {
+  data: Array<ProductTypeCreateManyInput>;
 }
 
 export interface MutationCreateManyAndReturnUserArgs {
@@ -1397,6 +1427,10 @@ export interface MutationCreateManyProductSalesArgs {
   data: Array<ProductSalesCreateManyInput>;
 }
 
+export interface MutationCreateManyProductTypeArgs {
+  data: Array<ProductTypeCreateManyInput>;
+}
+
 export interface MutationCreateManyUserArgs {
   data: Array<UserCreateManyInput>;
 }
@@ -1427,6 +1461,10 @@ export interface MutationCreateOneProductColorArgs {
 
 export interface MutationCreateOneProductSalesArgs {
   data: ProductSalesCreateInput;
+}
+
+export interface MutationCreateOneProductTypeArgs {
+  data: ProductTypeCreateInput;
 }
 
 export interface MutationCreateOneUserArgs {
@@ -1461,6 +1499,10 @@ export interface MutationDeleteManyProductSalesArgs {
   where?: InputMaybe<ProductSalesWhereInput>;
 }
 
+export interface MutationDeleteManyProductTypeArgs {
+  where?: InputMaybe<ProductTypeWhereInput>;
+}
+
 export interface MutationDeleteManyUserArgs {
   where?: InputMaybe<UserWhereInput>;
 }
@@ -1491,6 +1533,10 @@ export interface MutationDeleteOneProductColorArgs {
 
 export interface MutationDeleteOneProductSalesArgs {
   where: ProductSalesWhereUniqueInput;
+}
+
+export interface MutationDeleteOneProductTypeArgs {
+  where: ProductTypeWhereUniqueInput;
 }
 
 export interface MutationDeleteOneUserArgs {
@@ -1532,6 +1578,11 @@ export interface MutationUpdateManyProductSalesArgs {
   where?: InputMaybe<ProductSalesWhereInput>;
 }
 
+export interface MutationUpdateManyProductTypeArgs {
+  data: ProductTypeUpdateManyMutationInput;
+  where?: InputMaybe<ProductTypeWhereInput>;
+}
+
 export interface MutationUpdateManyUserArgs {
   data: UserUpdateManyMutationInput;
   where?: InputMaybe<UserWhereInput>;
@@ -1570,6 +1621,11 @@ export interface MutationUpdateOneProductColorArgs {
 export interface MutationUpdateOneProductSalesArgs {
   data: ProductSalesUpdateInput;
   where: ProductSalesWhereUniqueInput;
+}
+
+export interface MutationUpdateOneProductTypeArgs {
+  data: ProductTypeUpdateInput;
+  where: ProductTypeWhereUniqueInput;
 }
 
 export interface MutationUpdateOneUserArgs {
@@ -1617,6 +1673,12 @@ export interface MutationUpsertOneProductSalesArgs {
   create: ProductSalesCreateInput;
   update: ProductSalesUpdateInput;
   where: ProductSalesWhereUniqueInput;
+}
+
+export interface MutationUpsertOneProductTypeArgs {
+  create: ProductTypeCreateInput;
+  update: ProductTypeUpdateInput;
+  where: ProductTypeWhereUniqueInput;
 }
 
 export interface MutationUpsertOneUserArgs {
@@ -1688,6 +1750,17 @@ export interface NestedIntFilter {
   notIn?: InputMaybe<Array<Scalars["Int"]["input"]>>;
 }
 
+export interface NestedIntNullableFilter {
+  equals?: InputMaybe<Scalars["Int"]["input"]>;
+  gt?: InputMaybe<Scalars["Int"]["input"]>;
+  gte?: InputMaybe<Scalars["Int"]["input"]>;
+  in?: InputMaybe<Array<Scalars["Int"]["input"]>>;
+  lt?: InputMaybe<Scalars["Int"]["input"]>;
+  lte?: InputMaybe<Scalars["Int"]["input"]>;
+  not?: InputMaybe<NestedIntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars["Int"]["input"]>>;
+}
+
 export interface NestedIntWithAggregatesFilter {
   _avg?: InputMaybe<NestedFloatFilter>;
   _count?: InputMaybe<NestedIntFilter>;
@@ -1718,6 +1791,37 @@ export interface NestedStringFilter {
   startsWith?: InputMaybe<Scalars["String"]["input"]>;
 }
 
+export interface NestedStringNullableFilter {
+  contains?: InputMaybe<Scalars["String"]["input"]>;
+  endsWith?: InputMaybe<Scalars["String"]["input"]>;
+  equals?: InputMaybe<Scalars["String"]["input"]>;
+  gt?: InputMaybe<Scalars["String"]["input"]>;
+  gte?: InputMaybe<Scalars["String"]["input"]>;
+  in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  lt?: InputMaybe<Scalars["String"]["input"]>;
+  lte?: InputMaybe<Scalars["String"]["input"]>;
+  not?: InputMaybe<NestedStringNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  startsWith?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface NestedStringNullableWithAggregatesFilter {
+  _count?: InputMaybe<NestedIntNullableFilter>;
+  _max?: InputMaybe<NestedStringNullableFilter>;
+  _min?: InputMaybe<NestedStringNullableFilter>;
+  contains?: InputMaybe<Scalars["String"]["input"]>;
+  endsWith?: InputMaybe<Scalars["String"]["input"]>;
+  equals?: InputMaybe<Scalars["String"]["input"]>;
+  gt?: InputMaybe<Scalars["String"]["input"]>;
+  gte?: InputMaybe<Scalars["String"]["input"]>;
+  in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  lt?: InputMaybe<Scalars["String"]["input"]>;
+  lte?: InputMaybe<Scalars["String"]["input"]>;
+  not?: InputMaybe<NestedStringNullableWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  startsWith?: InputMaybe<Scalars["String"]["input"]>;
+}
+
 export interface NestedStringWithAggregatesFilter {
   _count?: InputMaybe<NestedIntFilter>;
   _max?: InputMaybe<NestedStringFilter>;
@@ -1735,10 +1839,16 @@ export interface NestedStringWithAggregatesFilter {
   startsWith?: InputMaybe<Scalars["String"]["input"]>;
 }
 
+export enum NullsOrder {
+  First = 0,
+  Last = 1,
+}
+
 export interface Product {
   Inventory: Array<Inventory>;
   ProductColor: Array<ProductColor>;
   ProductSales: Array<ProductSales>;
+  ProductType?: Maybe<ProductType>;
   _count?: Maybe<ProductCount>;
   dateCreated: Scalars["DateTimeISO"]["output"];
   dateUpdated: Scalars["DateTimeISO"]["output"];
@@ -1746,7 +1856,7 @@ export interface Product {
   id: Scalars["String"]["output"];
   name: Scalars["String"]["output"];
   price: Scalars["Float"]["output"];
-  type: Scalars["String"]["output"];
+  productTypeId?: Maybe<Scalars["String"]["output"]>;
 }
 
 export interface ProductInventoryArgs {
@@ -1774,6 +1884,10 @@ export interface ProductProductSalesArgs {
   skip?: InputMaybe<Scalars["Int"]["input"]>;
   take?: InputMaybe<Scalars["Int"]["input"]>;
   where?: InputMaybe<ProductSalesWhereInput>;
+}
+
+export interface ProductProductTypeArgs {
+  where?: InputMaybe<ProductTypeWhereInput>;
 }
 
 export interface ProductAvgAggregate {
@@ -2151,7 +2265,7 @@ export interface ProductCountAggregate {
   id: Scalars["Int"]["output"];
   name: Scalars["Int"]["output"];
   price: Scalars["Int"]["output"];
-  type: Scalars["Int"]["output"];
+  productTypeId: Scalars["Int"]["output"];
 }
 
 export interface ProductCountOrderByAggregateInput {
@@ -2161,20 +2275,20 @@ export interface ProductCountOrderByAggregateInput {
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   price?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
+  productTypeId?: InputMaybe<SortOrder>;
 }
 
 export interface ProductCreateInput {
   Inventory?: InputMaybe<InventoryCreateNestedManyWithoutProductInput>;
   ProductColor?: InputMaybe<ProductColorCreateNestedManyWithoutProductInput>;
   ProductSales?: InputMaybe<ProductSalesCreateNestedManyWithoutProductInput>;
+  ProductType?: InputMaybe<ProductTypeCreateNestedOneWithoutProductInput>;
   dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   description: Scalars["String"]["input"];
   id?: InputMaybe<Scalars["String"]["input"]>;
   name: Scalars["String"]["input"];
   price: Scalars["Float"]["input"];
-  type: Scalars["String"]["input"];
 }
 
 export interface ProductCreateManyInput {
@@ -2184,7 +2298,29 @@ export interface ProductCreateManyInput {
   id?: InputMaybe<Scalars["String"]["input"]>;
   name: Scalars["String"]["input"];
   price: Scalars["Float"]["input"];
-  type: Scalars["String"]["input"];
+  productTypeId?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface ProductCreateManyProductTypeInput {
+  dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  description: Scalars["String"]["input"];
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name: Scalars["String"]["input"];
+  price: Scalars["Float"]["input"];
+}
+
+export interface ProductCreateManyProductTypeInputEnvelope {
+  data: Array<ProductCreateManyProductTypeInput>;
+}
+
+export interface ProductCreateNestedManyWithoutProductTypeInput {
+  connect?: InputMaybe<Array<ProductWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<ProductCreateOrConnectWithoutProductTypeInput>
+  >;
+  create?: InputMaybe<Array<ProductCreateWithoutProductTypeInput>>;
+  createMany?: InputMaybe<ProductCreateManyProductTypeInputEnvelope>;
 }
 
 export interface ProductCreateNestedOneWithoutInventoryInput {
@@ -2220,40 +2356,57 @@ export interface ProductCreateOrConnectWithoutProductSalesInput {
   where: ProductWhereUniqueInput;
 }
 
+export interface ProductCreateOrConnectWithoutProductTypeInput {
+  create: ProductCreateWithoutProductTypeInput;
+  where: ProductWhereUniqueInput;
+}
+
 export interface ProductCreateWithoutInventoryInput {
   ProductColor?: InputMaybe<ProductColorCreateNestedManyWithoutProductInput>;
   ProductSales?: InputMaybe<ProductSalesCreateNestedManyWithoutProductInput>;
+  ProductType?: InputMaybe<ProductTypeCreateNestedOneWithoutProductInput>;
   dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   description: Scalars["String"]["input"];
   id?: InputMaybe<Scalars["String"]["input"]>;
   name: Scalars["String"]["input"];
   price: Scalars["Float"]["input"];
-  type: Scalars["String"]["input"];
 }
 
 export interface ProductCreateWithoutProductColorInput {
   Inventory?: InputMaybe<InventoryCreateNestedManyWithoutProductInput>;
   ProductSales?: InputMaybe<ProductSalesCreateNestedManyWithoutProductInput>;
+  ProductType?: InputMaybe<ProductTypeCreateNestedOneWithoutProductInput>;
   dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   description: Scalars["String"]["input"];
   id?: InputMaybe<Scalars["String"]["input"]>;
   name: Scalars["String"]["input"];
   price: Scalars["Float"]["input"];
-  type: Scalars["String"]["input"];
 }
 
 export interface ProductCreateWithoutProductSalesInput {
   Inventory?: InputMaybe<InventoryCreateNestedManyWithoutProductInput>;
   ProductColor?: InputMaybe<ProductColorCreateNestedManyWithoutProductInput>;
+  ProductType?: InputMaybe<ProductTypeCreateNestedOneWithoutProductInput>;
   dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   description: Scalars["String"]["input"];
   id?: InputMaybe<Scalars["String"]["input"]>;
   name: Scalars["String"]["input"];
   price: Scalars["Float"]["input"];
-  type: Scalars["String"]["input"];
+}
+
+export interface ProductCreateWithoutProductTypeInput {
+  Inventory?: InputMaybe<InventoryCreateNestedManyWithoutProductInput>;
+  ProductColor?: InputMaybe<ProductColorCreateNestedManyWithoutProductInput>;
+  ProductSales?: InputMaybe<ProductSalesCreateNestedManyWithoutProductInput>;
+  dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  description: Scalars["String"]["input"];
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name: Scalars["String"]["input"];
+  price: Scalars["Float"]["input"];
 }
 
 export interface ProductGroupBy {
@@ -2268,7 +2421,13 @@ export interface ProductGroupBy {
   id: Scalars["String"]["output"];
   name: Scalars["String"]["output"];
   price: Scalars["Float"]["output"];
-  type: Scalars["String"]["output"];
+  productTypeId?: Maybe<Scalars["String"]["output"]>;
+}
+
+export interface ProductListRelationFilter {
+  every?: InputMaybe<ProductWhereInput>;
+  none?: InputMaybe<ProductWhereInput>;
+  some?: InputMaybe<ProductWhereInput>;
 }
 
 export interface ProductMaxAggregate {
@@ -2278,7 +2437,7 @@ export interface ProductMaxAggregate {
   id?: Maybe<Scalars["String"]["output"]>;
   name?: Maybe<Scalars["String"]["output"]>;
   price?: Maybe<Scalars["Float"]["output"]>;
-  type?: Maybe<Scalars["String"]["output"]>;
+  productTypeId?: Maybe<Scalars["String"]["output"]>;
 }
 
 export interface ProductMaxOrderByAggregateInput {
@@ -2288,7 +2447,7 @@ export interface ProductMaxOrderByAggregateInput {
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   price?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
+  productTypeId?: InputMaybe<SortOrder>;
 }
 
 export interface ProductMinAggregate {
@@ -2298,7 +2457,7 @@ export interface ProductMinAggregate {
   id?: Maybe<Scalars["String"]["output"]>;
   name?: Maybe<Scalars["String"]["output"]>;
   price?: Maybe<Scalars["Float"]["output"]>;
-  type?: Maybe<Scalars["String"]["output"]>;
+  productTypeId?: Maybe<Scalars["String"]["output"]>;
 }
 
 export interface ProductMinOrderByAggregateInput {
@@ -2308,7 +2467,11 @@ export interface ProductMinOrderByAggregateInput {
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   price?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
+  productTypeId?: InputMaybe<SortOrder>;
+}
+
+export interface ProductOrderByRelationAggregateInput {
+  _count?: InputMaybe<SortOrder>;
 }
 
 export interface ProductOrderByWithAggregationInput {
@@ -2323,20 +2486,21 @@ export interface ProductOrderByWithAggregationInput {
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   price?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
+  productTypeId?: InputMaybe<SortOrderInput>;
 }
 
 export interface ProductOrderByWithRelationInput {
   Inventory?: InputMaybe<InventoryOrderByRelationAggregateInput>;
   ProductColor?: InputMaybe<ProductColorOrderByRelationAggregateInput>;
   ProductSales?: InputMaybe<ProductSalesOrderByRelationAggregateInput>;
+  ProductType?: InputMaybe<ProductTypeOrderByWithRelationInput>;
   dateCreated?: InputMaybe<SortOrder>;
   dateUpdated?: InputMaybe<SortOrder>;
   description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   price?: InputMaybe<SortOrder>;
-  type?: InputMaybe<SortOrder>;
+  productTypeId?: InputMaybe<SortOrderInput>;
 }
 
 export interface ProductRelationFilter {
@@ -2876,7 +3040,20 @@ export enum ProductScalarFieldEnum {
   Id = 3,
   Name = 4,
   Price = 5,
-  Type = 6,
+  ProductTypeId = 6,
+}
+
+export interface ProductScalarWhereInput {
+  AND?: InputMaybe<Array<ProductScalarWhereInput>>;
+  NOT?: InputMaybe<Array<ProductScalarWhereInput>>;
+  OR?: InputMaybe<Array<ProductScalarWhereInput>>;
+  dateCreated?: InputMaybe<DateTimeFilter>;
+  dateUpdated?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringFilter>;
+  id?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  price?: InputMaybe<FloatFilter>;
+  productTypeId?: InputMaybe<StringNullableFilter>;
 }
 
 export interface ProductScalarWhereWithAggregatesInput {
@@ -2889,7 +3066,7 @@ export interface ProductScalarWhereWithAggregatesInput {
   id?: InputMaybe<StringWithAggregatesFilter>;
   name?: InputMaybe<StringWithAggregatesFilter>;
   price?: InputMaybe<FloatWithAggregatesFilter>;
-  type?: InputMaybe<StringWithAggregatesFilter>;
+  productTypeId?: InputMaybe<StringNullableWithAggregatesFilter>;
 }
 
 export interface ProductSumAggregate {
@@ -2900,17 +3077,234 @@ export interface ProductSumOrderByAggregateInput {
   price?: InputMaybe<SortOrder>;
 }
 
+export interface ProductType {
+  Product: Array<Product>;
+  _count?: Maybe<ProductTypeCount>;
+  dateCreated: Scalars["DateTimeISO"]["output"];
+  dateUpdated: Scalars["DateTimeISO"]["output"];
+  id: Scalars["String"]["output"];
+  name: Scalars["String"]["output"];
+}
+
+export interface ProductTypeProductArgs {
+  cursor?: InputMaybe<ProductWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ProductScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ProductOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductWhereInput>;
+}
+
+export interface ProductTypeCount {
+  Product: Scalars["Int"]["output"];
+}
+
+export interface ProductTypeCountProductArgs {
+  where?: InputMaybe<ProductWhereInput>;
+}
+
+export interface ProductTypeCountAggregate {
+  _all: Scalars["Int"]["output"];
+  dateCreated: Scalars["Int"]["output"];
+  dateUpdated: Scalars["Int"]["output"];
+  id: Scalars["Int"]["output"];
+  name: Scalars["Int"]["output"];
+}
+
+export interface ProductTypeCountOrderByAggregateInput {
+  dateCreated?: InputMaybe<SortOrder>;
+  dateUpdated?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+}
+
+export interface ProductTypeCreateInput {
+  Product?: InputMaybe<ProductCreateNestedManyWithoutProductTypeInput>;
+  dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name: Scalars["String"]["input"];
+}
+
+export interface ProductTypeCreateManyInput {
+  dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name: Scalars["String"]["input"];
+}
+
+export interface ProductTypeCreateNestedOneWithoutProductInput {
+  connect?: InputMaybe<ProductTypeWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ProductTypeCreateOrConnectWithoutProductInput>;
+  create?: InputMaybe<ProductTypeCreateWithoutProductInput>;
+}
+
+export interface ProductTypeCreateOrConnectWithoutProductInput {
+  create: ProductTypeCreateWithoutProductInput;
+  where: ProductTypeWhereUniqueInput;
+}
+
+export interface ProductTypeCreateWithoutProductInput {
+  dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name: Scalars["String"]["input"];
+}
+
+export interface ProductTypeGroupBy {
+  _count?: Maybe<ProductTypeCountAggregate>;
+  _max?: Maybe<ProductTypeMaxAggregate>;
+  _min?: Maybe<ProductTypeMinAggregate>;
+  dateCreated: Scalars["DateTimeISO"]["output"];
+  dateUpdated: Scalars["DateTimeISO"]["output"];
+  id: Scalars["String"]["output"];
+  name: Scalars["String"]["output"];
+}
+
+export interface ProductTypeMaxAggregate {
+  dateCreated?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  dateUpdated?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  id?: Maybe<Scalars["String"]["output"]>;
+  name?: Maybe<Scalars["String"]["output"]>;
+}
+
+export interface ProductTypeMaxOrderByAggregateInput {
+  dateCreated?: InputMaybe<SortOrder>;
+  dateUpdated?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+}
+
+export interface ProductTypeMinAggregate {
+  dateCreated?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  dateUpdated?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  id?: Maybe<Scalars["String"]["output"]>;
+  name?: Maybe<Scalars["String"]["output"]>;
+}
+
+export interface ProductTypeMinOrderByAggregateInput {
+  dateCreated?: InputMaybe<SortOrder>;
+  dateUpdated?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+}
+
+export interface ProductTypeNullableRelationFilter {
+  is?: InputMaybe<ProductTypeWhereInput>;
+  isNot?: InputMaybe<ProductTypeWhereInput>;
+}
+
+export interface ProductTypeOrderByWithAggregationInput {
+  _count?: InputMaybe<ProductTypeCountOrderByAggregateInput>;
+  _max?: InputMaybe<ProductTypeMaxOrderByAggregateInput>;
+  _min?: InputMaybe<ProductTypeMinOrderByAggregateInput>;
+  dateCreated?: InputMaybe<SortOrder>;
+  dateUpdated?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+}
+
+export interface ProductTypeOrderByWithRelationInput {
+  Product?: InputMaybe<ProductOrderByRelationAggregateInput>;
+  dateCreated?: InputMaybe<SortOrder>;
+  dateUpdated?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+}
+
+export enum ProductTypeScalarFieldEnum {
+  DateCreated = 0,
+  DateUpdated = 1,
+  Id = 2,
+  Name = 3,
+}
+
+export interface ProductTypeScalarWhereWithAggregatesInput {
+  AND?: InputMaybe<Array<ProductTypeScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<ProductTypeScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<ProductTypeScalarWhereWithAggregatesInput>>;
+  dateCreated?: InputMaybe<DateTimeWithAggregatesFilter>;
+  dateUpdated?: InputMaybe<DateTimeWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  name?: InputMaybe<StringWithAggregatesFilter>;
+}
+
+export interface ProductTypeUpdateInput {
+  Product?: InputMaybe<ProductUpdateManyWithoutProductTypeNestedInput>;
+  dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface ProductTypeUpdateManyMutationInput {
+  dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface ProductTypeUpdateOneWithoutProductNestedInput {
+  connect?: InputMaybe<ProductTypeWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ProductTypeCreateOrConnectWithoutProductInput>;
+  create?: InputMaybe<ProductTypeCreateWithoutProductInput>;
+  delete?: InputMaybe<ProductTypeWhereInput>;
+  disconnect?: InputMaybe<ProductTypeWhereInput>;
+  update?: InputMaybe<ProductTypeUpdateToOneWithWhereWithoutProductInput>;
+  upsert?: InputMaybe<ProductTypeUpsertWithoutProductInput>;
+}
+
+export interface ProductTypeUpdateToOneWithWhereWithoutProductInput {
+  data: ProductTypeUpdateWithoutProductInput;
+  where?: InputMaybe<ProductTypeWhereInput>;
+}
+
+export interface ProductTypeUpdateWithoutProductInput {
+  dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface ProductTypeUpsertWithoutProductInput {
+  create: ProductTypeCreateWithoutProductInput;
+  update: ProductTypeUpdateWithoutProductInput;
+  where?: InputMaybe<ProductTypeWhereInput>;
+}
+
+export interface ProductTypeWhereInput {
+  AND?: InputMaybe<Array<ProductTypeWhereInput>>;
+  NOT?: InputMaybe<Array<ProductTypeWhereInput>>;
+  OR?: InputMaybe<Array<ProductTypeWhereInput>>;
+  Product?: InputMaybe<ProductListRelationFilter>;
+  dateCreated?: InputMaybe<DateTimeFilter>;
+  dateUpdated?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+}
+
+export interface ProductTypeWhereUniqueInput {
+  AND?: InputMaybe<Array<ProductTypeWhereInput>>;
+  NOT?: InputMaybe<Array<ProductTypeWhereInput>>;
+  OR?: InputMaybe<Array<ProductTypeWhereInput>>;
+  Product?: InputMaybe<ProductListRelationFilter>;
+  dateCreated?: InputMaybe<DateTimeFilter>;
+  dateUpdated?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name?: InputMaybe<StringFilter>;
+}
+
 export interface ProductUpdateInput {
   Inventory?: InputMaybe<InventoryUpdateManyWithoutProductNestedInput>;
   ProductColor?: InputMaybe<ProductColorUpdateManyWithoutProductNestedInput>;
   ProductSales?: InputMaybe<ProductSalesUpdateManyWithoutProductNestedInput>;
+  ProductType?: InputMaybe<ProductTypeUpdateOneWithoutProductNestedInput>;
   dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
   price?: InputMaybe<Scalars["Float"]["input"]>;
-  type?: InputMaybe<Scalars["String"]["input"]>;
 }
 
 export interface ProductUpdateManyMutationInput {
@@ -2920,7 +3314,33 @@ export interface ProductUpdateManyMutationInput {
   id?: InputMaybe<Scalars["String"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
   price?: InputMaybe<Scalars["Float"]["input"]>;
-  type?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface ProductUpdateManyWithWhereWithoutProductTypeInput {
+  data: ProductUpdateManyMutationInput;
+  where: ProductScalarWhereInput;
+}
+
+export interface ProductUpdateManyWithoutProductTypeNestedInput {
+  connect?: InputMaybe<Array<ProductWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<ProductCreateOrConnectWithoutProductTypeInput>
+  >;
+  create?: InputMaybe<Array<ProductCreateWithoutProductTypeInput>>;
+  createMany?: InputMaybe<ProductCreateManyProductTypeInputEnvelope>;
+  delete?: InputMaybe<Array<ProductWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<ProductScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<ProductWhereUniqueInput>>;
+  set?: InputMaybe<Array<ProductWhereUniqueInput>>;
+  update?: InputMaybe<
+    Array<ProductUpdateWithWhereUniqueWithoutProductTypeInput>
+  >;
+  updateMany?: InputMaybe<
+    Array<ProductUpdateManyWithWhereWithoutProductTypeInput>
+  >;
+  upsert?: InputMaybe<
+    Array<ProductUpsertWithWhereUniqueWithoutProductTypeInput>
+  >;
 }
 
 export interface ProductUpdateOneRequiredWithoutInventoryNestedInput {
@@ -2962,40 +3382,63 @@ export interface ProductUpdateToOneWithWhereWithoutProductSalesInput {
   where?: InputMaybe<ProductWhereInput>;
 }
 
+export interface ProductUpdateWithWhereUniqueWithoutProductTypeInput {
+  data: ProductUpdateWithoutProductTypeInput;
+  where: ProductWhereUniqueInput;
+}
+
 export interface ProductUpdateWithoutInventoryInput {
   ProductColor?: InputMaybe<ProductColorUpdateManyWithoutProductNestedInput>;
   ProductSales?: InputMaybe<ProductSalesUpdateManyWithoutProductNestedInput>;
+  ProductType?: InputMaybe<ProductTypeUpdateOneWithoutProductNestedInput>;
   dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
   price?: InputMaybe<Scalars["Float"]["input"]>;
-  type?: InputMaybe<Scalars["String"]["input"]>;
 }
 
 export interface ProductUpdateWithoutProductColorInput {
   Inventory?: InputMaybe<InventoryUpdateManyWithoutProductNestedInput>;
   ProductSales?: InputMaybe<ProductSalesUpdateManyWithoutProductNestedInput>;
+  ProductType?: InputMaybe<ProductTypeUpdateOneWithoutProductNestedInput>;
   dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
   price?: InputMaybe<Scalars["Float"]["input"]>;
-  type?: InputMaybe<Scalars["String"]["input"]>;
 }
 
 export interface ProductUpdateWithoutProductSalesInput {
   Inventory?: InputMaybe<InventoryUpdateManyWithoutProductNestedInput>;
   ProductColor?: InputMaybe<ProductColorUpdateManyWithoutProductNestedInput>;
+  ProductType?: InputMaybe<ProductTypeUpdateOneWithoutProductNestedInput>;
   dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   description?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["String"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
   price?: InputMaybe<Scalars["Float"]["input"]>;
-  type?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface ProductUpdateWithoutProductTypeInput {
+  Inventory?: InputMaybe<InventoryUpdateManyWithoutProductNestedInput>;
+  ProductColor?: InputMaybe<ProductColorUpdateManyWithoutProductNestedInput>;
+  ProductSales?: InputMaybe<ProductSalesUpdateManyWithoutProductNestedInput>;
+  dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  description?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["String"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  price?: InputMaybe<Scalars["Float"]["input"]>;
+}
+
+export interface ProductUpsertWithWhereUniqueWithoutProductTypeInput {
+  create: ProductCreateWithoutProductTypeInput;
+  update: ProductUpdateWithoutProductTypeInput;
+  where: ProductWhereUniqueInput;
 }
 
 export interface ProductUpsertWithoutInventoryInput {
@@ -3023,13 +3466,14 @@ export interface ProductWhereInput {
   OR?: InputMaybe<Array<ProductWhereInput>>;
   ProductColor?: InputMaybe<ProductColorListRelationFilter>;
   ProductSales?: InputMaybe<ProductSalesListRelationFilter>;
+  ProductType?: InputMaybe<ProductTypeNullableRelationFilter>;
   dateCreated?: InputMaybe<DateTimeFilter>;
   dateUpdated?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   price?: InputMaybe<FloatFilter>;
-  type?: InputMaybe<StringFilter>;
+  productTypeId?: InputMaybe<StringNullableFilter>;
 }
 
 export interface ProductWhereUniqueInput {
@@ -3039,13 +3483,14 @@ export interface ProductWhereUniqueInput {
   OR?: InputMaybe<Array<ProductWhereInput>>;
   ProductColor?: InputMaybe<ProductColorListRelationFilter>;
   ProductSales?: InputMaybe<ProductSalesListRelationFilter>;
+  ProductType?: InputMaybe<ProductTypeNullableRelationFilter>;
   dateCreated?: InputMaybe<DateTimeFilter>;
   dateUpdated?: InputMaybe<DateTimeFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<Scalars["String"]["input"]>;
   name?: InputMaybe<StringFilter>;
   price?: InputMaybe<FloatFilter>;
-  type?: InputMaybe<StringFilter>;
+  productTypeId?: InputMaybe<StringNullableFilter>;
 }
 
 export interface Query {
@@ -3056,6 +3501,7 @@ export interface Query {
   aggregateProduct: AggregateProduct;
   aggregateProductColor: AggregateProductColor;
   aggregateProductSales: AggregateProductSales;
+  aggregateProductType: AggregateProductType;
   aggregateUser: AggregateUser;
   color?: Maybe<Color>;
   colors: Array<Color>;
@@ -3075,6 +3521,8 @@ export interface Query {
   findFirstProductOrThrow?: Maybe<Product>;
   findFirstProductSales?: Maybe<ProductSales>;
   findFirstProductSalesOrThrow?: Maybe<ProductSales>;
+  findFirstProductType?: Maybe<ProductType>;
+  findFirstProductTypeOrThrow?: Maybe<ProductType>;
   findFirstUser?: Maybe<User>;
   findFirstUserOrThrow?: Maybe<User>;
   findManyProductSales: Array<ProductSales>;
@@ -3086,6 +3534,7 @@ export interface Query {
   getLoginHistory?: Maybe<LoginHistory>;
   getProduct?: Maybe<Product>;
   getProductColor?: Maybe<ProductColor>;
+  getProductType?: Maybe<ProductType>;
   getUser?: Maybe<User>;
   groupByColor: Array<ColorGroupBy>;
   groupByCustomer: Array<CustomerGroupBy>;
@@ -3094,6 +3543,7 @@ export interface Query {
   groupByProduct: Array<ProductGroupBy>;
   groupByProductColor: Array<ProductColorGroupBy>;
   groupByProductSales: Array<ProductSalesGroupBy>;
+  groupByProductType: Array<ProductTypeGroupBy>;
   groupByUser: Array<UserGroupBy>;
   inventories: Array<Inventory>;
   inventory?: Maybe<Inventory>;
@@ -3102,6 +3552,8 @@ export interface Query {
   product?: Maybe<Product>;
   productColor?: Maybe<ProductColor>;
   productColors: Array<ProductColor>;
+  productType?: Maybe<ProductType>;
+  productTypes: Array<ProductType>;
   products: Array<Product>;
   signIn: Scalars["String"]["output"];
   signOut: Scalars["Boolean"]["output"];
@@ -3164,6 +3616,14 @@ export interface QueryAggregateProductSalesArgs {
   skip?: InputMaybe<Scalars["Int"]["input"]>;
   take?: InputMaybe<Scalars["Int"]["input"]>;
   where?: InputMaybe<ProductSalesWhereInput>;
+}
+
+export interface QueryAggregateProductTypeArgs {
+  cursor?: InputMaybe<ProductTypeWhereUniqueInput>;
+  orderBy?: InputMaybe<Array<ProductTypeOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductTypeWhereInput>;
 }
 
 export interface QueryAggregateUserArgs {
@@ -3326,6 +3786,24 @@ export interface QueryFindFirstProductSalesOrThrowArgs {
   where?: InputMaybe<ProductSalesWhereInput>;
 }
 
+export interface QueryFindFirstProductTypeArgs {
+  cursor?: InputMaybe<ProductTypeWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ProductTypeScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ProductTypeOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductTypeWhereInput>;
+}
+
+export interface QueryFindFirstProductTypeOrThrowArgs {
+  cursor?: InputMaybe<ProductTypeWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ProductTypeScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ProductTypeOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductTypeWhereInput>;
+}
+
 export interface QueryFindFirstUserArgs {
   cursor?: InputMaybe<UserWhereUniqueInput>;
   distinct?: InputMaybe<Array<UserScalarFieldEnum>>;
@@ -3383,6 +3861,10 @@ export interface QueryGetProductArgs {
 
 export interface QueryGetProductColorArgs {
   where: ProductColorWhereUniqueInput;
+}
+
+export interface QueryGetProductTypeArgs {
+  where: ProductTypeWhereUniqueInput;
 }
 
 export interface QueryGetUserArgs {
@@ -3452,6 +3934,15 @@ export interface QueryGroupByProductSalesArgs {
   where?: InputMaybe<ProductSalesWhereInput>;
 }
 
+export interface QueryGroupByProductTypeArgs {
+  by: Array<ProductTypeScalarFieldEnum>;
+  having?: InputMaybe<ProductTypeScalarWhereWithAggregatesInput>;
+  orderBy?: InputMaybe<Array<ProductTypeOrderByWithAggregationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductTypeWhereInput>;
+}
+
 export interface QueryGroupByUserArgs {
   by: Array<UserScalarFieldEnum>;
   having?: InputMaybe<UserScalarWhereWithAggregatesInput>;
@@ -3504,6 +3995,19 @@ export interface QueryProductColorsArgs {
   where?: InputMaybe<ProductColorWhereInput>;
 }
 
+export interface QueryProductTypeArgs {
+  where: ProductTypeWhereUniqueInput;
+}
+
+export interface QueryProductTypesArgs {
+  cursor?: InputMaybe<ProductTypeWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ProductTypeScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ProductTypeOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductTypeWhereInput>;
+}
+
 export interface QueryProductsArgs {
   cursor?: InputMaybe<ProductWhereUniqueInput>;
   distinct?: InputMaybe<Array<ProductScalarFieldEnum>>;
@@ -3540,6 +4044,11 @@ export enum SortOrder {
   Desc = 1,
 }
 
+export interface SortOrderInput {
+  nulls?: InputMaybe<NullsOrder>;
+  sort: SortOrder;
+}
+
 export interface StringFilter {
   contains?: InputMaybe<Scalars["String"]["input"]>;
   endsWith?: InputMaybe<Scalars["String"]["input"]>;
@@ -3550,6 +4059,37 @@ export interface StringFilter {
   lt?: InputMaybe<Scalars["String"]["input"]>;
   lte?: InputMaybe<Scalars["String"]["input"]>;
   not?: InputMaybe<NestedStringFilter>;
+  notIn?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  startsWith?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface StringNullableFilter {
+  contains?: InputMaybe<Scalars["String"]["input"]>;
+  endsWith?: InputMaybe<Scalars["String"]["input"]>;
+  equals?: InputMaybe<Scalars["String"]["input"]>;
+  gt?: InputMaybe<Scalars["String"]["input"]>;
+  gte?: InputMaybe<Scalars["String"]["input"]>;
+  in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  lt?: InputMaybe<Scalars["String"]["input"]>;
+  lte?: InputMaybe<Scalars["String"]["input"]>;
+  not?: InputMaybe<NestedStringNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  startsWith?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface StringNullableWithAggregatesFilter {
+  _count?: InputMaybe<NestedIntNullableFilter>;
+  _max?: InputMaybe<NestedStringNullableFilter>;
+  _min?: InputMaybe<NestedStringNullableFilter>;
+  contains?: InputMaybe<Scalars["String"]["input"]>;
+  endsWith?: InputMaybe<Scalars["String"]["input"]>;
+  equals?: InputMaybe<Scalars["String"]["input"]>;
+  gt?: InputMaybe<Scalars["String"]["input"]>;
+  gte?: InputMaybe<Scalars["String"]["input"]>;
+  in?: InputMaybe<Array<Scalars["String"]["input"]>>;
+  lt?: InputMaybe<Scalars["String"]["input"]>;
+  lte?: InputMaybe<Scalars["String"]["input"]>;
+  not?: InputMaybe<NestedStringNullableWithAggregatesFilter>;
   notIn?: InputMaybe<Array<Scalars["String"]["input"]>>;
   startsWith?: InputMaybe<Scalars["String"]["input"]>;
 }
@@ -4000,6 +4540,12 @@ export type GetProductsQuery = {
   }>;
 };
 
+export type GetProductTypesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetProductTypesQuery = {
+  productTypes: Array<{ id: string; name: string }>;
+};
+
 export type GetUsersQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetUsersQuery = {
@@ -4364,6 +4910,35 @@ export const GetProductsDocument = {
     },
   ],
 } as unknown as DocumentNode<GetProductsQuery, GetProductsQueryVariables>;
+export const GetProductTypesDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "getProductTypes" },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "productTypes" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetProductTypesQuery,
+  GetProductTypesQueryVariables
+>;
 export const GetUsersDocument = {
   kind: "Document",
   definitions: [

@@ -1,13 +1,18 @@
-import { Signal, SignalWatcher } from '@lit-labs/signals';
-import { provide } from '@lit/context';
-import { LitElement, css, html } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import type { Router } from '@lit-labs/router';
+import { html } from '@lit-labs/signals';
+import { useEffect, useState } from 'haunted';
+import { css } from 'lit';
+
+import { define, useStyles } from '@mui/core';
 
 import { validate } from '@/auth/auth.js';
-import { isSignedInContext, isSignedInSignal } from '@/auth/is-signed-in.js';
-import { createRouter, initNavigation, navigate } from '@/router/index.js';
-import { routes } from '@/router/routes.js';
+import { useIsSignedInWatcher } from '@/auth/is-signed-in.js';
+import { navigate } from '@/router/index.js';
+import { routePaths } from '@/router/route-path.js';
+import '@/auth/is-signed-in.js';
+import '@/router/router-provider.js';
 import '@/components/main/main.js';
+import type { RouterChangedEvent } from '@/router/events.js';
 
 import './header/header.js';
 import './footer/footer.js';
@@ -23,93 +28,59 @@ const styles = css`
     padding-block: 2rem 3rem;
     padding-inline: 3rem;
     background: var(--mui-palette-surface-a10);
-    /* background: linear-gradient
-      45deg,
-      hsla(189, 100%, 50%, 0.4),
-      hsla(321, 100%, 53%, 0.4) 80%
-    ); */
-    /* background: linear-gradient(
-      45deg,
-      hsla(222, 23%, 15%, 0.4) 30%,
-      hsla(321, 100%, 53%, 0.4) 90%
-    ); */
     backdrop-filter: blur(10px);
     z-index: 1;
   }
 `;
 
-@customElement('app-layout')
-export class Layout extends SignalWatcher(LitElement) {
-  static override styles = [styles];
+const Layout = () => {
+  useStyles(styles);
 
-  readonly #router = createRouter(this);
-  #watcher: Signal.subtle.Watcher;
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [router, setRouter] = useState<Router>();
+  const [title, setTitle] = useState('');
+  const { isSignedIn } = useIsSignedInWatcher();
 
-  @state() private _drawerOpen = false;
+  const handleRouterChanged = ({ detail }: RouterChangedEvent) => {
+    setRouter(detail.router);
 
-  @provide({ context: isSignedInContext }) isSignedIn = isSignedInSignal.get();
+    // Override every route's enter method to set the page title.
+    detail.router.routes.map(route => {
+      route.enter = () => {
+        setTitle(route.name);
+        return true;
+      };
+    });
+  };
 
-  async connectedCallback() {
-    super.connectedCallback();
-
-    initNavigation(this.#router);
-
-    this.#watchIsSignedIn();
-
-    // check if user is signed in and if not redirect to login page
-    const valid = await validate();
-    if (!valid) {
-      navigate(routes.login);
+  // Is current user authenticated?
+  useEffect(async () => {
+    if (!(await validate())) {
+      navigate(routePaths.login);
     }
-  }
+  }, []);
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    this.#watcher.unwatch();
-  }
-
-  override render() {
-    return html`
+  return html`
+    <app-router-provider @router-changed=${handleRouterChanged}>
       <app-main
-        .drawerOpen=${this._drawerOpen}
-        @drawer-close=${() => (this._drawerOpen = false)}>
-        <app-header @nav-button-clicked=${this.#showDrawer}></app-header>
-        <article>${this.#router.outlet()}</article>
+        .drawerOpen=${drawerOpen}
+        @drawer-close=${() => setDrawerOpen(false)}>
+        <app-header
+          .isSignedIn=${isSignedIn}
+          .pageTitle=${title}
+          @nav-button-clicked=${() => setDrawerOpen(true)}>
+        </app-header>
+        <article>${router?.outlet()}</article>
         <app-footer></app-footer>
       </app-main>
-    `;
-  }
+    </app-router-provider>
+  `;
+};
 
-  /**
-   * Watch the isSignedIn signal and update the isSignedIn property
-   */
-  #watchIsSignedIn() {
-    // TODO: a utility method should be created to handle this pattern (i.e. computed(() => ...))
-
-    const isSignedIn = new Signal.Computed(() => isSignedInSignal.get());
-
-    this.#watcher = new Signal.subtle.Watcher(async () => {
-      // notify callbacks are not allowed to access signals synchronously
-      await 0;
-      this.isSignedIn = isSignedIn.get();
-      // watchers have to be re-enabled after they run:
-      this.#watcher.watch();
-    });
-
-    this.#watcher.watch(isSignedIn);
-
-    // computed signals are lazy, so we need to read it to run the computation
-    // and notify watchers
-    isSignedIn.get();
-  }
-
-  #showDrawer(): void {
-    this._drawerOpen = true;
-  }
-}
+define('app-layout', Layout);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-layout': Layout;
+    'app-layout': HTMLElement;
   }
 }

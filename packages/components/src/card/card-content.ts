@@ -13,6 +13,7 @@ const styles = css`
     background: var(--_background-color);
     color: var(--mui-card-content-color, var(--_color ));
     padding: 1.1rem 1rem;
+    overflow: hidden;
 
     &:not(:has(+ mui-card-footer)) {
       border-end-start-radius: var(--mui-shape-medium-inner);

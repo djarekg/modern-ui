@@ -2,9 +2,11 @@ import { Hook, type State, hook } from 'haunted';
 
 /**
  * A hook that returns the `this` of the current component.
+ *
+ * @returns {T} the host element.
  */
 export const useHost = hook(
-  class HostHook<T extends Element> extends Hook<[], T, T> {
+  class HostHook<T extends HTMLElement> extends Hook<[], T, T> {
     constructor(
       id: number,
       private el: State<T>,
@@ -17,4 +19,4 @@ export const useHost = hook(
       return this.el.host;
     }
   },
-) as <T extends Element>() => T;
+) as <T extends HTMLElement>() => T;

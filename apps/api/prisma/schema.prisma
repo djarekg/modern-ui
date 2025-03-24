@@ -64,17 +64,26 @@ model Customer {
   productSales ProductSales[]
 }
 
+model ProductType {
+  id          String    @id @default(uuid())
+  name        String
+  dateCreated DateTime  @default(now())
+  dateUpdated DateTime  @updatedAt
+  Product     Product[]
+}
+
 model Product {
-  id           String         @id @default(uuid())
-  name         String
-  description  String
-  price        Float
-  type         String
-  dateCreated  DateTime       @default(now())
-  dateUpdated  DateTime       @updatedAt
-  Inventory    Inventory[]
-  ProductSales ProductSales[]
-  ProductColor ProductColor[]
+  id            String         @id @default(uuid())
+  name          String
+  description   String
+  price         Float
+  dateCreated   DateTime       @default(now())
+  dateUpdated   DateTime       @updatedAt
+  Inventory     Inventory[]
+  ProductSales  ProductSales[]
+  ProductColor  ProductColor[]
+  ProductType   ProductType?   @relation(fields: [productTypeId], references: [id])
+  productTypeId String?
 }
 
 // enum ProductType {
