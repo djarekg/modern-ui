@@ -23,7 +23,7 @@ import { routes } from './routes.js';
  * <app-router-provider /@router-changed="..."></app-router-provider>
  * ```
  */
-@customElement('app-router-provider')
+@customElement('app-router-provider-element')
 export class RouterProviderElement extends LitElement {
   constructor() {
     super();
@@ -38,6 +38,6 @@ export class RouterProviderElement extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-router-provider': RouterProviderElement;
+    'app-router-provider-element': RouterProviderElement;
   }
 }

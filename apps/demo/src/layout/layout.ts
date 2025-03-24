@@ -10,7 +10,7 @@ import { useIsSignedInWatcher } from '@/auth/is-signed-in.js';
 import { navigate } from '@/router/index.js';
 import { routePaths } from '@/router/route-path.js';
 import '@/auth/is-signed-in.js';
-import '@/router/router-provider.js';
+import '@/router/router-provider-element.js';
 import '@/components/main/main.js';
 import type { RouterChangedEvent } from '@/router/events.js';
 
@@ -61,7 +61,7 @@ const Layout = () => {
   }, []);
 
   return html`
-    <app-router-provider @router-changed=${handleRouterChanged}>
+    <app-router-provider-element @router-changed=${handleRouterChanged}>
       <app-main
         .drawerOpen=${drawerOpen}
         @drawer-close=${() => setDrawerOpen(false)}>
@@ -73,7 +73,7 @@ const Layout = () => {
         <article>${router?.outlet()}</article>
         <app-footer></app-footer>
       </app-main>
-    </app-router-provider>
+    </app-router-provider-element>
   `;
 };
 
