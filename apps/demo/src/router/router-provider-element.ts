@@ -25,8 +25,8 @@ import { routes } from './routes.js';
  */
 @customElement('app-router-provider-element')
 export class RouterProviderElement extends LitElement {
-  constructor() {
-    super();
+  connectedCallback() {
+    super.connectedCallback();
 
     const router = new Router(this, routes);
     subscribeToPushState(router);
