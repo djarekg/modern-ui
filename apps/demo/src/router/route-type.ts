@@ -1,7 +1,7 @@
 /**
  * Type safe route paths.
  */
-export const routePaths = {
+export const routeType = {
   home: '/',
   login: '/auth/login',
   users: '/users',

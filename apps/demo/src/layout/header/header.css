@@ -53,3 +53,7 @@ section {
   gap: 1rem;
   align-items: center;
 }
+
+.title {
+  font-size: 1.5rem;
+}

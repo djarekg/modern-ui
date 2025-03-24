@@ -9,7 +9,7 @@ import { type TypedEvent, define, isEmpty, useStyles } from '@mui/core';
 
 import { signIn } from '@/auth/auth.js';
 import { navigate } from '@/router/index.js';
-import { routePaths } from '@/router/route-path.js';
+import { routeType } from '@/router/route-type.js';
 
 import styles from './login.css?inline';
 
@@ -45,7 +45,7 @@ const LoginPage = () => {
 
     const signedIn = await signIn(userName.get(), password.get());
     if (signedIn) {
-      navigate(routePaths.home);
+      navigate(routeType.home);
     }
   };
 

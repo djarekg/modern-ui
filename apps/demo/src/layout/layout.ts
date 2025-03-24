@@ -1,6 +1,6 @@
 import type { Router } from '@lit-labs/router';
 import { html } from '@lit-labs/signals';
-import { useEffect, useState } from 'haunted';
+import { useCallback, useEffect, useState } from 'haunted';
 import { css } from 'lit';
 
 import { define, useStyles } from '@mui/core';
@@ -8,9 +8,10 @@ import { define, useStyles } from '@mui/core';
 import { validate } from '@/auth/auth.js';
 import { useIsSignedInWatcher } from '@/auth/is-signed-in.js';
 import { navigate } from '@/router/index.js';
-import { routePaths } from '@/router/route-path.js';
+import { routeType } from '@/router/route-type.js';
 import '@/auth/is-signed-in.js';
 import '@/router/router-provider-element.js';
+import '@/router/router-consumer-element.js';
 import '@/components/main/main.js';
 import type { RouterChangedEvent } from '@/router/events.js';
 
@@ -41,39 +42,52 @@ const Layout = () => {
   const [title, setTitle] = useState('');
   const { isSignedIn } = useIsSignedInWatcher();
 
-  const handleRouterChanged = ({ detail }: RouterChangedEvent) => {
-    setRouter(detail.router);
+  const handleRouterChanged = useCallback(
+    ({ detail }: RouterChangedEvent) => {
+      const _router = detail.router;
 
-    // Override every route's enter method to set the page title.
-    detail.router.routes.map(route => {
-      route.enter = () => {
-        setTitle(route.name);
-        return true;
-      };
-    });
-  };
+      setRouter(_router);
+
+      // Override every route's enter method to set the page title.
+      _router.routes.map(route => {
+        const origEnter = route.enter;
+
+        route.enter = async params => {
+          if (origEnter) {
+            await origEnter(params);
+          }
+
+          setTitle(route.name);
+          return true;
+        };
+      });
+    },
+    [router],
+  );
 
   // Is current user authenticated?
   useEffect(async () => {
     if (!(await validate())) {
-      navigate(routePaths.login);
+      navigate(routeType.login);
     }
   }, []);
 
   return html`
-    <app-router-provider-element @router-changed=${handleRouterChanged}>
-      <app-main
-        .drawerOpen=${drawerOpen}
-        @drawer-close=${() => setDrawerOpen(false)}>
-        <app-header
-          .isSignedIn=${isSignedIn}
-          .pageTitle=${title}
-          @nav-button-clicked=${() => setDrawerOpen(true)}>
-        </app-header>
-        <article>${router?.outlet()}</article>
-        <app-footer></app-footer>
-      </app-main>
+    <app-router-provider-element>
+      <app-router-consumer-element @router-changed=${handleRouterChanged}>
+      </app-router-consumer-element>
     </app-router-provider-element>
+    <app-main
+      .drawerOpen=${drawerOpen}
+      @drawer-close=${() => setDrawerOpen(false)}>
+      <app-header
+        .isSignedIn=${isSignedIn}
+        .pageTitle=${title}
+        @nav-button-clicked=${() => setDrawerOpen(true)}>
+      </app-header>
+      <article>${router?.outlet()}</article>
+      <app-footer></app-footer>
+    </app-main>
   `;
 };
 

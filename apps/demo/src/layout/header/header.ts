@@ -5,7 +5,7 @@ import { define, useHost, useStyles } from '@mui/core';
 
 import { signOut } from '@/auth/auth.js';
 import { navigate } from '@/router/index.js';
-import { routePaths } from '@/router/route-path.js';
+import { routeType } from '@/router/route-type.js';
 import { getUserId } from '@/utils/cache-util.js';
 import { confirm } from '@mui/components';
 
@@ -24,7 +24,7 @@ const Header = ({ isSignedIn, pageTitle }: HeaderProps) => {
   const handleSignOut = useCallback(async () => {
     if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {
       if (await signOut()) {
-        navigate(routePaths.login);
+        navigate(routeType.login);
       }
     }
   }, []);
@@ -62,7 +62,7 @@ const Header = ({ isSignedIn, pageTitle }: HeaderProps) => {
           <mui-menu id="profileMenu" icon="account_circle">
             <ul>
               <li>
-                <a class="link" href=${`${routePaths.users}/${getUserId()}`}>
+                <a class="link" href=${`${routeType.users}/${getUserId()}`}>
                   <mui-icon>user_attributes</mui-icon>
                   Profile
                 </a>
@@ -85,7 +85,7 @@ const Header = ({ isSignedIn, pageTitle }: HeaderProps) => {
     <header>
       <nav>
         ${renderNavButton}
-        <a href=${routePaths.home}>
+        <a href=${routeType.home}>
           <img
             src="../../../public/img/token-branded--idia.svg"
             loading="lazy"
@@ -94,7 +94,7 @@ const Header = ({ isSignedIn, pageTitle }: HeaderProps) => {
             height="28" />
         </a>
       </nav>
-      <h2>${pageTitle}</h2>
+      <span class="title">${pageTitle}</span>
       <section>
         ${renderSearch}
         ${renderUserMenu}

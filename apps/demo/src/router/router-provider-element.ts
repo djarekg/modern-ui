@@ -1,39 +1,29 @@
 import { Router } from '@lit-labs/router';
+import { provide } from '@lit/context';
 import { LitElement, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
-import { createRouterChangedEvent } from './events.js';
-import { subscribeToPushState } from './push-state.js';
+import { RouterContext } from './router-context.js';
 import { routes } from './routes.js';
 
 /**
  * Router provider element.
  *
- * Dispatches a router changed event with a new router instance.
- * This is needed because the app mostly is using haunted components and
- * the router requires its owner, a ReactiveControllerHost to be
- * passed in the constructor of the router. By instantiating the router
- * in this custom element, we can use this element in any haunted component
- * and have access to the router instance via the router-changed event.
- *
- * @fires router-changed - Dispatched when the router instance is changed.
- *
- * @example
- * ```html
- * <app-router-provider /@router-changed="..."></app-router-provider>
- * ```
+ * The purpose of this element is to consume the router context and dispatch a router-changed
+ * event when the router changes. Most of the applicaiton uses haunted components, but the Router
+ * requires a LitElement host to work. This element is used to bridge the gap between haunted and
+ * LitElement. By using a custon elememnt, we can include this element and a corresponding
+ * `app-router-consumer-element` in any haunted component to provide access to the router.
  */
 @customElement('app-router-provider-element')
 export class RouterProviderElement extends LitElement {
-  connectedCallback() {
-    super.connectedCallback();
+  @provide({ context: RouterContext })
+  @property({ type: Object })
+  value = new Router(this, routes);
 
-    const router = new Router(this, routes);
-    subscribeToPushState(router);
-    this.dispatchEvent(createRouterChangedEvent(router));
+  render() {
+    html`<slot></slot>`;
   }
-
-  render = () => html`<slot></slot>`;
 }
 
 declare global {
