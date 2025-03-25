@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": false,
   "license": "MIT",
-  "packageManager": "bun@1.1.41",
+  "packageManager": "bun",
   "author": "Dustin Griffith",
   "repository": {
     "type": "git",
@@ -13,16 +13,102 @@
     "bun": ">=1.1.41"
   },
   "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "exports": {
     "./package.json": "./package.json",
     "./theme/theme.css": "./dist/theme/theme.css",
+    "./button/button.js": {
+      "types": "./dist/button/button.d.ts",
+      "import": "./dist/button/button.js"
+    },
     "./button/flat-button.js": {
       "types": "./dist/button/flat-button.d.ts",
       "import": "./dist/button/flat-button.js"
     },
+    "./button/icon-button.js": {
+      "types": "./dist/button/icon-button.d.ts",
+      "import": "./dist/button/icon-button.js"
+    },
+    "./button/link-button.js": {
+      "types": "./dist/button/link-button.d.ts",
+      "import": "./dist/button/link-button.js"
+    },
     "./button/outline-button.js": {
       "types": "./dist/button/outline-button.d.ts",
       "import": "./dist/button/outline-button.js"
+    },
+    "./card/card-content.js": {
+      "types": "./dist/card/card-content.d.ts",
+      "import": "./dist/card/card-content.js"
+    },
+    "./card/card-footer.js": {
+      "types": "./dist/card/card-footer.d.ts",
+      "import": "./dist/card/card-footer.js"
+    },
+    "./card/card-header.js": {
+      "types": "./dist/card/card-header.d.ts",
+      "import": "./dist/card/card-header.js"
+    },
+    "./card/card.js": {
+      "types": "./dist/card/card.d.ts",
+      "import": "./dist/card/card.js"
+    },
+    "./command-palette/command-palette.js": {
+      "types": "./dist/command-palette/command-palette.d.ts",
+      "import": "./dist/command-palette/command-palette.js"
+    },
+    "./dialog/dialog.js": {
+      "types": "./dist/dialog/dialog.d.ts",
+      "import": "./dist/dialog/dialog.js"
+    },
+    "./dialog/confirm.js": {
+      "types": "./dist/dialog/confirm.d.ts",
+      "import": "./dist/dialog/confirm.js"
+    },
+    "./icon/icon.js": {
+      "types": "./dist/icon/icon.d.ts",
+      "import": "./dist/icon/icon.js"
+    },
+    "./list/*.js": {
+      "types": "./dist/list/*.d.ts",
+      "import": "./dist/list/*.js"
+    },
+    "./menu/menu.js": {
+      "types": "./dist/menu/menu.d.ts",
+      "import": "./dist/menu/menu.js"
+    },
+    "./navigation-drawer/navigation-drawer.js": {
+      "types": "./dist/navigation/navigation-drawer.d.ts",
+      "import": "./dist/navigation/navigation-drawer.js"
+    },
+    "./navigation-item/navigation-item.js": {
+      "types": "./dist/navigation/navigation-item.d.ts",
+      "import": "./dist/navigation/navigation-item.js"
+    },
+    "./notifications/toast.js": {
+      "types": "./dist/notifications/toast.d.ts",
+      "import": "./dist/notifications/toast.js"
+    },
+    "./skeleton/skeleton-table.js": {
+      "types": "./dist/skeleton/skeleton-table.d.ts",
+      "import": "./dist/skeleton/skeleton-table.js"
+    },
+    "./skeleton/skeleton.js": {
+      "types": "./dist/skeleton/skeleton.d.ts",
+      "import": "./dist/skeleton/skeleton.js"
+    },
+    "./table/*.js": {
+      "types": "./dist/table/*.d.ts",
+      "import": "./dist/table/*.js"
+    },
+    "./tabs/*.js": {
+      "types": "./dist/tabs/*.d.ts",
+      "import": "./dist/tabs/*.js"
+    },
+    "./text-field/text-field.js": {
+      "types": "./dist/text-field/text-field.d.ts",
+      "import": "./dist/text-field/text-field.js"
     },
     ".": {
       "types": "./dist/index.d.ts",
@@ -34,11 +120,15 @@
     "build": "task build"
   },
   "dependencies": {
-    "@mui/web": "workspace:*",
-    "@open-wc/dedupe-mixin": "^1.4.0"
+    "@lit-labs/observers": "^2.0.5",
+    "@lit-labs/signals": "^0.1.2",
+    "@mui/core": "workspace:*",
+    "@open-wc/dedupe-mixin": "^1.4.0",
+    "haunted": "^6.1.0",
+    "signal-utils": "^0.21.1"
   },
   "peerDependencies": {
     "lit": "^3.2.1",
-    "typescript": "^5"
+    "typescript": "^5.8.2"
   }
 }

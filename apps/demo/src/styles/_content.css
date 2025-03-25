@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+}
+
+.app-container {
+  border: 1px solid var(--mui-palette-surface-a30);
+  border-radius: var(--mui-shape-medium);
+  padding: 1.5rem;
+  box-shadow: var(--mui-elevation-3);
+  background: var(--mui-palette-surface-a0);
+}

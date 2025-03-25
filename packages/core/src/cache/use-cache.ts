@@ -1,4 +1,3 @@
-import memoize from '@github/memoize';
 import { signal } from '@lit-labs/signals';
 import { effect } from 'signal-utils/subtle/microtask-effect';
 
@@ -22,37 +21,37 @@ export const useCache = () => {
   });
 
   // Serialize current cache and save cache to local storage
-  const persistCache = memoize(() => {
+  const persistCache = () => {
     const data = JSON.stringify(Object.fromEntries(cache.get()));
     localStorage.setItem('cache', data);
-  });
+  };
 
   /**
    * Get value from cache
    * @returns cache item stored at key
    */
-  const get = memoize((key: string) => cache.get().get(key));
+  const get = <T = unknown>(key: string): T | undefined => cache.get().get(key) as T;
 
   /**
    * Set a value to cache
    * @param key key of the value
    * @param value value to be stored
    */
-  const set = memoize((key: string, value: unknown) => {
-    cache.set(new Map(cache.get()).set(key, value));
+  const set = (key: string, value: unknown) => {
+    cache.get().set(key, value);
     persistCache();
-  });
+  };
 
   /**
    * Remove a value from cache
    * @param key key of the value
    */
-  const remove = memoize((key: string) => {
+  const remove = (key: string) => {
     const newCache = new Map(cache.get());
     newCache.delete(key);
     cache.set(newCache);
     persistCache();
-  });
+  };
 
   return [get, set, remove] as const;
 };

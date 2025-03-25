@@ -1,20 +1,13 @@
 {
   "configurations": [
     {
-      "name": "Attach to Edge",
-      "port": 4004,
-      "request": "attach",
-      "type": "msedge",
-      "webRoot": "${workspaceFolder}/apps/api"
-    },
-    {
       "name": "Launch api",
       "cwd": "${workspaceFolder}/apps/api",
       "request": "launch",
       "type": "node-terminal",
       "noDebug": false,
       "command": "bun run dev:debug",
-      "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/nodea_modules/@mui/**"],
+      "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/node_modules/@mui/**"],
       "sourceMaps": true,
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
@@ -48,11 +41,10 @@
       "type": "node-terminal",
       "noDebug": false,
       "command": "bun run dev",
-      "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/nodea_modules/@mui/**"],
+      "skipFiles": ["**/<node_internals>/**", "**/node_modules/**", "!**/node_modules/@mui/**"],
       "sourceMaps": true,
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
-      // "preLaunchTask": "Run projects script: dev",
       "presentation": {
         "hidden": false,
         "group": "3",
@@ -60,12 +52,29 @@
       }
     },
     {
-      "name": "Launch demo:client",
+      "name": "Launch demo:client (edge)",
       "type": "pwa-msedge",
       "request": "launch",
       "url": "http://localhost:3003/",
       "webRoot": "${workspaceFolder}/apps/demo/src",
       "userDataDir": "${workspaceFolder}/.out/edge/apps",
+      "internalConsoleOptions": "openOnSessionStart",
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}/apps/demo",
+      "smartStep": true,
+      "presentation": {
+        "hidden": false,
+        "group": "3",
+        "order": 2
+      }
+    },
+    {
+      "name": "Launch demo:client (chrome)",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:3003/",
+      "webRoot": "${workspaceFolder}/apps/demo/src",
+      "userDataDir": "${workspaceFolder}/.out/chrome/apps",
       "internalConsoleOptions": "openOnSessionStart",
       "sourceMaps": true,
       "cwd": "${workspaceFolder}/apps/demo",
@@ -89,8 +98,18 @@
       }
     },
     {
-      "name": "Debug demo",
-      "configurations": ["Launch api", "Launch demo:serve", "Launch demo:client"],
+      "name": "Debug demo (edge)",
+      "configurations": ["Launch api", "Launch demo:serve", "Launch demo:client (edge)"],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "1",
+        "order": 1
+      }
+    },
+    {
+      "name": "Debug demo (chrome)",
+      "configurations": ["Launch api", "Launch demo:serve", "Launch demo:client (chrome)"],
       "stopAll": true,
       "presentation": {
         "hidden": false,

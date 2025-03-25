@@ -1,0 +1,32 @@
+@import "../../styles/_content.css";
+
+:host,
+article {
+  block-size: 100%;
+  inline-size: 100%;
+}
+
+:host {
+  --_tabs-inline-size: 50rem;
+
+  container-type: inline-size;
+  display: block;
+}
+
+@container (max-width: 820px) {
+  mui-tabs {
+    --_tabs-inline-size: 100%;
+  }
+}
+
+mui-tabs {
+  inline-size: var(--_tabs-inline-size);
+  min-inline-size: 450px;
+  margin-block-end: 2rem;
+}
+
+article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

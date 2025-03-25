@@ -1,23 +1,24 @@
-import { LitElement, type TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import css from './index.css?inline';
-import styles from './styles/styles.css?inline';
+import { html, unsafeCSS } from 'lit';
+
+import { define, useStyles } from '@mui/core';
+import '@mui/components/theme/theme.css';
+
 import './layout/header/header.js';
 import './layout/footer/footer.js';
 import './layout/layout.js';
-import '@mui/components/theme/theme.css';
+import css from './index.css?inline';
+import stylesCss from './styles/styles.css?inline';
 
-@customElement('app-index')
-export class Index extends LitElement {
-  static override styles = [unsafeCSS(styles), unsafeCSS(css)];
+const Index = () => {
+  useStyles([unsafeCSS(stylesCss), unsafeCSS(css)]);
 
-  override render(): TemplateResult {
-    return html`<app-layout></app-layout>`;
-  }
-}
+  return html`<app-layout></app-layout>`;
+};
+
+define('app-index', Index);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-index': Index;
+    'app-index': HTMLElement;
   }
 }

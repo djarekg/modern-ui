@@ -12,7 +12,7 @@ tasks:
     internal: true
     desc: Clean the project
     cmds:
-      - bunx rimraf -g **/node_modules **/bun.lockb **/dist
+      - bunx rimraf -g **/node_modules **/bun.lock **/dist
 
   install:workspace:
     desc: Install dependencies

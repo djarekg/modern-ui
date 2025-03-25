@@ -1,29 +1,55 @@
-import { useApi } from '@/hooks/use-api.js';
 import { useCache } from '@mui/core';
-import { type AuthCache, authCacheKey } from './auth-cache.js';
+import { useClient } from '@mui/graphql';
+
+import { isSignedInSignal } from '@/auth/is-signed-in.js';
+import { PROFILE_CACHE_KEY } from '@/auth/profile-cache-key.js';
+import { clientConfig } from '@/config.js';
+import {
+  GetUserByUserNameDocument,
+  SignInDocument,
+  SignOutDocument,
+  ValidateDocument,
+} from '@/types/graphql.js';
+
+import { AUTH_CACHE_KEY } from './auth-cache-key.js';
 
 /**
- * Sign in using JWT
- * @param username The username of the user attempting to sign in
- * @param password The password of the user attempting to sign in
- * @returns True if the user is signed in, false otherwise
+ * Auth cache type is the structure of the auth cache.
  */
-export const signIn = async (username: string, password: string) => {
-  const { sign, auth } = useApi();
+export type AuthCache = {
+  name: string;
+  token: string;
+};
 
-  const { data: signedIn } = await sign.in.post({
-    username,
-    password,
-  });
+/**
+ * Sign in using the provided username and password.
+ *
+ * @param userName The username of the user attempting to sign in.
+ * @param password The password of the user attempting to sign in.
+ * @returns True if the user is signed in, false otherwise.
+ */
+export const signIn = async (userName: string, password: string) => {
+  const { query } = useClient(clientConfig);
+  const { signIn: token } = await query(SignInDocument, { variables: { userName, password } });
 
-  if (signedIn) {
-    const { data: token } = await auth.sign({ name: username }).get();
+  if (token) {
     const [_, setCache] = useCache();
+
+    // Store username and token in the cache.
     const authCache: AuthCache = {
-      name: username,
+      name: userName,
       token,
     };
-    setCache(authCacheKey, authCache);
+    setCache(AUTH_CACHE_KEY, authCache);
+
+    // Store the user's profile in the cache
+    const { user } = await query(GetUserByUserNameDocument, { variables: { userName } });
+    setCache(PROFILE_CACHE_KEY, user);
+
+    // set the signed in signal to true. this will trigger the user to be signed in
+    // to any components that are watching the signal
+    isSignedInSignal.set(true);
+
     return true;
   }
 
@@ -31,27 +57,50 @@ export const signIn = async (username: string, password: string) => {
 };
 
 /**
- * Validate user
- * @returns True if the user is signed out, false otherwise
+ * Sign out current user.
+ *
+ * @returns True if the user is signed out, false otherwise.
+ */
+export const signOut = async () => {
+  const { query } = useClient(clientConfig);
+  const { signOut } = await query(SignOutDocument);
+
+  if (signOut) {
+    const [_, setCache] = useCache();
+    setCache(AUTH_CACHE_KEY, null);
+    isSignedInSignal.set(false);
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ * Validate user.
+ *
+ * @returns True if the user is signed in, false otherwise.
  */
 export const validate = async () => {
   const [cache] = useCache();
-  const cachedAuth = cache(authCacheKey) as AuthCache;
+  const cachedAuth = cache(AUTH_CACHE_KEY) as AuthCache;
 
-  // if there is no cached auth, the user is not signed in
+  // If there is no cached auth, the user is not signed in.
   if (!cachedAuth) {
+    isSignedInSignal.set(false);
     return false;
   }
 
-  const { name, token } = cachedAuth;
+  // Validate cached token with the server.
+  const { token } = cachedAuth;
+  const { query } = useClient(clientConfig);
+  const { validate } = await query(ValidateDocument, { variables: { token } });
 
-  // fetch the user's name from the server token for comparison
-  const { auth } = useApi();
-  const { data, status } = await auth.validate.post(token);
-  if (status === 401 || !data || typeof data === 'string') {
+  if (!validate) {
+    isSignedInSignal.set(false);
     return false;
   }
 
-  // check if the user is the same as what is stored in the auth token
-  return name === data.name;
+  // This user is signed in...wooohooo!!!
+  isSignedInSignal.set(true);
+  return true;
 };

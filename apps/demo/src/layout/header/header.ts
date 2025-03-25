@@ -1,27 +1,112 @@
-import { LitElement, css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, useCallback, useMemo } from 'haunted';
+import { nothing, unsafeCSS } from 'lit';
 
-const styles = css`
-  :host {
-    display: block;
-  }
-`;
+import { define, useHost, useStyles } from '@mui/core';
 
-@customElement('app-header')
-export class Header extends LitElement {
-  static override styles = styles;
+import { signOut } from '@/auth/auth.js';
+import { navigate } from '@/router/index.js';
+import { routeType } from '@/router/route-type.js';
+import { getUserId } from '@/utils/cache-util.js';
+import { confirm } from '@mui/components';
 
-  override render() {
-    return html`
-      <header>
+import styles from './header.css?inline';
 
-      </header>
-    `;
-  }
-}
+type HeaderProps = {
+  isSignedIn: boolean;
+  pageTitle: string;
+};
+
+const Header = ({ isSignedIn, pageTitle }: HeaderProps) => {
+  useStyles(unsafeCSS(styles));
+
+  const _this = useHost();
+
+  const handleSignOut = useCallback(async () => {
+    if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {
+      if (await signOut()) {
+        navigate(routeType.login);
+      }
+    }
+  }, []);
+
+  const handleMenuClick = useCallback(() => {
+    _this.dispatchEvent(
+      new CustomEvent('nav-button-clicked', {
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  }, []);
+
+  const renderNavButton = useMemo(() => {
+    return isSignedIn
+      ? html`
+        <mui-icon-button id="siteMenu" @click=${handleMenuClick}>
+          menu
+        </mui-icon-button>
+        <!-- <mui-tooltip anchor="siteMenu" inline-start-offset="40">Open site menu</mui-tooltip> -->
+      `
+      : nothing;
+  }, [isSignedIn]);
+
+  const renderSearch = useMemo(
+    () =>
+      html`<mui-command-palette logoSrc="../../../public/img/token-branded--idia.svg"></mui-command-palette>`,
+    [],
+  );
+
+  const renderUserMenu = useMemo(
+    () =>
+      isSignedIn
+        ? html`
+          <mui-menu id="profileMenu" icon="account_circle">
+            <ul>
+              <li>
+                <a class="link" href=${`${routeType.users}/${getUserId()}`}>
+                  <mui-icon>user_attributes</mui-icon>
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a class="link" href="#" @click=${handleSignOut}>
+                  <mui-icon>logout</mui-icon>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </mui-menu>
+          <!-- <mui-tooltip anchor="profileMenu" inline-end-offset="10">User profile</mui-tooltip> -->
+        `
+        : nothing,
+    [isSignedIn],
+  );
+
+  return html`
+    <header>
+      <nav>
+        ${renderNavButton}
+        <a href=${routeType.home}>
+          <img
+            src="../../../public/img/token-branded--idia.svg"
+            loading="lazy"
+            alt="Home"
+            width="28"
+            height="28" />
+        </a>
+      </nav>
+      <span class="title">${pageTitle}</span>
+      <section>
+        ${renderSearch}
+        ${renderUserMenu}
+      </section>
+    </header>
+  `;
+};
+
+define('app-header', Header);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-header': Header;
+    'app-header': HTMLElement & HeaderProps;
   }
 }

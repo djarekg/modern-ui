@@ -1,0 +1,17 @@
+query getUsers {
+  users {
+    ...UserParts
+  }
+}
+
+query getUserById($id: String!) {
+  user(where: { id: $id }) {
+    ...UserParts
+  }
+}
+
+query getUserByUserName($userName: String!) {
+  user(where: { email: $userName }) {
+    ...UserParts
+  }
+}

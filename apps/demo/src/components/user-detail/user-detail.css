@@ -1,0 +1,51 @@
+/* :host {
+  display: block;
+} */
+
+form {
+  display: flex;
+  flex-direction: row;
+  inline-size: 100%;
+  margin-block-end: 1rem;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  inline-size: 50%;
+  border: none;
+
+  > h4 {
+    --mui-icon-size: 16px;
+
+    display: flex;
+    align-items: center;
+    margin-block: 0;
+    color: var(--mui-color-text-2);
+
+    mui-icon-button {
+      margin-inline-start: 4px;
+    }
+  }
+
+  &:has(svg) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+svg {
+  inline-size: 80%;
+  color: var(--mui-color-secondary);
+}
+
+header,
+footer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+  inline-size: 100%;
+}

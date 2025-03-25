@@ -1,14 +1,60 @@
-import auth from '@/routes/auth.js';
-import login from '@/routes/login.js';
+import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
+import { apollo } from '@elysiajs/apollo';
+import { cookie } from '@elysiajs/cookie';
 import { cors } from '@elysiajs/cors';
+import { type JWTPayloadSpec, jwt } from '@elysiajs/jwt';
 import { swagger } from '@elysiajs/swagger';
+import { resolvers } from '@prisma/generated/type-graphql/index.js';
 import { Elysia } from 'elysia';
+import { isNotEmpty } from 'elysia/utils';
+import { buildSchema } from 'type-graphql';
 
-const app = new Elysia() // format - force new line
+// import { ForbiddenError, UnauthorizedError } from '@mui/graphql';
+
+import type { Context } from '@/client/context.js';
+import { prisma } from '@/client/index.js';
+import { corsConfig, isDev, jwtConfig, port } from '@/config.js';
+import { AuthResolver } from '@/resolvers/auth.js';
+
+import { ForbiddenError } from './errors.js';
+
+const schema = await buildSchema({
+  resolvers: [...resolvers, AuthResolver],
+  emitSchemaFile: './prisma/schema.graphql',
+  validate: false,
+});
+
+new Elysia()
   .use(swagger())
-  .use(cors())
-  .use(login)
-  .use(auth)
-  .listen(process.env.PORT || 4000);
+  .use(cors(corsConfig))
+  .use(jwt(jwtConfig))
+  .use(cookie())
+  .use(
+    apollo<'/graphql', Context>({
+      cache: new InMemoryLRUCache(),
+      schema,
+      enablePlayground: isDev,
+      introspection: isDev,
+      context: async ({ cookie, jwt, request }) => {
+        const authorization = request.headers.get('authorization');
+        let userId: string | null = null;
 
-export type App = typeof app;
+        if (isNotEmpty(authorization)) {
+          // Extract userId from token.
+          const token = authorization.split(' ')[1];
+          const { sub: storedUserId } = (await jwt.verify(token)) as JWTPayloadSpec;
+
+          if (!storedUserId) {
+            ForbiddenError('Access Token is invalid');
+          }
+
+          userId = storedUserId;
+        }
+
+        return { cookie, jwt, prisma, request, userId };
+      },
+    }),
+  )
+  .listen(port, ({ hostname, port }) =>
+    console.log(`🚀 Server is running on http://${hostname}:${port}`),
+  );

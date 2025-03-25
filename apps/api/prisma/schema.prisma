@@ -4,22 +4,151 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
+}
+
+generator typegraphql {
+  provider               = "typegraphql-prisma"
+  output                 = "../../../node_modules/@prisma/generated/type-graphql"
+  // output           = "generated/type-graphql"
+  contextPrismaKey       = "prisma"
+  emitRedundantTypesInfo = true
+  simpleResolvers        = true
+  useSimpleInputs        = true
+}
+
 model User {
-  id          String   @id @default(cuid())
-  firstName   String
-  lastName    String
-  email       String   @unique
-  address     String
-  phone       String
-  password    String
+  id           String         @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String         @unique
+  address      String
+  phone        String
+  password     String
+  role         String
+  dateCreated  DateTime       @default(now())
+  LoginHistory LoginHistory[]
+  productSales ProductSales[]
+}
+
+// enum Role {
+//   ADMIN
+//   USER
+//   SALES
+//   ACCOUNTING
+// }
+
+model LoginHistory {
+  id        String   @id @default(uuid())
+  userId    String
+  loginTime DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Customer {
+  id           String         @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String         @unique
+  address      String
+  phone        String
+  dateCreated  DateTime       @default(now())
+  dateUpdated  DateTime       @updatedAt
+  productSales ProductSales[]
+}
+
+model ProductType {
+  id          String    @id @default(uuid())
+  name        String
+  dateCreated DateTime  @default(now())
+  dateUpdated DateTime  @updatedAt
+  Product     Product[]
+}
+
+model Product {
+  id            String         @id @default(uuid())
+  name          String
+  description   String
+  price         Float
+  dateCreated   DateTime       @default(now())
+  dateUpdated   DateTime       @updatedAt
+  Inventory     Inventory[]
+  ProductSales  ProductSales[]
+  ProductColor  ProductColor[]
+  ProductType   ProductType?   @relation(fields: [productTypeId], references: [id])
+  productTypeId String?
+}
+
+// enum ProductType {
+//   DRESS
+//   HAT
+//   HOODIE
+//   JACKET
+//   PANTS
+//   SHIRT
+//   SHOES
+//   SHORTS
+//   SOCKS
+//   SWEATER
+//   UNDERWEAR
+// }
+
+model Color {
+  id           String         @id @default(uuid())
+  name         String
+  dateCreated  DateTime       @default(now())
+  dateUpdated  DateTime       @updatedAt
+  ProductColor ProductColor[]
+}
+
+model ProductColor {
+  id          String   @id @default(uuid())
+  productId   String
+  colorId     String
   dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id])
+  color       Color    @relation(fields: [colorId], references: [id])
+}
+
+model Inventory {
+  id          String   @id @default(uuid())
+  productId   String
+  size        String
+  quantity    Int
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id])
+}
+
+// enum Size {
+//   XSMALL
+//   SMALL
+//   MEDIUM
+//   LARGE
+//   XLARGE
+//   XXLARGE
+//   XXXLARGE
+//   ONESIZE
+// }
+
+model ProductSales {
+  id          String   @id @default(uuid())
+  productId   String
+  customerId  String
+  userId      String
+  quantity    Int
+  price       Float
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id])
+  Customer    Customer @relation(fields: [customerId], references: [id])
+  User        User     @relation(fields: [userId], references: [id])
 }

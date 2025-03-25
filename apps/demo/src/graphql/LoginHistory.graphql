@@ -1,0 +1,5 @@
+query GetLoginHistoryByUserId($userId: String!) {
+  loginHistories(where: { userId: { equals: $userId } }) {
+    ...LoginHistoryParts
+  }
+}

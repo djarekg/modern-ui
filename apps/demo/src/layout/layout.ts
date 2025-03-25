@@ -1,66 +1,108 @@
+import type { Router } from '@lit-labs/router';
+import { html } from '@lit-labs/signals';
+import { useCallback, useEffect, useState } from 'haunted';
+import { css } from 'lit';
+
+import { define, useStyles } from '@mui/core';
+
 import { validate } from '@/auth/auth.js';
-import { initNavigation, navigate, routes } from '@/router/index.js';
-import { Router } from '@lit-labs/router';
-import { LitElement, type TemplateResult, css, html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { useIsSignedInWatcher } from '@/auth/is-signed-in.js';
+import { getCurrentRoute, navigate } from '@/router/index.js';
+import { routeType } from '@/router/route-type.js';
+import '@/auth/is-signed-in.js';
+import '@/router/router-provider-element.js';
+import '@/router/router-consumer-element.js';
+import '@/components/main/main.js';
+import type { RouterChangedEvent } from '@/router/events.js';
+
 import './header/header.js';
 import './footer/footer.js';
-import { routeTypes } from '@/router/route-types.js';
 
 const styles = css`
-  :host,
-  main,
-  article {
+  :host {
+    display: block;
     block-size: 100%;
     inline-size: 100%;
   }
 
-  :host {
-    display: block;
-  }
-
-  main {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden auto;
+  article{
+    padding-block: 2rem 3rem;
+    padding-inline: 3rem;
+    background: var(--mui-palette-surface-a10);
+    backdrop-filter: blur(10px);
+    z-index: 1;
   }
 `;
 
-@customElement('app-layout')
-export class Layout extends LitElement {
-  static override styles = [styles];
-  readonly #router = new Router(this, routes);
+const Layout = () => {
+  useStyles(styles);
 
-  async connectedCallback(): Promise<void> {
-    super.connectedCallback();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [router, setRouter] = useState<Router>();
+  const [title, setTitle] = useState('');
+  const { isSignedIn } = useIsSignedInWatcher();
 
-    initNavigation(this.#router);
+  const handleRouterChanged = useCallback(
+    ({ detail }: RouterChangedEvent) => {
+      const _router = detail.router;
 
-    // check if user is signed in and if not redirect to login page
-    const valid = await validate();
-    if (!valid) {
-      console.log('User is not signed in');
-      navigate(routeTypes.login);
+      setRouter(_router);
+
+      // Set the page title.
+      const { name = '' } = getCurrentRoute(_router);
+      setTitle(name);
+
+      // Override every route's enter method to set the page title.
+      _router.routes.map(route => {
+        // In case the route already has an enter method defined,
+        // we need to call it frist and then set the page title.
+        const origEnter = route.enter;
+
+        route.enter = async params => {
+          let enterResult = true;
+
+          if (origEnter) {
+            enterResult = await origEnter(params);
+          }
+
+          setTitle(route.name);
+          return enterResult;
+        };
+      });
+    },
+    [router],
+  );
+
+  // Is current user authenticated?
+  useEffect(async () => {
+    if (!(await validate())) {
+      navigate(routeType.login);
     }
+  }, []);
 
-    console.log('User is signed in');
-  }
+  return html`
+    <app-router-provider-element>
+      <app-router-consumer-element @router-changed=${handleRouterChanged}>
+      </app-router-consumer-element>
+    </app-router-provider-element>
+    <app-main
+      .drawerOpen=${drawerOpen}
+      @drawer-close=${() => setDrawerOpen(false)}>
+      <app-header
+        .isSignedIn=${isSignedIn}
+        .pageTitle=${title}
+        @nav-button-clicked=${() => setDrawerOpen(true)}>
+      </app-header>
+      <article>${router?.outlet()}</article>
+      <app-footer></app-footer>
+    </app-main>
+  `;
+};
 
-  protected override render(): TemplateResult {
-    return html`
-      <main>
-        <app-header></app-header>
-        <article>
-            ${this.#router.outlet()}
-        </article>
-        <app-footer></app-footer>
-      </main>
-    `;
-  }
-}
+define('app-layout', Layout);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-layout': Layout;
+    'app-layout': HTMLElement;
   }
 }

@@ -17,13 +17,16 @@
       "path": "./apps/demo"
     },
     {
+      "path": "./packages/components"
+    },
+    {
       "path": "./packages/core"
     },
     {
-      "path": "./packages/web"
+      "path": "./packages/graphql"
     },
     {
-      "path": "./packages/components"
+      "path": "./packages/logger"
     }
   ]
 }

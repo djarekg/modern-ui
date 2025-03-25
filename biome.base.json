@@ -17,6 +17,7 @@
         "useImportExtensions": "warn"
       },
       "suspicious": {
+        "noAssignInExpressions": "off",
         "noConsole": "off",
         "noConsoleLog": "off"
       },
@@ -53,6 +54,9 @@
       "attributePosition": "auto",
       "indentStyle": "space",
       "lineEnding": "lf"
+    },
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
     }
   },
   "json": {

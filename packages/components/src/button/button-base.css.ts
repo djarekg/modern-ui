@@ -5,7 +5,7 @@ export default css`
     button {
       all: unset;
       cursor: pointer;
-      padding: .5rem 1.5rem;
+      padding: .3rem 1.5rem;
       border-radius: var(--mui-shape-small);
       color: var(--mui-color-text);
       text-align: center;

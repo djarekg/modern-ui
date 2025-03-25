@@ -9,13 +9,13 @@
   },
   "license": "MIT",
   "type": "module",
-  "packageManager": "bun@1.1.41",
+  "packageManager": "bun",
   "engines": {
     "bun": ">=1.1.41"
   },
   "scripts": {
     "setup": "task install",
-    "postinstall": "bun run --filter './apps/api' db:generate && bun run build:all",
+    "postsetup": "bun run --filter './apps/api' db:generate && bun run build:all",
     "build:packages": "bun run --filter './packages/*' build",
     "build:apps": "bun run --filter './apps/*' build",
     "build:all": "bun run build:packages && bun run --filter './apps/api' build"
@@ -24,18 +24,19 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@jspm/core": "^2.1.0",
-    "@jspm/generator": "^2.4.1",
+    "@jspm/generator": "^2.5.1",
     "@jspm/import-map": "^1.1.0",
-    "@types/bun": "^1.1.14",
-    "typedoc": "^0.27.6"
+    "@types/bun": "^1.2.5",
+    "typedoc": "^0.27.9"
   },
   "peerDependencies": {
-    "typescript": "^5.7.2"
+    "typescript": "^5.8.2"
   },
   "overrides": {
     "@lit-labs/signals": "latest",
-    "typescript": "^5",
+    "graphql": "^16.10.0",
     "lit": "^3",
+    "typescript": "^5",
     "signal-polyfill": "^0.2.0",
     "signal-utils": "^0.21.0"
   },

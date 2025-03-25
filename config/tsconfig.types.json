@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
     "declaration": true,
     "emitDeclarationOnly": true,
     "rootDir": "${configDir}/src",
