@@ -1,8 +1,9 @@
 import { Router } from '@lit-labs/router';
 import { provide } from '@lit/context';
-import { LitElement, html } from 'lit';
+import { LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import { subscribeToPushState } from '@/router/push-state.js';
 import { RouterContext } from './router-context.js';
 import { routes } from './routes.js';
 
@@ -21,8 +22,10 @@ export class RouterProviderElement extends LitElement {
   @property({ type: Object })
   value = new Router(this, routes);
 
-  render() {
-    html`<slot></slot>`;
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    subscribeToPushState(this.value);
   }
 }
 

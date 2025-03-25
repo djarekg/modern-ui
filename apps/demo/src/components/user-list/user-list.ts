@@ -29,11 +29,11 @@ export const UserList = virtual(({ users = [] }: UserListProps) => {
       users.map(
         ({ id, firstName, lastName, email, address, phone }) => html`
         <mui-table-row .id=${id}>
-          <mui-table-cell>${id}</mui-table-cell>
+          <!-- <mui-table-cell width="280px">${id}</mui-table-cell> -->
           <mui-table-cell>${firstName} ${lastName}</mui-table-cell>
           <mui-table-cell>${email}</mui-table-cell>
           <mui-table-cell>${address}</mui-table-cell>
-          <mui-table-cell>${phone}</mui-table-cell>
+          <mui-table-cell width="160px">${phone}</mui-table-cell>
           <mui-table-cell view></mui-table-cell>
         </mui-table-row>
       `,
@@ -47,7 +47,7 @@ export const UserList = virtual(({ users = [] }: UserListProps) => {
       @row-selected=${handleTableRowSelected}
       @row-view=${handleTableRowView}>
       <mui-table-row header>
-        <mui-table-header-cell>ID</mui-table-header-cell>
+        <!-- <mui-table-header-cell>ID</mui-table-header-cell> -->
         <mui-table-header-cell>Name</mui-table-header-cell>
         <mui-table-header-cell>Email</mui-table-header-cell>
         <mui-table-header-cell>Address</mui-table-header-cell>

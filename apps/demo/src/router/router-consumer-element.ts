@@ -1,7 +1,7 @@
 import type { Router } from '@lit-labs/router';
 import { ContextConsumer } from '@lit/context';
 import { html } from 'haunted';
-import { LitElement } from 'lit';
+import { LitElement, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import { createRouterChangedEvent } from './events.js';
@@ -34,10 +34,6 @@ export class RouterConsumerElement extends LitElement {
       },
       subscribe: true,
     });
-  }
-
-  render() {
-    html`<slot></slot>`;
   }
 }
 

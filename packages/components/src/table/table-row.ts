@@ -1,5 +1,5 @@
 import { useEffect } from 'haunted';
-import { css, html } from 'lit';
+import { css, html, unsafeCSS } from 'lit';
 
 import { define, useHost, useStyles } from '@mui/core';
 
@@ -20,10 +20,18 @@ const styles = css`
 type TableRowProps = {
   header: boolean;
   type: string;
+  height: string;
 };
 
-const TableRow = () => {
-  useStyles(styles);
+const TableRow = ({ height }: TableRowProps) => {
+  useStyles([
+    styles,
+    css`
+      :host {
+        block-size: ${unsafeCSS(height)};
+      }
+    `,
+  ]);
 
   const _this = useHost();
   const table = _this.closest<Table>('mui-table');
@@ -41,7 +49,7 @@ const TableRow = () => {
   return html`<slot></slot>`;
 };
 
-define('mui-table-row', TableRow, { observedAttributes: ['header', 'type'] });
+define('mui-table-row', TableRow, { observedAttributes: ['header', 'type', 'height'] });
 
 export type TableRow = HTMLElement & TableRowProps;
 

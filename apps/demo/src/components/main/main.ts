@@ -35,7 +35,7 @@ type MainProps = {
  * @param {MainProps} Main properties.
  * @fires drawer-close - Dispatched when the drawer is closed.
  */
-const Main = ({ drawerOpen }: MainProps) => {
+export const Main = ({ drawerOpen }: MainProps) => {
   useStyles(styles);
 
   const _this = useHost();

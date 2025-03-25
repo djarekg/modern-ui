@@ -1,4 +1,4 @@
-import type { PathRouteConfig, Router } from '@lit-labs/router';
+import type { Router } from '@lit-labs/router';
 import { html } from '@lit-labs/signals';
 import { useCallback, useEffect, useState } from 'haunted';
 import { css } from 'lit';
@@ -54,17 +54,19 @@ const Layout = () => {
 
       // Override every route's enter method to set the page title.
       _router.routes.map(route => {
-        // Incase the route already has an enter method defined,
+        // In case the route already has an enter method defined,
         // we need to call it frist and then set the page title.
         const origEnter = route.enter;
 
         route.enter = async params => {
+          let enterResult = true;
+
           if (origEnter) {
-            await origEnter(params);
+            enterResult = await origEnter(params);
           }
 
           setTitle(route.name);
-          return true;
+          return enterResult;
         };
       });
     },

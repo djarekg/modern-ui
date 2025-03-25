@@ -1,5 +1,5 @@
 import { useMemo } from 'haunted';
-import { css, html } from 'lit';
+import { css, html, unsafeCSS } from 'lit';
 
 import { define, useHost, useStyles } from '@mui/core';
 
@@ -35,13 +35,31 @@ type TableCellProps = {
   editIcon: string;
   viewIcon: string;
   type: string;
+  height: string;
+  width: string;
 };
 
 /**
  * @cssprop --mui-table-hover-color - Background color of the table cell when hovered. Default is `var(--mui-color-on-background)`.
  */
-const TableCell = ({ edit, view, editIcon = 'edit', viewIcon = 'pageview' }: TableCellProps) => {
-  useStyles([sharedCss, styles]);
+const TableCell = ({
+  edit,
+  view,
+  editIcon = 'edit',
+  viewIcon = 'pageview',
+  height = 'auto',
+  width = 'auto',
+}: TableCellProps) => {
+  useStyles([
+    sharedCss,
+    styles,
+    css`
+      :host {
+        inline-size: ${unsafeCSS(width)};
+        block-size: ${unsafeCSS(height)};
+      }
+    `,
+  ]);
 
   const _this = useHost();
 
@@ -92,7 +110,7 @@ const TableCell = ({ edit, view, editIcon = 'edit', viewIcon = 'pageview' }: Tab
   return html`<slot></slot>`;
 };
 
-define('mui-table-cell', TableCell, { observedAttributes: ['edit', 'view', 'type'] });
+define('mui-table-cell', TableCell, { observedAttributes: ['edit', 'view', 'type', 'width'] });
 
 declare global {
   interface HTMLElementTagNameMap {

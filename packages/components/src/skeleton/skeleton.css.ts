@@ -73,7 +73,7 @@ export default css`
     --mui-skeleton-block-size: var(--mui-typescale-label-medium-line-height);
   }
   :host([label][large]) {
-    --mui-skeleton-block-size: var(--mui-typescale-label-large-line-height);
+    --mui-skeleton-block-size: var(--mui-typescale-label-xlarge-line-height);
   }
 
   :host([body][small]) {
@@ -83,7 +83,7 @@ export default css`
     --mui-skeleton-block-size: var(--mui-typescale-body-medium-line-height);
   }
   :host([body][large]) {
-    --mui-skeleton-block-size: var(--mui-typescale-body-large-line-height);
+    --mui-skeleton-block-size: var(--mui-typescale-body-xlarge-line-height);
   }
 
   :host([headline][small]) {
@@ -93,7 +93,7 @@ export default css`
     --mui-skeleton-block-size: var(--mui-typescale-headline-medium-line-height);
   }
   :host([headline][large]) {
-    --mui-skeleton-block-size: var(--mui-typescale-headline-large-line-height);
+    --mui-skeleton-block-size: var(--mui-typescale-headline-xlarge-line-height);
   }
 
   :host([title][small]) {
@@ -103,7 +103,7 @@ export default css`
     --mui-skeleton-block-size: var(--mui-typescale-title-medium-line-height);
   }
   :host([title][large]) {
-    --mui-skeleton-block-size: var(--mui-typescale-title-large-line-height);
+    --mui-skeleton-block-size: var(--mui-typescale-title-xlarge-line-height);
   }
 
   :host([display][small]) {
@@ -113,6 +113,6 @@ export default css`
     --mui-skeleton-block-size: var(--mui-typescale-display-medium-line-height);
   }
   :host([display][large]) {
-    --mui-skeleton-block-size: var(--mui-typescale-display-large-line-height);
+    --mui-skeleton-block-size: var(--mui-typescale-display-xlarge-line-height);
   }
 `;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'haunted';
-import { css, html } from 'lit';
+import { html } from 'lit';
 
-import { define, useStyles } from '@mui/core';
+import { define } from '@mui/core';
 import { useClient } from '@mui/graphql';
 
 import { clientConfig } from '@/config.js';
@@ -9,13 +9,7 @@ import { GetProductTypesDocument, type GetProductTypesQuery } from '@/types/grap
 import '@/components/product-list/product-list.js';
 import { ProductList } from '@/components/product-list/product-list.js';
 
-const styles = css`
-
-`;
-
 const ProductsPage = () => {
-  useStyles(styles);
-
   const { query } = useClient(clientConfig);
   const [productTypes, setProductTypes] = useState<GetProductTypesQuery['productTypes']>([]);
 

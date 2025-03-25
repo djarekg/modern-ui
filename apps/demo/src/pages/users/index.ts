@@ -1,7 +1,8 @@
 import { html, useEffect, useState } from 'haunted';
 import { css } from 'lit';
 
-import { define, useStyles } from '@mui/core';
+import '@mui/components/skeleton/skeleton-table.js';
+import { define, delay, useStyles } from '@mui/core';
 import { useClient } from '@mui/graphql';
 
 import { clientConfig } from '@/config.js';
@@ -25,17 +26,24 @@ const UsersPage = () => {
 
   const [users, setUsers] = useState<GetUsersQuery['users']>([]);
   const { query } = useClient(clientConfig);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Fetch users data.
   useEffect(async () => {
+    // Simulate slower loading time.
+    await delay(2000);
     const { users } = await query(GetUsersDocument);
     setUsers(users);
+    setIsLoading(false);
   }, []);
+
+  if (isLoading) {
+    return html`<mui-skeleton-table rows="20" columns="5"></mui-skeleton-table>`;
+  }
 
   return html`
     <article>
       <section class="app-container">
-        <h2>Users</h2>
         ${UserList({ users })}
       </section>
     </article>

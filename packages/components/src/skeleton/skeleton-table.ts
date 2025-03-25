@@ -1,7 +1,7 @@
 import { useMemo } from 'haunted';
 import { html } from 'lit';
 
-import { define } from '@mui/core';
+import { define, randomInRange } from '@mui/core';
 
 import '../table/table.js';
 
@@ -12,6 +12,7 @@ const from = Array.from;
 type SkeletonTableProps = {
   rows: number;
   columns: number;
+  hasHeader: boolean;
 };
 
 /**
@@ -29,48 +30,54 @@ type SkeletonTableProps = {
  * `;
  * ```
  */
-const SkeletonTable = ({ rows = 5, columns = 3 }: SkeletonTableProps) => {
+const SkeletonTable = ({ rows = 5, columns = 3, hasHeader }: SkeletonTableProps) => {
   const renderHeaderRow = useMemo(
     () => html`
-    <mui-table-row header>
+    <mui-table-row header height="53px">
       ${from({ length: columns }).map(
         () => html`
-        <mui-table-header-cell>
-          <mui-skeleton body medium width="100%"></mui-skeleton>
-        </mui-table-header-cell>
-      `,
+          <mui-table-header-cell>
+            <mui-skeleton body medium width="100%"></mui-skeleton>
+          </mui-table-header-cell>
+        `,
       )}
     </mui-table-row>
   `,
     [columns],
   );
 
-  const renderCells = useMemo(
-    () =>
-      from({ length: columns }).map(
-        () => html`
-      <mui-table-cell>
-        <mui-skeleton body large width="100%"></mui-skeleton>
-      </mui-table-cell>
-    `,
-      ),
-    [columns],
-  );
+  const renderCells = () =>
+    from({ length: columns }).map(
+      () => html`
+          <mui-table-cell>
+            <mui-skeleton body medium width="${randomInRange(25, 95)}%"></mui-skeleton>
+          </mui-table-cell>
+        `,
+    );
 
   const renderRows = useMemo(
-    () => from({ length: rows }).map(() => html`<mui-table-row>${renderCells}</mui-table-row>`),
+    () =>
+      from({ length: rows }).map(
+        () => html`
+          <mui-table-row height="53px">${renderCells()}</mui-table-row>
+        `,
+      ),
     [rows],
   );
 
+  console.log(`hasHeader: ${hasHeader}`);
+
   return html`
     <mui-table>
-      ${renderHeaderRow}
+      ${hasHeader && renderHeaderRow}
       ${renderRows}
     </mui-table>
   `;
 };
 
-define('mui-skeleton-table', SkeletonTable, { observedAttributes: ['rows', 'columns'] });
+define('mui-skeleton-table', SkeletonTable, {
+  observedAttributes: ['rows', 'columns', 'hasHeader'],
+});
 
 declare global {
   interface HTMLElementTagNameMap {

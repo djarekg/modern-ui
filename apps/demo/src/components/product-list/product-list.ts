@@ -78,7 +78,7 @@ export const ProductList = virtual(({ productTypes }: ProductListProps) => {
   const renderCards = ({ id, name }: ArrayElement<ProductTypes>) => html`
     <mui-card>
       <mui-card-header>
-        ${name}
+        ${name}7
         <div>
           <mui-icon-button id="openNew" @click=${() => handleOpenClick(id)}>open_in_new</mui-icon-button>
           <!-- <mui-tooltip anchor="openNew">Open product</mui-tooltip> -->
@@ -87,7 +87,7 @@ export const ProductList = virtual(({ productTypes }: ProductListProps) => {
         </div>
       </mui-card-header>
       <mui-card-content>
-        <img src="../../../public/img/products/${id}.jpeg" alt=${name} />
+        <img src="/img/products/${id}.jpeg" alt=${name} />
       </mui-card-content>
     </mui-card>
   `;

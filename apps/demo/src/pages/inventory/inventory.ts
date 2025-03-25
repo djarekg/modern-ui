@@ -9,8 +9,6 @@ const InventoryPage = () => {
   useStyles(styles);
 
   return html`
-    <div>Inventory</div>
-
     <mui-skeleton-table rows="7" columns="4"></mui-skeleton-table>
   `;
 };
