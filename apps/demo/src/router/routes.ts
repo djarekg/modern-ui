@@ -10,7 +10,7 @@ import { routeType } from '@/router/route-type.js';
 export const routes: RouteConfig[] = [
   {
     name: 'home',
-    path: routeType.home,
+    pattern: new URLPattern({ pathname: routeType.home }),
     render: () => {
       import('../pages/home.js');
       return html`<app-home></app-home>`;
@@ -18,7 +18,7 @@ export const routes: RouteConfig[] = [
   },
   {
     name: 'login',
-    path: routeType.login,
+    pattern: new URLPattern({ pathname: routeType.login }),
     render: () => {
       import('../pages/auth/login.js');
       return html`<app-login-page></app-login-page>`;
@@ -26,7 +26,7 @@ export const routes: RouteConfig[] = [
   },
   {
     name: 'user',
-    path: `${routeType.users}/:id`,
+    pattern: new URLPattern({ pathname: `${routeType.users}/:id` }),
     render: ({ id }) => {
       import('../pages/users/user.js');
       return html`<app-user-page .id=${id}></app-user-page>`;
@@ -34,7 +34,7 @@ export const routes: RouteConfig[] = [
   },
   {
     name: 'users',
-    path: `${routeType.users}`,
+    pattern: new URLPattern({ pathname: routeType.users }),
     render: () => {
       import('../pages/users/index.js');
       return html`<app-users-page></app-users-page>`;
@@ -42,7 +42,7 @@ export const routes: RouteConfig[] = [
   },
   {
     name: 'accounting',
-    path: routeType.accounting,
+    pattern: new URLPattern({ pathname: routeType.accounting }),
     render: () => {
       import('../pages/accounting/accounting.js');
       return html`<app-accounting-page></app-accounting-page>`;
@@ -50,7 +50,7 @@ export const routes: RouteConfig[] = [
   },
   {
     name: 'accounting',
-    path: routeType.accountingReports,
+    pattern: new URLPattern({ pathname: routeType.accountingReports }),
     render: () => {
       import('../pages/accounting/reports/index.js');
       return html`<app-accounting-reports-page></app-accounting-reports-page>`;
@@ -58,7 +58,7 @@ export const routes: RouteConfig[] = [
   },
   {
     name: 'inventory',
-    path: routeType.inventory,
+    pattern: new URLPattern({ pathname: routeType.inventory }),
     render: () => {
       import('../pages/inventory/inventory.js');
       return html`<app-inventory-page></app-inventory-page>`;
@@ -66,7 +66,7 @@ export const routes: RouteConfig[] = [
   },
   {
     name: 'products',
-    path: routeType.products,
+    pattern: new URLPattern({ pathname: routeType.products }),
     render: () => {
       import('../pages/products/index.js');
       return html`<app-products-page></app-products-page>`;
@@ -74,7 +74,7 @@ export const routes: RouteConfig[] = [
   },
   {
     name: 'product',
-    path: `${routeType.products}/:id`,
+    pattern: new URLPattern({ pathname: `${routeType.products}/:id` }),
     render: ({ id }) => {
       import('../pages/products/product.js');
       return html`${ProductPage({ id })}`;

@@ -6,3 +6,9 @@ query getProducts {
     price
   }
 }
+
+query getProductById($id: String!) {
+  product(where: { id: $id }) {
+    ...ProductParts
+  }
+}

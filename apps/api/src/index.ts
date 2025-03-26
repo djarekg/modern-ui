@@ -34,7 +34,7 @@ new Elysia()
       cache: new InMemoryLRUCache(),
       schema,
       enablePlayground: isDev,
-      introspection: isDev,
+
       context: async ({ cookie, jwt, request }) => {
         const authorization = request.headers.get('authorization');
         let userId: string | null = null;
@@ -52,6 +52,13 @@ new Elysia()
         }
 
         return { cookie, jwt, prisma, request, userId };
+      },
+      formatError: (formattedError, error) => {
+        console.error(error);
+        return formattedError;
+      },
+      persistedQueries: {
+        ttl: 300, // 5 minutes (default)
       },
     }),
   )

@@ -5,9 +5,8 @@ import type {
   QueryOptions,
   TypedDocumentNode,
 } from '@apollo/client/core';
-import { useCallback } from 'haunted';
 
-import { isEmpty } from '@mui/core';
+import { assert } from '@mui/core';
 
 import { BadRequestError } from '../errors.js';
 import {
@@ -40,13 +39,8 @@ export type ClientOptions = {
  * ```
  */
 export const useClient = ({ name, version, uri, token }: ClientOptions) => {
-  if (isEmpty(uri)) {
-    BadRequestError('ApolloClient requires a uri');
-  }
-
-  if (isEmpty(token)) {
-    BadRequestError('ApolloClient requires a token');
-  }
+  assert.notEmpty(uri, () => BadRequestError('ApolloClient requires a uri'));
+  assert.notEmpty(token, () => BadRequestError('ApolloClient requires a token'));
 
   const client = createApolloClient({ name, version, uri, token });
 

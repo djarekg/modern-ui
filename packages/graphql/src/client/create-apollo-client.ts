@@ -7,8 +7,10 @@ import {
   type TypePolicies,
 } from '@apollo/client/core';
 import { onError } from '@apollo/client/link/error';
+import { createPersistedQueryLink } from '@apollo/client/link/persisted-queries';
+import { sha256 } from 'crypto-hash';
 
-import { isDev } from '@mui/core';
+import { assert, isDev } from '@mui/core';
 
 import { BadRequestError } from '../errors.js';
 
@@ -19,6 +21,61 @@ type ApolloClientOptions = {
   token: string;
   typePolicies?: TypePolicies;
   validateVariables?: boolean;
+};
+
+/**
+ * Create Apollo links with error handling, persisted queries, and authorization.
+ *
+ * @param {string} token Authorization token.
+ * @param {string} uri GraphQL endpoint.
+ * @returns {ApolloLink} Apollo link.
+ */
+const createLinks = (token: string, uri: string) => {
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+      // biome-ignore lint/complexity/noForEach: <explanation>
+      graphQLErrors.forEach(({ message, locations, path }) =>
+        console.error(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+        ),
+      );
+    }
+
+    if (networkError) {
+      console.error(`[Network error]: ${networkError}`);
+    }
+  });
+
+  const httpLink = new HttpLink({
+    fetchOptions: {
+      mode: 'cors',
+    },
+    uri,
+    headers: {
+      'Access-Control-Allow-Origin': 'true',
+    },
+  });
+
+  const persistedQueryLink = createPersistedQueryLink({
+    sha256,
+    disable: () => !isDev,
+    useGETForHashedQueries: true,
+  });
+
+  const authLink = new ApolloLink((operation, forward) => {
+    operation.setContext(({ headers = {} }) => ({
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    }));
+
+    return forward(operation);
+  });
+
+  const link = authLink.concat(ApolloLink.from([errorLink, httpLink, persistedQueryLink]));
+
+  return link;
 };
 
 /**
@@ -35,68 +92,15 @@ export const createApolloClient = ({
   token,
   typePolicies,
 }: ApolloClientOptions) => {
-  if (!uri) {
-    BadRequestError('ApolloClient requires a uri');
-  }
+  assert.notEmpty(uri, () => BadRequestError('ApolloClient requires a uri'));
 
-  // if (!token) {
-  //   BadRequestError('ApolloClient requires a token');
-  // }
-
-  const cache = new InMemoryCache({
-    typePolicies: typePolicies || {},
-  });
-
-  const httpLink = new HttpLink({
-    fetchOptions: {
-      mode: 'cors',
-    },
-    uri,
-    headers: {
-      'Access-Control-Allow-Origin': 'true',
-    },
-  });
-
-  const authLink = new ApolloLink((operation, forward) => {
-    operation.setContext(({ headers = {} }) => ({
-      headers: {
-        ...headers,
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    }));
-
-    return forward(operation);
-  });
-
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors) {
-      // biome-ignore lint/complexity/noForEach: <explanation>
-      graphQLErrors.forEach(({ message, locations, path }) =>
-        console.error(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-        ),
-      );
-    }
-
-    if (networkError) {
-      console.error(`[Network error]: ${networkError}`);
-    }
-  });
-
-  const link = ApolloLink.from([errorLink, httpLink]);
+  const cache = new InMemoryCache({ typePolicies: typePolicies || {} });
+  const link = createLinks(token, uri);
   const client = new ApolloClient({
     name,
     version,
-    link: authLink.concat(link),
+    link,
     cache,
-    // defaultOptions: {
-    //   watchQuery: {
-    //     fetchPolicy: 'cache-and-network',
-    //   },
-    // },
-    // devtools: {
-    //   enabled: true
-    // }
   });
 
   if (isDev) {

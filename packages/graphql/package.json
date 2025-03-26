@@ -27,6 +27,7 @@
   "dependencies": {
     "@apollo/client": "^3.13.4",
     "@mui/core": "workspace:*",
+    "crypto-hash": "^3.1.0",
     "graphql": "^16.10.0",
     "haunted": "^6.1.0"
   },

@@ -8,6 +8,7 @@ export * from './decorators/index.js';
 export * from './directives/index.js';
 export * from './dom/index.js';
 export * from './env/index.js';
+export * from './errors/index.js';
 export * from './hooks/index.js';
 export * from './interfaces.js';
 export * from './reactivity/index.js';

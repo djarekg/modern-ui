@@ -1,4 +1,4 @@
-import type { PathRouteConfig, Router } from '@lit-labs/router';
+import type { Router, URLPatternRouteConfig } from '@lit-labs/router';
 
 export * from './navigate.js';
 
@@ -9,7 +9,8 @@ export * from './navigate.js';
  * @returns {RouteConfig} The current route.
  */
 export const getCurrentRoute = (router: Router) => {
-  const { pathname } = new URL(window.location.href);
-  const route = router.routes.find(route => (route as PathRouteConfig).path === pathname);
+  const route = router.routes.find(route =>
+    (route as URLPatternRouteConfig).pattern.test(window.location.href),
+  );
   return route;
 };

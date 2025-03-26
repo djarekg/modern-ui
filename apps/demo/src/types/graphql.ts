@@ -4540,6 +4540,23 @@ export type GetProductsQuery = {
   }>;
 };
 
+export type GetProductByIdQueryVariables = Exact<{
+  id: Scalars["String"]["input"];
+}>;
+
+export type GetProductByIdQuery = {
+  product?:
+    | {
+        id: string;
+        name: string;
+        description: string;
+        price: number;
+        dateCreated: unknown;
+        dateUpdated: unknown;
+      }
+    | undefined;
+};
+
 export type GetProductTypesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetProductTypesQuery = {
@@ -4605,6 +4622,15 @@ export type LoginHistoryPartsFragment = {
   loginTime: unknown;
 };
 
+export type ProductPartsFragment = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  dateCreated: unknown;
+  dateUpdated: unknown;
+};
+
 export type UserPartsFragment = {
   id: string;
   firstName: string;
@@ -4637,6 +4663,30 @@ export const LoginHistoryPartsFragmentDoc = {
     },
   ],
 } as unknown as DocumentNode<LoginHistoryPartsFragment, unknown>;
+export const ProductPartsFragmentDoc = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "ProductParts" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Product" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "name" } },
+          { kind: "Field", name: { kind: "Name", value: "description" } },
+          { kind: "Field", name: { kind: "Name", value: "price" } },
+          { kind: "Field", name: { kind: "Name", value: "dateCreated" } },
+          { kind: "Field", name: { kind: "Name", value: "dateUpdated" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<ProductPartsFragment, unknown>;
 export const UserPartsFragmentDoc = {
   kind: "Document",
   definitions: [
@@ -4910,6 +4960,85 @@ export const GetProductsDocument = {
     },
   ],
 } as unknown as DocumentNode<GetProductsQuery, GetProductsQueryVariables>;
+export const GetProductByIdDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "getProductById" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "product" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "where" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "id" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "id" },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                {
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "ProductParts" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+    {
+      kind: "FragmentDefinition",
+      name: { kind: "Name", value: "ProductParts" },
+      typeCondition: {
+        kind: "NamedType",
+        name: { kind: "Name", value: "Product" },
+      },
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          { kind: "Field", name: { kind: "Name", value: "id" } },
+          { kind: "Field", name: { kind: "Name", value: "name" } },
+          { kind: "Field", name: { kind: "Name", value: "description" } },
+          { kind: "Field", name: { kind: "Name", value: "price" } },
+          { kind: "Field", name: { kind: "Name", value: "dateCreated" } },
+          { kind: "Field", name: { kind: "Name", value: "dateUpdated" } },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetProductByIdQuery, GetProductByIdQueryVariables>;
 export const GetProductTypesDocument = {
   kind: "Document",
   definitions: [

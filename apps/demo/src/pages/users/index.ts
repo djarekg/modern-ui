@@ -24,8 +24,8 @@ const styles = css`
 const UsersPage = () => {
   useStyles(styles);
 
-  const [users, setUsers] = useState<GetUsersQuery['users']>([]);
   const { query } = useClient(clientConfig);
+  const [users, setUsers] = useState<GetUsersQuery['users']>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch users data.

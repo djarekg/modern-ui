@@ -1,0 +1,8 @@
+fragment ProductParts on Product {
+  id
+  name
+  description
+  price
+  dateCreated
+  dateUpdated
+}
