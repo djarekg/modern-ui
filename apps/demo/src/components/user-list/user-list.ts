@@ -1,8 +1,8 @@
 import { html, useCallback, useMemo, virtual } from 'haunted';
 
 import type { TableEvent } from '@mui/components/table/events.js';
+import { navigateTo } from '@mui/router';
 
-import { navigate } from '@/router/index.js';
 import { routeType } from '@/router/route-type.js';
 import type { GetUsersQuery } from '@/types/graphql.js';
 
@@ -21,7 +21,7 @@ export const UserList = virtual(({ users = [] }: UserListProps) => {
 
   const handleTableRowView = useCallback(({ detail: { row } }: TableEvent) => {
     const { id } = row;
-    navigate(`${routeType.users}/${id}`);
+    navigateTo(`${routeType.users}/${id}`);
   }, []);
 
   const renderRows = useMemo(

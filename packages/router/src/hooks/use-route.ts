@@ -1,6 +1,6 @@
 import { component, createContext, html, useContext } from 'haunted';
 
-import { useSearchParams } from './use-search-params.js';
+import { useSearchParams } from '../hooks/use-search-params.js';
 
 export type Route = {
   ready: boolean;

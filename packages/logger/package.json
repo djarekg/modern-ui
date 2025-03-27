@@ -25,7 +25,8 @@
     "build": "task build"
   },
   "dependencies": {
-    "@github/memoize": "^1.1.5"
+    "@github/memoize": "^1.1.5",
+    "@mui/core": "workspace:*"
   },
   "devDependencies": {
     "@types/bun": "^1.2.5"

@@ -1,6 +1,6 @@
 import { Hook, type State, hook } from 'haunted';
 
-import { addCurrent, removeCurrent } from './router.js';
+import { addCurrent, removeCurrent } from '../router.js';
 
 type RouteParameters = {
   [key: string]: string;
@@ -124,4 +124,4 @@ const useRoutes = hook(
   },
 );
 
-export { useRoutes };
+export { useRoutes, type Routes };

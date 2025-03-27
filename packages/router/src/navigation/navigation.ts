@@ -1,4 +1,4 @@
-import { update } from './router.js';
+import { update } from '../router.js';
 
 /**
  * Navigate to a new URL and push it to the history.

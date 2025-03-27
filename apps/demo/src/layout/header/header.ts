@@ -1,30 +1,29 @@
-import { html, useCallback, useMemo } from 'haunted';
+import { html, useCallback, useMemo, useState } from 'haunted';
 import { nothing, unsafeCSS } from 'lit';
 
 import { define, useHost, useStyles } from '@mui/core';
+import { navigateTo } from '@mui/router';
 
 import { signOut } from '@/auth/auth.js';
-import { navigate } from '@/router/index.js';
+import { useIsSignedInWatcher } from '@/auth/is-signed-in.js';
 import { routeType } from '@/router/route-type.js';
 import { getUserId } from '@/utils/cache-util.js';
 import { confirm } from '@mui/components';
 
 import styles from './header.css?inline';
 
-type HeaderProps = {
-  isSignedIn: boolean;
-  pageTitle: string;
-};
-
-const Header = ({ isSignedIn, pageTitle }: HeaderProps) => {
+const Header = () => {
   useStyles(unsafeCSS(styles));
+
+  const { isSignedIn } = useIsSignedInWatcher();
+  const [pageTitle] = useState('title here');
 
   const _this = useHost();
 
   const handleSignOut = useCallback(async () => {
     if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {
       if (await signOut()) {
-        navigate(routeType.login);
+        navigateTo(routeType.login);
       }
     }
   }, []);
@@ -107,6 +106,6 @@ define('app-header', Header);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-header': HTMLElement & HeaderProps;
+    'app-header': HTMLElement;
   }
 }

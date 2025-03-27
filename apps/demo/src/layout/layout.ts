@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'haunted';
-import { css, html } from 'lit';
+import { css, html, nothing } from 'lit';
 
 import { define, useStyles } from '@mui/core';
+import { navigateTo, useRoutes } from '@mui/router';
 
 import { validate } from '@/auth/auth.js';
-import { useIsSignedInWatcher } from '@/auth/is-signed-in.js';
 import { routeType } from '@/router/route-type.js';
+import { routes } from '@/router/routes.js';
 import '@/auth/is-signed-in.js';
 import '@/components/main/main.js';
 
@@ -31,13 +32,13 @@ const styles = css`
 const Layout = () => {
   useStyles(styles);
 
+  const route = useRoutes(routes, nothing);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { isSignedIn } = useIsSignedInWatcher();
 
   // Is current user authenticated?
   useEffect(async () => {
     if (!(await validate())) {
-      navigate(routeType.login);
+      navigateTo(routeType.login);
     }
   }, []);
 
@@ -45,12 +46,9 @@ const Layout = () => {
     <app-main
       .drawerOpen=${drawerOpen}
       @drawer-close=${() => setDrawerOpen(false)}>
-      <app-header
-        .isSignedIn=${isSignedIn}
-        .pageTitle=${title}
-        @nav-button-clicked=${() => setDrawerOpen(true)}>
+      <app-header @nav-button-clicked=${() => setDrawerOpen(true)}>
       </app-header>
-      <article>${router.outlet}</article>
+      <article>${route.outlet}</article>
       <app-footer></app-footer>
     </app-main>
   `;

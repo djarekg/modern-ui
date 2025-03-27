@@ -5,8 +5,8 @@ import { type ArrayElement, useStyles } from '@mui/core';
 import '@mui/components/card/index.js';
 import '@mui/components/button/icon-button.js';
 import '@mui/components/tooltip/tooltip.js';
+import { navigateTo } from '@mui/router';
 
-import { navigate } from '@/router/index.js';
 import { routeType } from '@/router/route-type.js';
 import type { GetProductTypesQuery } from '@/types/graphql.js';
 
@@ -72,7 +72,7 @@ export const ProductList = virtual(({ productTypes }: ProductListProps) => {
   useStyles(styles);
 
   const handleOpenClick = useCallback((id: string) => {
-    navigate(`${routeType.products}/${id}`);
+    navigateTo(`${routeType.products}/${id}`);
   }, []);
 
   const renderCards = ({ id, name }: ArrayElement<ProductTypes>) => html`

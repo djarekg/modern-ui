@@ -10,7 +10,8 @@
       "@mui/components/*": ["../../packages/components/*"],
       "@mui/core/*": ["../../packages/core/*"],
       "@mui/graphql/*": ["../../packages/graphql/*"],
-      "@mui/logger/*": ["../../packages/logger/*"]
+      "@mui/logger/*": ["../../packages/logger/*"],
+      "@mui/router/*": ["../../packages/router/*"]
     },
 
     // required by vite

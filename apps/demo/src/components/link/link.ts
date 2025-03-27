@@ -2,8 +2,7 @@ import { html, useCallback, virtual } from 'haunted';
 import { css } from 'lit';
 
 import { useStyles } from '@mui/core';
-
-import { navigate } from '@/router/navigate.js';
+import { navigateTo } from '@mui/router';
 
 type LinkProps = {
   href: string;
@@ -29,7 +28,7 @@ export const Link = virtual(({ href, label, newWindow }: LinkProps) => {
   const handleClick = useCallback(
     (event: Event) => {
       event.preventDefault();
-      navigate(href);
+      navigateTo(href);
     },
     [href],
   );

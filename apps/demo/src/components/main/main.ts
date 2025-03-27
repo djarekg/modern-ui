@@ -5,8 +5,7 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import type { NavigationDrawer, NavigationDrawerNavigateEvent } from '@mui/components';
 import { define, useHost, useStyles } from '@mui/core';
 import '@mui/components/navigation-drawer/navigation-drawer.js';
-
-import { navigate } from '@/router/index.js';
+import { navigateTo } from '@mui/router';
 
 import navItems from './nav-items.js';
 
@@ -52,7 +51,7 @@ export const Main = ({ drawerOpen }: MainProps) => {
      * navigation API. We need this to track navigation history and perform route transitions
      * on any navigation from the drawer.
      */
-    navigate(path);
+    navigateTo(path);
   };
 
   const handleDrawerClose = useCallback(() => {

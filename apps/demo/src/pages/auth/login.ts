@@ -6,9 +6,9 @@ import '@mui/components/button/outline-button.js';
 import '@mui/components/text-field/text-field.js';
 import { type TypedEvent, define, isEmpty, useStyles } from '@mui/core';
 // import { useLogger } from '@mui/logger';
+import { navigateTo } from '@mui/router';
 
 import { signIn } from '@/auth/auth.js';
-import { navigate } from '@/router/index.js';
 import { routeType } from '@/router/route-type.js';
 
 import styles from './login.css?inline';
@@ -45,7 +45,7 @@ const LoginPage = () => {
 
     const signedIn = await signIn(userName.get(), password.get());
     if (signedIn) {
-      navigate(routeType.home);
+      navigateTo(routeType.home);
     }
   };
 
