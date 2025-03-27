@@ -150,10 +150,10 @@
       "version": "1.0.0",
       "dependencies": {
         "@mui/core": "workspace:*",
-        "haunted": "^6.1.0",
+        "haunted": "latest",
       },
       "devDependencies": {
-        "@types/bun": "^1.2.5",
+        "@types/bun": "latest",
       },
     },
   },
