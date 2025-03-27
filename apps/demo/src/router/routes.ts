@@ -65,19 +65,20 @@ export const routes: RouteConfig[] = [
     },
   },
   {
-    name: 'products',
-    pattern: new URLPattern({ pathname: routeType.products }),
-    render: () => {
-      import('../pages/products/index.js');
-      return html`<app-products-page></app-products-page>`;
-    },
-  },
-  {
     name: 'product',
     pattern: new URLPattern({ pathname: `${routeType.products}/:id` }),
+    // path: routeType.product,
     render: ({ id }) => {
       import('../pages/products/product.js');
       return html`${ProductPage({ id })}`;
+    },
+  },
+  {
+    name: 'products',
+    pattern: new URLPattern({ pathname: routeType.products }),
+    // path: routeType.products,
+    render: () => {
+      import('../pages/products/index.js');
     },
   },
 ];

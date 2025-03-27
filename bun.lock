@@ -48,7 +48,6 @@
       "version": "1.0.0",
       "dependencies": {
         "@apollo/client": "^3.13.4",
-        "@lit-labs/router": "^0.1.4",
         "@lit-labs/signals": "^0.1.2",
         "@lit/context": "^1.1.4",
         "@mui/components": "workspace:*",
@@ -157,6 +156,7 @@
   ],
   "overrides": {
     "typescript": "^5",
+    "haunted": "^6.1.0",
     "signal-utils": "^0.21.0",
     "signal-polyfill": "^0.2.0",
     "lit": "^3",
@@ -465,8 +465,6 @@
     "@jspm/import-map": ["@jspm/import-map@1.1.0", "https://artifactory.nml.com:443/artifactory/api/npm/npm/@jspm/import-map/-/import-map-1.1.0.tgz", {}, "sha512-vmk583YnMi4fmqeXbWIBiyzFu+vqVZ5VCoaa6H4xeSQy5E6JAWtmcq72OAMFTeSTqw7xxHQIJFq2OlHKdUWitQ=="],
 
     "@lit-labs/observers": ["@lit-labs/observers@2.0.5", "https://artifactory.nml.com:443/artifactory/api/npm/npm/@lit-labs/observers/-/observers-2.0.5.tgz", { "dependencies": { "@lit/reactive-element": "^1.0.0 || ^2.0.0", "lit-html": "^3.2.0" } }, "sha512-DYHc3XhNgfl9RoDFMz99OvnElWIU7ncNga1tYd/9Wez4NOsMDRXsSD6LjFfpHCVfzZic6MdlVfB7+iIuWXl5Ng=="],
-
-    "@lit-labs/router": ["@lit-labs/router@0.1.4", "https://artifactory.nml.com:443/artifactory/api/npm/npm/@lit-labs/router/-/router-0.1.4.tgz", { "dependencies": { "lit": "^2.0.0 || ^3.0.0" } }, "sha512-xURH6fOPE0MYfXa1nyl+qTIhZRVWkFa2oggTRodKAI2q/HjA2Va7HEKe7fMm8DdnFE+zEI2aUGnStawKpVh3lQ=="],
 
     "@lit-labs/signals": ["@lit-labs/signals@0.1.2", "https://artifactory.nml.com:443/artifactory/api/npm/npm/@lit-labs/signals/-/signals-0.1.2.tgz", { "dependencies": { "lit": "^2.0.0 || ^3.0.0", "signal-polyfill": "^0.2.0" } }, "sha512-hkOL0ua4ILeHlaJ8IqFKS+Y+dpYznWaDhdikzwt3zJ1/LPz3Etft4OPIMoltzbBJS5pyXPRseD/uWRlET3ImEA=="],
 
