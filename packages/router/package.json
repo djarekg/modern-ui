@@ -1,0 +1,34 @@
+{
+  "name": "@mui/router",
+  "version": "1.0.0",
+  "author": "Dustin Griffith",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/djarekg/modern-ui"
+  },
+  "engines": {
+    "bun": ">=1.1.41"
+  },
+  "license": "MIT",
+  "packageManager": "bun",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "task build",
+    "build": "task build"
+  },
+  "dependencies": {
+    "@mui/core": "workspace:*",
+    "haunted": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.5"
+  }
+}
