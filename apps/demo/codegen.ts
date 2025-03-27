@@ -11,6 +11,7 @@ const config: CodegenConfig = {
   ignoreNoDocuments: true,
   config: {
     avoidOptionals: false,
+    documentVariableSuffix: '',
     // allowEnumStringTypes: true,
     numericEnums: true,
     // dedupeOperationSuffix: true,
@@ -18,7 +19,8 @@ const config: CodegenConfig = {
     defaultScalarType: 'unknown',
     overwrite: true,
     declarationKind: 'interface',
-    immutableTypes: false,
+    immutableTypes: true,
+    dedupeOperationSuffix: true,
     maybeValue: 'T | undefined',
     // preResolveTypes: true,
     skipTypename: true,

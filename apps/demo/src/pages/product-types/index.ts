@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'haunted';
-import { html } from 'lit';
+import { html, useEffect, useState, virtual } from 'haunted';
 
-import { define } from '@mui/core';
 import { useClient } from '@mui/graphql';
 
+import { ProductTypeList } from '@/components/product-type-list/product-type-list.js';
 import { clientConfig } from '@/config.js';
 import { GetProductTypes, type GetProductTypesQuery } from '@/types/graphql.js';
-import '@/components/product-list/product-list.js';
 
-const ProductsPage = () => {
+export const ProductTypes = virtual(() => {
   const { query } = useClient(clientConfig);
   const [productTypes, setProductTypes] = useState<GetProductTypesQuery['productTypes']>([]);
 
@@ -17,16 +15,5 @@ const ProductsPage = () => {
     setProductTypes(productTypes);
   }, []);
 
-  return html`
-    <div>
-    </div>
-  `;
-};
-
-define('app-products-page', ProductsPage);
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'app-products-page': HTMLElement;
-  }
-}
+  return html`${ProductTypeList({ productTypes })}`;
+});

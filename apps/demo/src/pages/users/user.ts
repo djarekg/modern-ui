@@ -11,9 +11,9 @@ import { UserLoginHistory } from '@/components/login-history/user-login-history.
 import { UserDetail } from '@/components/user-detail/user-detail.js';
 import { clientConfig } from '@/config.js';
 import {
-  GetLoginHistoryByUserIdDocument,
+  GetLoginHistoryByUserId,
   type GetLoginHistoryByUserIdQuery,
-  GetUserByIdDocument,
+  GetUserById,
   type GetUserByIdQuery,
 } from '@/types/graphql.js';
 import { getUserId } from '@/utils/cache-util.js';
@@ -35,14 +35,14 @@ const UserPage = ({ id = getUserId() }: UserPageProps) => {
 
   // Fetch the user data.
   useEffect(async () => {
-    const { user } = await query(GetUserByIdDocument, { variables: { id } });
+    const { user } = await query(GetUserById, { variables: { id } });
     setUser(user);
   }, []);
 
   // Fetch the login history and user data.
   useEffect(async () => {
     const userId = getUserId();
-    const { loginHistories } = await query(GetLoginHistoryByUserIdDocument, {
+    const { loginHistories } = await query(GetLoginHistoryByUserId, {
       variables: { userId },
     });
     setLoginHistories(loginHistories);

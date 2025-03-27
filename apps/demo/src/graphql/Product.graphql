@@ -12,3 +12,8 @@ query getProductById($id: String!) {
     ...ProductParts
   }
 }
+query getProductsByProductTypeId($productTypeId: String!) {
+  products(where: { productTypeId: { equals: $productTypeId } }) {
+    ...ProductParts
+  }
+}

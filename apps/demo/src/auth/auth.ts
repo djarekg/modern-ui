@@ -4,12 +4,7 @@ import { useClient } from '@mui/graphql';
 import { isSignedInSignal } from '@/auth/is-signed-in.js';
 import { PROFILE_CACHE_KEY } from '@/auth/profile-cache-key.js';
 import { clientConfig } from '@/config.js';
-import {
-  GetUserByUserNameDocument,
-  SignInDocument,
-  SignOutDocument,
-  ValidateDocument,
-} from '@/types/graphql.js';
+import { GetUserByUserName, SignIn, SignOut, Validate } from '@/types/graphql.js';
 
 import { AUTH_CACHE_KEY } from './auth-cache-key.js';
 
@@ -30,7 +25,7 @@ export type AuthCache = {
  */
 export const signIn = async (userName: string, password: string) => {
   const { query } = useClient(clientConfig);
-  const { signIn: token } = await query(SignInDocument, { variables: { userName, password } });
+  const { signIn: token } = await query(SignIn, { variables: { userName, password } });
 
   if (token) {
     const [_, setCache] = useCache();
@@ -43,7 +38,7 @@ export const signIn = async (userName: string, password: string) => {
     setCache(AUTH_CACHE_KEY, authCache);
 
     // Store the user's profile in the cache
-    const { user } = await query(GetUserByUserNameDocument, { variables: { userName } });
+    const { user } = await query(GetUserByUserName, { variables: { userName } });
     setCache(PROFILE_CACHE_KEY, user);
 
     // set the signed in signal to true. this will trigger the user to be signed in
@@ -63,7 +58,7 @@ export const signIn = async (userName: string, password: string) => {
  */
 export const signOut = async () => {
   const { query } = useClient(clientConfig);
-  const { signOut } = await query(SignOutDocument);
+  const { signOut } = await query(SignOut);
 
   if (signOut) {
     const [_, setCache] = useCache();
@@ -93,7 +88,7 @@ export const validate = async () => {
   // Validate cached token with the server.
   const { token } = cachedAuth;
   const { query } = useClient(clientConfig);
-  const { validate } = await query(ValidateDocument, { variables: { token } });
+  const { validate } = await query(Validate, { variables: { token } });
 
   if (!validate) {
     isSignedInSignal.set(false);

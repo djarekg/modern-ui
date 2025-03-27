@@ -42,4 +42,12 @@ export const routes: Routes<TemplateResult | typeof nothing> = {
     import('../pages/products/index.js');
     return html`<app-products-page></app-products-page>`;
   },
+  [`${routeType.productTypes}/:id`]: ({ id }) => {
+    import('../pages/product-types/product-type.js');
+    return html`<app-product-type-page .id=${id}></app-product-type-page>`;
+  },
+  [routeType.productTypes]: () => {
+    import('../pages/product-types/index.js');
+    return html`<app-product-types-page></app-product-types-page>`;
+  },
 } as const;

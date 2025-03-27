@@ -8,7 +8,7 @@ import { useClient } from '@mui/graphql';
 import { clientConfig } from '@/config.js';
 import '@/components/user-list/user-list.js';
 import { UserList } from '@/components/user-list/user-list.js';
-import { GetUsersDocument, type GetUsersQuery } from '@/types/graphql.js';
+import { GetUsers, type GetUsersQuery } from '@/types/graphql.js';
 
 const styles = css`
   :host {
@@ -32,7 +32,7 @@ const UsersPage = () => {
   useEffect(async () => {
     // Simulate slower loading time.
     await delay(2000);
-    const { users } = await query(GetUsersDocument);
+    const { users } = await query(GetUsers);
     setUsers(users);
     setIsLoading(false);
   }, []);
