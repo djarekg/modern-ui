@@ -26,8 +26,8 @@
     "@jspm/core": "^2.1.0",
     "@jspm/generator": "^2.5.1",
     "@jspm/import-map": "^1.1.0",
-    "@types/bun": "^1.2.5",
-    "typedoc": "^0.27.9"
+    "@types/bun": "^1.2.6",
+    "typedoc": "^0.28.1"
   },
   "peerDependencies": {
     "typescript": "^5.8.2"

@@ -32,7 +32,7 @@
     "stylis": "^4.3.6"
   },
   "devDependencies": {
-    "@types/bun": "^1.2.5",
+    "@types/bun": "^1.2.6",
     "@types/stylis": "^4.2.7"
   },
   "peerDependencies": {

@@ -38,16 +38,16 @@
     "@elysiajs/swagger": "^1.2.2",
     "@mui/graphql": "workspace:*",
     "@prisma/client": "^6.5.0",
-    "elysia": "1.2.6",
+    "elysia": "1.2.25",
     "graphql": "^16.10.0",
     "graphql-fields": "^2.0.3",
-    "graphql-scalars": "^1.24.1",
+    "graphql-scalars": "^1.24.2",
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.2"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.6.0",
-    "@types/bun": "^1.2.5",
+    "@types/bun": "^1.2.6",
     "prisma": "^6.5.0",
     "typegraphql-prisma": "^0.28.0",
     "typescript": "^5.8.2"
