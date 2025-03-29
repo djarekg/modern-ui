@@ -16,12 +16,12 @@ import { clientConfig } from '@/config.js';
  * @param {Variables<D, V>} variables Query variables.
  * @returns {object} Query result object.
  */
-export const useQuery = <V = OperationVariables, D = unknown>(
+export const useQuery = <D = unknown, V = OperationVariables>(
   query: ComponentDocument<D, V>,
   variables?: Variables<D, V>,
 ) => {
   const client = useContext(ClientContext);
-  return originalUseQuery(query, { client, variables });
+  return originalUseQuery<D, V>(query, { client, variables });
 };
 
 /**
@@ -31,10 +31,12 @@ export const useQuery = <V = OperationVariables, D = unknown>(
  * @param {Variables<D, V>} variables Query variables.
  * @returns {object} Query result object.
  */
-export const useQueryAsync = async <V = OperationVariables, D = unknown>(
+export const useQueryAsync = async <D = unknown, V = OperationVariables>(
   query: ComponentDocument<D, V>,
   variables?: Variables<D, V>,
 ) => {
-  const { data, loading, error } = await originalUseQueryAsync(clientConfig, query, { variables });
+  const { data, loading, error } = await originalUseQueryAsync<D, V>(clientConfig, query, {
+    variables,
+  });
   return { data, loading, error };
 };

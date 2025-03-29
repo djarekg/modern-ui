@@ -23,9 +23,7 @@ export type AuthCache = {
  * @returns True if the user is signed in, false otherwise.
  */
 export const signIn = async (userName: string, password: string) => {
-  const {
-    data: { signIn: token },
-  } = await useQueryAsync(SignIn, { userName, password });
+  const { data: token } = await useQueryAsync(SignIn, { userName, password });
 
   if (token) {
     const [_, setCache] = useCache();
@@ -79,40 +77,40 @@ export const validate = () => {
   const [cache] = useCache();
   const cachedAuth = cache(AUTH_CACHE_KEY) as AuthCache;
 
-  // If there is no cached auth, the user is not signed in.
-  if (!cachedAuth) {
-    isSignedInSignal.set(false);
-    resolve(false);
-  }
-
   // 🤓 Ensure signal is set after the current event loop. This will
   // allow any pending renders or updates to be processed first.
   const updateIsSignedInSignal = (isSignedIn: boolean) => {
     setTimeout(() => isSignedInSignal.set(isSignedIn));
   };
 
-  const { token } = cachedAuth;
+  if (cachedAuth) {
+    const { token } = cachedAuth;
 
-  // Validate cached token with the server.
-  useQueryAsync(Validate, { token })
-    .then(({ data: valid }) => {
-      if (valid) {
-        // This user is signed in...wooohooo 🎉.
-        resolve(true);
-        updateIsSignedInSignal(true);
-        return;
-      }
+    // Validate cached token with the server.
+    useQueryAsync(Validate, { token })
+      .then(({ data: valid }) => {
+        if (valid) {
+          // This user is signed in...wooohooo 🎉.
+          updateIsSignedInSignal(true);
+          resolve(true);
+          return;
+        }
 
-      // If the token is invalid, the user is not signed in.
-      isSignedInSignal.set(false);
-      updateIsSignedInSignal(false);
-      resolve(false);
-    })
-    .catch(error => {
-      console.error('Error validating token:', error);
-      updateIsSignedInSignal(false);
-      resolve(false);
-    });
+        // If the token is invalid, the user is not signed in.
+        isSignedInSignal.set(false);
+        updateIsSignedInSignal(false);
+        resolve(false);
+      })
+      .catch(error => {
+        console.error('Error validating token:', error);
+        updateIsSignedInSignal(false);
+        resolve(false);
+      });
+  } else {
+    // If there is no cached auth, the user is not signed in.
+    updateIsSignedInSignal(false);
+    resolve(false);
+  }
 
   return promise;
 };

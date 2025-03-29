@@ -4,14 +4,15 @@ import type { TableEvent } from '@mui/components/table/events.js';
 import { navigateTo } from '@mui/router';
 
 import { routeType } from '@/router/route-type.js';
-import type { GetUsersQuery } from '@/types/graphql.js';
+import type { User } from '@/types/graphql.js';
 
 type UserListProps = {
-  users: GetUsersQuery['users'];
+  users: User[];
 };
 
 /**
  * User list component.
+ *
  * @param UserListProps Component properties.
  */
 export const UserList = virtual(({ users = [] }: UserListProps) => {

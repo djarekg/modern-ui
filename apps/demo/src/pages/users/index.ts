@@ -7,7 +7,7 @@ import { define, useStyles } from '@mui/core';
 import '@/components/user-list/user-list.js';
 import { UserList } from '@/components/user-list/user-list.js';
 import { useQuery } from '@/hooks/use-query.js';
-import { GetUsers } from '@/types/graphql.js';
+import { GetUsers, type User } from '@/types/graphql.js';
 
 const styles = css`
   :host {
@@ -32,7 +32,7 @@ const UsersPage = () => {
   return html`
     <article>
       <section class="app-container">
-        ${UserList({ users: data.users })}
+        ${UserList({ users: data.users as User[] })}
       </section>
     </article>
   `;
