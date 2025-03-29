@@ -93,8 +93,8 @@ const useRoutes = hook(
 
     constructor(id: number, state: State, routes: Routes<T>, fallback: T) {
       super(id, state);
-      this.fallback = fallback;
       this._routes = Object.entries(routes).map(createRouteEntry);
+      this.fallback = fallback;
     }
 
     update() {

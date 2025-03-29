@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'haunted';
+import { useEffect, useMemo, useState } from 'haunted';
 import { css, html, nothing } from 'lit';
 
 import { define, useStyles } from '@mui/core';
@@ -29,18 +29,26 @@ const styles = css`
   }
 `;
 
+/**
+ * Validate the user session and redirect to login if not valid.
+ */
+if (!(await validate())) {
+  navigateTo(routeType.login);
+}
+
+/**
+ * Layout component for the application.
+ *
+ * This component is responsible for rendering the main layout of the application,
+ * including the header, footer, and main content area. The
+ * @returns
+ */
 const Layout = () => {
   useStyles(styles);
 
   const route = useRoutes(routes, nothing);
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Is current user authenticated?
-  useEffect(async () => {
-    if (!(await validate())) {
-      navigateTo(routeType.login);
-    }
-  }, []);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return html`
     <app-main

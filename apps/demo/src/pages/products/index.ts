@@ -2,20 +2,17 @@ import { useEffect, useState } from 'haunted';
 import { html } from 'lit';
 
 import { define } from '@mui/core';
-import { useClient } from '@mui/graphql';
 
-import { clientConfig } from '@/config.js';
-import { GetProductTypes, type GetProductTypesQuery } from '@/types/graphql.js';
+import { GetProductTypes } from '@/types/graphql.js';
 import '@/components/product-list/product-list.js';
+import { useQuery } from '@/hooks/use-query.js';
 
 const ProductsPage = () => {
-  const { query } = useClient(clientConfig);
-  const [productTypes, setProductTypes] = useState<GetProductTypesQuery['productTypes']>([]);
+  const { data, loading } = useQuery(GetProductTypes);
 
-  useEffect(async () => {
-    const { productTypes } = await query(GetProductTypes);
-    setProductTypes(productTypes);
-  }, []);
+  if (loading) {
+    return html`<div>Loading...</div>`;
+  }
 
   return html`
     <div>

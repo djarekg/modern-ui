@@ -31,6 +31,8 @@
     "generate": "bunx graphql-codegen --config codegen.ts"
   },
   "dependencies": {
+    "@apollo-elements/core": "^2.1.2",
+    "@apollo-elements/haunted": "^3.0.3",
     "@apollo/client": "^3.13.5",
     "@lit-labs/signals": "^0.1.2",
     "@lit/context": "^1.1.4",

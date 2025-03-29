@@ -1,28 +1,23 @@
-import { html, useEffect, useState, virtual } from 'haunted';
+import { html, virtual } from 'haunted';
 
 import '@mui/components/card/card.js';
-import { useClient } from '@mui/graphql';
 
 import { ProductDetail } from '@/components/product-detail/product-detail.js';
-import { clientConfig } from '@/config.js';
-import { GetProductById, type GetProductByIdQuery } from '@/types/graphql.js';
+import { useQuery } from '@/hooks/use-query.js';
+import { GetProductById } from '@/types/graphql.js';
 
 type ProductProps = {
   id: string;
 };
 
 export const ProductPage = virtual(({ id }: ProductProps) => {
-  const { query } = useClient(clientConfig);
-  const [product, setProduct] = useState<GetProductByIdQuery['product']>(null);
+  const { data, loading } = useQuery(GetProductById, { id });
 
-  useEffect(async () => {
-    const { product } = await query(GetProductById, { variables: { id } });
-    setProduct(product);
-  }, [id]);
-
-  if (!product) return html`<div>Loading...</div>`;
+  if (!loading && !data) {
+    return html`<div>Product not found</div>`;
+  }
 
   return html`
-    ${ProductDetail({ product })}
+    ${ProductDetail({ product: data.product })}
   `;
 });

@@ -1,37 +1,33 @@
-import { useQuery } from '@apollo/client';
-import { html, useEffect, useState, virtual } from 'haunted';
-import { css, unsafeCSS } from 'lit';
+// import { html, useEffect, useState, virtual } from 'haunted';
+// import { css, unsafeCSS } from 'lit';
 
-import { useStyles } from '@mui/core';
+// import { useStyles } from '@mui/core';
 
-import { ProductTypeList } from '@/components/product-type-list/product-type-list.js';
-import {
-  GetProductsByProductTypeId,
-  type ProductType as ProductTypeModel,
-} from '@/types/graphql.js';
+// import { ProductTypeList } from '@/components/product-type-list/product-type-list.js';
+// import { useQuery } from '@/hooks/use-query.js';
+// import {
+//   type ProductType as ProductTypeModel,
+// } from '@/types/graphql.js';
 
-const styles = css``;
+// const styles = css``;
 
-type ProductTypeProps = {
-  id: string;
-};
+// type ProductTypeProps = {
+//   id: string;
+// };
 
-export const ProductType = virtual(({ id }: ProductTypeProps) => {
-  useStyles(unsafeCSS(styles));
+// export const ProductType = virtual(({ id }: ProductTypeProps) => {
+//   useStyles(unsafeCSS(styles));
 
-  const [productTypes, setProductTypes] = useState<ProductTypeModel[]>([]);
+//   const { data, loading } = useQuery<ProductTypeModel[], { productTypeId: string }>(
+//     GetPro,
+//     {
+//       productTypeId: id,
+//     },
+//   );
 
-  useEffect(async () => {
-    const { data: productTypes } = useQuery<ProductTypeModel[], { productTypeId: string }>(
-      GetProductsByProductTypeId,
-      {
-        variables: {
-          productTypeId: id,
-        },
-      },
-    );
-    setProductTypes(productTypes);
-  }, []);
+//   if (loading) {
+//     return html`<div>Loading...</div>`;
+//   }
 
-  return html`${ProductTypeList({ productTypes })}`;
-});
+//   return html`${ProductTypeList({ productTypes: data.productTypes })}`;
+// });

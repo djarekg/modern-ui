@@ -2,19 +2,18 @@ import { html, useEffect, useMemo, useState } from 'haunted';
 import { nothing, unsafeCSS } from 'lit';
 
 import { define, useStyles } from '@mui/core';
-import { useClient } from '@mui/graphql';
 import '@mui/components/text-field/text-field.js';
 import '@mui/components/tabs/tabs.js';
 import '@mui/components/tabs/tab.js';
 
 import { UserLoginHistory } from '@/components/login-history/user-login-history.js';
 import { UserDetail } from '@/components/user-detail/user-detail.js';
-import { clientConfig } from '@/config.js';
+import { useQuery } from '@/hooks/use-query.js';
 import {
   GetLoginHistoryByUserId,
   type GetLoginHistoryByUserIdQuery,
   GetUserById,
-  type GetUserByIdQuery,
+  type User,
 } from '@/types/graphql.js';
 import { getUserId } from '@/utils/cache-util.js';
 
@@ -29,24 +28,11 @@ type UserPageProps = {
 const UserPage = ({ id = getUserId() }: UserPageProps) => {
   useStyles(unsafeCSS(styles));
 
-  const { query } = useClient(clientConfig);
-  const [user, setUser] = useState<GetUserByIdQuery['user']>(null);
-  const [loginHistories, setLoginHistories] = useState<LoginHistories>([]);
-
   // Fetch the user data.
-  useEffect(async () => {
-    const { user } = await query(GetUserById, { variables: { id } });
-    setUser(user);
-  }, []);
+  const { data: userData } = useQuery(GetUserById, { id });
 
   // Fetch the login history and user data.
-  useEffect(async () => {
-    const userId = getUserId();
-    const { loginHistories } = await query(GetLoginHistoryByUserId, {
-      variables: { userId },
-    });
-    setLoginHistories(loginHistories);
-  }, []);
+  const { data: loginHistoriesData } = useQuery(GetLoginHistoryByUserId, { userId: getUserId() });
 
   // const onProfileSave = useCallback(async ({ detail: { user } }: SaveEvent) => {
   //   // const { users } = useApi();
@@ -55,13 +41,19 @@ const UserPage = ({ id = getUserId() }: UserPageProps) => {
 
   // <app-user-detail .user=${user} @save=${onProfileSave}></app-user-detail>
 
-  const renderForm = useMemo(() => (user ? html`${UserDetail({ user })}` : nothing), [user]);
+  const renderForm = useMemo(
+    () => (userData?.user ? html`${UserDetail({ user: userData?.user })}` : nothing),
+    [userData],
+  );
 
   const renderAddress = useMemo(() => html`<div>Address</div>`, []);
 
   const renderLoginHistory = useMemo(
-    () => (loginHistories ? html`${UserLoginHistory({ loginHistories })}` : nothing),
-    [loginHistories],
+    () =>
+      loginHistoriesData?.loginHistories
+        ? html`${UserLoginHistory({ loginHistories: loginHistoriesData?.loginHistories })}`
+        : nothing,
+    [loginHistoriesData],
   );
 
   return html`

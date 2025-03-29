@@ -1,23 +1,20 @@
-import { useQuery } from '@apollo/client';
-import { html, useEffect, useState, virtual } from 'haunted';
+import { html, virtual } from 'haunted';
 
-import { GetProductsByProductTypeId, type Product } from '@/types/graphql.js';
+import { useQuery } from '@/hooks/use-query.js';
+import { GetProductsByProductTypeId } from '@/types/graphql.js';
 
 type ProductsByTypeProps = {
   productTypeId: string;
 };
 
 export const ProductsByType = virtual(({ productTypeId }: ProductsByTypeProps) => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const { data, loading } = useQuery(GetProductsByProductTypeId, {
+    productTypeId,
+  });
 
-  useEffect(() => {
-    const { data } = useQuery<Product[], { productTypeId: string }>(GetProductsByProductTypeId, {
-      variables: {
-        productTypeId,
-      },
-    });
-    setProducts(data);
-  }, [productTypeId]);
+  if (loading) {
+    return html`<div>Loading...</div>`;
+  }
 
   return html``;
 });

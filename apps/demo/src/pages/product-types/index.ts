@@ -1,19 +1,15 @@
-import { html, useEffect, useState, virtual } from 'haunted';
-
-import { useClient } from '@mui/graphql';
+import { html, virtual } from 'haunted';
 
 import { ProductTypeList } from '@/components/product-type-list/product-type-list.js';
-import { clientConfig } from '@/config.js';
-import { GetProductTypes, type GetProductTypesQuery } from '@/types/graphql.js';
+import { useQuery } from '@/hooks/use-query.js';
+import { GetProductTypes } from '@/types/graphql.js';
 
 export const ProductTypes = virtual(() => {
-  const { query } = useClient(clientConfig);
-  const [productTypes, setProductTypes] = useState<GetProductTypesQuery['productTypes']>([]);
+  const { data, loading } = useQuery(GetProductTypes);
 
-  useEffect(async () => {
-    const { productTypes } = await query(GetProductTypes);
-    setProductTypes(productTypes);
-  }, []);
+  if (loading) {
+    return html`<div>Loading...</div>`;
+  }
 
-  return html`${ProductTypeList({ productTypes })}`;
+  return html`${ProductTypeList({ productTypes: data.productTypes })}`;
 });

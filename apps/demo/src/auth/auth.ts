@@ -1,9 +1,8 @@
 import { useCache } from '@mui/core';
-import { useClient } from '@mui/graphql';
 
 import { isSignedInSignal } from '@/auth/is-signed-in.js';
 import { PROFILE_CACHE_KEY } from '@/auth/profile-cache-key.js';
-import { clientConfig } from '@/config.js';
+import { useQueryAsync } from '@/hooks/use-query.js';
 import { GetUserByUserName, SignIn, SignOut, Validate } from '@/types/graphql.js';
 
 import { AUTH_CACHE_KEY } from './auth-cache-key.js';
@@ -24,8 +23,9 @@ export type AuthCache = {
  * @returns True if the user is signed in, false otherwise.
  */
 export const signIn = async (userName: string, password: string) => {
-  const { query } = useClient(clientConfig);
-  const { signIn: token } = await query(SignIn, { variables: { userName, password } });
+  const {
+    data: { signIn: token },
+  } = await useQueryAsync(SignIn, { userName, password });
 
   if (token) {
     const [_, setCache] = useCache();
@@ -38,7 +38,7 @@ export const signIn = async (userName: string, password: string) => {
     setCache(AUTH_CACHE_KEY, authCache);
 
     // Store the user's profile in the cache
-    const { user } = await query(GetUserByUserName, { variables: { userName } });
+    const { data: user } = await useQueryAsync(GetUserByUserName, { userName });
     setCache(PROFILE_CACHE_KEY, user);
 
     // set the signed in signal to true. this will trigger the user to be signed in
@@ -57,8 +57,7 @@ export const signIn = async (userName: string, password: string) => {
  * @returns True if the user is signed out, false otherwise.
  */
 export const signOut = async () => {
-  const { query } = useClient(clientConfig);
-  const { signOut } = await query(SignOut);
+  const { data: signOut } = await useQueryAsync(SignOut);
 
   if (signOut) {
     const [_, setCache] = useCache();
@@ -71,31 +70,49 @@ export const signOut = async () => {
 };
 
 /**
- * Validate user.
+ * Validate current user session.
  *
  * @returns True if the user is signed in, false otherwise.
  */
-export const validate = async () => {
+export const validate = () => {
+  const { promise, resolve } = Promise.withResolvers<boolean>();
   const [cache] = useCache();
   const cachedAuth = cache(AUTH_CACHE_KEY) as AuthCache;
 
   // If there is no cached auth, the user is not signed in.
   if (!cachedAuth) {
     isSignedInSignal.set(false);
-    return false;
+    resolve(false);
   }
+
+  // 🤓 Ensure signal is set after the current event loop. This will
+  // allow any pending renders or updates to be processed first.
+  const updateIsSignedInSignal = (isSignedIn: boolean) => {
+    setTimeout(() => isSignedInSignal.set(isSignedIn));
+  };
+
+  const { token } = cachedAuth;
 
   // Validate cached token with the server.
-  const { token } = cachedAuth;
-  const { query } = useClient(clientConfig);
-  const { validate } = await query(Validate, { variables: { token } });
+  useQueryAsync(Validate, { token })
+    .then(({ data: valid }) => {
+      if (valid) {
+        // This user is signed in...wooohooo 🎉.
+        resolve(true);
+        updateIsSignedInSignal(true);
+        return;
+      }
 
-  if (!validate) {
-    isSignedInSignal.set(false);
-    return false;
-  }
+      // If the token is invalid, the user is not signed in.
+      isSignedInSignal.set(false);
+      updateIsSignedInSignal(false);
+      resolve(false);
+    })
+    .catch(error => {
+      console.error('Error validating token:', error);
+      updateIsSignedInSignal(false);
+      resolve(false);
+    });
 
-  // This user is signed in...wooohooo!!!
-  isSignedInSignal.set(true);
-  return true;
+  return promise;
 };

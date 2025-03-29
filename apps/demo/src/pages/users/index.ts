@@ -1,14 +1,13 @@
-import { html, useEffect, useState } from 'haunted';
+import { html } from 'haunted';
 import { css } from 'lit';
 
 import '@mui/components/skeleton/skeleton-table.js';
-import { define, delay, useStyles } from '@mui/core';
-import { useClient } from '@mui/graphql';
+import { define, useStyles } from '@mui/core';
 
-import { clientConfig } from '@/config.js';
 import '@/components/user-list/user-list.js';
 import { UserList } from '@/components/user-list/user-list.js';
-import { GetUsers, type GetUsersQuery } from '@/types/graphql.js';
+import { useQuery } from '@/hooks/use-query.js';
+import { GetUsers } from '@/types/graphql.js';
 
 const styles = css`
   :host {
@@ -24,27 +23,16 @@ const styles = css`
 const UsersPage = () => {
   useStyles(styles);
 
-  const { query } = useClient(clientConfig);
-  const [users, setUsers] = useState<GetUsersQuery['users']>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, loading } = useQuery(GetUsers);
 
-  // Fetch users data.
-  useEffect(async () => {
-    // Simulate slower loading time.
-    await delay(2000);
-    const { users } = await query(GetUsers);
-    setUsers(users);
-    setIsLoading(false);
-  }, []);
-
-  if (isLoading) {
+  if (loading) {
     return html`<mui-skeleton-table rows="20" columns="5"></mui-skeleton-table>`;
   }
 
   return html`
     <article>
       <section class="app-container">
-        ${UserList({ users })}
+        ${UserList({ users: data.users })}
       </section>
     </article>
   `;

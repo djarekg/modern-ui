@@ -1,15 +1,7 @@
 import { getAuthToken } from './utils/cache-util.js';
 
 /**
- * Apollo client configuration. Pass this to the `useClient` hook.
- *
- * @example
- * ```ts
- * import { useClient } from '@mui/core';
- * import { apolloClientConfig } from '@/config.ts';
- *
- * const { query } = useClient(apolloClientConfig);
- * ```
+ * Apollo client configuration. Pass this to the `@mui/graphql` `useQuery` hook.
  */
 export const clientConfig = {
   name: '@mui/demo',

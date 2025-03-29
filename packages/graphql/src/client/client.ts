@@ -14,8 +14,7 @@ import {
   unwrapMutateResult,
 } from '../utils/operation-result-unwrapper.js';
 import { createApolloClient } from './create-apollo-client.js';
-
-interface ClientQueryOptions extends Omit<QueryOptions, 'query'> {}
+import type { ClientQueryOptions } from './index.js';
 
 /**
  * Client options type.

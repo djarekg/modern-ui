@@ -1,4 +1,5 @@
-import { html, useCallback, useMemo, useState } from 'haunted';
+import { html } from '@lit-labs/signals';
+import { useCallback, useMemo, useState } from 'haunted';
 import { nothing, unsafeCSS } from 'lit';
 
 import { define, useHost, useStyles } from '@mui/core';
@@ -12,13 +13,11 @@ import { confirm } from '@mui/components';
 
 import styles from './header.css?inline';
 
-const Header = () => {
+const Header = (element: HTMLElement) => {
   useStyles(unsafeCSS(styles));
 
   const { isSignedIn } = useIsSignedInWatcher();
   const [pageTitle] = useState('title here');
-
-  const _this = useHost();
 
   const handleSignOut = useCallback(async () => {
     if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {
@@ -29,7 +28,7 @@ const Header = () => {
   }, []);
 
   const handleMenuClick = useCallback(() => {
-    _this.dispatchEvent(
+    element.dispatchEvent(
       new CustomEvent('nav-button-clicked', {
         bubbles: true,
         composed: true,
