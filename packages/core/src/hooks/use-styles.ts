@@ -1,8 +1,9 @@
 import { useCallback, useLayoutEffect } from 'haunted';
-import { type CSSResult, type ChildPart, supportsAdoptingStyleSheets } from 'lit-element';
+import { type CSSResult, supportsAdoptingStyleSheets } from 'lit-element';
 import { compile, serialize, stringify } from 'stylis';
 
 import { hash } from '../crypto/hash.js';
+import { wrap } from '../dom/wrap.js';
 
 import { useHost } from './use-host.js';
 
@@ -48,11 +49,17 @@ export function useStyles(styles: CSSResult | CSSResult[]) {
               const serializedCss = serialize(compile(`.${id}{${style.cssText}}`), stringify);
               newStyle.textContent = serializedCss;
               newStyle.setAttribute('id', id);
-              // document.head.appendChild(newStyle);
-              (el as unknown as ChildPart).parentNode?.appendChild(newStyle);
-              // const parent = findElementWithShadowRoot(document.body);
-              // parent?.shadowRoot.appendChild(newStyle);
-              ((el as unknown as ChildPart).parentNode as Element).classList.add(id);
+
+              const parent = el.parentNode;
+
+              if (parent.children.length > 1) {
+                throw new Error('The can only be one HTML element at the root of the component.');
+              }
+
+              const firstElement = parent.firstElementChild;
+              const wrapperElement = wrap(firstElement);
+              wrapperElement.classList.add(id);
+              parent.prepend(newStyle);
             }
           }
         }

@@ -5,6 +5,7 @@ import { define, useStyles } from '@mui/core';
 import '@mui/components/text-field/text-field.js';
 import '@mui/components/tabs/tabs.js';
 import '@mui/components/tabs/tab.js';
+import { useTitle } from '@mui/router';
 
 import { UserLoginHistory } from '@/components/login-history/user-login-history.js';
 import { UserDetail } from '@/components/user-detail/user-detail.js';
@@ -13,7 +14,6 @@ import {
   GetLoginHistoryByUserId,
   type GetLoginHistoryByUserIdQuery,
   GetUserById,
-  type User,
 } from '@/types/graphql.js';
 import { getUserId } from '@/utils/cache-util.js';
 
@@ -27,6 +27,7 @@ type UserPageProps = {
 
 const UserPage = ({ id = getUserId() }: UserPageProps) => {
   useStyles(unsafeCSS(styles));
+  useTitle('user');
 
   // Fetch the user data.
   const { data: userData } = useQuery(GetUserById, { id });

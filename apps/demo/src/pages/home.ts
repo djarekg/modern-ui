@@ -1,6 +1,7 @@
 import { css, html } from 'lit';
 
 import { define, useStyles } from '@mui/core';
+import { useTitle } from '@mui/router';
 
 const styles = css`
   :host:not(:defined) {
@@ -26,6 +27,7 @@ const styles = css`
 
 const Home = () => {
   useStyles(styles);
+  useTitle('home');
 
   return html`<span>Modern UI ~ by GriffiDi</span>`;
 };

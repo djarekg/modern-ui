@@ -76,7 +76,7 @@ model Product {
   id            String         @id @default(uuid())
   name          String
   description   String
-  price         Float
+  price         String
   dateCreated   DateTime       @default(now())
   dateUpdated   DateTime       @updatedAt
   Inventory     Inventory[]

@@ -34,11 +34,9 @@ type AggregateLoginHistory {
 }
 
 type AggregateProduct {
-  _avg: ProductAvgAggregate
   _count: ProductCountAggregate
   _max: ProductMaxAggregate
   _min: ProductMinAggregate
-  _sum: ProductSumAggregate
 }
 
 type AggregateProductColor {
@@ -311,7 +309,7 @@ type CreateManyAndReturnProduct {
   description: String!
   id: String!
   name: String!
-  price: Float!
+  price: String!
   productTypeId: String
 }
 
@@ -1467,16 +1465,8 @@ type Product {
   description: String!
   id: String!
   name: String!
-  price: Float!
+  price: String!
   productTypeId: String
-}
-
-type ProductAvgAggregate {
-  price: Float
-}
-
-input ProductAvgOrderByAggregateInput {
-  price: SortOrder
 }
 
 type ProductColor {
@@ -1837,7 +1827,7 @@ input ProductCreateInput {
   description: String!
   id: String
   name: String!
-  price: Float!
+  price: String!
 }
 
 input ProductCreateManyInput {
@@ -1846,7 +1836,7 @@ input ProductCreateManyInput {
   description: String!
   id: String
   name: String!
-  price: Float!
+  price: String!
   productTypeId: String
 }
 
@@ -1856,7 +1846,7 @@ input ProductCreateManyProductTypeInput {
   description: String!
   id: String
   name: String!
-  price: Float!
+  price: String!
 }
 
 input ProductCreateManyProductTypeInputEnvelope {
@@ -1917,7 +1907,7 @@ input ProductCreateWithoutInventoryInput {
   description: String!
   id: String
   name: String!
-  price: Float!
+  price: String!
 }
 
 input ProductCreateWithoutProductColorInput {
@@ -1929,7 +1919,7 @@ input ProductCreateWithoutProductColorInput {
   description: String!
   id: String
   name: String!
-  price: Float!
+  price: String!
 }
 
 input ProductCreateWithoutProductSalesInput {
@@ -1941,7 +1931,7 @@ input ProductCreateWithoutProductSalesInput {
   description: String!
   id: String
   name: String!
-  price: Float!
+  price: String!
 }
 
 input ProductCreateWithoutProductTypeInput {
@@ -1953,21 +1943,19 @@ input ProductCreateWithoutProductTypeInput {
   description: String!
   id: String
   name: String!
-  price: Float!
+  price: String!
 }
 
 type ProductGroupBy {
-  _avg: ProductAvgAggregate
   _count: ProductCountAggregate
   _max: ProductMaxAggregate
   _min: ProductMinAggregate
-  _sum: ProductSumAggregate
   dateCreated: DateTimeISO!
   dateUpdated: DateTimeISO!
   description: String!
   id: String!
   name: String!
-  price: Float!
+  price: String!
   productTypeId: String
 }
 
@@ -1983,7 +1971,7 @@ type ProductMaxAggregate {
   description: String
   id: String
   name: String
-  price: Float
+  price: String
   productTypeId: String
 }
 
@@ -2003,7 +1991,7 @@ type ProductMinAggregate {
   description: String
   id: String
   name: String
-  price: Float
+  price: String
   productTypeId: String
 }
 
@@ -2022,11 +2010,9 @@ input ProductOrderByRelationAggregateInput {
 }
 
 input ProductOrderByWithAggregationInput {
-  _avg: ProductAvgOrderByAggregateInput
   _count: ProductCountOrderByAggregateInput
   _max: ProductMaxOrderByAggregateInput
   _min: ProductMinOrderByAggregateInput
-  _sum: ProductSumOrderByAggregateInput
   dateCreated: SortOrder
   dateUpdated: SortOrder
   description: SortOrder
@@ -2573,7 +2559,7 @@ input ProductScalarWhereInput {
   description: StringFilter
   id: StringFilter
   name: StringFilter
-  price: FloatFilter
+  price: StringFilter
   productTypeId: StringNullableFilter
 }
 
@@ -2586,16 +2572,8 @@ input ProductScalarWhereWithAggregatesInput {
   description: StringWithAggregatesFilter
   id: StringWithAggregatesFilter
   name: StringWithAggregatesFilter
-  price: FloatWithAggregatesFilter
+  price: StringWithAggregatesFilter
   productTypeId: StringNullableWithAggregatesFilter
-}
-
-type ProductSumAggregate {
-  price: Float
-}
-
-input ProductSumOrderByAggregateInput {
-  price: SortOrder
 }
 
 type ProductType {
@@ -2812,7 +2790,7 @@ input ProductUpdateInput {
   description: String
   id: String
   name: String
-  price: Float
+  price: String
 }
 
 input ProductUpdateManyMutationInput {
@@ -2821,7 +2799,7 @@ input ProductUpdateManyMutationInput {
   description: String
   id: String
   name: String
-  price: Float
+  price: String
 }
 
 input ProductUpdateManyWithWhereWithoutProductTypeInput {
@@ -2896,7 +2874,7 @@ input ProductUpdateWithoutInventoryInput {
   description: String
   id: String
   name: String
-  price: Float
+  price: String
 }
 
 input ProductUpdateWithoutProductColorInput {
@@ -2908,7 +2886,7 @@ input ProductUpdateWithoutProductColorInput {
   description: String
   id: String
   name: String
-  price: Float
+  price: String
 }
 
 input ProductUpdateWithoutProductSalesInput {
@@ -2920,7 +2898,7 @@ input ProductUpdateWithoutProductSalesInput {
   description: String
   id: String
   name: String
-  price: Float
+  price: String
 }
 
 input ProductUpdateWithoutProductTypeInput {
@@ -2932,7 +2910,7 @@ input ProductUpdateWithoutProductTypeInput {
   description: String
   id: String
   name: String
-  price: Float
+  price: String
 }
 
 input ProductUpsertWithWhereUniqueWithoutProductTypeInput {
@@ -2972,7 +2950,7 @@ input ProductWhereInput {
   description: StringFilter
   id: StringFilter
   name: StringFilter
-  price: FloatFilter
+  price: StringFilter
   productTypeId: StringNullableFilter
 }
 
@@ -2989,7 +2967,7 @@ input ProductWhereUniqueInput {
   description: StringFilter
   id: String
   name: StringFilter
-  price: FloatFilter
+  price: StringFilter
   productTypeId: StringNullableFilter
 }
 

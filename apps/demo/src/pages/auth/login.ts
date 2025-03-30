@@ -6,7 +6,7 @@ import '@mui/components/button/outline-button.js';
 import '@mui/components/text-field/text-field.js';
 import { type TypedEvent, define, isEmpty, useStyles } from '@mui/core';
 // import { useLogger } from '@mui/logger';
-import { navigateTo } from '@mui/router';
+import { navigateTo, useTitle } from '@mui/router';
 
 import { signIn } from '@/auth/auth.js';
 import { routeType } from '@/router/route-type.js';
@@ -27,6 +27,7 @@ import styles from './login.css?inline';
 
 const LoginPage = () => {
   useStyles(unsafeCSS(styles));
+  useTitle('login');
 
   // const [userName, setUserName] = useState('');
   // const [password, setPassword] = useState('');

@@ -17,7 +17,7 @@ const Header = (element: HTMLElement) => {
   useStyles(unsafeCSS(styles));
 
   const { isSignedIn } = useIsSignedInWatcher();
-  const [pageTitle] = useState('title here');
+  const [pageTitle] = useState(document.title);
 
   const handleSignOut = useCallback(async () => {
     if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {

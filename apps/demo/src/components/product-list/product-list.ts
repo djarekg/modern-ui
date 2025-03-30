@@ -1,5 +1,5 @@
-import { html, virtual } from 'haunted';
-import { css } from 'lit';
+import { html, useMemo, virtual } from 'haunted';
+import { unsafeCSS } from 'lit';
 
 import '@mui/components/card/index.js';
 import '@mui/components/button/icon-button.js';
@@ -8,23 +8,37 @@ import { useStyles } from '@mui/core';
 
 import type { Product } from '@/types/graphql.js';
 
-const styles = css`
-
-`;
+import styles from './product-list.css?inline';
 
 type ProductListProps = {
   products: Product[];
 };
 
 export const ProductList = virtual(({ products }: ProductListProps) => {
-  useStyles(styles);
+  useStyles(unsafeCSS(styles));
 
-  return products.map(
-    ({ id, name }: Product) => html`
-    <div>
-      <h1>${id}</h1>
-      <p>${name}</p>
-    </div>
-  `,
+  const renderProducts = useMemo(
+    () =>
+      products.map(
+        ({ id, name, description }) => html`
+        <mui-card key=${id}>
+          <mui-card-header>
+            ${name}
+          </mui-card-header>
+          <mui-card-footer>
+            <span class="description">
+              ${description}
+            </span>
+          </mui-card-footer>
+        </mui-card>
+      `,
+      ),
+    [products],
   );
+
+  return html`
+    <div class="container">
+      ${renderProducts}
+    </div>
+  `;
 });

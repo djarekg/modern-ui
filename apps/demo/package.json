@@ -28,7 +28,7 @@
     "dev": "bunx vite",
     "build": "task build && bunx vite build",
     "preview": "bunx vite preview",
-    "generate": "bunx graphql-codegen --config codegen.ts"
+    "codegen": "bunx graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@apollo-elements/core": "^2.1.2",

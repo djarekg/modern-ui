@@ -1,6 +1,7 @@
-import { html, virtual } from 'haunted';
+import { html } from 'haunted';
 
 import '@mui/components/card/card.js';
+import { useTitle } from '@mui/router';
 
 import { ProductDetail } from '@/components/product-detail/product-detail.js';
 import { useQuery } from '@/hooks/use-query.js';
@@ -10,7 +11,9 @@ type ProductProps = {
   id: string;
 };
 
-export const ProductPage = virtual(({ id }: ProductProps) => {
+export const ProductPage = ({ id }: ProductProps) => {
+  useTitle('product');
+
   const { data, loading } = useQuery(GetProductById, { id });
 
   if (!loading && !data) {
@@ -20,4 +23,4 @@ export const ProductPage = virtual(({ id }: ProductProps) => {
   return html`
     ${ProductDetail({ product: data.product })}
   `;
-});
+};

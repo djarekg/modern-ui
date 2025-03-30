@@ -1,10 +1,11 @@
-import { html, virtual } from 'haunted';
+import { html } from 'haunted';
 
 import { ProductTypeList } from '@/components/product-type-list/product-type-list.js';
 import { useQuery } from '@/hooks/use-query.js';
 import { GetProductTypes } from '@/types/graphql.js';
+import { define } from '@mui/core';
 
-export const ProductTypes = virtual(() => {
+export const ProductTypes = () => {
   const { data, loading } = useQuery(GetProductTypes);
 
   if (loading) {
@@ -12,4 +13,12 @@ export const ProductTypes = virtual(() => {
   }
 
   return html`${ProductTypeList({ productTypes: data.productTypes })}`;
-});
+};
+
+define('app-product-types', ProductTypes);
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'app-product-types-page': HTMLElement;
+  }
+}

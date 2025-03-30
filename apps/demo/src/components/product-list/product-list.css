@@ -1,0 +1,39 @@
+.container {
+  --mui-card-header-color: var(--mui-color-secondary);
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2.5rem;
+}
+
+mui-card {
+  &:hover {
+    --mui-card-elevation: var(--mui-elevation-3);
+
+    transform: scale(1.03);
+    transition: transform 0.3s;
+  }
+}
+
+mui-card-header {
+  --mui-icon-color: var(--mui-card-header-color);
+  --mui-icon-size: 1.25rem;
+}
+
+mui-card-content {
+  padding: 0;
+  align-items: flex-end;
+}
+
+mui-card-footer {
+  flex: 1 1 100%;
+
+  .description {
+    font-size: 0.8rem;
+    font-weight: 300;
+  }
+
+  .price {
+    font-size: 0.7rem;
+  }
+}

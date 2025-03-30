@@ -1,7 +1,10 @@
-import { html, useCallback, virtual } from 'haunted';
+import { html, useCallback, useMemo, virtual } from 'haunted';
 import { unsafeCSS } from 'lit';
 
-import { type ArrayElement, useStyles } from '@mui/core';
+import '@mui/components/card/index.js';
+import '@mui/components/button/icon-button.js';
+import '@mui/components/tooltip/tooltip.js';
+import { useStyles } from '@mui/core';
 import { navigateTo } from '@mui/router';
 
 import { routeType } from '@/router/route-type.js';
@@ -24,29 +27,35 @@ export const ProductTypeList = virtual(({ productTypes }: ProductTypeListProps) 
   useStyles(unsafeCSS(styles));
 
   const handleOpenClick = useCallback((id: string) => {
-    navigateTo(`${routeType.products}/${id}`);
+    navigateTo(`${routeType.productsByType}/${id}`);
   }, []);
 
-  const renderCards = ({ id, name }: ArrayElement<ProductTypes>) => html`
-    <mui-card>
-      <mui-card-header>
-        ${name}
-        <div>
-          <mui-icon-button id="openNew" @click=${() => handleOpenClick(id)}>open_in_new</mui-icon-button>
-          <!-- <mui-tooltip anchor="openNew">Open product</mui-tooltip> -->
-          <mui-icon-button id="preview" @click=${() => handleOpenClick(id)}>preview</mui-icon-button>
-          <!-- <mui-tooltip anchor="preview">Preview product</mui-tooltip> -->
-        </div>
-      </mui-card-header>
-      <mui-card-content>
-        <img src="/img/products/${id}.jpeg" alt=${name} />
-      </mui-card-content>
-    </mui-card>
-  `;
+  const renderCards = useMemo(
+    () =>
+      productTypes.map(
+        ({ id, name }) => html`
+        <mui-card>
+          <mui-card-header>
+            ${name}
+            <div>
+              <mui-icon-button id="openNew" @click=${() => handleOpenClick(id)}>open_in_new</mui-icon-button>
+              <!-- <mui-tooltip anchor="openNew">Open product</mui-tooltip> -->
+              <mui-icon-button id="preview" @click=${() => handleOpenClick(id)}>preview</mui-icon-button>
+              <!-- <mui-tooltip anchor="preview">Preview product</mui-tooltip> -->
+            </div>
+          </mui-card-header>
+          <mui-card-content>
+            <img src="/img/products/${id}.jpeg" alt=${name} />
+          </mui-card-content>
+        </mui-card>
+      `,
+      ),
+    [productTypes],
+  );
 
   return html`
     <div class="container">
-      ${productTypes.map(renderCards)}
+      ${renderCards}
     </div>
   `;
 });

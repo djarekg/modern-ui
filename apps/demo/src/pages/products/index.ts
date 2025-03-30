@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'haunted';
 import { html } from 'lit';
 
 import { define } from '@mui/core';
+import { useTitle } from '@mui/router';
 
 import { GetProductTypes } from '@/types/graphql.js';
 import '@/components/product-list/product-list.js';
+import { ProductTypeList } from '@/components/product-type-list/product-type-list.js';
 import { useQuery } from '@/hooks/use-query.js';
 
 const ProductsPage = () => {
+  useTitle('products');
+
   const { data, loading } = useQuery(GetProductTypes);
 
   if (loading) {
@@ -16,6 +19,7 @@ const ProductsPage = () => {
 
   return html`
     <div>
+        ${ProductTypeList({ productTypes: data?.productTypes })}
     </div>
   `;
 };
