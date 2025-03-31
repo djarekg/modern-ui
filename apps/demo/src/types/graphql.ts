@@ -61,11 +61,9 @@ export interface AggregateLoginHistory {
 }
 
 export interface AggregateProduct {
-  readonly _avg?: Maybe<ProductAvgAggregate>;
   readonly _count?: Maybe<ProductCountAggregate>;
   readonly _max?: Maybe<ProductMaxAggregate>;
   readonly _min?: Maybe<ProductMinAggregate>;
-  readonly _sum?: Maybe<ProductSumAggregate>;
 }
 
 export interface AggregateProductColor {
@@ -351,7 +349,7 @@ export interface CreateManyAndReturnProduct {
   readonly description: Scalars["String"]["output"];
   readonly id: Scalars["String"]["output"];
   readonly name: Scalars["String"]["output"];
-  readonly price: Scalars["Float"]["output"];
+  readonly price: Scalars["String"]["output"];
   readonly productTypeId?: Maybe<Scalars["String"]["output"]>;
 }
 
@@ -1889,7 +1887,7 @@ export interface Product {
   readonly description: Scalars["String"]["output"];
   readonly id: Scalars["String"]["output"];
   readonly name: Scalars["String"]["output"];
-  readonly price: Scalars["Float"]["output"];
+  readonly price: Scalars["String"]["output"];
   readonly productTypeId?: Maybe<Scalars["String"]["output"]>;
 }
 
@@ -1922,14 +1920,6 @@ export interface ProductProductSalesArgs {
 
 export interface ProductProductTypeArgs {
   where?: InputMaybe<ProductTypeWhereInput>;
-}
-
-export interface ProductAvgAggregate {
-  readonly price?: Maybe<Scalars["Float"]["output"]>;
-}
-
-export interface ProductAvgOrderByAggregateInput {
-  readonly price?: InputMaybe<SortOrder>;
 }
 
 export interface ProductColor {
@@ -2336,7 +2326,7 @@ export interface ProductCreateInput {
   readonly description: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
-  readonly price: Scalars["Float"]["input"];
+  readonly price: Scalars["String"]["input"];
 }
 
 export interface ProductCreateManyInput {
@@ -2345,7 +2335,7 @@ export interface ProductCreateManyInput {
   readonly description: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
-  readonly price: Scalars["Float"]["input"];
+  readonly price: Scalars["String"]["input"];
   readonly productTypeId?: InputMaybe<Scalars["String"]["input"]>;
 }
 
@@ -2355,7 +2345,7 @@ export interface ProductCreateManyProductTypeInput {
   readonly description: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
-  readonly price: Scalars["Float"]["input"];
+  readonly price: Scalars["String"]["input"];
 }
 
 export interface ProductCreateManyProductTypeInputEnvelope {
@@ -2420,7 +2410,7 @@ export interface ProductCreateWithoutInventoryInput {
   readonly description: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
-  readonly price: Scalars["Float"]["input"];
+  readonly price: Scalars["String"]["input"];
 }
 
 export interface ProductCreateWithoutProductColorInput {
@@ -2432,7 +2422,7 @@ export interface ProductCreateWithoutProductColorInput {
   readonly description: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
-  readonly price: Scalars["Float"]["input"];
+  readonly price: Scalars["String"]["input"];
 }
 
 export interface ProductCreateWithoutProductSalesInput {
@@ -2444,7 +2434,7 @@ export interface ProductCreateWithoutProductSalesInput {
   readonly description: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
-  readonly price: Scalars["Float"]["input"];
+  readonly price: Scalars["String"]["input"];
 }
 
 export interface ProductCreateWithoutProductTypeInput {
@@ -2456,21 +2446,19 @@ export interface ProductCreateWithoutProductTypeInput {
   readonly description: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
-  readonly price: Scalars["Float"]["input"];
+  readonly price: Scalars["String"]["input"];
 }
 
 export interface ProductGroupBy {
-  readonly _avg?: Maybe<ProductAvgAggregate>;
   readonly _count?: Maybe<ProductCountAggregate>;
   readonly _max?: Maybe<ProductMaxAggregate>;
   readonly _min?: Maybe<ProductMinAggregate>;
-  readonly _sum?: Maybe<ProductSumAggregate>;
   readonly dateCreated: Scalars["DateTimeISO"]["output"];
   readonly dateUpdated: Scalars["DateTimeISO"]["output"];
   readonly description: Scalars["String"]["output"];
   readonly id: Scalars["String"]["output"];
   readonly name: Scalars["String"]["output"];
-  readonly price: Scalars["Float"]["output"];
+  readonly price: Scalars["String"]["output"];
   readonly productTypeId?: Maybe<Scalars["String"]["output"]>;
 }
 
@@ -2486,7 +2474,7 @@ export interface ProductMaxAggregate {
   readonly description?: Maybe<Scalars["String"]["output"]>;
   readonly id?: Maybe<Scalars["String"]["output"]>;
   readonly name?: Maybe<Scalars["String"]["output"]>;
-  readonly price?: Maybe<Scalars["Float"]["output"]>;
+  readonly price?: Maybe<Scalars["String"]["output"]>;
   readonly productTypeId?: Maybe<Scalars["String"]["output"]>;
 }
 
@@ -2506,7 +2494,7 @@ export interface ProductMinAggregate {
   readonly description?: Maybe<Scalars["String"]["output"]>;
   readonly id?: Maybe<Scalars["String"]["output"]>;
   readonly name?: Maybe<Scalars["String"]["output"]>;
-  readonly price?: Maybe<Scalars["Float"]["output"]>;
+  readonly price?: Maybe<Scalars["String"]["output"]>;
   readonly productTypeId?: Maybe<Scalars["String"]["output"]>;
 }
 
@@ -2525,11 +2513,9 @@ export interface ProductOrderByRelationAggregateInput {
 }
 
 export interface ProductOrderByWithAggregationInput {
-  readonly _avg?: InputMaybe<ProductAvgOrderByAggregateInput>;
   readonly _count?: InputMaybe<ProductCountOrderByAggregateInput>;
   readonly _max?: InputMaybe<ProductMaxOrderByAggregateInput>;
   readonly _min?: InputMaybe<ProductMinOrderByAggregateInput>;
-  readonly _sum?: InputMaybe<ProductSumOrderByAggregateInput>;
   readonly dateCreated?: InputMaybe<SortOrder>;
   readonly dateUpdated?: InputMaybe<SortOrder>;
   readonly description?: InputMaybe<SortOrder>;
@@ -3124,7 +3110,7 @@ export interface ProductScalarWhereInput {
   readonly description?: InputMaybe<StringFilter>;
   readonly id?: InputMaybe<StringFilter>;
   readonly name?: InputMaybe<StringFilter>;
-  readonly price?: InputMaybe<FloatFilter>;
+  readonly price?: InputMaybe<StringFilter>;
   readonly productTypeId?: InputMaybe<StringNullableFilter>;
 }
 
@@ -3143,16 +3129,8 @@ export interface ProductScalarWhereWithAggregatesInput {
   readonly description?: InputMaybe<StringWithAggregatesFilter>;
   readonly id?: InputMaybe<StringWithAggregatesFilter>;
   readonly name?: InputMaybe<StringWithAggregatesFilter>;
-  readonly price?: InputMaybe<FloatWithAggregatesFilter>;
+  readonly price?: InputMaybe<StringWithAggregatesFilter>;
   readonly productTypeId?: InputMaybe<StringNullableWithAggregatesFilter>;
-}
-
-export interface ProductSumAggregate {
-  readonly price?: Maybe<Scalars["Float"]["output"]>;
-}
-
-export interface ProductSumOrderByAggregateInput {
-  readonly price?: InputMaybe<SortOrder>;
 }
 
 export interface ProductType {
@@ -3388,7 +3366,7 @@ export interface ProductUpdateInput {
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
-  readonly price?: InputMaybe<Scalars["Float"]["input"]>;
+  readonly price?: InputMaybe<Scalars["String"]["input"]>;
 }
 
 export interface ProductUpdateManyMutationInput {
@@ -3397,7 +3375,7 @@ export interface ProductUpdateManyMutationInput {
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
-  readonly price?: InputMaybe<Scalars["Float"]["input"]>;
+  readonly price?: InputMaybe<Scalars["String"]["input"]>;
 }
 
 export interface ProductUpdateManyWithWhereWithoutProductTypeInput {
@@ -3482,7 +3460,7 @@ export interface ProductUpdateWithoutInventoryInput {
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
-  readonly price?: InputMaybe<Scalars["Float"]["input"]>;
+  readonly price?: InputMaybe<Scalars["String"]["input"]>;
 }
 
 export interface ProductUpdateWithoutProductColorInput {
@@ -3494,7 +3472,7 @@ export interface ProductUpdateWithoutProductColorInput {
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
-  readonly price?: InputMaybe<Scalars["Float"]["input"]>;
+  readonly price?: InputMaybe<Scalars["String"]["input"]>;
 }
 
 export interface ProductUpdateWithoutProductSalesInput {
@@ -3506,7 +3484,7 @@ export interface ProductUpdateWithoutProductSalesInput {
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
-  readonly price?: InputMaybe<Scalars["Float"]["input"]>;
+  readonly price?: InputMaybe<Scalars["String"]["input"]>;
 }
 
 export interface ProductUpdateWithoutProductTypeInput {
@@ -3518,7 +3496,7 @@ export interface ProductUpdateWithoutProductTypeInput {
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
-  readonly price?: InputMaybe<Scalars["Float"]["input"]>;
+  readonly price?: InputMaybe<Scalars["String"]["input"]>;
 }
 
 export interface ProductUpsertWithWhereUniqueWithoutProductTypeInput {
@@ -3558,7 +3536,7 @@ export interface ProductWhereInput {
   readonly description?: InputMaybe<StringFilter>;
   readonly id?: InputMaybe<StringFilter>;
   readonly name?: InputMaybe<StringFilter>;
-  readonly price?: InputMaybe<FloatFilter>;
+  readonly price?: InputMaybe<StringFilter>;
   readonly productTypeId?: InputMaybe<StringNullableFilter>;
 }
 
@@ -3575,7 +3553,7 @@ export interface ProductWhereUniqueInput {
   readonly description?: InputMaybe<StringFilter>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<StringFilter>;
-  readonly price?: InputMaybe<FloatFilter>;
+  readonly price?: InputMaybe<StringFilter>;
   readonly productTypeId?: InputMaybe<StringNullableFilter>;
 }
 
@@ -4626,7 +4604,7 @@ export type GetProductsQuery = {
     readonly id: string;
     readonly name: string;
     readonly description: string;
-    readonly price: number;
+    readonly price: string;
   }>;
 };
 
@@ -4640,7 +4618,8 @@ export type GetProductByIdQuery = {
         readonly id: string;
         readonly name: string;
         readonly description: string;
-        readonly price: number;
+        readonly price: string;
+        readonly productTypeId?: string | undefined;
         readonly dateCreated: unknown;
         readonly dateUpdated: unknown;
       }
@@ -4656,7 +4635,8 @@ export type GetProductsByProductTypeIdQuery = {
     readonly id: string;
     readonly name: string;
     readonly description: string;
-    readonly price: number;
+    readonly price: string;
+    readonly productTypeId?: string | undefined;
     readonly dateCreated: unknown;
     readonly dateUpdated: unknown;
   }>;
@@ -4734,7 +4714,8 @@ export type ProductPartsFragment = {
   readonly id: string;
   readonly name: string;
   readonly description: string;
-  readonly price: number;
+  readonly price: string;
+  readonly productTypeId?: string | undefined;
   readonly dateCreated: unknown;
   readonly dateUpdated: unknown;
 };
@@ -4788,6 +4769,7 @@ export const ProductPartsFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "description" } },
           { kind: "Field", name: { kind: "Name", value: "price" } },
+          { kind: "Field", name: { kind: "Name", value: "productTypeId" } },
           { kind: "Field", name: { kind: "Name", value: "dateCreated" } },
           { kind: "Field", name: { kind: "Name", value: "dateUpdated" } },
         ],
@@ -5140,6 +5122,7 @@ export const GetProductById = {
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "description" } },
           { kind: "Field", name: { kind: "Name", value: "price" } },
+          { kind: "Field", name: { kind: "Name", value: "productTypeId" } },
           { kind: "Field", name: { kind: "Name", value: "dateCreated" } },
           { kind: "Field", name: { kind: "Name", value: "dateUpdated" } },
         ],
@@ -5231,6 +5214,7 @@ export const GetProductsByProductTypeId = {
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "description" } },
           { kind: "Field", name: { kind: "Name", value: "price" } },
+          { kind: "Field", name: { kind: "Name", value: "productTypeId" } },
           { kind: "Field", name: { kind: "Name", value: "dateCreated" } },
           { kind: "Field", name: { kind: "Name", value: "dateUpdated" } },
         ],

@@ -3,6 +3,7 @@ fragment ProductParts on Product {
   name
   description
   price
+  productTypeId
   dateCreated
   dateUpdated
 }

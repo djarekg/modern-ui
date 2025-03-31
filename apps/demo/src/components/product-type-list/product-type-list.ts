@@ -45,7 +45,7 @@ export const ProductTypeList = virtual(({ productTypes }: ProductTypeListProps) 
             </div>
           </mui-card-header>
           <mui-card-content>
-            <img src="/img/products/${id}.jpeg" alt=${name} />
+            <img src="/img/product-types/${id}.jpeg" alt=${name} />
           </mui-card-content>
         </mui-card>
       `,

@@ -8,6 +8,7 @@ import { useStyles } from '@mui/core';
 
 import type { Product } from '@/types/graphql.js';
 
+import { ProductType } from '@/types/product-type.js';
 import styles from './product-list.css?inline';
 
 type ProductListProps = {
@@ -20,11 +21,16 @@ export const ProductList = virtual(({ products }: ProductListProps) => {
   const renderProducts = useMemo(
     () =>
       products.map(
-        ({ id, name, description }) => html`
+        ({ id, name, description, productTypeId }) => html`
         <mui-card key=${id}>
           <mui-card-header>
             ${name}
           </mui-card-header>
+          <mui-card-content>
+            <img src="/img/products/${Object.entries(ProductType)
+              .find(([_, value]) => value === productTypeId)[0]
+              .toLocaleLowerCase()}/${id}.jpg" alt=${name} />
+          </mui-card-content>
           <mui-card-footer>
             <span class="description">
               ${description}

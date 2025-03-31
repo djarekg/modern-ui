@@ -23,10 +23,17 @@ mui-card-header {
 mui-card-content {
   padding: 0;
   align-items: flex-end;
+
+  img {
+    /* width: 100%; */
+    /* height: 100%; */
+    max-block-size: 220px;
+    object-fit: cover;
+  }
 }
 
 mui-card-footer {
-  flex: 1 1 100%;
+  /* flex: 1 1 100%; */
 
   .description {
     font-size: 0.8rem;
