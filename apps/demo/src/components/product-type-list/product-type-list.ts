@@ -27,7 +27,7 @@ export const ProductTypeList = virtual(({ productTypes }: ProductTypeListProps) 
   useStyles(unsafeCSS(styles));
 
   const handleOpenClick = useCallback((id: string) => {
-    navigateTo(`${routeType.productsByType}/${id}`);
+    navigateTo(`${routeType.productTypes}/${id}/product-by-type`);
   }, []);
 
   const renderCards = useMemo(

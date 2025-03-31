@@ -1,24 +1,24 @@
 import type { Hook } from 'haunted';
 
-interface RouterHook extends Hook {
-  matches(pathname: string): string | undefined;
-}
-
 const hookPath = new Map<RouterHook, string | undefined>();
 // TODO: should this be scoped to the methods it's used in?
 let farthestPath = window.location.pathname;
 
+export interface RouterHook extends Hook {
+  matches(pathname: string): { match: string; name: string } | undefined;
+}
+
 /**
- * Add the current hook to the hook path.
+ * Add the current router hook to the hook path.
  *
  * @param {RouterHook} hook Hook to add.
  */
-const addCurrent = (hook: RouterHook) => {
+export const addCurrent = (hook: RouterHook) => {
   if (hookPath.has(hook)) {
     return;
   }
 
-  const match = hook.matches(farthestPath);
+  const { match } = hook.matches(farthestPath);
 
   hookPath.set(hook, match);
 
@@ -28,23 +28,22 @@ const addCurrent = (hook: RouterHook) => {
 };
 
 /**
- * Remove the current hook from the hook path.
+ * Remove the current router hook from the hook path.
  *
  * @param {RouterHook} hook Hook to remove.
  */
-const removeCurrent = (hook: RouterHook) => {
+export const removeCurrent = (hook: RouterHook) => {
   hookPath.delete(hook);
 };
 
 /**
- * Update the hook path.
+ * Update the router hook path.
  */
-const update = () => {
-  let match: string | undefined;
+export const update = () => {
   farthestPath = window.location.pathname;
 
   for (const [hook, oldHook] of hookPath.entries()) {
-    match = hook.matches(farthestPath);
+    const { match, name } = hook.matches(farthestPath);
 
     if (oldHook !== match) {
       hook.state.update();
@@ -57,6 +56,16 @@ const update = () => {
     if (match) {
       farthestPath = farthestPath.slice(match.length);
     }
+
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent('router:update', {
+          detail: { name },
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
+    });
   }
 
   // Update the last item of hook path anyways 😉
@@ -65,5 +74,3 @@ const update = () => {
     lastHook.state.update();
   }
 };
-
-export { addCurrent, removeCurrent, update };

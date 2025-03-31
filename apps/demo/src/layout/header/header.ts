@@ -1,9 +1,9 @@
 import { html } from '@lit-labs/signals';
-import { useCallback, useMemo, useState } from 'haunted';
+import { useCallback, useMemo } from 'haunted';
 import { nothing, unsafeCSS } from 'lit';
 
-import { define, useHost, useStyles } from '@mui/core';
-import { navigateTo } from '@mui/router';
+import { define, useStyles } from '@mui/core';
+import { navigateTo, useTitle } from '@mui/router';
 
 import { signOut } from '@/auth/auth.js';
 import { useIsSignedInWatcher } from '@/auth/is-signed-in.js';
@@ -17,7 +17,7 @@ const Header = (element: HTMLElement) => {
   useStyles(unsafeCSS(styles));
 
   const { isSignedIn } = useIsSignedInWatcher();
-  const [pageTitle] = useState(document.title);
+  const pageTitle = useTitle();
 
   const handleSignOut = useCallback(async () => {
     if (await confirm({ title: 'Sign out', content: 'Are you sure you want to sign out?' })) {

@@ -5,6 +5,7 @@ import { createCustomers } from './customer.js';
 import { createInventories } from './inventory.js';
 import { createLoginHistories } from './login-history.js';
 import { createProductColors } from './product-color.js';
+import { createProductImages } from './product-images.js';
 import { createProductSales } from './product-sale.js';
 import { createProductTypes } from './product-type.js';
 import { createProducts } from './product.js';
@@ -13,15 +14,17 @@ import { createUsers } from './user.js';
 const prisma = new PrismaClient();
 
 const load = async () => {
-  await createUsers(prisma);
-  await createLoginHistories(prisma);
-  await createCustomers(prisma);
-  await createProductTypes(prisma);
-  await createProducts(prisma);
-  await createColors(prisma);
-  await createProductColors(prisma);
-  await createInventories(prisma);
-  await createProductSales(prisma);
+  // await createUsers(prisma);
+  // await createLoginHistories(prisma);
+  // await createCustomers(prisma);
+  // await createProductTypes(prisma);
+  // await createProducts(prisma);
+  // await createColors(prisma);
+  // await createProductColors(prisma);
+  // await createInventories(prisma);
+  // await createProductSales(prisma);
+
+  await createProductImages(prisma);
 };
 
 load()

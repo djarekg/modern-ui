@@ -13,5 +13,4 @@ export const routeType = {
   product: '/products/:id',
   productTypes: '/product-types',
   productType: '/product-types/:id',
-  productsByType: '/products/products-by-type',
 } as const;

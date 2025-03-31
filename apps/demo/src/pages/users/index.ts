@@ -3,7 +3,6 @@ import { css } from 'lit';
 
 import '@mui/components/skeleton/skeleton-table.js';
 import { define, useStyles } from '@mui/core';
-import { useTitle } from '@mui/router';
 
 import '@/components/user-list/user-list.js';
 import { UserList } from '@/components/user-list/user-list.js';
@@ -23,7 +22,6 @@ const styles = css`
 
 const UsersPage = () => {
   useStyles(styles);
-  useTitle('users');
 
   const { data, loading } = useQuery(GetUsers);
 

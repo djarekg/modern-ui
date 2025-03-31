@@ -17,11 +17,11 @@ export default css`
     --_active-indicator-background-color: var(--mui-navigation-item-active-indicator-background-color, transparent);
     --_active-indicator-border-radius: var(--mui-navigation-item-active-indicator-border-radius, var(--mui-shape-round));
     --_border-color: transparent;
-    --mui-icon-size: 21px;
+    --mui-icon-size: 18px;
   }
 
   a {
-    --_anchor-block-size: 44px;
+    --_anchor-block-size: 40px;
     --mui-icon-color: var(--_icon-color);
 
     position: relative;
@@ -29,12 +29,12 @@ export default css`
     align-items: center;
     gap: 1rem;
     block-size: var(--_anchor-block-size);
+    inline-size: 100%;
     padding-inline: 18px;
     font-weight: 600;
-    text-decoration: none;
-    inline-size: 100%;
-    color: var(--_color);
     font-weight: var(--_font-weight);
+    text-decoration: none;
+    color: var(--_color);
     outline: none;
 
     &:hover,

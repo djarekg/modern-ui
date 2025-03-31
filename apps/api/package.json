@@ -48,6 +48,7 @@
   "devDependencies": {
     "@faker-js/faker": "^9.6.0",
     "@types/bun": "^1.2.6",
+    "pexels": "^1.4.0",
     "prisma": "^6.5.0",
     "typegraphql-prisma": "^0.28.0",
     "typescript": "^5.8.2"

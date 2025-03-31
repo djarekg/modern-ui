@@ -1,5 +1,6 @@
 import { Hook, type State, hook } from 'haunted';
 
+import { proxyPushState } from '../push-state.js';
 import { addCurrent, removeCurrent } from '../router.js';
 
 type RouteParameters = {
@@ -20,7 +21,7 @@ type RouteEntry<T> = {
 };
 
 type Routes<T> = {
-  [path: string]: RouteCallback<T>;
+  [path: string]: RouteEntry<T> | RouteCallback<T>;
 };
 
 type RouterOutlet<T> = {
@@ -93,6 +94,7 @@ const useRoutes = hook(
 
     constructor(id: number, state: State, routes: Routes<T>, fallback: T) {
       super(id, state);
+      proxyPushState(this);
       this._routes = Object.entries(routes).map(createRouteEntry);
       this.fallback = fallback;
     }
@@ -106,7 +108,7 @@ const useRoutes = hook(
       removeCurrent(this);
     }
 
-    matches(pathname: string): string | undefined {
+    matches(pathname: string) {
       let match: string | undefined;
       let params: RouteParameters;
       let exact: boolean;
@@ -115,7 +117,7 @@ const useRoutes = hook(
         [match, params, exact] = matcher(pathname);
         if (match === undefined) continue;
         this._result = { outlet: callback(params, history.state), match: name, exact };
-        return match;
+        return { match, name };
       }
 
       this._result = { outlet: this.fallback, match: undefined, exact: false };

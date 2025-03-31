@@ -12,7 +12,7 @@ import navItems from './nav-items.js';
 const styles = css`
   :host {
     --mui-navigation-item-icon-color: var(--mui-palette-surface-tonal-a40);
-    --mui-navigation-item-icon-hover-color: var(--mui-color-primary);
+    --mui-navigation-item-icon-hover-color: var(--mui-color-secondary);
    }
 
   main {

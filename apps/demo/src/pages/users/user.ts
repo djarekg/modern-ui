@@ -1,11 +1,10 @@
-import { html, useEffect, useMemo, useState } from 'haunted';
+import { html, useMemo } from 'haunted';
 import { nothing, unsafeCSS } from 'lit';
 
 import { define, useStyles } from '@mui/core';
 import '@mui/components/text-field/text-field.js';
 import '@mui/components/tabs/tabs.js';
 import '@mui/components/tabs/tab.js';
-import { useTitle } from '@mui/router';
 
 import { UserLoginHistory } from '@/components/login-history/user-login-history.js';
 import { UserDetail } from '@/components/user-detail/user-detail.js';
@@ -27,7 +26,6 @@ type UserPageProps = {
 
 const UserPage = ({ id = getUserId() }: UserPageProps) => {
   useStyles(unsafeCSS(styles));
-  useTitle('user');
 
   // Fetch the user data.
   const { data: userData } = useQuery(GetUserById, { id });
