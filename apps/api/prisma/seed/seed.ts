@@ -14,16 +14,15 @@ import { createUsers } from './user.js';
 const prisma = new PrismaClient();
 
 const load = async () => {
-  // await createUsers(prisma);
-  // await createLoginHistories(prisma);
-  // await createCustomers(prisma);
-  // await createProductTypes(prisma);
-  // await createProducts(prisma);
-  // await createColors(prisma);
-  // await createProductColors(prisma);
-  // await createInventories(prisma);
-  // await createProductSales(prisma);
-
+  await createUsers(prisma);
+  await createLoginHistories(prisma);
+  await createCustomers(prisma);
+  await createProductTypes(prisma);
+  await createProducts(prisma);
+  await createColors(prisma);
+  await createProductColors(prisma);
+  await createInventories(prisma);
+  await createProductSales(prisma);
   await createProductImages(prisma);
 };
 
