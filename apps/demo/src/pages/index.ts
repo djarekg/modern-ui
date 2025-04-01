@@ -30,10 +30,10 @@ const Home = () => {
   return html`<span>Modern UI ~ by GriffiDi</span>`;
 };
 
-define('app-home', Home);
+define('app-home-page', Home);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'app-home': HTMLElement;
+    'app-home-page': HTMLElement;
   }
 }
