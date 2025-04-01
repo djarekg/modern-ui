@@ -85,6 +85,20 @@ model Product {
   ProductSales  ProductSales[]
   ProductColor  ProductColor[]
   ProductType   ProductType?   @relation(fields: [productTypeId], references: [id])
+  ProductImage  ProductImage[]
+}
+
+model ProductImage {
+  id          String   @id @default(uuid())
+  productId   String
+  imageId     Int
+  ext         String
+  width       Int
+  height      Int
+  avgColor    String
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+  product     Product  @relation(fields: [productId], references: [id])
 }
 
 // enum ProductType {

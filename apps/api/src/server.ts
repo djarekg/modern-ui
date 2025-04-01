@@ -9,8 +9,6 @@ import { Elysia } from 'elysia';
 import { isNotEmpty } from 'elysia/utils';
 import { buildSchema } from 'type-graphql';
 
-// import { ForbiddenError, UnauthorizedError } from '@mui/graphql';
-
 import type { Context } from '@/client/context.js';
 import { prisma } from '@/client/index.js';
 import { corsConfig, isDev, jwtConfig, port } from '@/config.js';

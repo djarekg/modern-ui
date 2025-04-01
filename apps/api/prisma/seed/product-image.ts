@@ -5,32 +5,27 @@ import type { PrismaClient } from '@prisma/client';
 
 import { Gender, ProductType } from '@/enums/index.js';
 
+/**
+ * Extracts the file extension from a URL string. If there is not extenison
+ * in the URL, it returns an empty string. If the URL ends with a slash or
+ * ends with a query string, it can still extract the extension.
+ *
+ * @param {string} url The URL string.
+ * @returns {string} The file extension, or an empty string if none is found.
+ */
+const getFileExtension = (url: string) => {
+  const index = url.lastIndexOf('.');
+  return index !== -1 ? url.substring(index + 1) : '';
+};
+
 export const createProductImages = async (prisma: PrismaClient) => {
   const pexelsClient = createClient(Bun.env.PEXELS_API_KEY);
 
   console.group('Seeding product images...');
 
-  const imgDir = './prisma/img';
-  if (!existsSync(imgDir)) {
-    mkdirSync(imgDir, { recursive: true });
-    console.log(`Created directory: ${imgDir}`);
-  } else {
-    console.log(`Directory already exists: ${imgDir}`);
-  }
-
   for (const [genderKey, genderId] of Object.entries(Gender)) {
     for (const [productTypeKey, productTypeId] of Object.entries(ProductType)) {
       console.group(`Seeding images for ${productTypeKey}...`);
-
-      const dir = `./prisma/img/${productTypeKey.toLocaleLowerCase()}/${genderKey.toLocaleLowerCase()}`;
-
-      // Ensure image directory exists for the product type.
-      if (!existsSync(dir)) {
-        mkdirSync(dir, { recursive: true });
-        console.log(`Created directory: ${dir}`);
-      } else {
-        console.log(`Directory already exists: ${dir}`);
-      }
 
       // Fetch products for gender and type.
       const products = await prisma.product.findMany({
@@ -57,26 +52,35 @@ export const createProductImages = async (prisma: PrismaClient) => {
         per_page: products.length,
       });
 
-      // Downlaod images and save them to the directory for each product using the product ID.
+      // Insert image identifiers and metedata for each product.
       for (let i = 0, len = products.length; i < len; i++) {
-        const { id, name } = products[i];
+        const { id: productId, name } = products[i];
         const photo = (photos as PhotosWithTotalResults).photos[i];
 
         console.log(`Processing product ${name}...`);
 
         if (photo) {
-          const { src } = photo;
-          const { medium } = src;
+          const {
+            id: imageId,
+            width,
+            height,
+            avg_color: avgColor,
+            src: { original },
+          } = photo;
+          const ext = getFileExtension(original);
 
-          // Download the image and save it to the directory
-          const response = await fetch(medium);
-          const buffer = await response.arrayBuffer();
-          const filePath = `${dir}/${id}.jpg`;
+          await prisma.productImage.create({
+            data: {
+              productId,
+              imageId,
+              ext,
+              width,
+              height,
+              avgColor,
+            },
+          });
 
-          // Save the image to the file system
-          Bun.write(filePath, Buffer.from(buffer));
-
-          console.log(`Saved image for product ${id} at ${filePath}`);
+          console.log(`Saved image for product ${productId}.`);
         }
       }
     }

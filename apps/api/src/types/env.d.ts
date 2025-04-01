@@ -5,7 +5,7 @@ declare global {
       CORS_ORIGIN: string;
       PORT: number;
       PEXELS_API_KEY: string;
-      PEXELS_API: string;
+      PEXELS_PHOTO_URL_FORMAT: string;
     }
   }
 }

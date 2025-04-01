@@ -53,7 +53,7 @@ function createDate(year: number, month: number, date: number): Date {
   return newDate;
 }
 
-export const format = (value: Date | number | string, format?: FormatOptions): string => {
+export const formatDate = (value: Date | number | string, format?: FormatOptions): string => {
   const date = toDate(value);
   const {
     locale = navigator.language,

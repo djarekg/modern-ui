@@ -5,7 +5,7 @@ import { createCustomers } from './customer.js';
 import { createInventories } from './inventory.js';
 import { createLoginHistories } from './login-history.js';
 import { createProductColors } from './product-color.js';
-import { createProductImages } from './product-images.js';
+import { createProductImages } from './product-image.js';
 import { createProductSales } from './product-sale.js';
 import { createProductTypes } from './product-type.js';
 import { createProducts } from './product.js';
@@ -19,11 +19,11 @@ const load = async () => {
   await createCustomers(prisma);
   await createProductTypes(prisma);
   await createProducts(prisma);
+  await createProductImages(prisma);
   await createColors(prisma);
   await createProductColors(prisma);
   await createInventories(prisma);
   await createProductSales(prisma);
-  await createProductImages(prisma);
 };
 
 load()
