@@ -1,6 +1,6 @@
 import type { PrismaClient } from '@prisma/client';
 
-import { ProductType } from '../enums/product-type.js';
+import { ProductType } from '../../src/enums/product-type.js';
 
 export const createProductColors = async (prisma: PrismaClient) => {
   console.group('Seeding product colors...');

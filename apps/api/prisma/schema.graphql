@@ -307,10 +307,11 @@ type CreateManyAndReturnProduct {
   dateCreated: DateTimeISO!
   dateUpdated: DateTimeISO!
   description: String!
+  genderId: String!
   id: String!
   name: String!
   price: String!
-  productTypeId: String
+  productTypeId: String!
 }
 
 type CreateManyAndReturnProductColor {
@@ -1360,17 +1361,6 @@ input NestedIntFilter {
   notIn: [Int!]
 }
 
-input NestedIntNullableFilter {
-  equals: Int
-  gt: Int
-  gte: Int
-  in: [Int!]
-  lt: Int
-  lte: Int
-  not: NestedIntNullableFilter
-  notIn: [Int!]
-}
-
 input NestedIntWithAggregatesFilter {
   _avg: NestedFloatFilter
   _count: NestedIntFilter
@@ -1401,37 +1391,6 @@ input NestedStringFilter {
   startsWith: String
 }
 
-input NestedStringNullableFilter {
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  not: NestedStringNullableFilter
-  notIn: [String!]
-  startsWith: String
-}
-
-input NestedStringNullableWithAggregatesFilter {
-  _count: NestedIntNullableFilter
-  _max: NestedStringNullableFilter
-  _min: NestedStringNullableFilter
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  not: NestedStringNullableWithAggregatesFilter
-  notIn: [String!]
-  startsWith: String
-}
-
 input NestedStringWithAggregatesFilter {
   _count: NestedIntFilter
   _max: NestedStringFilter
@@ -1449,11 +1408,6 @@ input NestedStringWithAggregatesFilter {
   startsWith: String
 }
 
-enum NullsOrder {
-  first
-  last
-}
-
 type Product {
   Inventory(cursor: InventoryWhereUniqueInput, distinct: [InventoryScalarFieldEnum!], orderBy: [InventoryOrderByWithRelationInput!], skip: Int, take: Int, where: InventoryWhereInput): [Inventory!]!
   ProductColor(cursor: ProductColorWhereUniqueInput, distinct: [ProductColorScalarFieldEnum!], orderBy: [ProductColorOrderByWithRelationInput!], skip: Int, take: Int, where: ProductColorWhereInput): [ProductColor!]!
@@ -1463,10 +1417,11 @@ type Product {
   dateCreated: DateTimeISO!
   dateUpdated: DateTimeISO!
   description: String!
+  genderId: String!
   id: String!
   name: String!
   price: String!
-  productTypeId: String
+  productTypeId: String!
 }
 
 type ProductColor {
@@ -1801,6 +1756,7 @@ type ProductCountAggregate {
   dateCreated: Int!
   dateUpdated: Int!
   description: Int!
+  genderId: Int!
   id: Int!
   name: Int!
   price: Int!
@@ -1811,6 +1767,7 @@ input ProductCountOrderByAggregateInput {
   dateCreated: SortOrder
   dateUpdated: SortOrder
   description: SortOrder
+  genderId: SortOrder
   id: SortOrder
   name: SortOrder
   price: SortOrder
@@ -1825,6 +1782,7 @@ input ProductCreateInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String!
+  genderId: String!
   id: String
   name: String!
   price: String!
@@ -1834,16 +1792,18 @@ input ProductCreateManyInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String!
+  genderId: String!
   id: String
   name: String!
   price: String!
-  productTypeId: String
+  productTypeId: String!
 }
 
 input ProductCreateManyProductTypeInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String!
+  genderId: String!
   id: String
   name: String!
   price: String!
@@ -1905,6 +1865,7 @@ input ProductCreateWithoutInventoryInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String!
+  genderId: String!
   id: String
   name: String!
   price: String!
@@ -1917,6 +1878,7 @@ input ProductCreateWithoutProductColorInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String!
+  genderId: String!
   id: String
   name: String!
   price: String!
@@ -1929,6 +1891,7 @@ input ProductCreateWithoutProductSalesInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String!
+  genderId: String!
   id: String
   name: String!
   price: String!
@@ -1941,6 +1904,7 @@ input ProductCreateWithoutProductTypeInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String!
+  genderId: String!
   id: String
   name: String!
   price: String!
@@ -1953,10 +1917,11 @@ type ProductGroupBy {
   dateCreated: DateTimeISO!
   dateUpdated: DateTimeISO!
   description: String!
+  genderId: String!
   id: String!
   name: String!
   price: String!
-  productTypeId: String
+  productTypeId: String!
 }
 
 input ProductListRelationFilter {
@@ -1969,6 +1934,7 @@ type ProductMaxAggregate {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String
+  genderId: String
   id: String
   name: String
   price: String
@@ -1979,6 +1945,7 @@ input ProductMaxOrderByAggregateInput {
   dateCreated: SortOrder
   dateUpdated: SortOrder
   description: SortOrder
+  genderId: SortOrder
   id: SortOrder
   name: SortOrder
   price: SortOrder
@@ -1989,6 +1956,7 @@ type ProductMinAggregate {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String
+  genderId: String
   id: String
   name: String
   price: String
@@ -1999,6 +1967,7 @@ input ProductMinOrderByAggregateInput {
   dateCreated: SortOrder
   dateUpdated: SortOrder
   description: SortOrder
+  genderId: SortOrder
   id: SortOrder
   name: SortOrder
   price: SortOrder
@@ -2016,10 +1985,11 @@ input ProductOrderByWithAggregationInput {
   dateCreated: SortOrder
   dateUpdated: SortOrder
   description: SortOrder
+  genderId: SortOrder
   id: SortOrder
   name: SortOrder
   price: SortOrder
-  productTypeId: SortOrderInput
+  productTypeId: SortOrder
 }
 
 input ProductOrderByWithRelationInput {
@@ -2030,10 +2000,11 @@ input ProductOrderByWithRelationInput {
   dateCreated: SortOrder
   dateUpdated: SortOrder
   description: SortOrder
+  genderId: SortOrder
   id: SortOrder
   name: SortOrder
   price: SortOrder
-  productTypeId: SortOrderInput
+  productTypeId: SortOrder
 }
 
 input ProductRelationFilter {
@@ -2544,6 +2515,7 @@ enum ProductScalarFieldEnum {
   dateCreated
   dateUpdated
   description
+  genderId
   id
   name
   price
@@ -2557,10 +2529,11 @@ input ProductScalarWhereInput {
   dateCreated: DateTimeFilter
   dateUpdated: DateTimeFilter
   description: StringFilter
+  genderId: StringFilter
   id: StringFilter
   name: StringFilter
   price: StringFilter
-  productTypeId: StringNullableFilter
+  productTypeId: StringFilter
 }
 
 input ProductScalarWhereWithAggregatesInput {
@@ -2570,10 +2543,11 @@ input ProductScalarWhereWithAggregatesInput {
   dateCreated: DateTimeWithAggregatesFilter
   dateUpdated: DateTimeWithAggregatesFilter
   description: StringWithAggregatesFilter
+  genderId: StringWithAggregatesFilter
   id: StringWithAggregatesFilter
   name: StringWithAggregatesFilter
   price: StringWithAggregatesFilter
-  productTypeId: StringNullableWithAggregatesFilter
+  productTypeId: StringWithAggregatesFilter
 }
 
 type ProductType {
@@ -2788,6 +2762,7 @@ input ProductUpdateInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String
+  genderId: String
   id: String
   name: String
   price: String
@@ -2797,6 +2772,7 @@ input ProductUpdateManyMutationInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String
+  genderId: String
   id: String
   name: String
   price: String
@@ -2872,6 +2848,7 @@ input ProductUpdateWithoutInventoryInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String
+  genderId: String
   id: String
   name: String
   price: String
@@ -2884,6 +2861,7 @@ input ProductUpdateWithoutProductColorInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String
+  genderId: String
   id: String
   name: String
   price: String
@@ -2896,6 +2874,7 @@ input ProductUpdateWithoutProductSalesInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String
+  genderId: String
   id: String
   name: String
   price: String
@@ -2908,6 +2887,7 @@ input ProductUpdateWithoutProductTypeInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   description: String
+  genderId: String
   id: String
   name: String
   price: String
@@ -2948,10 +2928,11 @@ input ProductWhereInput {
   dateCreated: DateTimeFilter
   dateUpdated: DateTimeFilter
   description: StringFilter
+  genderId: StringFilter
   id: StringFilter
   name: StringFilter
   price: StringFilter
-  productTypeId: StringNullableFilter
+  productTypeId: StringFilter
 }
 
 input ProductWhereUniqueInput {
@@ -2965,10 +2946,11 @@ input ProductWhereUniqueInput {
   dateCreated: DateTimeFilter
   dateUpdated: DateTimeFilter
   description: StringFilter
+  genderId: StringFilter
   id: String
   name: StringFilter
   price: StringFilter
-  productTypeId: StringNullableFilter
+  productTypeId: StringFilter
 }
 
 type Query {
@@ -3045,11 +3027,6 @@ enum SortOrder {
   desc
 }
 
-input SortOrderInput {
-  nulls: NullsOrder
-  sort: SortOrder!
-}
-
 input StringFilter {
   contains: String
   endsWith: String
@@ -3060,37 +3037,6 @@ input StringFilter {
   lt: String
   lte: String
   not: NestedStringFilter
-  notIn: [String!]
-  startsWith: String
-}
-
-input StringNullableFilter {
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  not: NestedStringNullableFilter
-  notIn: [String!]
-  startsWith: String
-}
-
-input StringNullableWithAggregatesFilter {
-  _count: NestedIntNullableFilter
-  _max: NestedStringNullableFilter
-  _min: NestedStringNullableFilter
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  not: NestedStringNullableWithAggregatesFilter
   notIn: [String!]
   startsWith: String
 }

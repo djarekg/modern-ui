@@ -24,8 +24,8 @@
   },
   "scripts": {
     "db:generate": "rm -rf prisma/dev.db prisma/img && bunx prisma generate && bunx prisma db push && bun prisma/seed/seed.ts",
-    "dev": "bun src/index.ts",
-    "dev:debug": "bun --inspect=localhost:4004 --watch src/index.ts",
+    "dev": "bun src/server.ts",
+    "dev:debug": "bun --inspect=localhost:4004 --watch src/server.ts",
     "build": "task build"
   },
   "dependencies": {

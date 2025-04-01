@@ -77,13 +77,14 @@ model Product {
   name          String
   description   String
   price         String
+  productTypeId String
+  genderId      String
   dateCreated   DateTime       @default(now())
   dateUpdated   DateTime       @updatedAt
   Inventory     Inventory[]
   ProductSales  ProductSales[]
   ProductColor  ProductColor[]
   ProductType   ProductType?   @relation(fields: [productTypeId], references: [id])
-  productTypeId String?
 }
 
 // enum ProductType {

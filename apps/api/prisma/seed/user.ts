@@ -1,7 +1,7 @@
 import type { PrismaClient } from '@prisma/client';
 
 import { generateHash } from '../../src/crypto/hash.js';
-import { Role } from '../enums/role.js';
+import { Role } from '../../src/enums/role.js';
 
 import { faker } from './init-faker.js';
 

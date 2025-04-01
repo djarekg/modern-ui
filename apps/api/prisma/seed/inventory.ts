@@ -1,7 +1,7 @@
 import type { PrismaClient } from '@prisma/client';
 
-import { ProductType } from '../enums/product-type.js';
-import { Size } from '../enums/size.js';
+import { ProductType } from '../../src/enums/product-type.js';
+import { Size } from '../../src/enums/size.js';
 
 export const createInventories = async (prisma: PrismaClient) => {
   console.log('Seeding inventories...');

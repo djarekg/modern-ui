@@ -1,7 +1,7 @@
 import type { PrismaClient } from '@prisma/client';
 
-import { ProductType } from '../enums/product-type.js';
-import { Role } from '../enums/role.js';
+import { ProductType } from '../../src/enums/product-type.js';
+import { Role } from '../../src/enums/role.js';
 
 export const createProductSales = async (prisma: PrismaClient) => {
   console.group('Seeding product sales...');
