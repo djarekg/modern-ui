@@ -61,11 +61,12 @@ export class Tooltip extends LitElement {
     return (rootNode instanceof ShadowRoot ? rootNode : document).getElementById(this.anchor ?? '');
   }
 
+  @property({ attribute: 'aria-hiddehn' }) ariaHidden = 'true';
+  @property({ attribute: 'role' }) role = 'tooltip';
+
   connectedCallback(): void {
     super.connectedCallback();
 
-    this.setAttribute('role', 'tooltip');
-    this.setAttribute('aria-hidden', 'true');
     this.#setPosition();
 
     const anchorElement = this.#anchorElement;
@@ -108,7 +109,6 @@ export class Tooltip extends LitElement {
    * Show the tooltip.
    */
   show() {
-    this.setAttribute('aria-hidden', 'false');
     this.showPopover();
   }
 
@@ -116,7 +116,6 @@ export class Tooltip extends LitElement {
    * Hide the tooltip.
    */
   hide() {
-    this.setAttribute('aria-hidden', 'true');
     this.hidePopover();
   }
 

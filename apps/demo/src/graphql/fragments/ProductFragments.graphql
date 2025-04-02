@@ -6,4 +6,11 @@ fragment ProductParts on Product {
   productTypeId
   dateCreated
   dateUpdated
+  ProductImage {
+    imageId
+    ext
+    width
+    height
+    avgColor
+  }
 }

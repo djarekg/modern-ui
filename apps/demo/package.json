@@ -36,6 +36,7 @@
     "@apollo/client": "^3.13.5",
     "@lit-labs/signals": "^0.1.2",
     "@lit/context": "^1.1.4",
+    "@mui/api": "workspace:*",
     "@mui/components": "workspace:*",
     "@mui/core": "workspace:*",
     "@mui/graphql": "workspace:*",

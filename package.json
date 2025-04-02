@@ -15,8 +15,9 @@
   },
   "scripts": {
     "setup": "task install",
-    "postsetup": "bun run --filter './apps/api' db:generate && bun run build:all",
-    "build:packages": "bun run --filter './packages/*' build",
+    "//postsetup": "bun run --filter './apps/api' db:generate && bun run build:all",
+    "postsetup": "bun run build:all",
+    "build:packages": "bun run --filter './packages/core' build && bun run --filter './packages/components' build && bun run --filter './packages/graphql' build && bun run --filter './packages/router' build",
     "build:apps": "bun run --filter './apps/*' build",
     "build:all": "bun run build:packages && bun run --filter './apps/api' build"
   },

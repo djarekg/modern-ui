@@ -1,35 +1,33 @@
-import { html, useMemo, virtual } from 'haunted';
+import { html, virtual } from 'haunted';
 import { unsafeCSS } from 'lit';
 
 import '@mui/components/card/index.js';
 import '@mui/components/button/icon-button.js';
 import '@mui/components/tooltip/tooltip.js';
-import { useStyles } from '@mui/core';
+import { format, useStyles } from '@mui/core';
 
-import type { Product } from '@/types/graphql.js';
+import type { GetProductsByProductTypeIdQuery } from '@/types/graphql.js';
 
-import { ProductType } from '@/types/product-type.js';
 import styles from './product-list.css?inline';
 
 type ProductListProps = {
-  products: Product[];
+  products: GetProductsByProductTypeIdQuery['products'];
 };
+
+const IMAGE_URL = import.meta.env.VITE_PEXELS_PHOTO_URL_FORMAT;
 
 export const ProductList = virtual(({ products }: ProductListProps) => {
   useStyles(unsafeCSS(styles));
 
-  const renderProducts = useMemo(
-    () =>
-      products.map(
-        ({ id, name, description, productTypeId }) => html`
+  const renderProducts = products.map(
+    ({ id, name, description, ProductImage: [{ imageId, ext }] }) => html`
         <mui-card key=${id}>
           <mui-card-header>
             ${name}
           </mui-card-header>
           <mui-card-content>
-            <img src="/img/products/${Object.entries(ProductType)
-              .find(([_, value]) => value === productTypeId)[0]
-              .toLocaleLowerCase()}/${id}.jpg" alt=${name} />
+          <img src="${format(IMAGE_URL, imageId.toString(), ext)}?auto=compress&cs=tinysrgb&h=220&w=940"
+            alt=${name} />
           </mui-card-content>
           <mui-card-footer>
             <span class="description">
@@ -38,8 +36,6 @@ export const ProductList = virtual(({ products }: ProductListProps) => {
           </mui-card-footer>
         </mui-card>
       `,
-      ),
-    [products],
   );
 
   return html`

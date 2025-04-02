@@ -22,7 +22,7 @@ export const createProducts = async (prisma: PrismaClient) => {
     prisma.product.create({
       data: {
         id: faker.string.uuid(),
-        name: `${faker.commerce.productAdjective()}} Hat`,
+        name: `${faker.commerce.productAdjective()} Hat`,
         description: `${faker.commerce.productDescription()} hat`,
         price: faker.commerce.price({ min: 10, max: 50 }),
         productTypeId: ProductType.Hat,
@@ -70,7 +70,7 @@ export const createProducts = async (prisma: PrismaClient) => {
     prisma.product.create({
       data: {
         id: faker.string.uuid(),
-        name: `${faker.commerce.productAdjective()}} Shirt`,
+        name: `${faker.commerce.productAdjective()} Shirt`,
         description: `${faker.commerce.productDescription()} shirt`,
         price: faker.commerce.price({ min: 10, max: 70 }),
         productTypeId: ProductType.Shirt,
@@ -82,7 +82,7 @@ export const createProducts = async (prisma: PrismaClient) => {
     prisma.product.create({
       data: {
         id: faker.string.uuid(),
-        name: `${faker.commerce.productAdjective()}} Shoes`,
+        name: `${faker.commerce.productAdjective()} Shoes`,
         description: `${faker.commerce.productDescription()} shoes`,
         price: faker.commerce.price({ min: 25, max: 150 }),
         productTypeId: ProductType.Shoes,
@@ -94,7 +94,7 @@ export const createProducts = async (prisma: PrismaClient) => {
     prisma.product.create({
       data: {
         id: faker.string.uuid(),
-        name: `${faker.commerce.productAdjective()}} Shorts`,
+        name: `${faker.commerce.productAdjective()} Shorts`,
         description: `${faker.commerce.productDescription()} shorts`,
         price: faker.commerce.price({ min: 15, max: 80 }),
         productTypeId: ProductType.Shorts,
@@ -106,7 +106,7 @@ export const createProducts = async (prisma: PrismaClient) => {
     prisma.product.create({
       data: {
         id: faker.string.uuid(),
-        name: `${faker.commerce.productAdjective()}} Socks`,
+        name: `${faker.commerce.productAdjective()} Socks`,
         description: `${faker.commerce.productDescription()} socks`,
         price: faker.commerce.price({ min: 5, max: 30 }),
         productTypeId: ProductType.Socks,
@@ -118,7 +118,7 @@ export const createProducts = async (prisma: PrismaClient) => {
     prisma.product.create({
       data: {
         id: faker.string.uuid(),
-        name: `${faker.commerce.productAdjective()}} Sweater`,
+        name: `${faker.commerce.productAdjective()} Sweater`,
         description: `${faker.commerce.productDescription()} sweater`,
         price: faker.commerce.price({ min: 20, max: 100 }),
         productTypeId: ProductType.Sweater,
@@ -130,7 +130,7 @@ export const createProducts = async (prisma: PrismaClient) => {
     prisma.product.create({
       data: {
         id: faker.string.uuid(),
-        name: `${faker.commerce.productAdjective()}} Underwear`,
+        name: `${faker.commerce.productAdjective()} Underwear`,
         description: `${faker.commerce.productDescription()} underwear`,
         price: faker.commerce.price({ min: 5, max: 50 }),
         productTypeId: ProductType.Underwear,

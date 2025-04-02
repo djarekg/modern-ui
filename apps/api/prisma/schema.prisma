@@ -160,7 +160,7 @@ model ProductSales {
   customerId  String
   userId      String
   quantity    Int
-  price       Float
+  price       String
   dateCreated DateTime @default(now())
   dateUpdated DateTime @updatedAt
   product     Product  @relation(fields: [productId], references: [id])

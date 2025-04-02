@@ -72,6 +72,14 @@ export interface AggregateProductColor {
   readonly _min?: Maybe<ProductColorMinAggregate>;
 }
 
+export interface AggregateProductImage {
+  readonly _avg?: Maybe<ProductImageAvgAggregate>;
+  readonly _count?: Maybe<ProductImageCountAggregate>;
+  readonly _max?: Maybe<ProductImageMaxAggregate>;
+  readonly _min?: Maybe<ProductImageMinAggregate>;
+  readonly _sum?: Maybe<ProductImageSumAggregate>;
+}
+
 export interface AggregateProductSales {
   readonly _avg?: Maybe<ProductSalesAvgAggregate>;
   readonly _count?: Maybe<ProductSalesCountAggregate>;
@@ -347,10 +355,11 @@ export interface CreateManyAndReturnProduct {
   readonly dateCreated: Scalars["DateTimeISO"]["output"];
   readonly dateUpdated: Scalars["DateTimeISO"]["output"];
   readonly description: Scalars["String"]["output"];
+  readonly genderId: Scalars["String"]["output"];
   readonly id: Scalars["String"]["output"];
   readonly name: Scalars["String"]["output"];
   readonly price: Scalars["String"]["output"];
-  readonly productTypeId?: Maybe<Scalars["String"]["output"]>;
+  readonly productTypeId: Scalars["String"]["output"];
 }
 
 export interface CreateManyAndReturnProductProductTypeArgs {
@@ -365,6 +374,19 @@ export interface CreateManyAndReturnProductColor {
   readonly id: Scalars["String"]["output"];
   readonly product: Product;
   readonly productId: Scalars["String"]["output"];
+}
+
+export interface CreateManyAndReturnProductImage {
+  readonly avgColor: Scalars["String"]["output"];
+  readonly dateCreated: Scalars["DateTimeISO"]["output"];
+  readonly dateUpdated: Scalars["DateTimeISO"]["output"];
+  readonly ext: Scalars["String"]["output"];
+  readonly height: Scalars["Int"]["output"];
+  readonly id: Scalars["String"]["output"];
+  readonly imageId: Scalars["Int"]["output"];
+  readonly product: Product;
+  readonly productId: Scalars["String"]["output"];
+  readonly width: Scalars["Int"]["output"];
 }
 
 export interface CreateManyAndReturnProductSales {
@@ -1327,6 +1349,7 @@ export interface Mutation {
   readonly createManyAndReturnLoginHistory: ReadonlyArray<CreateManyAndReturnLoginHistory>;
   readonly createManyAndReturnProduct: ReadonlyArray<CreateManyAndReturnProduct>;
   readonly createManyAndReturnProductColor: ReadonlyArray<CreateManyAndReturnProductColor>;
+  readonly createManyAndReturnProductImage: ReadonlyArray<CreateManyAndReturnProductImage>;
   readonly createManyAndReturnProductSales: ReadonlyArray<CreateManyAndReturnProductSales>;
   readonly createManyAndReturnProductType: ReadonlyArray<CreateManyAndReturnProductType>;
   readonly createManyAndReturnUser: ReadonlyArray<CreateManyAndReturnUser>;
@@ -1336,6 +1359,7 @@ export interface Mutation {
   readonly createManyLoginHistory: AffectedRowsOutput;
   readonly createManyProduct: AffectedRowsOutput;
   readonly createManyProductColor: AffectedRowsOutput;
+  readonly createManyProductImage: AffectedRowsOutput;
   readonly createManyProductSales: AffectedRowsOutput;
   readonly createManyProductType: AffectedRowsOutput;
   readonly createManyUser: AffectedRowsOutput;
@@ -1345,6 +1369,7 @@ export interface Mutation {
   readonly createOneLoginHistory: LoginHistory;
   readonly createOneProduct: Product;
   readonly createOneProductColor: ProductColor;
+  readonly createOneProductImage: ProductImage;
   readonly createOneProductSales: ProductSales;
   readonly createOneProductType: ProductType;
   readonly createOneUser: User;
@@ -1354,6 +1379,7 @@ export interface Mutation {
   readonly deleteManyLoginHistory: AffectedRowsOutput;
   readonly deleteManyProduct: AffectedRowsOutput;
   readonly deleteManyProductColor: AffectedRowsOutput;
+  readonly deleteManyProductImage: AffectedRowsOutput;
   readonly deleteManyProductSales: AffectedRowsOutput;
   readonly deleteManyProductType: AffectedRowsOutput;
   readonly deleteManyUser: AffectedRowsOutput;
@@ -1363,6 +1389,7 @@ export interface Mutation {
   readonly deleteOneLoginHistory?: Maybe<LoginHistory>;
   readonly deleteOneProduct?: Maybe<Product>;
   readonly deleteOneProductColor?: Maybe<ProductColor>;
+  readonly deleteOneProductImage?: Maybe<ProductImage>;
   readonly deleteOneProductSales?: Maybe<ProductSales>;
   readonly deleteOneProductType?: Maybe<ProductType>;
   readonly deleteOneUser?: Maybe<User>;
@@ -1372,6 +1399,7 @@ export interface Mutation {
   readonly updateManyLoginHistory: AffectedRowsOutput;
   readonly updateManyProduct: AffectedRowsOutput;
   readonly updateManyProductColor: AffectedRowsOutput;
+  readonly updateManyProductImage: AffectedRowsOutput;
   readonly updateManyProductSales: AffectedRowsOutput;
   readonly updateManyProductType: AffectedRowsOutput;
   readonly updateManyUser: AffectedRowsOutput;
@@ -1381,6 +1409,7 @@ export interface Mutation {
   readonly updateOneLoginHistory?: Maybe<LoginHistory>;
   readonly updateOneProduct?: Maybe<Product>;
   readonly updateOneProductColor?: Maybe<ProductColor>;
+  readonly updateOneProductImage?: Maybe<ProductImage>;
   readonly updateOneProductSales?: Maybe<ProductSales>;
   readonly updateOneProductType?: Maybe<ProductType>;
   readonly updateOneUser?: Maybe<User>;
@@ -1390,6 +1419,7 @@ export interface Mutation {
   readonly upsertOneLoginHistory: LoginHistory;
   readonly upsertOneProduct: Product;
   readonly upsertOneProductColor: ProductColor;
+  readonly upsertOneProductImage: ProductImage;
   readonly upsertOneProductSales: ProductSales;
   readonly upsertOneProductType: ProductType;
   readonly upsertOneUser: User;
@@ -1417,6 +1447,10 @@ export interface MutationCreateManyAndReturnProductArgs {
 
 export interface MutationCreateManyAndReturnProductColorArgs {
   data: ReadonlyArray<ProductColorCreateManyInput>;
+}
+
+export interface MutationCreateManyAndReturnProductImageArgs {
+  data: ReadonlyArray<ProductImageCreateManyInput>;
 }
 
 export interface MutationCreateManyAndReturnProductSalesArgs {
@@ -1455,6 +1489,10 @@ export interface MutationCreateManyProductColorArgs {
   data: ReadonlyArray<ProductColorCreateManyInput>;
 }
 
+export interface MutationCreateManyProductImageArgs {
+  data: ReadonlyArray<ProductImageCreateManyInput>;
+}
+
 export interface MutationCreateManyProductSalesArgs {
   data: ReadonlyArray<ProductSalesCreateManyInput>;
 }
@@ -1489,6 +1527,10 @@ export interface MutationCreateOneProductArgs {
 
 export interface MutationCreateOneProductColorArgs {
   data: ProductColorCreateInput;
+}
+
+export interface MutationCreateOneProductImageArgs {
+  data: ProductImageCreateInput;
 }
 
 export interface MutationCreateOneProductSalesArgs {
@@ -1527,6 +1569,10 @@ export interface MutationDeleteManyProductColorArgs {
   where?: InputMaybe<ProductColorWhereInput>;
 }
 
+export interface MutationDeleteManyProductImageArgs {
+  where?: InputMaybe<ProductImageWhereInput>;
+}
+
 export interface MutationDeleteManyProductSalesArgs {
   where?: InputMaybe<ProductSalesWhereInput>;
 }
@@ -1561,6 +1607,10 @@ export interface MutationDeleteOneProductArgs {
 
 export interface MutationDeleteOneProductColorArgs {
   where: ProductColorWhereUniqueInput;
+}
+
+export interface MutationDeleteOneProductImageArgs {
+  where: ProductImageWhereUniqueInput;
 }
 
 export interface MutationDeleteOneProductSalesArgs {
@@ -1603,6 +1653,11 @@ export interface MutationUpdateManyProductArgs {
 export interface MutationUpdateManyProductColorArgs {
   data: ProductColorUpdateManyMutationInput;
   where?: InputMaybe<ProductColorWhereInput>;
+}
+
+export interface MutationUpdateManyProductImageArgs {
+  data: ProductImageUpdateManyMutationInput;
+  where?: InputMaybe<ProductImageWhereInput>;
 }
 
 export interface MutationUpdateManyProductSalesArgs {
@@ -1648,6 +1703,11 @@ export interface MutationUpdateOneProductArgs {
 export interface MutationUpdateOneProductColorArgs {
   data: ProductColorUpdateInput;
   where: ProductColorWhereUniqueInput;
+}
+
+export interface MutationUpdateOneProductImageArgs {
+  data: ProductImageUpdateInput;
+  where: ProductImageWhereUniqueInput;
 }
 
 export interface MutationUpdateOneProductSalesArgs {
@@ -1699,6 +1759,12 @@ export interface MutationUpsertOneProductColorArgs {
   create: ProductColorCreateInput;
   update: ProductColorUpdateInput;
   where: ProductColorWhereUniqueInput;
+}
+
+export interface MutationUpsertOneProductImageArgs {
+  create: ProductImageCreateInput;
+  update: ProductImageUpdateInput;
+  where: ProductImageWhereUniqueInput;
 }
 
 export interface MutationUpsertOneProductSalesArgs {
@@ -1782,17 +1848,6 @@ export interface NestedIntFilter {
   readonly notIn?: InputMaybe<ReadonlyArray<Scalars["Int"]["input"]>>;
 }
 
-export interface NestedIntNullableFilter {
-  readonly equals?: InputMaybe<Scalars["Int"]["input"]>;
-  readonly gt?: InputMaybe<Scalars["Int"]["input"]>;
-  readonly gte?: InputMaybe<Scalars["Int"]["input"]>;
-  readonly in?: InputMaybe<ReadonlyArray<Scalars["Int"]["input"]>>;
-  readonly lt?: InputMaybe<Scalars["Int"]["input"]>;
-  readonly lte?: InputMaybe<Scalars["Int"]["input"]>;
-  readonly not?: InputMaybe<NestedIntNullableFilter>;
-  readonly notIn?: InputMaybe<ReadonlyArray<Scalars["Int"]["input"]>>;
-}
-
 export interface NestedIntWithAggregatesFilter {
   readonly _avg?: InputMaybe<NestedFloatFilter>;
   readonly _count?: InputMaybe<NestedIntFilter>;
@@ -1823,37 +1878,6 @@ export interface NestedStringFilter {
   readonly startsWith?: InputMaybe<Scalars["String"]["input"]>;
 }
 
-export interface NestedStringNullableFilter {
-  readonly contains?: InputMaybe<Scalars["String"]["input"]>;
-  readonly endsWith?: InputMaybe<Scalars["String"]["input"]>;
-  readonly equals?: InputMaybe<Scalars["String"]["input"]>;
-  readonly gt?: InputMaybe<Scalars["String"]["input"]>;
-  readonly gte?: InputMaybe<Scalars["String"]["input"]>;
-  readonly in?: InputMaybe<ReadonlyArray<Scalars["String"]["input"]>>;
-  readonly lt?: InputMaybe<Scalars["String"]["input"]>;
-  readonly lte?: InputMaybe<Scalars["String"]["input"]>;
-  readonly not?: InputMaybe<NestedStringNullableFilter>;
-  readonly notIn?: InputMaybe<ReadonlyArray<Scalars["String"]["input"]>>;
-  readonly startsWith?: InputMaybe<Scalars["String"]["input"]>;
-}
-
-export interface NestedStringNullableWithAggregatesFilter {
-  readonly _count?: InputMaybe<NestedIntNullableFilter>;
-  readonly _max?: InputMaybe<NestedStringNullableFilter>;
-  readonly _min?: InputMaybe<NestedStringNullableFilter>;
-  readonly contains?: InputMaybe<Scalars["String"]["input"]>;
-  readonly endsWith?: InputMaybe<Scalars["String"]["input"]>;
-  readonly equals?: InputMaybe<Scalars["String"]["input"]>;
-  readonly gt?: InputMaybe<Scalars["String"]["input"]>;
-  readonly gte?: InputMaybe<Scalars["String"]["input"]>;
-  readonly in?: InputMaybe<ReadonlyArray<Scalars["String"]["input"]>>;
-  readonly lt?: InputMaybe<Scalars["String"]["input"]>;
-  readonly lte?: InputMaybe<Scalars["String"]["input"]>;
-  readonly not?: InputMaybe<NestedStringNullableWithAggregatesFilter>;
-  readonly notIn?: InputMaybe<ReadonlyArray<Scalars["String"]["input"]>>;
-  readonly startsWith?: InputMaybe<Scalars["String"]["input"]>;
-}
-
 export interface NestedStringWithAggregatesFilter {
   readonly _count?: InputMaybe<NestedIntFilter>;
   readonly _max?: InputMaybe<NestedStringFilter>;
@@ -1871,24 +1895,21 @@ export interface NestedStringWithAggregatesFilter {
   readonly startsWith?: InputMaybe<Scalars["String"]["input"]>;
 }
 
-export enum NullsOrder {
-  First = 0,
-  Last = 1,
-}
-
 export interface Product {
   readonly Inventory: ReadonlyArray<Inventory>;
   readonly ProductColor: ReadonlyArray<ProductColor>;
+  readonly ProductImage: ReadonlyArray<ProductImage>;
   readonly ProductSales: ReadonlyArray<ProductSales>;
   readonly ProductType?: Maybe<ProductType>;
   readonly _count?: Maybe<ProductCount>;
   readonly dateCreated: Scalars["DateTimeISO"]["output"];
   readonly dateUpdated: Scalars["DateTimeISO"]["output"];
   readonly description: Scalars["String"]["output"];
+  readonly genderId: Scalars["String"]["output"];
   readonly id: Scalars["String"]["output"];
   readonly name: Scalars["String"]["output"];
   readonly price: Scalars["String"]["output"];
-  readonly productTypeId?: Maybe<Scalars["String"]["output"]>;
+  readonly productTypeId: Scalars["String"]["output"];
 }
 
 export interface ProductInventoryArgs {
@@ -1907,6 +1928,15 @@ export interface ProductProductColorArgs {
   skip?: InputMaybe<Scalars["Int"]["input"]>;
   take?: InputMaybe<Scalars["Int"]["input"]>;
   where?: InputMaybe<ProductColorWhereInput>;
+}
+
+export interface ProductProductImageArgs {
+  cursor?: InputMaybe<ProductImageWhereUniqueInput>;
+  distinct?: InputMaybe<ReadonlyArray<ProductImageScalarFieldEnum>>;
+  orderBy?: InputMaybe<ReadonlyArray<ProductImageOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductImageWhereInput>;
 }
 
 export interface ProductProductSalesArgs {
@@ -2280,6 +2310,7 @@ export interface ProductColorWhereUniqueInput {
 export interface ProductCount {
   readonly Inventory: Scalars["Int"]["output"];
   readonly ProductColor: Scalars["Int"]["output"];
+  readonly ProductImage: Scalars["Int"]["output"];
   readonly ProductSales: Scalars["Int"]["output"];
 }
 
@@ -2291,6 +2322,10 @@ export interface ProductCountProductColorArgs {
   where?: InputMaybe<ProductColorWhereInput>;
 }
 
+export interface ProductCountProductImageArgs {
+  where?: InputMaybe<ProductImageWhereInput>;
+}
+
 export interface ProductCountProductSalesArgs {
   where?: InputMaybe<ProductSalesWhereInput>;
 }
@@ -2300,6 +2335,7 @@ export interface ProductCountAggregate {
   readonly dateCreated: Scalars["Int"]["output"];
   readonly dateUpdated: Scalars["Int"]["output"];
   readonly description: Scalars["Int"]["output"];
+  readonly genderId: Scalars["Int"]["output"];
   readonly id: Scalars["Int"]["output"];
   readonly name: Scalars["Int"]["output"];
   readonly price: Scalars["Int"]["output"];
@@ -2310,6 +2346,7 @@ export interface ProductCountOrderByAggregateInput {
   readonly dateCreated?: InputMaybe<SortOrder>;
   readonly dateUpdated?: InputMaybe<SortOrder>;
   readonly description?: InputMaybe<SortOrder>;
+  readonly genderId?: InputMaybe<SortOrder>;
   readonly id?: InputMaybe<SortOrder>;
   readonly name?: InputMaybe<SortOrder>;
   readonly price?: InputMaybe<SortOrder>;
@@ -2319,11 +2356,13 @@ export interface ProductCountOrderByAggregateInput {
 export interface ProductCreateInput {
   readonly Inventory?: InputMaybe<InventoryCreateNestedManyWithoutProductInput>;
   readonly ProductColor?: InputMaybe<ProductColorCreateNestedManyWithoutProductInput>;
+  readonly ProductImage?: InputMaybe<ProductImageCreateNestedManyWithoutProductInput>;
   readonly ProductSales?: InputMaybe<ProductSalesCreateNestedManyWithoutProductInput>;
   readonly ProductType?: InputMaybe<ProductTypeCreateNestedOneWithoutProductInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description: Scalars["String"]["input"];
+  readonly genderId: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
   readonly price: Scalars["String"]["input"];
@@ -2333,16 +2372,18 @@ export interface ProductCreateManyInput {
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description: Scalars["String"]["input"];
+  readonly genderId: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
   readonly price: Scalars["String"]["input"];
-  readonly productTypeId?: InputMaybe<Scalars["String"]["input"]>;
+  readonly productTypeId: Scalars["String"]["input"];
 }
 
 export interface ProductCreateManyProductTypeInput {
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description: Scalars["String"]["input"];
+  readonly genderId: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
   readonly price: Scalars["String"]["input"];
@@ -2375,6 +2416,12 @@ export interface ProductCreateNestedOneWithoutProductColorInput {
   readonly create?: InputMaybe<ProductCreateWithoutProductColorInput>;
 }
 
+export interface ProductCreateNestedOneWithoutProductImageInput {
+  readonly connect?: InputMaybe<ProductWhereUniqueInput>;
+  readonly connectOrCreate?: InputMaybe<ProductCreateOrConnectWithoutProductImageInput>;
+  readonly create?: InputMaybe<ProductCreateWithoutProductImageInput>;
+}
+
 export interface ProductCreateNestedOneWithoutProductSalesInput {
   readonly connect?: InputMaybe<ProductWhereUniqueInput>;
   readonly connectOrCreate?: InputMaybe<ProductCreateOrConnectWithoutProductSalesInput>;
@@ -2391,6 +2438,11 @@ export interface ProductCreateOrConnectWithoutProductColorInput {
   readonly where: ProductWhereUniqueInput;
 }
 
+export interface ProductCreateOrConnectWithoutProductImageInput {
+  readonly create: ProductCreateWithoutProductImageInput;
+  readonly where: ProductWhereUniqueInput;
+}
+
 export interface ProductCreateOrConnectWithoutProductSalesInput {
   readonly create: ProductCreateWithoutProductSalesInput;
   readonly where: ProductWhereUniqueInput;
@@ -2403,11 +2455,13 @@ export interface ProductCreateOrConnectWithoutProductTypeInput {
 
 export interface ProductCreateWithoutInventoryInput {
   readonly ProductColor?: InputMaybe<ProductColorCreateNestedManyWithoutProductInput>;
+  readonly ProductImage?: InputMaybe<ProductImageCreateNestedManyWithoutProductInput>;
   readonly ProductSales?: InputMaybe<ProductSalesCreateNestedManyWithoutProductInput>;
   readonly ProductType?: InputMaybe<ProductTypeCreateNestedOneWithoutProductInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description: Scalars["String"]["input"];
+  readonly genderId: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
   readonly price: Scalars["String"]["input"];
@@ -2415,11 +2469,27 @@ export interface ProductCreateWithoutInventoryInput {
 
 export interface ProductCreateWithoutProductColorInput {
   readonly Inventory?: InputMaybe<InventoryCreateNestedManyWithoutProductInput>;
+  readonly ProductImage?: InputMaybe<ProductImageCreateNestedManyWithoutProductInput>;
   readonly ProductSales?: InputMaybe<ProductSalesCreateNestedManyWithoutProductInput>;
   readonly ProductType?: InputMaybe<ProductTypeCreateNestedOneWithoutProductInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description: Scalars["String"]["input"];
+  readonly genderId: Scalars["String"]["input"];
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly name: Scalars["String"]["input"];
+  readonly price: Scalars["String"]["input"];
+}
+
+export interface ProductCreateWithoutProductImageInput {
+  readonly Inventory?: InputMaybe<InventoryCreateNestedManyWithoutProductInput>;
+  readonly ProductColor?: InputMaybe<ProductColorCreateNestedManyWithoutProductInput>;
+  readonly ProductSales?: InputMaybe<ProductSalesCreateNestedManyWithoutProductInput>;
+  readonly ProductType?: InputMaybe<ProductTypeCreateNestedOneWithoutProductInput>;
+  readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly description: Scalars["String"]["input"];
+  readonly genderId: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
   readonly price: Scalars["String"]["input"];
@@ -2428,10 +2498,12 @@ export interface ProductCreateWithoutProductColorInput {
 export interface ProductCreateWithoutProductSalesInput {
   readonly Inventory?: InputMaybe<InventoryCreateNestedManyWithoutProductInput>;
   readonly ProductColor?: InputMaybe<ProductColorCreateNestedManyWithoutProductInput>;
+  readonly ProductImage?: InputMaybe<ProductImageCreateNestedManyWithoutProductInput>;
   readonly ProductType?: InputMaybe<ProductTypeCreateNestedOneWithoutProductInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description: Scalars["String"]["input"];
+  readonly genderId: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
   readonly price: Scalars["String"]["input"];
@@ -2440,10 +2512,12 @@ export interface ProductCreateWithoutProductSalesInput {
 export interface ProductCreateWithoutProductTypeInput {
   readonly Inventory?: InputMaybe<InventoryCreateNestedManyWithoutProductInput>;
   readonly ProductColor?: InputMaybe<ProductColorCreateNestedManyWithoutProductInput>;
+  readonly ProductImage?: InputMaybe<ProductImageCreateNestedManyWithoutProductInput>;
   readonly ProductSales?: InputMaybe<ProductSalesCreateNestedManyWithoutProductInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description: Scalars["String"]["input"];
+  readonly genderId: Scalars["String"]["input"];
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name: Scalars["String"]["input"];
   readonly price: Scalars["String"]["input"];
@@ -2456,10 +2530,398 @@ export interface ProductGroupBy {
   readonly dateCreated: Scalars["DateTimeISO"]["output"];
   readonly dateUpdated: Scalars["DateTimeISO"]["output"];
   readonly description: Scalars["String"]["output"];
+  readonly genderId: Scalars["String"]["output"];
   readonly id: Scalars["String"]["output"];
   readonly name: Scalars["String"]["output"];
   readonly price: Scalars["String"]["output"];
-  readonly productTypeId?: Maybe<Scalars["String"]["output"]>;
+  readonly productTypeId: Scalars["String"]["output"];
+}
+
+export interface ProductImage {
+  readonly avgColor: Scalars["String"]["output"];
+  readonly dateCreated: Scalars["DateTimeISO"]["output"];
+  readonly dateUpdated: Scalars["DateTimeISO"]["output"];
+  readonly ext: Scalars["String"]["output"];
+  readonly height: Scalars["Int"]["output"];
+  readonly id: Scalars["String"]["output"];
+  readonly imageId: Scalars["Int"]["output"];
+  readonly product: Product;
+  readonly productId: Scalars["String"]["output"];
+  readonly width: Scalars["Int"]["output"];
+}
+
+export interface ProductImageAvgAggregate {
+  readonly height?: Maybe<Scalars["Float"]["output"]>;
+  readonly imageId?: Maybe<Scalars["Float"]["output"]>;
+  readonly width?: Maybe<Scalars["Float"]["output"]>;
+}
+
+export interface ProductImageAvgOrderByAggregateInput {
+  readonly height?: InputMaybe<SortOrder>;
+  readonly imageId?: InputMaybe<SortOrder>;
+  readonly width?: InputMaybe<SortOrder>;
+}
+
+export interface ProductImageCountAggregate {
+  readonly _all: Scalars["Int"]["output"];
+  readonly avgColor: Scalars["Int"]["output"];
+  readonly dateCreated: Scalars["Int"]["output"];
+  readonly dateUpdated: Scalars["Int"]["output"];
+  readonly ext: Scalars["Int"]["output"];
+  readonly height: Scalars["Int"]["output"];
+  readonly id: Scalars["Int"]["output"];
+  readonly imageId: Scalars["Int"]["output"];
+  readonly productId: Scalars["Int"]["output"];
+  readonly width: Scalars["Int"]["output"];
+}
+
+export interface ProductImageCountOrderByAggregateInput {
+  readonly avgColor?: InputMaybe<SortOrder>;
+  readonly dateCreated?: InputMaybe<SortOrder>;
+  readonly dateUpdated?: InputMaybe<SortOrder>;
+  readonly ext?: InputMaybe<SortOrder>;
+  readonly height?: InputMaybe<SortOrder>;
+  readonly id?: InputMaybe<SortOrder>;
+  readonly imageId?: InputMaybe<SortOrder>;
+  readonly productId?: InputMaybe<SortOrder>;
+  readonly width?: InputMaybe<SortOrder>;
+}
+
+export interface ProductImageCreateInput {
+  readonly avgColor: Scalars["String"]["input"];
+  readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly ext: Scalars["String"]["input"];
+  readonly height: Scalars["Int"]["input"];
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly imageId: Scalars["Int"]["input"];
+  readonly product: ProductCreateNestedOneWithoutProductImageInput;
+  readonly width: Scalars["Int"]["input"];
+}
+
+export interface ProductImageCreateManyInput {
+  readonly avgColor: Scalars["String"]["input"];
+  readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly ext: Scalars["String"]["input"];
+  readonly height: Scalars["Int"]["input"];
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly imageId: Scalars["Int"]["input"];
+  readonly productId: Scalars["String"]["input"];
+  readonly width: Scalars["Int"]["input"];
+}
+
+export interface ProductImageCreateManyProductInput {
+  readonly avgColor: Scalars["String"]["input"];
+  readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly ext: Scalars["String"]["input"];
+  readonly height: Scalars["Int"]["input"];
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly imageId: Scalars["Int"]["input"];
+  readonly width: Scalars["Int"]["input"];
+}
+
+export interface ProductImageCreateManyProductInputEnvelope {
+  readonly data: ReadonlyArray<ProductImageCreateManyProductInput>;
+}
+
+export interface ProductImageCreateNestedManyWithoutProductInput {
+  readonly connect?: InputMaybe<ReadonlyArray<ProductImageWhereUniqueInput>>;
+  readonly connectOrCreate?: InputMaybe<
+    ReadonlyArray<ProductImageCreateOrConnectWithoutProductInput>
+  >;
+  readonly create?: InputMaybe<
+    ReadonlyArray<ProductImageCreateWithoutProductInput>
+  >;
+  readonly createMany?: InputMaybe<ProductImageCreateManyProductInputEnvelope>;
+}
+
+export interface ProductImageCreateOrConnectWithoutProductInput {
+  readonly create: ProductImageCreateWithoutProductInput;
+  readonly where: ProductImageWhereUniqueInput;
+}
+
+export interface ProductImageCreateWithoutProductInput {
+  readonly avgColor: Scalars["String"]["input"];
+  readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly ext: Scalars["String"]["input"];
+  readonly height: Scalars["Int"]["input"];
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly imageId: Scalars["Int"]["input"];
+  readonly width: Scalars["Int"]["input"];
+}
+
+export interface ProductImageGroupBy {
+  readonly _avg?: Maybe<ProductImageAvgAggregate>;
+  readonly _count?: Maybe<ProductImageCountAggregate>;
+  readonly _max?: Maybe<ProductImageMaxAggregate>;
+  readonly _min?: Maybe<ProductImageMinAggregate>;
+  readonly _sum?: Maybe<ProductImageSumAggregate>;
+  readonly avgColor: Scalars["String"]["output"];
+  readonly dateCreated: Scalars["DateTimeISO"]["output"];
+  readonly dateUpdated: Scalars["DateTimeISO"]["output"];
+  readonly ext: Scalars["String"]["output"];
+  readonly height: Scalars["Int"]["output"];
+  readonly id: Scalars["String"]["output"];
+  readonly imageId: Scalars["Int"]["output"];
+  readonly productId: Scalars["String"]["output"];
+  readonly width: Scalars["Int"]["output"];
+}
+
+export interface ProductImageListRelationFilter {
+  readonly every?: InputMaybe<ProductImageWhereInput>;
+  readonly none?: InputMaybe<ProductImageWhereInput>;
+  readonly some?: InputMaybe<ProductImageWhereInput>;
+}
+
+export interface ProductImageMaxAggregate {
+  readonly avgColor?: Maybe<Scalars["String"]["output"]>;
+  readonly dateCreated?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  readonly dateUpdated?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  readonly ext?: Maybe<Scalars["String"]["output"]>;
+  readonly height?: Maybe<Scalars["Int"]["output"]>;
+  readonly id?: Maybe<Scalars["String"]["output"]>;
+  readonly imageId?: Maybe<Scalars["Int"]["output"]>;
+  readonly productId?: Maybe<Scalars["String"]["output"]>;
+  readonly width?: Maybe<Scalars["Int"]["output"]>;
+}
+
+export interface ProductImageMaxOrderByAggregateInput {
+  readonly avgColor?: InputMaybe<SortOrder>;
+  readonly dateCreated?: InputMaybe<SortOrder>;
+  readonly dateUpdated?: InputMaybe<SortOrder>;
+  readonly ext?: InputMaybe<SortOrder>;
+  readonly height?: InputMaybe<SortOrder>;
+  readonly id?: InputMaybe<SortOrder>;
+  readonly imageId?: InputMaybe<SortOrder>;
+  readonly productId?: InputMaybe<SortOrder>;
+  readonly width?: InputMaybe<SortOrder>;
+}
+
+export interface ProductImageMinAggregate {
+  readonly avgColor?: Maybe<Scalars["String"]["output"]>;
+  readonly dateCreated?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  readonly dateUpdated?: Maybe<Scalars["DateTimeISO"]["output"]>;
+  readonly ext?: Maybe<Scalars["String"]["output"]>;
+  readonly height?: Maybe<Scalars["Int"]["output"]>;
+  readonly id?: Maybe<Scalars["String"]["output"]>;
+  readonly imageId?: Maybe<Scalars["Int"]["output"]>;
+  readonly productId?: Maybe<Scalars["String"]["output"]>;
+  readonly width?: Maybe<Scalars["Int"]["output"]>;
+}
+
+export interface ProductImageMinOrderByAggregateInput {
+  readonly avgColor?: InputMaybe<SortOrder>;
+  readonly dateCreated?: InputMaybe<SortOrder>;
+  readonly dateUpdated?: InputMaybe<SortOrder>;
+  readonly ext?: InputMaybe<SortOrder>;
+  readonly height?: InputMaybe<SortOrder>;
+  readonly id?: InputMaybe<SortOrder>;
+  readonly imageId?: InputMaybe<SortOrder>;
+  readonly productId?: InputMaybe<SortOrder>;
+  readonly width?: InputMaybe<SortOrder>;
+}
+
+export interface ProductImageOrderByRelationAggregateInput {
+  readonly _count?: InputMaybe<SortOrder>;
+}
+
+export interface ProductImageOrderByWithAggregationInput {
+  readonly _avg?: InputMaybe<ProductImageAvgOrderByAggregateInput>;
+  readonly _count?: InputMaybe<ProductImageCountOrderByAggregateInput>;
+  readonly _max?: InputMaybe<ProductImageMaxOrderByAggregateInput>;
+  readonly _min?: InputMaybe<ProductImageMinOrderByAggregateInput>;
+  readonly _sum?: InputMaybe<ProductImageSumOrderByAggregateInput>;
+  readonly avgColor?: InputMaybe<SortOrder>;
+  readonly dateCreated?: InputMaybe<SortOrder>;
+  readonly dateUpdated?: InputMaybe<SortOrder>;
+  readonly ext?: InputMaybe<SortOrder>;
+  readonly height?: InputMaybe<SortOrder>;
+  readonly id?: InputMaybe<SortOrder>;
+  readonly imageId?: InputMaybe<SortOrder>;
+  readonly productId?: InputMaybe<SortOrder>;
+  readonly width?: InputMaybe<SortOrder>;
+}
+
+export interface ProductImageOrderByWithRelationInput {
+  readonly avgColor?: InputMaybe<SortOrder>;
+  readonly dateCreated?: InputMaybe<SortOrder>;
+  readonly dateUpdated?: InputMaybe<SortOrder>;
+  readonly ext?: InputMaybe<SortOrder>;
+  readonly height?: InputMaybe<SortOrder>;
+  readonly id?: InputMaybe<SortOrder>;
+  readonly imageId?: InputMaybe<SortOrder>;
+  readonly product?: InputMaybe<ProductOrderByWithRelationInput>;
+  readonly productId?: InputMaybe<SortOrder>;
+  readonly width?: InputMaybe<SortOrder>;
+}
+
+export enum ProductImageScalarFieldEnum {
+  AvgColor = 0,
+  DateCreated = 1,
+  DateUpdated = 2,
+  Ext = 3,
+  Height = 4,
+  Id = 5,
+  ImageId = 6,
+  ProductId = 7,
+  Width = 8,
+}
+
+export interface ProductImageScalarWhereInput {
+  readonly AND?: InputMaybe<ReadonlyArray<ProductImageScalarWhereInput>>;
+  readonly NOT?: InputMaybe<ReadonlyArray<ProductImageScalarWhereInput>>;
+  readonly OR?: InputMaybe<ReadonlyArray<ProductImageScalarWhereInput>>;
+  readonly avgColor?: InputMaybe<StringFilter>;
+  readonly dateCreated?: InputMaybe<DateTimeFilter>;
+  readonly dateUpdated?: InputMaybe<DateTimeFilter>;
+  readonly ext?: InputMaybe<StringFilter>;
+  readonly height?: InputMaybe<IntFilter>;
+  readonly id?: InputMaybe<StringFilter>;
+  readonly imageId?: InputMaybe<IntFilter>;
+  readonly productId?: InputMaybe<StringFilter>;
+  readonly width?: InputMaybe<IntFilter>;
+}
+
+export interface ProductImageScalarWhereWithAggregatesInput {
+  readonly AND?: InputMaybe<
+    ReadonlyArray<ProductImageScalarWhereWithAggregatesInput>
+  >;
+  readonly NOT?: InputMaybe<
+    ReadonlyArray<ProductImageScalarWhereWithAggregatesInput>
+  >;
+  readonly OR?: InputMaybe<
+    ReadonlyArray<ProductImageScalarWhereWithAggregatesInput>
+  >;
+  readonly avgColor?: InputMaybe<StringWithAggregatesFilter>;
+  readonly dateCreated?: InputMaybe<DateTimeWithAggregatesFilter>;
+  readonly dateUpdated?: InputMaybe<DateTimeWithAggregatesFilter>;
+  readonly ext?: InputMaybe<StringWithAggregatesFilter>;
+  readonly height?: InputMaybe<IntWithAggregatesFilter>;
+  readonly id?: InputMaybe<StringWithAggregatesFilter>;
+  readonly imageId?: InputMaybe<IntWithAggregatesFilter>;
+  readonly productId?: InputMaybe<StringWithAggregatesFilter>;
+  readonly width?: InputMaybe<IntWithAggregatesFilter>;
+}
+
+export interface ProductImageSumAggregate {
+  readonly height?: Maybe<Scalars["Int"]["output"]>;
+  readonly imageId?: Maybe<Scalars["Int"]["output"]>;
+  readonly width?: Maybe<Scalars["Int"]["output"]>;
+}
+
+export interface ProductImageSumOrderByAggregateInput {
+  readonly height?: InputMaybe<SortOrder>;
+  readonly imageId?: InputMaybe<SortOrder>;
+  readonly width?: InputMaybe<SortOrder>;
+}
+
+export interface ProductImageUpdateInput {
+  readonly avgColor?: InputMaybe<Scalars["String"]["input"]>;
+  readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly ext?: InputMaybe<Scalars["String"]["input"]>;
+  readonly height?: InputMaybe<Scalars["Int"]["input"]>;
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly imageId?: InputMaybe<Scalars["Int"]["input"]>;
+  readonly product?: InputMaybe<ProductUpdateOneRequiredWithoutProductImageNestedInput>;
+  readonly width?: InputMaybe<Scalars["Int"]["input"]>;
+}
+
+export interface ProductImageUpdateManyMutationInput {
+  readonly avgColor?: InputMaybe<Scalars["String"]["input"]>;
+  readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly ext?: InputMaybe<Scalars["String"]["input"]>;
+  readonly height?: InputMaybe<Scalars["Int"]["input"]>;
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly imageId?: InputMaybe<Scalars["Int"]["input"]>;
+  readonly width?: InputMaybe<Scalars["Int"]["input"]>;
+}
+
+export interface ProductImageUpdateManyWithWhereWithoutProductInput {
+  readonly data: ProductImageUpdateManyMutationInput;
+  readonly where: ProductImageScalarWhereInput;
+}
+
+export interface ProductImageUpdateManyWithoutProductNestedInput {
+  readonly connect?: InputMaybe<ReadonlyArray<ProductImageWhereUniqueInput>>;
+  readonly connectOrCreate?: InputMaybe<
+    ReadonlyArray<ProductImageCreateOrConnectWithoutProductInput>
+  >;
+  readonly create?: InputMaybe<
+    ReadonlyArray<ProductImageCreateWithoutProductInput>
+  >;
+  readonly createMany?: InputMaybe<ProductImageCreateManyProductInputEnvelope>;
+  readonly delete?: InputMaybe<ReadonlyArray<ProductImageWhereUniqueInput>>;
+  readonly deleteMany?: InputMaybe<ReadonlyArray<ProductImageScalarWhereInput>>;
+  readonly disconnect?: InputMaybe<ReadonlyArray<ProductImageWhereUniqueInput>>;
+  readonly set?: InputMaybe<ReadonlyArray<ProductImageWhereUniqueInput>>;
+  readonly update?: InputMaybe<
+    ReadonlyArray<ProductImageUpdateWithWhereUniqueWithoutProductInput>
+  >;
+  readonly updateMany?: InputMaybe<
+    ReadonlyArray<ProductImageUpdateManyWithWhereWithoutProductInput>
+  >;
+  readonly upsert?: InputMaybe<
+    ReadonlyArray<ProductImageUpsertWithWhereUniqueWithoutProductInput>
+  >;
+}
+
+export interface ProductImageUpdateWithWhereUniqueWithoutProductInput {
+  readonly data: ProductImageUpdateWithoutProductInput;
+  readonly where: ProductImageWhereUniqueInput;
+}
+
+export interface ProductImageUpdateWithoutProductInput {
+  readonly avgColor?: InputMaybe<Scalars["String"]["input"]>;
+  readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly ext?: InputMaybe<Scalars["String"]["input"]>;
+  readonly height?: InputMaybe<Scalars["Int"]["input"]>;
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly imageId?: InputMaybe<Scalars["Int"]["input"]>;
+  readonly width?: InputMaybe<Scalars["Int"]["input"]>;
+}
+
+export interface ProductImageUpsertWithWhereUniqueWithoutProductInput {
+  readonly create: ProductImageCreateWithoutProductInput;
+  readonly update: ProductImageUpdateWithoutProductInput;
+  readonly where: ProductImageWhereUniqueInput;
+}
+
+export interface ProductImageWhereInput {
+  readonly AND?: InputMaybe<ReadonlyArray<ProductImageWhereInput>>;
+  readonly NOT?: InputMaybe<ReadonlyArray<ProductImageWhereInput>>;
+  readonly OR?: InputMaybe<ReadonlyArray<ProductImageWhereInput>>;
+  readonly avgColor?: InputMaybe<StringFilter>;
+  readonly dateCreated?: InputMaybe<DateTimeFilter>;
+  readonly dateUpdated?: InputMaybe<DateTimeFilter>;
+  readonly ext?: InputMaybe<StringFilter>;
+  readonly height?: InputMaybe<IntFilter>;
+  readonly id?: InputMaybe<StringFilter>;
+  readonly imageId?: InputMaybe<IntFilter>;
+  readonly product?: InputMaybe<ProductRelationFilter>;
+  readonly productId?: InputMaybe<StringFilter>;
+  readonly width?: InputMaybe<IntFilter>;
+}
+
+export interface ProductImageWhereUniqueInput {
+  readonly AND?: InputMaybe<ReadonlyArray<ProductImageWhereInput>>;
+  readonly NOT?: InputMaybe<ReadonlyArray<ProductImageWhereInput>>;
+  readonly OR?: InputMaybe<ReadonlyArray<ProductImageWhereInput>>;
+  readonly avgColor?: InputMaybe<StringFilter>;
+  readonly dateCreated?: InputMaybe<DateTimeFilter>;
+  readonly dateUpdated?: InputMaybe<DateTimeFilter>;
+  readonly ext?: InputMaybe<StringFilter>;
+  readonly height?: InputMaybe<IntFilter>;
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly imageId?: InputMaybe<IntFilter>;
+  readonly product?: InputMaybe<ProductRelationFilter>;
+  readonly productId?: InputMaybe<StringFilter>;
+  readonly width?: InputMaybe<IntFilter>;
 }
 
 export interface ProductListRelationFilter {
@@ -2472,6 +2934,7 @@ export interface ProductMaxAggregate {
   readonly dateCreated?: Maybe<Scalars["DateTimeISO"]["output"]>;
   readonly dateUpdated?: Maybe<Scalars["DateTimeISO"]["output"]>;
   readonly description?: Maybe<Scalars["String"]["output"]>;
+  readonly genderId?: Maybe<Scalars["String"]["output"]>;
   readonly id?: Maybe<Scalars["String"]["output"]>;
   readonly name?: Maybe<Scalars["String"]["output"]>;
   readonly price?: Maybe<Scalars["String"]["output"]>;
@@ -2482,6 +2945,7 @@ export interface ProductMaxOrderByAggregateInput {
   readonly dateCreated?: InputMaybe<SortOrder>;
   readonly dateUpdated?: InputMaybe<SortOrder>;
   readonly description?: InputMaybe<SortOrder>;
+  readonly genderId?: InputMaybe<SortOrder>;
   readonly id?: InputMaybe<SortOrder>;
   readonly name?: InputMaybe<SortOrder>;
   readonly price?: InputMaybe<SortOrder>;
@@ -2492,6 +2956,7 @@ export interface ProductMinAggregate {
   readonly dateCreated?: Maybe<Scalars["DateTimeISO"]["output"]>;
   readonly dateUpdated?: Maybe<Scalars["DateTimeISO"]["output"]>;
   readonly description?: Maybe<Scalars["String"]["output"]>;
+  readonly genderId?: Maybe<Scalars["String"]["output"]>;
   readonly id?: Maybe<Scalars["String"]["output"]>;
   readonly name?: Maybe<Scalars["String"]["output"]>;
   readonly price?: Maybe<Scalars["String"]["output"]>;
@@ -2502,6 +2967,7 @@ export interface ProductMinOrderByAggregateInput {
   readonly dateCreated?: InputMaybe<SortOrder>;
   readonly dateUpdated?: InputMaybe<SortOrder>;
   readonly description?: InputMaybe<SortOrder>;
+  readonly genderId?: InputMaybe<SortOrder>;
   readonly id?: InputMaybe<SortOrder>;
   readonly name?: InputMaybe<SortOrder>;
   readonly price?: InputMaybe<SortOrder>;
@@ -2519,24 +2985,27 @@ export interface ProductOrderByWithAggregationInput {
   readonly dateCreated?: InputMaybe<SortOrder>;
   readonly dateUpdated?: InputMaybe<SortOrder>;
   readonly description?: InputMaybe<SortOrder>;
+  readonly genderId?: InputMaybe<SortOrder>;
   readonly id?: InputMaybe<SortOrder>;
   readonly name?: InputMaybe<SortOrder>;
   readonly price?: InputMaybe<SortOrder>;
-  readonly productTypeId?: InputMaybe<SortOrderInput>;
+  readonly productTypeId?: InputMaybe<SortOrder>;
 }
 
 export interface ProductOrderByWithRelationInput {
   readonly Inventory?: InputMaybe<InventoryOrderByRelationAggregateInput>;
   readonly ProductColor?: InputMaybe<ProductColorOrderByRelationAggregateInput>;
+  readonly ProductImage?: InputMaybe<ProductImageOrderByRelationAggregateInput>;
   readonly ProductSales?: InputMaybe<ProductSalesOrderByRelationAggregateInput>;
   readonly ProductType?: InputMaybe<ProductTypeOrderByWithRelationInput>;
   readonly dateCreated?: InputMaybe<SortOrder>;
   readonly dateUpdated?: InputMaybe<SortOrder>;
   readonly description?: InputMaybe<SortOrder>;
+  readonly genderId?: InputMaybe<SortOrder>;
   readonly id?: InputMaybe<SortOrder>;
   readonly name?: InputMaybe<SortOrder>;
   readonly price?: InputMaybe<SortOrder>;
-  readonly productTypeId?: InputMaybe<SortOrderInput>;
+  readonly productTypeId?: InputMaybe<SortOrder>;
 }
 
 export interface ProductRelationFilter {
@@ -3095,10 +3564,11 @@ export enum ProductScalarFieldEnum {
   DateCreated = 0,
   DateUpdated = 1,
   Description = 2,
-  Id = 3,
-  Name = 4,
-  Price = 5,
-  ProductTypeId = 6,
+  GenderId = 3,
+  Id = 4,
+  Name = 5,
+  Price = 6,
+  ProductTypeId = 7,
 }
 
 export interface ProductScalarWhereInput {
@@ -3108,10 +3578,11 @@ export interface ProductScalarWhereInput {
   readonly dateCreated?: InputMaybe<DateTimeFilter>;
   readonly dateUpdated?: InputMaybe<DateTimeFilter>;
   readonly description?: InputMaybe<StringFilter>;
+  readonly genderId?: InputMaybe<StringFilter>;
   readonly id?: InputMaybe<StringFilter>;
   readonly name?: InputMaybe<StringFilter>;
   readonly price?: InputMaybe<StringFilter>;
-  readonly productTypeId?: InputMaybe<StringNullableFilter>;
+  readonly productTypeId?: InputMaybe<StringFilter>;
 }
 
 export interface ProductScalarWhereWithAggregatesInput {
@@ -3127,10 +3598,11 @@ export interface ProductScalarWhereWithAggregatesInput {
   readonly dateCreated?: InputMaybe<DateTimeWithAggregatesFilter>;
   readonly dateUpdated?: InputMaybe<DateTimeWithAggregatesFilter>;
   readonly description?: InputMaybe<StringWithAggregatesFilter>;
+  readonly genderId?: InputMaybe<StringWithAggregatesFilter>;
   readonly id?: InputMaybe<StringWithAggregatesFilter>;
   readonly name?: InputMaybe<StringWithAggregatesFilter>;
   readonly price?: InputMaybe<StringWithAggregatesFilter>;
-  readonly productTypeId?: InputMaybe<StringNullableWithAggregatesFilter>;
+  readonly productTypeId?: InputMaybe<StringWithAggregatesFilter>;
 }
 
 export interface ProductType {
@@ -3359,11 +3831,13 @@ export interface ProductTypeWhereUniqueInput {
 export interface ProductUpdateInput {
   readonly Inventory?: InputMaybe<InventoryUpdateManyWithoutProductNestedInput>;
   readonly ProductColor?: InputMaybe<ProductColorUpdateManyWithoutProductNestedInput>;
+  readonly ProductImage?: InputMaybe<ProductImageUpdateManyWithoutProductNestedInput>;
   readonly ProductSales?: InputMaybe<ProductSalesUpdateManyWithoutProductNestedInput>;
   readonly ProductType?: InputMaybe<ProductTypeUpdateOneWithoutProductNestedInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
+  readonly genderId?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
   readonly price?: InputMaybe<Scalars["String"]["input"]>;
@@ -3373,6 +3847,7 @@ export interface ProductUpdateManyMutationInput {
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
+  readonly genderId?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
   readonly price?: InputMaybe<Scalars["String"]["input"]>;
@@ -3423,6 +3898,14 @@ export interface ProductUpdateOneRequiredWithoutProductColorNestedInput {
   readonly upsert?: InputMaybe<ProductUpsertWithoutProductColorInput>;
 }
 
+export interface ProductUpdateOneRequiredWithoutProductImageNestedInput {
+  readonly connect?: InputMaybe<ProductWhereUniqueInput>;
+  readonly connectOrCreate?: InputMaybe<ProductCreateOrConnectWithoutProductImageInput>;
+  readonly create?: InputMaybe<ProductCreateWithoutProductImageInput>;
+  readonly update?: InputMaybe<ProductUpdateToOneWithWhereWithoutProductImageInput>;
+  readonly upsert?: InputMaybe<ProductUpsertWithoutProductImageInput>;
+}
+
 export interface ProductUpdateOneRequiredWithoutProductSalesNestedInput {
   readonly connect?: InputMaybe<ProductWhereUniqueInput>;
   readonly connectOrCreate?: InputMaybe<ProductCreateOrConnectWithoutProductSalesInput>;
@@ -3441,6 +3924,11 @@ export interface ProductUpdateToOneWithWhereWithoutProductColorInput {
   readonly where?: InputMaybe<ProductWhereInput>;
 }
 
+export interface ProductUpdateToOneWithWhereWithoutProductImageInput {
+  readonly data: ProductUpdateWithoutProductImageInput;
+  readonly where?: InputMaybe<ProductWhereInput>;
+}
+
 export interface ProductUpdateToOneWithWhereWithoutProductSalesInput {
   readonly data: ProductUpdateWithoutProductSalesInput;
   readonly where?: InputMaybe<ProductWhereInput>;
@@ -3453,11 +3941,13 @@ export interface ProductUpdateWithWhereUniqueWithoutProductTypeInput {
 
 export interface ProductUpdateWithoutInventoryInput {
   readonly ProductColor?: InputMaybe<ProductColorUpdateManyWithoutProductNestedInput>;
+  readonly ProductImage?: InputMaybe<ProductImageUpdateManyWithoutProductNestedInput>;
   readonly ProductSales?: InputMaybe<ProductSalesUpdateManyWithoutProductNestedInput>;
   readonly ProductType?: InputMaybe<ProductTypeUpdateOneWithoutProductNestedInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
+  readonly genderId?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
   readonly price?: InputMaybe<Scalars["String"]["input"]>;
@@ -3465,11 +3955,27 @@ export interface ProductUpdateWithoutInventoryInput {
 
 export interface ProductUpdateWithoutProductColorInput {
   readonly Inventory?: InputMaybe<InventoryUpdateManyWithoutProductNestedInput>;
+  readonly ProductImage?: InputMaybe<ProductImageUpdateManyWithoutProductNestedInput>;
   readonly ProductSales?: InputMaybe<ProductSalesUpdateManyWithoutProductNestedInput>;
   readonly ProductType?: InputMaybe<ProductTypeUpdateOneWithoutProductNestedInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
+  readonly genderId?: InputMaybe<Scalars["String"]["input"]>;
+  readonly id?: InputMaybe<Scalars["String"]["input"]>;
+  readonly name?: InputMaybe<Scalars["String"]["input"]>;
+  readonly price?: InputMaybe<Scalars["String"]["input"]>;
+}
+
+export interface ProductUpdateWithoutProductImageInput {
+  readonly Inventory?: InputMaybe<InventoryUpdateManyWithoutProductNestedInput>;
+  readonly ProductColor?: InputMaybe<ProductColorUpdateManyWithoutProductNestedInput>;
+  readonly ProductSales?: InputMaybe<ProductSalesUpdateManyWithoutProductNestedInput>;
+  readonly ProductType?: InputMaybe<ProductTypeUpdateOneWithoutProductNestedInput>;
+  readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
+  readonly description?: InputMaybe<Scalars["String"]["input"]>;
+  readonly genderId?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
   readonly price?: InputMaybe<Scalars["String"]["input"]>;
@@ -3478,10 +3984,12 @@ export interface ProductUpdateWithoutProductColorInput {
 export interface ProductUpdateWithoutProductSalesInput {
   readonly Inventory?: InputMaybe<InventoryUpdateManyWithoutProductNestedInput>;
   readonly ProductColor?: InputMaybe<ProductColorUpdateManyWithoutProductNestedInput>;
+  readonly ProductImage?: InputMaybe<ProductImageUpdateManyWithoutProductNestedInput>;
   readonly ProductType?: InputMaybe<ProductTypeUpdateOneWithoutProductNestedInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
+  readonly genderId?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
   readonly price?: InputMaybe<Scalars["String"]["input"]>;
@@ -3490,10 +3998,12 @@ export interface ProductUpdateWithoutProductSalesInput {
 export interface ProductUpdateWithoutProductTypeInput {
   readonly Inventory?: InputMaybe<InventoryUpdateManyWithoutProductNestedInput>;
   readonly ProductColor?: InputMaybe<ProductColorUpdateManyWithoutProductNestedInput>;
+  readonly ProductImage?: InputMaybe<ProductImageUpdateManyWithoutProductNestedInput>;
   readonly ProductSales?: InputMaybe<ProductSalesUpdateManyWithoutProductNestedInput>;
   readonly dateCreated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly dateUpdated?: InputMaybe<Scalars["DateTimeISO"]["input"]>;
   readonly description?: InputMaybe<Scalars["String"]["input"]>;
+  readonly genderId?: InputMaybe<Scalars["String"]["input"]>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<Scalars["String"]["input"]>;
   readonly price?: InputMaybe<Scalars["String"]["input"]>;
@@ -3517,6 +4027,12 @@ export interface ProductUpsertWithoutProductColorInput {
   readonly where?: InputMaybe<ProductWhereInput>;
 }
 
+export interface ProductUpsertWithoutProductImageInput {
+  readonly create: ProductCreateWithoutProductImageInput;
+  readonly update: ProductUpdateWithoutProductImageInput;
+  readonly where?: InputMaybe<ProductWhereInput>;
+}
+
 export interface ProductUpsertWithoutProductSalesInput {
   readonly create: ProductCreateWithoutProductSalesInput;
   readonly update: ProductUpdateWithoutProductSalesInput;
@@ -3529,15 +4045,17 @@ export interface ProductWhereInput {
   readonly NOT?: InputMaybe<ReadonlyArray<ProductWhereInput>>;
   readonly OR?: InputMaybe<ReadonlyArray<ProductWhereInput>>;
   readonly ProductColor?: InputMaybe<ProductColorListRelationFilter>;
+  readonly ProductImage?: InputMaybe<ProductImageListRelationFilter>;
   readonly ProductSales?: InputMaybe<ProductSalesListRelationFilter>;
   readonly ProductType?: InputMaybe<ProductTypeNullableRelationFilter>;
   readonly dateCreated?: InputMaybe<DateTimeFilter>;
   readonly dateUpdated?: InputMaybe<DateTimeFilter>;
   readonly description?: InputMaybe<StringFilter>;
+  readonly genderId?: InputMaybe<StringFilter>;
   readonly id?: InputMaybe<StringFilter>;
   readonly name?: InputMaybe<StringFilter>;
   readonly price?: InputMaybe<StringFilter>;
-  readonly productTypeId?: InputMaybe<StringNullableFilter>;
+  readonly productTypeId?: InputMaybe<StringFilter>;
 }
 
 export interface ProductWhereUniqueInput {
@@ -3546,15 +4064,17 @@ export interface ProductWhereUniqueInput {
   readonly NOT?: InputMaybe<ReadonlyArray<ProductWhereInput>>;
   readonly OR?: InputMaybe<ReadonlyArray<ProductWhereInput>>;
   readonly ProductColor?: InputMaybe<ProductColorListRelationFilter>;
+  readonly ProductImage?: InputMaybe<ProductImageListRelationFilter>;
   readonly ProductSales?: InputMaybe<ProductSalesListRelationFilter>;
   readonly ProductType?: InputMaybe<ProductTypeNullableRelationFilter>;
   readonly dateCreated?: InputMaybe<DateTimeFilter>;
   readonly dateUpdated?: InputMaybe<DateTimeFilter>;
   readonly description?: InputMaybe<StringFilter>;
+  readonly genderId?: InputMaybe<StringFilter>;
   readonly id?: InputMaybe<Scalars["String"]["input"]>;
   readonly name?: InputMaybe<StringFilter>;
   readonly price?: InputMaybe<StringFilter>;
-  readonly productTypeId?: InputMaybe<StringNullableFilter>;
+  readonly productTypeId?: InputMaybe<StringFilter>;
 }
 
 export interface Query {
@@ -3564,6 +4084,7 @@ export interface Query {
   readonly aggregateLoginHistory: AggregateLoginHistory;
   readonly aggregateProduct: AggregateProduct;
   readonly aggregateProductColor: AggregateProductColor;
+  readonly aggregateProductImage: AggregateProductImage;
   readonly aggregateProductSales: AggregateProductSales;
   readonly aggregateProductType: AggregateProductType;
   readonly aggregateUser: AggregateUser;
@@ -3582,6 +4103,8 @@ export interface Query {
   readonly findFirstProduct?: Maybe<Product>;
   readonly findFirstProductColor?: Maybe<ProductColor>;
   readonly findFirstProductColorOrThrow?: Maybe<ProductColor>;
+  readonly findFirstProductImage?: Maybe<ProductImage>;
+  readonly findFirstProductImageOrThrow?: Maybe<ProductImage>;
   readonly findFirstProductOrThrow?: Maybe<Product>;
   readonly findFirstProductSales?: Maybe<ProductSales>;
   readonly findFirstProductSalesOrThrow?: Maybe<ProductSales>;
@@ -3598,6 +4121,7 @@ export interface Query {
   readonly getLoginHistory?: Maybe<LoginHistory>;
   readonly getProduct?: Maybe<Product>;
   readonly getProductColor?: Maybe<ProductColor>;
+  readonly getProductImage?: Maybe<ProductImage>;
   readonly getProductType?: Maybe<ProductType>;
   readonly getUser?: Maybe<User>;
   readonly groupByColor: ReadonlyArray<ColorGroupBy>;
@@ -3606,6 +4130,7 @@ export interface Query {
   readonly groupByLoginHistory: ReadonlyArray<LoginHistoryGroupBy>;
   readonly groupByProduct: ReadonlyArray<ProductGroupBy>;
   readonly groupByProductColor: ReadonlyArray<ProductColorGroupBy>;
+  readonly groupByProductImage: ReadonlyArray<ProductImageGroupBy>;
   readonly groupByProductSales: ReadonlyArray<ProductSalesGroupBy>;
   readonly groupByProductType: ReadonlyArray<ProductTypeGroupBy>;
   readonly groupByUser: ReadonlyArray<UserGroupBy>;
@@ -3616,6 +4141,8 @@ export interface Query {
   readonly product?: Maybe<Product>;
   readonly productColor?: Maybe<ProductColor>;
   readonly productColors: ReadonlyArray<ProductColor>;
+  readonly productImage?: Maybe<ProductImage>;
+  readonly productImages: ReadonlyArray<ProductImage>;
   readonly productType?: Maybe<ProductType>;
   readonly productTypes: ReadonlyArray<ProductType>;
   readonly products: ReadonlyArray<Product>;
@@ -3672,6 +4199,14 @@ export interface QueryAggregateProductColorArgs {
   skip?: InputMaybe<Scalars["Int"]["input"]>;
   take?: InputMaybe<Scalars["Int"]["input"]>;
   where?: InputMaybe<ProductColorWhereInput>;
+}
+
+export interface QueryAggregateProductImageArgs {
+  cursor?: InputMaybe<ProductImageWhereUniqueInput>;
+  orderBy?: InputMaybe<ReadonlyArray<ProductImageOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductImageWhereInput>;
 }
 
 export interface QueryAggregateProductSalesArgs {
@@ -3823,6 +4358,24 @@ export interface QueryFindFirstProductColorOrThrowArgs {
   where?: InputMaybe<ProductColorWhereInput>;
 }
 
+export interface QueryFindFirstProductImageArgs {
+  cursor?: InputMaybe<ProductImageWhereUniqueInput>;
+  distinct?: InputMaybe<ReadonlyArray<ProductImageScalarFieldEnum>>;
+  orderBy?: InputMaybe<ReadonlyArray<ProductImageOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductImageWhereInput>;
+}
+
+export interface QueryFindFirstProductImageOrThrowArgs {
+  cursor?: InputMaybe<ProductImageWhereUniqueInput>;
+  distinct?: InputMaybe<ReadonlyArray<ProductImageScalarFieldEnum>>;
+  orderBy?: InputMaybe<ReadonlyArray<ProductImageOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductImageWhereInput>;
+}
+
 export interface QueryFindFirstProductOrThrowArgs {
   cursor?: InputMaybe<ProductWhereUniqueInput>;
   distinct?: InputMaybe<ReadonlyArray<ProductScalarFieldEnum>>;
@@ -3927,6 +4480,10 @@ export interface QueryGetProductColorArgs {
   where: ProductColorWhereUniqueInput;
 }
 
+export interface QueryGetProductImageArgs {
+  where: ProductImageWhereUniqueInput;
+}
+
 export interface QueryGetProductTypeArgs {
   where: ProductTypeWhereUniqueInput;
 }
@@ -3987,6 +4544,15 @@ export interface QueryGroupByProductColorArgs {
   skip?: InputMaybe<Scalars["Int"]["input"]>;
   take?: InputMaybe<Scalars["Int"]["input"]>;
   where?: InputMaybe<ProductColorWhereInput>;
+}
+
+export interface QueryGroupByProductImageArgs {
+  by: ReadonlyArray<ProductImageScalarFieldEnum>;
+  having?: InputMaybe<ProductImageScalarWhereWithAggregatesInput>;
+  orderBy?: InputMaybe<ReadonlyArray<ProductImageOrderByWithAggregationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductImageWhereInput>;
 }
 
 export interface QueryGroupByProductSalesArgs {
@@ -4059,6 +4625,19 @@ export interface QueryProductColorsArgs {
   where?: InputMaybe<ProductColorWhereInput>;
 }
 
+export interface QueryProductImageArgs {
+  where: ProductImageWhereUniqueInput;
+}
+
+export interface QueryProductImagesArgs {
+  cursor?: InputMaybe<ProductImageWhereUniqueInput>;
+  distinct?: InputMaybe<ReadonlyArray<ProductImageScalarFieldEnum>>;
+  orderBy?: InputMaybe<ReadonlyArray<ProductImageOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars["Int"]["input"]>;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  where?: InputMaybe<ProductImageWhereInput>;
+}
+
 export interface QueryProductTypeArgs {
   where: ProductTypeWhereUniqueInput;
 }
@@ -4108,11 +4687,6 @@ export enum SortOrder {
   Desc = 1,
 }
 
-export interface SortOrderInput {
-  readonly nulls?: InputMaybe<NullsOrder>;
-  readonly sort: SortOrder;
-}
-
 export interface StringFilter {
   readonly contains?: InputMaybe<Scalars["String"]["input"]>;
   readonly endsWith?: InputMaybe<Scalars["String"]["input"]>;
@@ -4123,37 +4697,6 @@ export interface StringFilter {
   readonly lt?: InputMaybe<Scalars["String"]["input"]>;
   readonly lte?: InputMaybe<Scalars["String"]["input"]>;
   readonly not?: InputMaybe<NestedStringFilter>;
-  readonly notIn?: InputMaybe<ReadonlyArray<Scalars["String"]["input"]>>;
-  readonly startsWith?: InputMaybe<Scalars["String"]["input"]>;
-}
-
-export interface StringNullableFilter {
-  readonly contains?: InputMaybe<Scalars["String"]["input"]>;
-  readonly endsWith?: InputMaybe<Scalars["String"]["input"]>;
-  readonly equals?: InputMaybe<Scalars["String"]["input"]>;
-  readonly gt?: InputMaybe<Scalars["String"]["input"]>;
-  readonly gte?: InputMaybe<Scalars["String"]["input"]>;
-  readonly in?: InputMaybe<ReadonlyArray<Scalars["String"]["input"]>>;
-  readonly lt?: InputMaybe<Scalars["String"]["input"]>;
-  readonly lte?: InputMaybe<Scalars["String"]["input"]>;
-  readonly not?: InputMaybe<NestedStringNullableFilter>;
-  readonly notIn?: InputMaybe<ReadonlyArray<Scalars["String"]["input"]>>;
-  readonly startsWith?: InputMaybe<Scalars["String"]["input"]>;
-}
-
-export interface StringNullableWithAggregatesFilter {
-  readonly _count?: InputMaybe<NestedIntNullableFilter>;
-  readonly _max?: InputMaybe<NestedStringNullableFilter>;
-  readonly _min?: InputMaybe<NestedStringNullableFilter>;
-  readonly contains?: InputMaybe<Scalars["String"]["input"]>;
-  readonly endsWith?: InputMaybe<Scalars["String"]["input"]>;
-  readonly equals?: InputMaybe<Scalars["String"]["input"]>;
-  readonly gt?: InputMaybe<Scalars["String"]["input"]>;
-  readonly gte?: InputMaybe<Scalars["String"]["input"]>;
-  readonly in?: InputMaybe<ReadonlyArray<Scalars["String"]["input"]>>;
-  readonly lt?: InputMaybe<Scalars["String"]["input"]>;
-  readonly lte?: InputMaybe<Scalars["String"]["input"]>;
-  readonly not?: InputMaybe<NestedStringNullableWithAggregatesFilter>;
   readonly notIn?: InputMaybe<ReadonlyArray<Scalars["String"]["input"]>>;
   readonly startsWith?: InputMaybe<Scalars["String"]["input"]>;
 }
@@ -4619,9 +5162,16 @@ export type GetProductByIdQuery = {
         readonly name: string;
         readonly description: string;
         readonly price: string;
-        readonly productTypeId?: string | undefined;
+        readonly productTypeId: string;
         readonly dateCreated: unknown;
         readonly dateUpdated: unknown;
+        readonly ProductImage: ReadonlyArray<{
+          readonly imageId: number;
+          readonly ext: string;
+          readonly width: number;
+          readonly height: number;
+          readonly avgColor: string;
+        }>;
       }
     | undefined;
 };
@@ -4636,9 +5186,16 @@ export type GetProductsByProductTypeIdQuery = {
     readonly name: string;
     readonly description: string;
     readonly price: string;
-    readonly productTypeId?: string | undefined;
+    readonly productTypeId: string;
     readonly dateCreated: unknown;
     readonly dateUpdated: unknown;
+    readonly ProductImage: ReadonlyArray<{
+      readonly imageId: number;
+      readonly ext: string;
+      readonly width: number;
+      readonly height: number;
+      readonly avgColor: string;
+    }>;
   }>;
 };
 
@@ -4715,9 +5272,16 @@ export type ProductPartsFragment = {
   readonly name: string;
   readonly description: string;
   readonly price: string;
-  readonly productTypeId?: string | undefined;
+  readonly productTypeId: string;
   readonly dateCreated: unknown;
   readonly dateUpdated: unknown;
+  readonly ProductImage: ReadonlyArray<{
+    readonly imageId: number;
+    readonly ext: string;
+    readonly width: number;
+    readonly height: number;
+    readonly avgColor: string;
+  }>;
 };
 
 export type UserPartsFragment = {
@@ -4772,6 +5336,20 @@ export const ProductPartsFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "productTypeId" } },
           { kind: "Field", name: { kind: "Name", value: "dateCreated" } },
           { kind: "Field", name: { kind: "Name", value: "dateUpdated" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "ProductImage" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "imageId" } },
+                { kind: "Field", name: { kind: "Name", value: "ext" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
+                { kind: "Field", name: { kind: "Name", value: "avgColor" } },
+              ],
+            },
+          },
         ],
       },
     },
@@ -5125,6 +5703,20 @@ export const GetProductById = {
           { kind: "Field", name: { kind: "Name", value: "productTypeId" } },
           { kind: "Field", name: { kind: "Name", value: "dateCreated" } },
           { kind: "Field", name: { kind: "Name", value: "dateUpdated" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "ProductImage" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "imageId" } },
+                { kind: "Field", name: { kind: "Name", value: "ext" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
+                { kind: "Field", name: { kind: "Name", value: "avgColor" } },
+              ],
+            },
+          },
         ],
       },
     },
@@ -5217,6 +5809,20 @@ export const GetProductsByProductTypeId = {
           { kind: "Field", name: { kind: "Name", value: "productTypeId" } },
           { kind: "Field", name: { kind: "Name", value: "dateCreated" } },
           { kind: "Field", name: { kind: "Name", value: "dateUpdated" } },
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "ProductImage" },
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "imageId" } },
+                { kind: "Field", name: { kind: "Name", value: "ext" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
+                { kind: "Field", name: { kind: "Name", value: "avgColor" } },
+              ],
+            },
+          },
         ],
       },
     },

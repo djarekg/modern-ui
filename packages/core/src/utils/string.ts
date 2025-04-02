@@ -38,7 +38,7 @@ export const isNotEmpty = (value: string | object | Array<unknown>) => !isEmpty(
 export const format = (template: string, ...args: string[]) => {
   for (let i = 0; i < args.length; i++) {
     // biome-ignore lint/style/noParameterAssign: no need to create a new variable.
-    template = template.replace(`{${i}}`, args[i]);
+    template = template.replaceAll(`{${i}}`, args[i]);
   }
   return template;
 };
