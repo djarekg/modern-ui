@@ -140,14 +140,12 @@
       "name": "@mui/logger",
       "version": "1.0.0",
       "dependencies": {
-        "@github/memoize": "^1.1.5",
         "@mui/core": "workspace:*",
       },
       "devDependencies": {
         "@types/bun": "^1.2.5",
       },
       "peerDependencies": {
-        "@github/memoize": "^1.1.5",
         "typescript": "^5.8.2",
       },
     },
