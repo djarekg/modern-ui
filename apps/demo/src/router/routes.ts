@@ -40,13 +40,6 @@ export const routes: Routes<TemplateResult | typeof nothing> = {
       return html`<app-accounting-page></app-accounting-page>`;
     },
   },
-  [routeType.accountingReports]: {
-    name: 'accounting-reports',
-    entry: () => {
-      import('../pages/accounting/reports/index.js');
-      return html`<app-accounting-reports-page></app-accounting-reports-page>`;
-    },
-  },
   [routeType.inventory]: {
     name: 'inventory',
     entry: () => {

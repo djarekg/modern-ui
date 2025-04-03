@@ -1,5 +1,4 @@
-import { existsSync, mkdirSync } from 'node:fs';
-import { type PhotosWithTotalResults, createClient } from 'pexels';
+import { createApi } from 'unsplash-js';
 
 import type { PrismaClient } from '@prisma/client';
 
@@ -19,7 +18,9 @@ const getFileExtension = (url: string) => {
 };
 
 export const createProductImages = async (prisma: PrismaClient) => {
-  const pexelsClient = createClient(Bun.env.PEXELS_API_KEY);
+  const photoClient = createApi({
+    accessKey: Bun.env.UNSPLASH_API_KEY,
+  });
 
   console.group('Seeding product images...');
 
@@ -47,27 +48,27 @@ export const createProductImages = async (prisma: PrismaClient) => {
       // Fetch all photos from Pexels API.
       // Note: Pexels API has a limit on the number of results per page of 80.
       // https://www.pexels.com/api/documentation/?language=javascript#photos-search__parameters__per_page
-      const photos = await pexelsClient.photos.search({
+      const photos = await photoClient.search.getPhotos({
         query: `${genderKey} modeling ${productTypeKey}`,
-        per_page: products.length,
+        perPage: products.length,
+        orientation: 'squarish',
       });
+
+      // const photos = await photoClient.photos.search({
+      //   query: `${genderKey} modeling ${productTypeKey}`,
+      //   per_page: products.length,
+      // });
 
       // Insert image identifiers and metedata for each product.
       for (let i = 0, len = products.length; i < len; i++) {
         const { id: productId, name } = products[i];
-        const photo = (photos as PhotosWithTotalResults).photos[i];
+        const photo = photos.response.results[i];
 
         console.log(`Processing product ${name}...`);
 
         if (photo) {
-          const {
-            id: imageId,
-            width,
-            height,
-            avg_color: avgColor,
-            src: { original },
-          } = photo;
-          const ext = getFileExtension(original);
+          const { id: imageId, width, height, color, urls } = photo;
+          const ext = getFileExtension(urls.regular);
 
           await prisma.productImage.create({
             data: {
@@ -76,10 +77,11 @@ export const createProductImages = async (prisma: PrismaClient) => {
               ext,
               width,
               height,
-              avgColor,
+              color,
             },
           });
 
+          console.log(urls);
           console.log(`Saved image for product ${productId}.`);
         }
       }

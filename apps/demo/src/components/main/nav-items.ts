@@ -22,12 +22,6 @@ export default [
     // cssColorVar: '--md-sys-color-purple',
   },
   {
-    path: routeType.accountingReports,
-    icon: 'analytics',
-    label: 'Accounting Reports',
-    // cssColorVar: '--md-sys-color-purple',
-  },
-  {
     path: routeType.products,
     icon: 'shopping_cart',
     label: 'Products',

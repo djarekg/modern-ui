@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
+import { createLogger } from '@mui/logger';
 import { createColors } from './color.js';
 import { createCustomers } from './customer.js';
 import { createInventories } from './inventory.js';
@@ -14,6 +15,13 @@ import { createUsers } from './user.js';
 const prisma = new PrismaClient();
 
 const load = async () => {
+  createLogger({
+    dir: './logs',
+    level: 0,
+    file: true,
+    console: true,
+  });
+
   await createUsers(prisma);
   await createLoginHistories(prisma);
   await createCustomers(prisma);

@@ -352,7 +352,7 @@ type CreateManyAndReturnProductSales {
   dateCreated: DateTimeISO!
   dateUpdated: DateTimeISO!
   id: String!
-  price: Float!
+  price: String!
   product: Product!
   productId: String!
   quantity: Int!
@@ -688,33 +688,6 @@ input DateTimeWithAggregatesFilter {
   lte: DateTimeISO
   not: NestedDateTimeWithAggregatesFilter
   notIn: [DateTimeISO!]
-}
-
-input FloatFilter {
-  equals: Float
-  gt: Float
-  gte: Float
-  in: [Float!]
-  lt: Float
-  lte: Float
-  not: NestedFloatFilter
-  notIn: [Float!]
-}
-
-input FloatWithAggregatesFilter {
-  _avg: NestedFloatFilter
-  _count: NestedIntFilter
-  _max: NestedFloatFilter
-  _min: NestedFloatFilter
-  _sum: NestedFloatFilter
-  equals: Float
-  gt: Float
-  gte: Float
-  in: [Float!]
-  lt: Float
-  lte: Float
-  not: NestedFloatWithAggregatesFilter
-  notIn: [Float!]
 }
 
 input IntFilter {
@@ -1360,22 +1333,6 @@ input NestedFloatFilter {
   lt: Float
   lte: Float
   not: NestedFloatFilter
-  notIn: [Float!]
-}
-
-input NestedFloatWithAggregatesFilter {
-  _avg: NestedFloatFilter
-  _count: NestedIntFilter
-  _max: NestedFloatFilter
-  _min: NestedFloatFilter
-  _sum: NestedFloatFilter
-  equals: Float
-  gt: Float
-  gte: Float
-  in: [Float!]
-  lt: Float
-  lte: Float
-  not: NestedFloatWithAggregatesFilter
   notIn: [Float!]
 }
 
@@ -2448,7 +2405,7 @@ type ProductSales {
   dateCreated: DateTimeISO!
   dateUpdated: DateTimeISO!
   id: String!
-  price: Float!
+  price: String!
   product: Product!
   productId: String!
   quantity: Int!
@@ -2456,12 +2413,10 @@ type ProductSales {
 }
 
 type ProductSalesAvgAggregate {
-  price: Float
   quantity: Float
 }
 
 input ProductSalesAvgOrderByAggregateInput {
-  price: SortOrder
   quantity: SortOrder
 }
 
@@ -2494,7 +2449,7 @@ input ProductSalesCreateInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float!
+  price: String!
   product: ProductCreateNestedOneWithoutProductSalesInput!
   quantity: Int!
 }
@@ -2503,7 +2458,7 @@ input ProductSalesCreateManyCustomerInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float!
+  price: String!
   productId: String!
   quantity: Int!
   userId: String!
@@ -2518,7 +2473,7 @@ input ProductSalesCreateManyInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float!
+  price: String!
   productId: String!
   quantity: Int!
   userId: String!
@@ -2529,7 +2484,7 @@ input ProductSalesCreateManyProductInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float!
+  price: String!
   quantity: Int!
   userId: String!
 }
@@ -2543,7 +2498,7 @@ input ProductSalesCreateManyUserInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float!
+  price: String!
   productId: String!
   quantity: Int!
 }
@@ -2593,7 +2548,7 @@ input ProductSalesCreateWithoutCustomerInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float!
+  price: String!
   product: ProductCreateNestedOneWithoutProductSalesInput!
   quantity: Int!
 }
@@ -2604,7 +2559,7 @@ input ProductSalesCreateWithoutProductInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float!
+  price: String!
   quantity: Int!
 }
 
@@ -2613,7 +2568,7 @@ input ProductSalesCreateWithoutUserInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float!
+  price: String!
   product: ProductCreateNestedOneWithoutProductSalesInput!
   quantity: Int!
 }
@@ -2628,7 +2583,7 @@ type ProductSalesGroupBy {
   dateCreated: DateTimeISO!
   dateUpdated: DateTimeISO!
   id: String!
-  price: Float!
+  price: String!
   productId: String!
   quantity: Int!
   userId: String!
@@ -2645,7 +2600,7 @@ type ProductSalesMaxAggregate {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float
+  price: String
   productId: String
   quantity: Int
   userId: String
@@ -2667,7 +2622,7 @@ type ProductSalesMinAggregate {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float
+  price: String
   productId: String
   quantity: Int
   userId: String
@@ -2737,7 +2692,7 @@ input ProductSalesScalarWhereInput {
   dateCreated: DateTimeFilter
   dateUpdated: DateTimeFilter
   id: StringFilter
-  price: FloatFilter
+  price: StringFilter
   productId: StringFilter
   quantity: IntFilter
   userId: StringFilter
@@ -2751,19 +2706,17 @@ input ProductSalesScalarWhereWithAggregatesInput {
   dateCreated: DateTimeWithAggregatesFilter
   dateUpdated: DateTimeWithAggregatesFilter
   id: StringWithAggregatesFilter
-  price: FloatWithAggregatesFilter
+  price: StringWithAggregatesFilter
   productId: StringWithAggregatesFilter
   quantity: IntWithAggregatesFilter
   userId: StringWithAggregatesFilter
 }
 
 type ProductSalesSumAggregate {
-  price: Float
   quantity: Int
 }
 
 input ProductSalesSumOrderByAggregateInput {
-  price: SortOrder
   quantity: SortOrder
 }
 
@@ -2773,7 +2726,7 @@ input ProductSalesUpdateInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float
+  price: String
   product: ProductUpdateOneRequiredWithoutProductSalesNestedInput
   quantity: Int
 }
@@ -2782,7 +2735,7 @@ input ProductSalesUpdateManyMutationInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float
+  price: String
   quantity: Int
 }
 
@@ -2863,7 +2816,7 @@ input ProductSalesUpdateWithoutCustomerInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float
+  price: String
   product: ProductUpdateOneRequiredWithoutProductSalesNestedInput
   quantity: Int
 }
@@ -2874,7 +2827,7 @@ input ProductSalesUpdateWithoutProductInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float
+  price: String
   quantity: Int
 }
 
@@ -2883,7 +2836,7 @@ input ProductSalesUpdateWithoutUserInput {
   dateCreated: DateTimeISO
   dateUpdated: DateTimeISO
   id: String
-  price: Float
+  price: String
   product: ProductUpdateOneRequiredWithoutProductSalesNestedInput
   quantity: Int
 }
@@ -2916,7 +2869,7 @@ input ProductSalesWhereInput {
   dateCreated: DateTimeFilter
   dateUpdated: DateTimeFilter
   id: StringFilter
-  price: FloatFilter
+  price: StringFilter
   product: ProductRelationFilter
   productId: StringFilter
   quantity: IntFilter
@@ -2933,7 +2886,7 @@ input ProductSalesWhereUniqueInput {
   dateCreated: DateTimeFilter
   dateUpdated: DateTimeFilter
   id: String
-  price: FloatFilter
+  price: StringFilter
   product: ProductRelationFilter
   productId: StringFilter
   quantity: IntFilter

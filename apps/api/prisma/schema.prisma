@@ -91,11 +91,11 @@ model Product {
 model ProductImage {
   id          String   @id @default(uuid())
   productId   String
-  imageId     Int
+  imageId     String
   ext         String
   width       Int
   height      Int
-  avgColor    String
+  color       String
   dateCreated DateTime @default(now())
   dateUpdated DateTime @updatedAt
   product     Product  @relation(fields: [productId], references: [id])
